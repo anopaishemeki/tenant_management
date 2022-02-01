@@ -10,8 +10,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Property")
-public class Property {
+@Table
+public class Owner {
     @Id
     @SequenceGenerator(
             name = "property_sequence",
@@ -23,19 +23,13 @@ public class Property {
             generator = "property_sequence"
     )
     private Long id;
-    private String name;
+    private String Name;
     private String address;
-    private String tenant;
-    private String description;
-    private String propertyType;
-    private String city;
-    private String owner;
-    private String province;
-    private String status;
+    private String contactDetails;
 
-    public Property(String name, String address, String tenant) {
-        this.name = name;
+    public Owner(String name, String address, String contactDetails) {
+        Name = name;
         this.address = address;
-        this.tenant = tenant;
+        this.contactDetails = contactDetails;
     }
 }

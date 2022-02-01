@@ -45,8 +45,28 @@ public class PropertyService {
         if (update.getTenant() != null && update.getTenant().length() > 0 && !Objects.equals(property.getTenant(), update.getTenant())){
             property.setTenant(update.getTenant());
         }
-        if (update.getTenant() != null && update.getTenant().length() > 0 && !Objects.equals(property.getTenant(), update.getTenant())){
-            property.setTenant(update.getTenant());
+        if (update.getDescription() != null && update.getDescription().length() > 0 && !Objects.equals(property.getDescription(), update.getDescription())){
+            property.setDescription(update.getDescription());
+        }
+
+        if (update.getPropertyType() != null && update.getPropertyType().length() > 0 && !Objects.equals(property.getPropertyType(), update.getPropertyType())){
+            property.setPropertyType(update.getPropertyType());
+        }
+
+        if (update.getCity() != null && update.getCity().length() > 0 && !Objects.equals(property.getCity(), update.getCity())){
+            property.setCity(update.getCity());
+        }
+
+        if (update.getProvince() != null && update.getProvince().length() > 0 && !Objects.equals(property.getProvince(), update.getProvince())){
+            property.setProvince(update.getProvince());
+        }
+
+        if (update.getStatus() != null && update.getStatus().length() > 0 && !Objects.equals(property.getStatus(), update.getStatus())){
+            property.setStatus(update.getStatus());
+        }
+
+        if (update.getOwner() != null && update.getOwner().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
+            property.setOwner(update.getOwner());
         }
     }
 }
