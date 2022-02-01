@@ -14,13 +14,13 @@ import javax.persistence.*;
 public class Owner {
     @Id
     @SequenceGenerator(
-            name = "property_sequence",
-            sequenceName = "property_sequence",
+            name = "owner_sequence",
+            sequenceName = "owner_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "property_sequence"
+            generator = "owner_sequence"
     )
     private Long id;
     private String Name;

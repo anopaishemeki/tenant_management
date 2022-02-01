@@ -14,13 +14,13 @@ import javax.persistence.*;
 public class Address {
     @Id
     @SequenceGenerator(
-            name = "property_sequence",
-            sequenceName = "property_sequence",
+            name = "address_sequence",
+            sequenceName = "address_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "property_sequence"
+            generator = "address_sequence"
     )
     private String id;
     private String name;
