@@ -23,13 +23,19 @@ public class Owner {
             generator = "owner_sequence"
     )
     private Long id;
-    private String Name;
-    private String address;
-    private String contactDetails;
+    private String name;
+    private Long address;
+    @Transient
+    private Address addressObject;
+    private Long contactDetails;
+    @Transient
+    private ContactDetails contactDetailsObject;
 
-    public Owner(String name, String address, String contactDetails) {
-        Name = name;
+    public Owner(String name, Long address, Address addressObject, Long contactDetails, ContactDetails contactDetailsObject) {
+        this.name = name;
         this.address = address;
+        this.addressObject = addressObject;
         this.contactDetails = contactDetails;
+        this.contactDetailsObject = contactDetailsObject;
     }
 }

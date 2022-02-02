@@ -29,13 +29,15 @@ public class Address {
     private String zipCode;
     private String city;
     private String country;
+    private Long property;
 
-    public Address(String name, String name2, String address, String zipCode, String city, String country) {
+    public Address(String name, String name2, String address, String zipCode, String city, String country, Long property) {
         this.name = name;
         this.name2 = name2;
         this.address = address;
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;
+        this.property = property;
     }
 }

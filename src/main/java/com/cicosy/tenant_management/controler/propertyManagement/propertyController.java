@@ -10,19 +10,31 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/property")
 public class propertyController {
-    private PropertyService propertyService;
-    private AddressController addressController;
+    private final PropertyService propertyService;
+    private final AddressController addressController;
+    private final OwnerController ownerController;
 
     @Autowired
-    public propertyController(PropertyService propertyService) {
+    public propertyController(PropertyService propertyService, AddressController addressController, OwnerController ownerController) {
         this.propertyService = propertyService;
+        this.addressController = addressController;
+        this.ownerController = ownerController;
     }
 
     @PostMapping
     public Property saveProperty(@RequestBody Property property){
-        Long id = addressController.saveAddress(property.getAddressObject());
-        property.setAddress(id);
+
+        property.getAddressObject().setProperty(property.getId());
+
+        //setting address id
+        property.setAddress(addressController.saveAddress(property.getAddressObject()));
+
+        //setting owner id
+        property.setOwner(ownerController.newOwner(property.getOwnerObject()));
+
         propertyService.saveProperty(property);
+
+
         return property;
     }
 

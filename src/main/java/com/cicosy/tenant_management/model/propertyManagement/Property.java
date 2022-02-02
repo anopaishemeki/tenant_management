@@ -32,6 +32,8 @@ public class Property {
     private String description;
     private String propertyType;
     private String city;
+    @Transient
+    private Owner ownerObject;
     private Long owner;
     private String province;
     private String status;
