@@ -11,6 +11,7 @@ import java.util.List;
 @RequestMapping(path = "/api/property")
 public class propertyController {
     private PropertyService propertyService;
+    private AddressController addressController;
 
     @Autowired
     public propertyController(PropertyService propertyService) {
@@ -19,6 +20,8 @@ public class propertyController {
 
     @PostMapping
     public Property saveProperty(@RequestBody Property property){
+        Long id = addressController.saveAddress(property.getAddressObject());
+        property.setAddress(id);
         propertyService.saveProperty(property);
         return property;
     }

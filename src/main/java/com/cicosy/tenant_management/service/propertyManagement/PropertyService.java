@@ -38,7 +38,7 @@ public class PropertyService {
             property.setName(update.getName());
         }
 
-        if (update.getAddress() != null && update.getAddress().length() > 0 && !Objects.equals(property.getAddress(), update.getAddress())){
+        if (update.getAddress() != null && update.getAddress().toString().length() > 0 && !Objects.equals(property.getAddress(), update.getAddress())){
             property.setAddress(update.getAddress());
         }
 
@@ -65,7 +65,7 @@ public class PropertyService {
             property.setStatus(update.getStatus());
         }
 
-        if (update.getOwner() != null && update.getOwner().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
+        if (update.getOwner() != null && update.getOwner().toString().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
             property.setOwner(update.getOwner());
         }
     }

@@ -22,7 +22,7 @@ public class Insurance {
             strategy = GenerationType.SEQUENCE,
             generator = "insurance_sequence"
     )
-    private String id;
+    private Long id;
     private String providerName;
     private String packageName;
     private double subscriptionFee;

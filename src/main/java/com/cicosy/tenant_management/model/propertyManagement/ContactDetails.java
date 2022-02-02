@@ -22,7 +22,7 @@ public class ContactDetails {
             strategy = GenerationType.SEQUENCE,
             generator = "contact_sequence"
     )
-    private String id;
+    private Long id;
     private String phone;
     private String MobileNumber;
     private String email;

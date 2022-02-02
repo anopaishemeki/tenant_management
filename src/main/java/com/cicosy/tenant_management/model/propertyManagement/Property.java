@@ -24,6 +24,8 @@ public class Property {
     )
     private Long id;
     private String name;
+    @Transient
+    private Address addressObject;
     private Long address;
     private String tenant;
     private Long insurance;

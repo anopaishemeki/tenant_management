@@ -22,7 +22,7 @@ public class Address {
             strategy = GenerationType.SEQUENCE,
             generator = "address_sequence"
     )
-    private String id;
+    private Long id;
     private String name;
     private String name2;
     private String address;
