@@ -25,7 +25,7 @@ public class PropertyService {
         propertyRepository.save(property);
     }
 
-    public List<Property> getProperty(){
+    public List<Property> getProperties(){
         return propertyRepository.findAll();
     }
 
@@ -68,5 +68,17 @@ public class PropertyService {
         if (update.getOwner() != null && update.getOwner().toString().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
             property.setOwner(update.getOwner());
         }
+
+        if (update.getAssetValue() > 0 && !Objects.equals(property.getAssetValue(), update.getAssetValue())){
+            property.setAssetValue(update.getOwner());
+        }
+
+        if (update.getOwner() != null && update.getOwner().toString().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
+            property.setOwner(update.getOwner());
+        }
+    }
+
+    public Property getProperty(Long id) {
+        return propertyRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Property with id" + id +" does not exist"));
     }
 }

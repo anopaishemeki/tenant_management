@@ -3,8 +3,7 @@ package com.cicosy.tenant_management.controler.propertyManagement;
 import com.cicosy.tenant_management.model.propertyManagement.Owner;
 import com.cicosy.tenant_management.service.propertyManagement.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/owner")
@@ -24,9 +23,22 @@ public class OwnerController {
 
         owner.setAddress(addressController.saveAddress(owner.getAddressObject()));
 
-        owner.setContactDetails(contactDetailsController.saveConontact(owner.getContactDetailsObject()));
+        owner.setContactDetails(contactDetailsController.saveContact(owner.getContactDetailsObject()));
 
         ownerService.saveOwner(owner);
         return owner.getId();
+    }
+
+    @PutMapping("/update-owner/{id}")
+    public void updateOwner(@PathVariable Long id, @RequestBody Owner owner){
+        ownerService.update(id, owner);
+    }
+
+    public Owner getOwner(Long id) {
+        Owner owner = ownerService.getOwner(id);
+        owner.setAddressObject(addressController.getAddress(owner.getAddress()));
+        owner.setContactDetailsObject(contactDetailsController.getContact(owner.getContactDetails()));
+
+        return owner;
     }
 }

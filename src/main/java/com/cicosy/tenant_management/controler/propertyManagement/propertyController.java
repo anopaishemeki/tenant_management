@@ -38,12 +38,24 @@ public class propertyController {
         return property;
     }
 
-    @GetMapping
+    @GetMapping("/get-all-properties")
     public List<Property> getProperties(){
-        return propertyService.getProperty();
+        return propertyService.getProperties();
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/get-property/{id}")
+    public Property getProperty(@PathVariable Long id){
+
+        Property property = propertyService.getProperty(id);
+
+        property.setAddressObject(addressController.getAddress(property.getAddress()));
+
+        property.setOwnerObject(ownerController.getOwner(property.getOwner()));
+
+        return property;
+    }
+
+    @PutMapping("/update-property/{id}")
     public void updateProperty(@PathVariable Long id, @RequestBody Property property){
         propertyService.update(id, property);
     }
