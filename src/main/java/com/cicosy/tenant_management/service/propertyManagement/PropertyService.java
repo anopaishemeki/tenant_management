@@ -70,7 +70,7 @@ public class PropertyService {
         }
 
         if (update.getAssetValue() > 0 && !Objects.equals(property.getAssetValue(), update.getAssetValue())){
-            property.setAssetValue(update.getOwner());
+            property.setAssetValue(update.getAssetValue());
         }
 
         if (update.getOwner() != null && update.getOwner().toString().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
