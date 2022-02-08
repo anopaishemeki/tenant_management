@@ -32,14 +32,6 @@ public class AddressService {
             address.setCity(update.getCity());
         }
 
-        if (update.getName2() != null && update.getName().length() > 0 && !Objects.equals(address.getName(), update.getName())){
-            address.setName(update.getName());
-        }
-
-        if (update.getName2() != null && update.getName2().length() > 0 && !Objects.equals(address.getName2(), update.getName2())){
-            address.setName2(update.getName2());
-        }
-
         if (update.getZipCode() != null && update.getZipCode().length() > 0 && !Objects.equals(address.getZipCode(), update.getZipCode())){
             address.setZipCode(update.getZipCode());
         }

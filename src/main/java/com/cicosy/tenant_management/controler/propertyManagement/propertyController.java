@@ -21,7 +21,7 @@ public class propertyController {
         this.ownerController = ownerController;
     }
 
-    @PostMapping
+    @PostMapping("/save-property")
     public Property saveProperty(@RequestBody Property property){
 
         property.getAddressObject().setProperty(property.getId());
@@ -40,7 +40,15 @@ public class propertyController {
 
     @GetMapping("/get-all-properties")
     public List<Property> getProperties(){
-        return propertyService.getProperties();
+        List<Property> properties =  propertyService.getProperties();
+
+        for(int i = 0; i < properties.size(); i++){
+            properties.get(i).setAddressObject(addressController.getAddress( properties.get(i).getAddress()));
+            properties.get(i).setOwnerObject(ownerController.getOwner( properties.get(i).getOwner()));
+        }
+
+
+        return  properties;
     }
 
     @GetMapping("/get-property/{id}")

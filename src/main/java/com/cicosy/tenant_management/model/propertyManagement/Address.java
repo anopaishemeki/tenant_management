@@ -24,16 +24,14 @@ public class Address {
     )
     private Long id;
     private String name;
-    private String name2;
     private String address;
     private String zipCode;
     private String city;
     private String country;
     private Long property;
 
-    public Address(String name, String name2, String address, String zipCode, String city, String country, Long property) {
+    public Address(String name, String address, String zipCode, String city, String country, Long property) {
         this.name = name;
-        this.name2 = name2;
         this.address = address;
         this.zipCode = zipCode;
         this.city = city;

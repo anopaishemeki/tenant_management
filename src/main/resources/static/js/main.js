@@ -1,10 +1,29 @@
+$(function() {
 
-(function ($) {
-    "use strict";
+  $('.js-check-all').on('click', function() {
 
+  	if ( $(this).prop('checked') ) {
+	  	$('th input[type="checkbox"]').each(function() {
+	  		$(this).prop('checked', true);
+        $(this).closest('tr').addClass('active');
+	  	})
+  	} else {
+  		$('th input[type="checkbox"]').each(function() {
+	  		$(this).prop('checked', false);
+        $(this).closest('tr').removeClass('active');
+	  	})
+  	}
 
-    /*==================================================================
-    [ Validate ]*/
+  });
+
+  $('th[scope="row"] input[type="checkbox"]').on('click', function() {
+    if ( $(this).closest('tr').hasClass('active') ) {
+      $(this).closest('tr').removeClass('active');
+    } else {
+      $(this).closest('tr').addClass('active');
+    }
+  });
+
     var input = $('.validate-input .input100');
 
     $('.validate-form').on('submit',function(){
@@ -23,7 +42,7 @@
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
-           hideValidate(this);
+            hideValidate(this);
         });
     });
 
@@ -51,7 +70,8 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
-    
-    
 
-})(jQuery);
+
+
+
+});
