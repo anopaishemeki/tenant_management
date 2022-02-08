@@ -1,0 +1,36 @@
+.myButtons {
+    height: 2rem;
+    background-color: transparent;
+    font-weight: 5;
+    /*width: 13.5rem;*/
+    border: solid;
+    width: 100%;
+    text-align: start;
+    color: #8F8FA1;
+    border-width: 0px;
+    padding-left: 3%;
+}
+
+.myButtons:hover{
+    background-color: rgba(143, 143, 161, 0.1);
+    border-left-width: 1px;
+    border-color: #007bff;
+}
+
+.myButtons:focus {
+    background-color: rgba(143, 143, 161, 0.23);
+    outline: none;
+    border-left-width: 1px;
+    border-right-width: 5px;
+    border-color: #007bff;
+}
+
+.topDiv {
+    background-color: #EDEDED;
+    padding-left: 3px;
+    color: #8F8FA1 ;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    position: sticky;
+    top: 0;
+}
+
