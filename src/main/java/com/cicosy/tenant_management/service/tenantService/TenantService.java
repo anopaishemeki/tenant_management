@@ -24,10 +24,10 @@ public class TenantService {
     public String updateTenant(Long id, Tenant tenant){
         Tenant existing_tenant = tenantRepository.getById(id);
         existing_tenant.setLease(tenant.getLease());
-        existing_tenant.setContact_details(tenant.getContact_details());
+        existing_tenant.setPhone(tenant.getPhone());
         existing_tenant.setName(tenant.getName());
         existing_tenant.setProperty(tenant.getProperty());
-        existing_tenant.setResidential_address(tenant.getResidential_address());
+        existing_tenant.setId_passport(tenant.getId_passport());
 
         tenantRepository.save(existing_tenant);
 

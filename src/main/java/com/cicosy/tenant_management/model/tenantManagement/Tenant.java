@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -33,7 +31,13 @@ public class Tenant {
     private String email;
     private String phone;
     private String id_passport;
-    private String residential_address;
+
+    @Embedded
+    private Address address;
+
+    @Embedded
+    private TenantBusiness tenantBusiness;
+
     private String lease;
     private String property;
 
@@ -46,7 +50,6 @@ public class Tenant {
         this.email = email;
         this.phone = phone;
         this.id_passport = id_passport;
-        this.residential_address = residential_address;
         this.lease = lease;
         this.property = property;
     }
