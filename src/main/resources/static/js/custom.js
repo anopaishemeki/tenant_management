@@ -15,7 +15,7 @@ function getProperties(){
             }
 
             for(let i = 0; i < items.length; i++){
-                let html = `<th scope="row" >
+                let html = `<th scope="row" id="row ${items[i].id}">
                                                 <label class="control control--checkbox">
 <!--                                                    <input type="checkbox"/>-->
 <!--                                                    <div class="control__indicator"></div>-->
@@ -34,7 +34,7 @@ function getProperties(){
                                                  <small class="d-block">${items[i].ownerObject.contactDetailsObject.phone + " ,"+ items[i].ownerObject.contactDetailsObject.email}</small>
                                             </td>
                                             <td>${items[i].status}</td>
-                                            <td><i class="bi bi-eye-fill"></i></td>`
+                                            <td><i class="bi bi-eye-fill eye"></i></td>`
 
                 let tr = document.createElement("tr");
                 // tr.className = "row"

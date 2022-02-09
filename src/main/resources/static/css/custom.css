@@ -34,3 +34,11 @@
     top: 0;
 }
 
+.eye{
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.eye:hover {
+    color: green;
+}
