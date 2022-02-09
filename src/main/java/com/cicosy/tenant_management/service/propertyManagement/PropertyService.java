@@ -25,7 +25,7 @@ public class PropertyService {
         propertyRepository.save(property);
     }
 
-    public List<Property> getProperty(){
+    public List<Property> getProperties(){
         return propertyRepository.findAll();
     }
 
@@ -38,15 +38,47 @@ public class PropertyService {
             property.setName(update.getName());
         }
 
-        if (update.getAddress() != null && update.getAddress().length() > 0 && !Objects.equals(property.getAddress(), update.getAddress())){
+        if (update.getAddress() != null && update.getAddress().toString().length() > 0 && !Objects.equals(property.getAddress(), update.getAddress())){
             property.setAddress(update.getAddress());
         }
 
         if (update.getTenant() != null && update.getTenant().length() > 0 && !Objects.equals(property.getTenant(), update.getTenant())){
             property.setTenant(update.getTenant());
         }
-        if (update.getTenant() != null && update.getTenant().length() > 0 && !Objects.equals(property.getTenant(), update.getTenant())){
-            property.setTenant(update.getTenant());
+        if (update.getDescription() != null && update.getDescription().length() > 0 && !Objects.equals(property.getDescription(), update.getDescription())){
+            property.setDescription(update.getDescription());
         }
+
+        if (update.getPropertyType() != null && update.getPropertyType().length() > 0 && !Objects.equals(property.getPropertyType(), update.getPropertyType())){
+            property.setPropertyType(update.getPropertyType());
+        }
+
+        if (update.getCity() != null && update.getCity().length() > 0 && !Objects.equals(property.getCity(), update.getCity())){
+            property.setCity(update.getCity());
+        }
+
+        if (update.getProvince() != null && update.getProvince().length() > 0 && !Objects.equals(property.getProvince(), update.getProvince())){
+            property.setProvince(update.getProvince());
+        }
+
+        if (update.getStatus() != null && update.getStatus().length() > 0 && !Objects.equals(property.getStatus(), update.getStatus())){
+            property.setStatus(update.getStatus());
+        }
+
+        if (update.getOwner() != null && update.getOwner().toString().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
+            property.setOwner(update.getOwner());
+        }
+
+        if (update.getAssetValue() > 0 && !Objects.equals(property.getAssetValue(), update.getAssetValue())){
+            property.setAssetValue(update.getAssetValue());
+        }
+
+        if (update.getOwner() != null && update.getOwner().toString().length() > 0 && !Objects.equals(property.getOwner(), update.getOwner())){
+            property.setOwner(update.getOwner());
+        }
+    }
+
+    public Property getProperty(Long id) {
+        return propertyRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Property with id" + id +" does not exist"));
     }
 }
