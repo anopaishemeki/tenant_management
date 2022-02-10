@@ -8,10 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tenants")
 public class TenantController {
 
     @Autowired
     private TenantService tenantService;
+
+    @GetMapping("/get-all-tenants")
+    public List<Tenant> getTenants(){
+        return tenantService.getAll();
+    }
 
     @PostMapping("/addTenant")
     public Tenant addTenant(@RequestBody Tenant tenant){

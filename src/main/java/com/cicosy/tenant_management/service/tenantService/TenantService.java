@@ -35,4 +35,7 @@ public class TenantService {
     }
 
 
+    public List<Tenant> getAll() {
+        return tenantRepository.findAll();
+    }
 }
