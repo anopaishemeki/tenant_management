@@ -68,22 +68,8 @@ public class LeaseDocumentService {
   public Stream<LeaseDocuments> getAllFiles() {
     return leaseRepo.findAll().stream();
   }
-  public Optional<LeaseDocuments> findOne(String Id) {
-        return leaseRepo.findById(Id);
-  }
-  
-  public LeaseDocuments storeDetails(LeaseDocuments leaseDocuments){
-      return leaseRepo.save(leaseDocuments);
-      
-  }
-  
-      // Read operation
-  
-  public List<LeaseDocuments> fetchLeaseDocuments()
-  {
-      return (List<LeaseDocuments>)
-            leaseRepo.findAll();
-  }
+
+ 
   public LeaseDocuments getLeaseDocumentsById(String Id) {
         Optional < LeaseDocuments > optional = leaseRepo.findById(Id);
         LeaseDocuments documents = null;

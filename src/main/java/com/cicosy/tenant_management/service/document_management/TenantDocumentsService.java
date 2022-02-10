@@ -54,19 +54,7 @@ public class TenantDocumentsService {
   public Stream<TenantDocuments> getAllFiles() {
     return tenantRepo.findAll().stream();
   }
-  public Optional<TenantDocuments> findOne(String id) {
-        return tenantRepo.findById(id);
-  }
-  
- 
-  
-      // Read operation
-  
-  public List<TenantDocuments> fetchTenantDocuments()
-  {
-      return (List<TenantDocuments>)
-            tenantRepo.findAll();
-  }
+
   public TenantDocuments getTenantDocumentsById(String Id) {
         Optional < TenantDocuments > optional = tenantRepo.findById(Id);
         TenantDocuments documents = null;

@@ -70,7 +70,7 @@ public class LeaseDocumentContoller {
     }
   }
 
-  @GetMapping("/getdocuments")
+  @GetMapping("/getLeasedocuments")
   public ResponseEntity<List<Response>> getListFiles() {
     List<Response> files = leaseDocumentService.getAllFiles().map(dbFile -> {
       String fileDownloadUri = ServletUriComponentsBuilder
@@ -98,13 +98,6 @@ public class LeaseDocumentContoller {
         .body(leaseDocuments.getData());
   }
 
-  @GetMapping("/getleasedocuments")
-    public String showNewEmployeeForm(Model model) {
-        // create model attribute to bind form data
-        LeaseDocuments leaseDocuments = new LeaseDocuments();
-        model.addAttribute("leasdocuments", leaseDocuments);
-        return "leasedocuments";
-    }
 
 
 

@@ -11,7 +11,7 @@ package com.cicosy.tenant_management.service.document_management;
 import com.cicosy.tenant_management.model.document_management.NoticeDocuments;
 import com.cicosy.tenant_management.repository.document_management.NoticeDocumentRepo;
 import java.io.IOException;
-import java.util.List;
+
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -55,22 +55,11 @@ public class NoticeDocumentsService {
   public Stream<NoticeDocuments> getAllFiles() {
     return noticeRepo.findAll().stream();
   }
-  public Optional<NoticeDocuments> findOne(String id) {
-        return noticeRepo.findById(id);
-  }
-  
-  public NoticeDocuments storeDetails(NoticeDocuments noticeDocuments){
-      return noticeRepo.save(noticeDocuments);
-      
-  }
+
   
       // Read operation
   
-  public List<NoticeDocuments> fetchTenantDocuments()
-  {
-      return (List<NoticeDocuments>)
-            noticeRepo.findAll();
-  }
+ 
   public NoticeDocuments getNoticeDocumentsById(String Id) {
         Optional < NoticeDocuments > optional = noticeRepo.findById(Id);
         NoticeDocuments documents = null;
