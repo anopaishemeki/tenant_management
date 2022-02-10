@@ -23,7 +23,8 @@ public class MaintenanceRequests {
     private String description;
     private String levelOfUrgency;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateLogged = new Date(System.currentTimeMillis());
+    private LocalDate dateLogged = LocalDate.now();
+    private LocalDate overdueDate = LocalDate.now().plusDays(7);
     @Column(columnDefinition = "varchar(255) default 'Pending'")
     private String status;
     private String maintenanceDate = "Pending";
