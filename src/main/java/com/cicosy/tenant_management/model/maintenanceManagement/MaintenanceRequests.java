@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,6 +27,7 @@ public class MaintenanceRequests {
     @Column(columnDefinition = "varchar(255) default 'Pending'")
     private String status;
     private String maintenanceDate = "Pending";
+
 
 
 
