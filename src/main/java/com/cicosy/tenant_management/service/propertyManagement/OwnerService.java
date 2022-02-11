@@ -30,6 +30,10 @@ public class OwnerService {
             owner.setName(update.getName());
         }
 
+        if (update.getLastName() != null && update.getLastName().length() > 0 && !Objects.equals(owner.getLastName(), update.getLastName())){
+            owner.setLastName(update.getLastName());
+        }
+
 
     }
 

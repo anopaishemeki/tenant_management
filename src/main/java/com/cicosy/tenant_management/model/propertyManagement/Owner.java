@@ -24,6 +24,7 @@ public class Owner {
     )
     private Long id;
     private String name;
+    private String lastName;
     private Long address;
     @Transient
     private Address addressObject;

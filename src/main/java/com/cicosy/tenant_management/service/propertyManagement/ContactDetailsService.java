@@ -6,6 +6,7 @@ import com.cicosy.tenant_management.repository.propertyManagement.ContactReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Objects;
 
 @Service
@@ -21,6 +22,7 @@ public class ContactDetailsService {
         contactRepository.save(contactDetails);
     }
 
+    @Transactional
     public void update(Long id, ContactDetails update) {
         ContactDetails contactDetails = contactRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Contact details with id: " + id +" does not exist"));
 

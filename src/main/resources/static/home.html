@@ -382,10 +382,17 @@
                             <div class="row">
                                 <h1>Property Name</h1>
                                 <div class="col-sm-6">
-                                    <div class="dis-flex justify-content-start" style="margin-bottom: 5%;border: solid;border-bottom-width: 2px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
-                                        <h3>Porperty Details</h3>
+                                    <div class="" style="margin-bottom: 5%;border: solid;border-bottom-width: 2px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
+                                        <div class="row">
+                                            <div class="col-md-10 dis-flex justify-content-start">
+                                                <h3>Porperty Details</h3>
+                                            </div>
+                                            <div class="col-md-2 dis-flex justify-content-end" id="iconsPropertyDetails">
+                                                <span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" id="update_propertyDetails">
                                         <div class="col-sm-6">
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
                                                 <p><span class="bi bi-file">&nbsp;</span> Name : Joiner City</p>
@@ -419,109 +426,137 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="dis-flex justify-content-start" style="margin-bottom: 5%;border: solid;border-bottom-width: 1px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
-                                            <h6>Porperty Address</h6>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
-                                                <p><span class="bi bi-geo-alt">&nbsp;</span>Name : Name</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
-                                                <p><span class="bi bi-file-earmark-zip">&nbsp;Zip Code : Zip Code</span></p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
-                                                <p><span class="bi bi-map">&nbsp;</span>Country</p>
-                                                <span class="focus-input100"></span>
+                                    <div class="row" >
+                                        <div class="" style="margin-bottom: 5%;border: solid;border-bottom-width: 1px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
+                                            <div class="row">
+                                                <div class="col-md-10 dis-flex justify-content-start">
+                                                    <h6>Porperty Address</h6>
+
+                                                </div>
+                                                <div class="col-md-2 dis-flex justify-content-end" id="iconsPropertyAddress">
+                                                    <span class="bi bi-pen-fill pen" onclick="editPropertyAddress()"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
-                                                <p><span class="bi bi-geo-alt">&nbsp;</span>Address</p>
-                                                <span class="focus-input100"></span>
+                                        <div class="row" id="update_PropertyAddress">
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Name : Name</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
+                                                    <p><span class="bi bi-file-earmark-zip">&nbsp;Zip Code : Zip Code</span></p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
+                                                    <p><span class="bi bi-map">&nbsp;</span>Country</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
                                             </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                </p><span class="bi bi-building">&nbsp;</span>City</p>
-                                                <span class="focus-input100"></span>
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Address</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                    <p><span class="bi bi-building">&nbsp;</span>City : City</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="dis-flex justify-content-start" style="margin-bottom: 5%;border: solid;border-bottom-width: 2px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
-                                        <h3>Porperty Owner Details</h3>
+                                    <div class="" style="margin-bottom: 5%;border: solid;border-bottom-width: 2px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
+                                        <div class="row">
+                                            <div class="col-md-10 dis-flex justify-content-start">
+                                                <h3>Porperty Owner Details</h3>
+                                            </div>
+                                            <div class="col-md-2 dis-flex justify-content-end" id="iconsPropertyOwnerDetails">
+                                                <span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerDetails()"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" id="update_PropertyOwnerDetails">
                                         <div class="col-sm-6">
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "First Name is required">
-                                                <span class="bi bi-person-bounding-box"></span>
-                                                <input class="input100" type="text" id="ownerFirstName" name="ownerFirstName" placeholder="First Name">
+                                                <p><span class="bi bi-person-bounding-box">&nbsp;</span>First Name : First Name</p>
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Owner Last Name is required">
-                                                <span class="bi bi-person-bounding-box"></span>
-                                                <input class="input100" type="text" id="ownerLastName" name="ownerLastName" placeholder="Owner Last Name">
+                                                <p><span class="bi bi-person-bounding-box"></span>Last Name : Last Name</p>
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="dis-flex justify-content-start" style="margin-bottom: 5%;border: solid;border-bottom-width: 1px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
-                                            <h6>Porperty Owner Address</h6>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
-                                                <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="ownerAddressName" name="ownerAddressName" placeholder="Address Name">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
-                                                <span class="bi bi-file-earmark-zip"></span>
-                                                <input class="input100" type="text" id="OwnerZipCode" name="OwnerZipCode" placeholder="Zip Code">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-map"></span>
-                                                <input class="input100" type="text" id="ownerCountry" name="ownerCountry" placeholder="Country">
-                                                <span class="focus-input100"></span>
+                                        <div class="" style="margin-bottom: 5%;border: solid;border-bottom-width: 1px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
+                                            <div class="row">
+                                                <div class="col-md-10 dis-flex justify-content-start">
+                                                    <h6>Porperty Owner Address</h6>
+                                                </div>
+                                                <div class="col-md-2 dis-flex justify-content-end" id="iconsPropertyOwnerAddress">
+                                                    <span class="bi bi-pen-fill pen" onclick="editPropertyOwnerAddress()"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
-                                                <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="ownerAddress" name="ownerAddress" placeholder="Address">
-                                                <span class="focus-input100"></span>
+                                        <div class="row" id="update_PropertyOwnerAddress">
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Name</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
+                                                    <p><span class="bi bi-file-earmark-zip">&nbsp;</span>Zip Code</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                    <p><span class="bi bi-map">&nbsp;</span>Country</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
                                             </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-building"></span>
-                                                <input class="input100" type="text" id="ownerCity" name="ownerCity" placeholder="City">
-                                                <span class="focus-input100"></span>
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Address </p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                    <p><span class="bi bi-building">&nbsp;</span>City : City</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="dis-flex justify-content-start" style="margin-bottom: 5%;border: solid;border-bottom-width: 1px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
-                                            <h6>Porperty Owner Contact Details</h6>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 bi bi-telephone d-flex validate-input m-b-16" data-validate = "Owner Phone is required">
-                                                <input class="input100" type="text" id="ownerPhone" name="ownerPhone" placeholder=" Phone">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Email Address is required">
-                                                <span class="bi bi-envelope"></span>
-                                                <input class="input100" type="text" id="ownerEmailAddress" name="ownerEmailAddress" placeholder="Email Address">
-                                                <span class="focus-input100"></span>
+                                        <div class="" style="margin-bottom: 5%;border: solid;border-bottom-width: 1px;border-left-width: 0px;border-top-width: 0px;border-right-width: 0px">
+                                            <div class="row">
+                                                <div class="col-md-10 dis-flex justify-content-start">
+                                                    <h6>Porperty Owner Contact Detail</h6>
+
+                                                </div>
+                                                <div class="col-md-2 dis-flex justify-content-end" id="iconsPropertyOwnerContactDetails">
+                                                    <span class="bi bi-pen-fill pen" onclick="editPropertyOwnerContactDetails()"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 bi bi-phone d-flex validate-input m-b-16" data-validate = "Cell Number is required">
-                                                <input class="input100" type="text" id="ownerCellNumber" name="ownerCellNumber" placeholder="Cell Number">
-                                                <span class="focus-input100"></span>
+                                        <div class="row" id="update_PropertyOwnerContactDetails">
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100  d-flex validate-input m-b-16" data-validate = "Owner Phone is required">
+                                                    <p><span class="bi bi-telephone">&nbsp;</span>Phone : Phone </p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Email Address is required">
+                                                    <p><span class="bi bi-envelope">&nbsp;</span>Email : Email</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Cell Number is required">
+                                                    <p><span class="bi bi-phone">&nbsp;</span>Cell Number : Cell Number</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
