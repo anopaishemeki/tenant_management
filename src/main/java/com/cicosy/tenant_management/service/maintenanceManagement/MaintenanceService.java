@@ -76,14 +76,11 @@ public class MaintenanceService {
         MaintenanceRequests maintenanceRequest = maintenanceRepo.findById(id)
                 .orElseThrow(() -> new Exception("Employee not exist with id :" + id));
 
-        maintenanceRequest.setRequest(scheduleDetails.getRequest());
-        maintenanceRequest.setDateLogged(scheduleDetails.getDateLogged());
-        maintenanceRequest.setLevelOfUrgency(scheduleDetails.getLevelOfUrgency());
-        maintenanceRequest.setDescription(scheduleDetails.getDescription());
-        maintenanceRequest.setMaintenanceDate(scheduleDetails.getMaintenanceDate());
+
+        maintenanceRequest.setSchedule(scheduleDetails.getSchedule());
 
 
-         MaintenanceRequests addSchedule = maintenanceRepo.save(maintenanceRequest);
+          maintenanceRepo.save(maintenanceRequest);
 
     }
 

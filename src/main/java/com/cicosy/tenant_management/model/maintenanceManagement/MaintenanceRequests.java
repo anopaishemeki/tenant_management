@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +29,11 @@ public class MaintenanceRequests {
 
     private String status ;
     private String maintenanceDate = "xxxx";
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_id")
+    private Schedule schedule;
 
     public String getStatus() {
 

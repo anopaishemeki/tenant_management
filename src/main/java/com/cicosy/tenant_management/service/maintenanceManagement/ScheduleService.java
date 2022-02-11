@@ -19,6 +19,6 @@ public class ScheduleService {
         scheduleRepo.save(schedule);
     }
     public List<Schedule> getAllSchedule(){
-        return scheduleRepo.getAllSchedule();
+        return scheduleRepo.findAll();
     }
 }
