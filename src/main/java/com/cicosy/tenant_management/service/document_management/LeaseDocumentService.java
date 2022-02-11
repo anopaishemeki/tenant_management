@@ -12,11 +12,11 @@ import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
+
 
 import java.util.Optional;
 import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,9 +40,9 @@ public class LeaseDocumentService {
 
   @Autowired
   private LeaseDocumentsRepo leaseRepo;
-  private LeaseDocuments leaseDocuments2 ;
+ 
 
-  public LeaseDocuments store(MultipartFile file,LocalDate startDate, Long leaseperiod) throws IOException {
+  public LeaseDocuments store(MultipartFile file) throws IOException {
       
       
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -54,8 +54,7 @@ public class LeaseDocumentService {
     } 
     
 
-    leaseDocuments.setLeaseperiod(leaseperiod);
-    leaseDocuments.setStartDate(startDate);
+ 
     
     
     return leaseRepo.save(leaseDocuments);
@@ -91,23 +90,8 @@ public class LeaseDocumentService {
         
         return leaseRepo.save(leaseDocuments);
     } 
-    public List<LeaseDocuments>getExpiredDocuments(){ 
-       
-       
-       int compareValue = leaseDocuments2.getExpiryDate().compareTo(LocalDate.now());         
-       if (compareValue>=0){
-           return (List<LeaseDocuments>)
-            leaseRepo.findAll();
-           
-           
-       }
-       
-       return null;
-  
-       
-       
-       
-    }
+
+}
            
       
        
@@ -119,4 +103,3 @@ public class LeaseDocumentService {
        
      
   
-}

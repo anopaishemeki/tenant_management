@@ -15,7 +15,8 @@ import javax.persistence.*;
  * @author Dejong
  */
 
-@Entity(name="noticeDocuments")
+@Entity
+@Table(name="noticeDocuments")
 public class NoticeDocuments  extends Documents {
     
 

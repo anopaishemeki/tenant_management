@@ -11,8 +11,8 @@ import com.cicosy.tenant_management.message.document_management.Response;
 import com.cicosy.tenant_management.message.document_management.ResponseMessage;
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 
+
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
-import java.time.LocalDate;
 
 
 import java.util.List;
@@ -29,15 +29,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,14 +52,14 @@ public class LeaseDocumentContoller {
   @Autowired
   private LeaseDocumentService leaseDocumentService;
 
+  
   @PostMapping("/upoadleaseFiles")
-  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,
-       @RequestParam("start") LocalDate startDate,
-    	@RequestParam("period") Long leaseperiod)
+  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
+      
     	 {
     String message = "";
     try {
-      leaseDocumentService.store(file,startDate,leaseperiod);
+      leaseDocumentService.store(file);
 
       message = "Uploaded the file successfully: " + file.getOriginalFilename();
       
@@ -108,7 +108,7 @@ public class LeaseDocumentContoller {
         LeaseDocuments leaseDocuments = leaseDocumentService.getLeaseDocumentsById(id);
 
         // set employee as a model attribute to pre-populate the form
-        model.addAttribute("tenantDocuments", leaseDocuments);
+        model.addAttribute("leaseDocuments", leaseDocuments);
         return "update_documents";
     }
 
@@ -119,13 +119,8 @@ public class LeaseDocumentContoller {
         this.leaseDocumentService.deleteDocumentById(id);
         return "redirect:/";
     }
-    	
-    @GetMapping("/expiredDoc")
-    public String getExpiredDoc(Model model)
-    {
-        List<LeaseDocuments> documents = this.leaseDocumentService.getExpiredDocuments();
-	model.addAttribute("documents", documents);
-	return "redirect:/";
-    }	
+  
+ 
+   
 
 }

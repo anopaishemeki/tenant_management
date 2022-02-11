@@ -15,7 +15,8 @@ import javax.persistence.*;
  * @author Dejong
  */
 
-@Entity(name="tenantDocuments")
+@Entity
+@Table(name="tenantDocuments")
 public class TenantDocuments  extends Documents {
     
 
