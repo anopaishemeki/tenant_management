@@ -22,16 +22,24 @@ public class MaintenanceRequests {
     private String request;
     private String description;
     private String levelOfUrgency;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private LocalDate dateLogged = LocalDate.now();
     private LocalDate overdueDate = LocalDate.now().plusDays(7);
-    @Column(columnDefinition = "varchar(255) default 'Pending'")
-    private String status;
-    private String maintenanceDate = "Pending";
+
+    private String status ;
+    private String maintenanceDate = "xxxx";
+
+    public String getStatus() {
+
+        if(this.getOverdueDate().isAfter(LocalDate.now())){
+            status = "Pending";
+        }else{
+            status ="Overdue";
+        }
 
 
-
-
+        return status;
+    }
 
 
 

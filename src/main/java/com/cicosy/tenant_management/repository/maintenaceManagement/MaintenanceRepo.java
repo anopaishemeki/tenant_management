@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface MaintenanceRepo extends JpaRepository<MaintenanceRequests, Long> {
 
+   List <MaintenanceRequests> getMaintenanceRequestsByStatus(String status);
 }

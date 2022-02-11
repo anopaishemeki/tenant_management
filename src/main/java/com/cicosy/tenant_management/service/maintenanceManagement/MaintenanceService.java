@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,13 +24,37 @@ public class MaintenanceService {
         return maintenanceRepo.findAll();
     }
 
+
+
     public MaintenanceRequests getMaintenanceRequestsById(long Id) throws Exception {
         return maintenanceRepo.findById(Id).orElseThrow(() ->new Exception("MaintenanceRequest is not found"));
+
+
         
 }
-    public void addMaintenanceRequest(MaintenanceRequests maintenanceRequest) {
-        maintenanceRepo.save(maintenanceRequest);
-    }
+        @Transactional
+        public List<MaintenanceRequests> overdueRequest(String status)  {
+            List<MaintenanceRequests> maintenanceRequest = maintenanceRepo.findAll();
+
+            for(int i=0; i< maintenanceRepo.findAll().size();i++) {
+                Long maintenanceRequestId = maintenanceRequest.get(i).getId();
+                MaintenanceRequests maintenanceRequests = maintenanceRepo.findById(maintenanceRequestId)
+                        .orElseThrow(()-> new IllegalStateException("Request with Id"+maintenanceRequestId+"does not exist"));
+
+                if(maintenanceRequests.getOverdueDate().isBefore(LocalDate.now())){
+                    maintenanceRequests.setStatus("Overdue");
+                }else {
+                    maintenanceRequests.setStatus("Pending");
+                }
+            }
+
+        return maintenanceRepo.getMaintenanceRequestsByStatus(status);
+        }
+
+        public void addMaintenanceRequest(MaintenanceRequests maintenanceRequest) {
+
+            maintenanceRepo.save(maintenanceRequest);
+        }
 
 
 
