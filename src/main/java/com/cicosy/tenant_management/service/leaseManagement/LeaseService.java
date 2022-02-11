@@ -1,27 +1,32 @@
 package com.cicosy.tenant_management.service.leaseManagement;
 
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
+import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
+import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class LeaseService {
     private final LeaseRepository leaseRepository;
+    private final LeaseHistoryRepository leaseHistoryRepository;
 
 
     @Autowired
-    public LeaseService(LeaseRepository leaseRepository) {
+    public LeaseService(LeaseRepository leaseRepository, LeaseHistoryRepository leaseHistoryRepository) {
         this.leaseRepository = leaseRepository;
 
 
+        this.leaseHistoryRepository = leaseHistoryRepository;
     }
 
     public List<Lease> getLeases() {
@@ -29,13 +34,19 @@ public class LeaseService {
         return leaseRepository.findAll();
     }
 
+    public List<LeaseHistory> getLeaseHistory() {
 
-    public void addNewLease(Lease lease) {
+        return leaseHistoryRepository.findAll();
+    }
+
+
+    public void addNewLease(Lease lease, LeaseHistory lease_history) {
         Optional<Lease> name = leaseRepository.findLeaseByName(lease.getName());
 
 
         if (name.isPresent()) {
             throw new IllegalStateException("Record with provided name already Exists");
+
         }
 
 
@@ -50,29 +61,50 @@ public class LeaseService {
             throw new IllegalStateException("Start Date Is Required");
         }
 
-        if (!(lease.getStartDate().toString().isEmpty()) &&
-                !(lease.getEndDate().toString().isEmpty())) ;
-        {
-            if (lease.getStartDate().isAfter(lease.getEndDate())) {
-                throw new IllegalStateException("Start Date Can not be Greater than End Date");
-            }
-        }
+//        if (!(lease.getStartDate().toString().isEmpty()) &&
+//                !(lease.getEndDate().toString().isEmpty())) ;
+//        {
+//            if (lease.getStartDate().isAfter(lease.getEndDate())) {
+//                throw new IllegalStateException("Start Date Can not be Greater than End Date");
+//            }
+//        }
 
         String s = String.valueOf(lease.getRentalFee());
         if ((s.isEmpty())) {
             throw new IllegalStateException("Rent Amount Is Required");
         }
-        if ((lease.getEndDate().toString().isEmpty())) {
-            throw new IllegalStateException("End Date Is Required");
-        }
+//        if ((lease.getEndDate().toString().isEmpty())) {
+//            throw new IllegalStateException("End Date Is Required");
+//        }
 
-        if ((lease.getEndDate().isAfter(LocalDate.now()))) {
+        if (((lease.getStartDate().plusMonths(lease.getDuration())).isAfter(LocalDate.now()))) {
             lease.setStatus("Active");
         } else {
             lease.setStatus("Expired");
         }
+        lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
 
         leaseRepository.save(lease);
+
+        lease_history.setTenant_id(lease.getId().intValue());
+        lease_history.setAgreementDate(lease.getAgreementDate());
+        lease_history.setBuildingLocation(lease.getBuildingLocation());
+        lease_history.setBuildingName(lease.getBuildingName());
+        lease_history.setDuration(lease.getDuration());
+        lease_history.setEndDate(lease.getEndDate());
+        lease_history.setStartDate(lease.getStartDate());
+        lease_history.setFloorNumber(lease.getFloorNumber());
+        lease_history.setName(lease.getName());
+        lease_history.setRentalFee(lease.getRentalFee());
+        lease_history.setTerms(lease.getTerms());
+        lease_history.setActionDate(LocalDateTime.now());
+        lease_history.setAction("Added");
+        leaseHistoryRepository.save(lease_history);
+
+
+
+
+
 
 
     }
@@ -85,11 +117,39 @@ public class LeaseService {
             );
         }
         leaseRepository.deleteById(leaseId);
+
+
+    }
+
+    public void SaveDelete(Long leaseId, LeaseHistory lease_history) {
+
+        Lease lease = leaseRepository.findById(leaseId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Record With ID " + leaseId + " Does Not Exist"
+                ));
+
+        lease_history.setTenant_id(lease.getId().intValue());
+        lease_history.setAgreementDate(lease.getAgreementDate());
+        lease_history.setBuildingLocation(lease.getBuildingLocation());
+        lease_history.setBuildingName(lease.getBuildingName());
+        lease_history.setDuration(lease.getDuration());
+        lease_history.setEndDate(lease.getEndDate());
+        lease_history.setStartDate(lease.getStartDate());
+        lease_history.setFloorNumber(lease.getFloorNumber());
+        lease_history.setName(lease.getName());
+        lease_history.setRentalFee(lease.getRentalFee());
+        lease_history.setTerms(lease.getTerms());
+        lease_history.setActionDate(LocalDateTime.now());
+        lease_history.setAction("Deleted");
+
+        leaseHistoryRepository.save(lease_history);
+
     }
 
     @Transactional
     public void updateLease(Long leaseId,
-                            Lease update) {
+                            Lease update
+    ) {
         Lease lease = leaseRepository.findById(leaseId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Record With ID " + leaseId + " Does Not Exist"
@@ -121,23 +181,68 @@ public class LeaseService {
                 !Objects.equals(lease.getFloorNumber(), update.getFloorNumber())) {
             lease.setFloorNumber(update.getFloorNumber());
         }
-//        if (update.getStatus()!=null &&
-//                update.getStatus().length()> 0 &&
-//                !Objects.equals(lease.getStatus(),update.getStatus())){
-//            lease.setStatus(update.getStatus());
-//        }
-
 
         if (update.getTerms() != null &&
                 update.getTerms().length() > 0 &&
                 !Objects.equals(lease.getTerms(), update.getTerms())) {
             lease.setTerms(update.getTerms());
         }
+
+
     }
 
 
+    public void SaveToHistory(Long leaseId, LeaseHistory lease_history) {
+
+        Lease lease = leaseRepository.findById(leaseId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Record With ID " + leaseId + " Does Not Exist"
+                ));
+
+
+        lease_history.setTenant_id(lease.getId().intValue());
+        lease_history.setAgreementDate(lease.getAgreementDate());
+        lease_history.setBuildingLocation(lease.getBuildingLocation());
+        lease_history.setBuildingName(lease.getBuildingName());
+        lease_history.setDuration(lease.getDuration());
+        lease_history.setEndDate(lease.getEndDate());
+        lease_history.setStartDate(lease.getStartDate());
+        lease_history.setFloorNumber(lease.getFloorNumber());
+        lease_history.setName(lease.getName());
+        lease_history.setRentalFee(lease.getRentalFee());
+        lease_history.setTerms(lease.getTerms());
+        lease_history.setActionDate(LocalDateTime.now());
+        lease_history.setAction("Updated");
+
+        leaseHistoryRepository.save(lease_history);
+
+    }
+
+    @Transactional
     public List<Lease> getExpiredLeases(String status) {
+
+        List<Lease> list = leaseRepository.findAll();
+
+        for (int i = 0; i < leaseRepository.findAll().size(); i++) {
+            Long leaseID = list.get(i).getId();
+            Lease lease = leaseRepository.findById(leaseID)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "Record With ID " + leaseID + " Does Not Exist"
+                    ));
+
+            if ((lease.getEndDate().isBefore(LocalDate.now())) &&
+                    (lease.getStatus() != "Expired")) {
+                lease.setStatus("Expired");
+            } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
+                    (lease.getStatus() != "Active")) {
+                lease.setStatus("Active");
+            }
+
+
+        }
+
         return leaseRepository.findLeaseByStatus(status);
+
     }
 
     @Transactional
@@ -148,42 +253,65 @@ public class LeaseService {
                         "Record With ID " + leaseId + " Does Not Exist"
                 ));
 
-        if (renewal.getStartDate() != null &&
-                renewal.getEndDate() != null &&
-                (renewal.getStartDate().isAfter(renewal.getEndDate()))) {
-            throw new IllegalStateException("Renewal Failed , Start Date Cannot be greater than End Date");
-        } else {
-            if (renewal.getEndDate() != null &&
-                    renewal.getEndDate().isBefore(LocalDate.now())) {
-                throw new IllegalStateException("Failed To Renew, End Date is Already Due");
-            }
 
-            if ((renewal.getStartDate() == null &&
-                    renewal.getEndDate() == null)) {
-                throw new IllegalStateException("At least End Date is Required Contract renewal");
-            }
-            if (renewal.getStartDate() == null &&
-                    renewal.getEndDate() != null &&
-                    renewal.getEndDate().isAfter(LocalDate.now())) {
-                lease.setStartDate(LocalDate.now());
-                lease.setEndDate(renewal.getEndDate());
-                lease.setStatus("Renewed");
+        String s = String.valueOf(renewal.getDuration());
 
-            }
-            if (renewal.getStartDate() != null &&
-                    renewal.getEndDate() != null &&
-                    (renewal.getEndDate().isAfter(renewal.getStartDate())) &&
-                    (renewal.getEndDate().isAfter(LocalDate.now()))) {
-                lease.setStartDate(renewal.getStartDate());
-                lease.setEndDate(renewal.getEndDate());
-                lease.setStatus("Renewed");
-            }
-
-            if (renewal.getEndDate() == null) {
-                throw new IllegalStateException("End Date is Required");
-            }
-
+        if (s == null) {
+            throw new IllegalStateException("New duration is Required");
         }
 
+        if (renewal.getDuration() <= 0) {
+            throw new IllegalStateException("Please Enter new Valid duration");
+        }
+
+        if (renewal.getStartDate() != null &&
+                (renewal.getStartDate().isBefore(LocalDate.now()))) {
+            throw new IllegalStateException("Entered Start Date is already Due,  please enter a new valid one");
+        }
+
+        if ((renewal.getStartDate() == null) &&
+                s != null) {
+            lease.setStartDate(LocalDate.now());
+            lease.setDuration(renewal.getDuration());
+            lease.setEndDate(LocalDate.now().plusMonths(renewal.getDuration()));
+            lease.setStatus("Renewed");
+        }
+        if ((renewal.getStartDate() != null) &&
+                s != null) {
+            lease.setStartDate(renewal.getStartDate());
+            lease.setDuration(renewal.getDuration());
+            lease.setEndDate(renewal.getStartDate().plusMonths(renewal.getDuration()));
+            lease.setStatus("Renewed");
+        }
+
+
     }
+
+
+    public void SaveRenewal(Long leaseId, LeaseHistory lease_history) {
+
+        Lease lease = leaseRepository.findById(leaseId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Record With ID " + leaseId + " Does Not Exist"
+                ));
+
+
+        lease_history.setTenant_id(lease.getId().intValue());
+        lease_history.setAgreementDate(lease.getAgreementDate());
+        lease_history.setBuildingLocation(lease.getBuildingLocation());
+        lease_history.setBuildingName(lease.getBuildingName());
+        lease_history.setDuration(lease.getDuration());
+        lease_history.setEndDate(lease.getEndDate());
+        lease_history.setStartDate(lease.getStartDate());
+        lease_history.setFloorNumber(lease.getFloorNumber());
+        lease_history.setName(lease.getName());
+        lease_history.setRentalFee(lease.getRentalFee());
+        lease_history.setTerms(lease.getTerms());
+        lease_history.setActionDate(LocalDateTime.now());
+        lease_history.setAction("Renewed");
+
+        leaseHistoryRepository.save(lease_history);
+
+    }
+
 }

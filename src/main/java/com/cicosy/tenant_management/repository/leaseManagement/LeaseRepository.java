@@ -17,5 +17,7 @@ public interface LeaseRepository
     Optional<Lease>findLeaseByBuildingLocation(String buildingLocation);
 
 
-    List<Lease> findLeaseByStatus(String status);
+
+
+     List<Lease> findLeaseByStatus(String status);
 }

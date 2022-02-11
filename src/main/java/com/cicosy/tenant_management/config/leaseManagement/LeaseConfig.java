@@ -1,16 +1,9 @@
 package com.cicosy.tenant_management.config.leaseManagement;
 
-import com.cicosy.tenant_management.model.leaseManagement.Lease;
-import com.cicosy.tenant_management.model.leaseManagement.Payments;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
-import com.cicosy.tenant_management.repository.leaseManagement.PaymentsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.time.LocalDate;
-
-import static java.time.Month.DECEMBER;
 
 @Configuration
 public class LeaseConfig {

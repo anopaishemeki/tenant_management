@@ -36,10 +36,12 @@ public class Lease {
     private int rentalFee;
     private int floorNumber;
     private String terms;
-    @Transient
+
     private int duration;
     private LocalDate endDate;
+
     private String status;
+
 
 
     public Lease(String name,
@@ -50,6 +52,7 @@ public class Lease {
                  int floorNumber,
                  int rentalFee,
                  String status,
+                 int duration,
                  String terms
 
     ) {
@@ -57,6 +60,7 @@ public class Lease {
         this.agreementDate = agreementDate;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.duration=duration;
         this.status=status;
         this.floorNumber=floorNumber;
         this.buildingName = buildingName;
@@ -73,16 +77,18 @@ public class Lease {
                  LocalDate endDate,
                  String buildingName,
                  String buildingLocation,
-                 int floorNumber,
                  String status,
+                 int floorNumber,
+                 int duration,
                  int rentalFee,
                  String terms
 
     ) {
         this.id=id;
         this.agreementDate = agreementDate;
-        this.status=status;
+        this.duration=duration;
         this.name = name;
+        this.status=status;
         this.startDate = startDate;
         this.endDate = endDate;
         this.floorNumber=floorNumber;
@@ -97,12 +103,25 @@ public class Lease {
 
 
     public int getDuration() {
-        return Period.between(this.startDate,this.endDate).getYears();
+        return duration;
     }
 
     public String getStatus() {
+        if (this.getEndDate().isBefore(LocalDate.now())){
+            status="Expired";
+        }else {
+            status="Active";
 
+        }
         return status;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getAgreementDate() {
+        return agreementDate;
     }
 
     public String getName() {
@@ -170,6 +189,7 @@ public class Lease {
     }
 
     public void setEndDate(LocalDate endDate) {
+       endDate= this.startDate.plusMonths(this.duration);
         this.endDate = endDate;
     }
 
