@@ -40,5 +40,23 @@
 }
 
 .eye:hover {
-    color: green;
+    color: #06d706;
+}
+
+.pen{
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.pen:hover {
+    color: #06d706;
+}
+
+.pen-big{
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.pen-big:hover {
+    color: #06d706;
 }

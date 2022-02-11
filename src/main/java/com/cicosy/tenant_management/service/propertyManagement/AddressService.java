@@ -6,6 +6,7 @@ import com.cicosy.tenant_management.repository.propertyManagement.AddressReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Objects;
 
 @Service
@@ -21,6 +22,7 @@ public class AddressService {
         addressRepository.save(address);
     }
 
+    @Transactional
     public void update(Long id, Address update) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Addresss with id: " + id +" does not exist"));
 
