@@ -353,8 +353,8 @@ function editPropertyOwnerDetails(id){
 }
 
 function updatePropertyOwnerDetails(id){
-    let name = document.createElement("update_ownerFirstName").value;
-    let lastName = document.createElement("ownerLastName").value;
+    let name = document.getElementById("update_ownerFirstName").value;
+    let lastName = document.getElementById("update_ownerLastName").value;
 
     let data = {
         name,
@@ -475,7 +475,7 @@ function editPropertyOwnerContactDetails(){
             let container = document.getElementById("update_PropertyOwnerContactDetails");
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerDetails()"></span>
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerContactDetails()"></span>
                                                     <span class="bi bi-trash-fill"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
