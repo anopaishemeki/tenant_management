@@ -141,11 +141,12 @@ function  saveProperty(){
         success: function (response) {
             alert("success" + response)
             console.log(response)
+            getProperties();
         }
     })
-    getProperties();
 }
 
+//Property Details
 function editPropertyDetails(id){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
@@ -241,8 +242,50 @@ function updatePropertyDetails(id){
         data: JSON.stringify(data),
         success: function (response) {
 
-            editPropertyDetails();
+            // editPropertyDetails();
             alert("Update Completed Successfully");
+
+            let html =  `<div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
+                                                <p><span class="bi bi-file">&nbsp;</span> Name : ${response.name}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Description is required">
+                                                <p> <span class="bi bi-file-earmark-text">&nbsp;</span>Description : ${response.description}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Type is required">
+                                                <p><span class="bi bi-house-door">&nbsp;</span>Property Type : ${response.propertyType} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "status is required">
+                                                <p><span class="bi bi-person-workspace">&nbsp;</span>Status : ${response.status}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                <p><span class="bi bi-map">&nbsp;</span>Country : ${response.province}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Asset Value is required">
+                                                <p><span class="bi bi-currency-dollar">&nbsp;</span>Asset Value : ${response.assetValue} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>`
+
+            let container = document.getElementById("update_propertyDetails");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
     })
 }
@@ -298,6 +341,7 @@ function discardEditPropertyDetailsChanges(id){
     })
 }
 
+//Property Address
 function editPropertyAddress(id){
     $.ajax({
         url: 'http://localhost:8090/api/address/get-address/1',
@@ -353,7 +397,7 @@ function updatePropertyAddress(){
     let country = document.getElementById("update_propertyCountry").value;
 
     let data = {
-        name,
+        name : name,
         address,
         zipCode,
         city,
@@ -369,6 +413,9 @@ function updatePropertyAddress(){
         data: JSON.stringify(data),
         success: function (response) {
             console.log(response);
+            alert("Update Completed Successfully");
+
+
         }
     })
 }
@@ -415,6 +462,7 @@ function discardEditPropertyAddress(id){
     })
 }
 
+//Property Owner Details
 function editPropertyOwnerDetails(id){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
@@ -499,6 +547,7 @@ function discardEditPropertyOwnerDetails(id){
     })
 }
 
+//Property Owner Address
 function editPropertyOwnerAddress(){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
@@ -616,6 +665,7 @@ function discardEditPropertyOwnerAddress(id){
     })
 }
 
+//Property Owner Contact Details
 function editPropertyOwnerContactDetails(){
     $.ajax({
         url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
