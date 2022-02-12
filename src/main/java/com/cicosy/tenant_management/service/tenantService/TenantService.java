@@ -38,4 +38,6 @@ public class TenantService {
     public List<Tenant> getAll() {
         return tenantRepository.findAll();
     }
+
+    public Tenant getTenant(Tenant tenant, String )
 }
