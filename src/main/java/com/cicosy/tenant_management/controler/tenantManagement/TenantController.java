@@ -34,5 +34,17 @@ public class TenantController {
         return tenantService.updateTenant(id, tenant);
     }
 
+        @GetMapping("/getTenant/{id}")
+        public Tenant getTenantById(@RequestBody Tenant tenant ,@PathVariable Long id){
+        return tenantService.getTenantById(tenant, id);
+
+        }
+
+    @GetMapping("/getTenant/{name}")
+    public Tenant getTenantByName(@RequestBody Tenant tenant ,@PathVariable String name){
+        return tenantService.getTenantByName(tenant, name);
+
+    }
+
 
 }
