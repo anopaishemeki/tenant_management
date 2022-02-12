@@ -26,6 +26,11 @@ public class AddressController {
         addressService.update(id, address);
     }
 
+    @GetMapping("/get-address/{id}")
+    public Address getAddressAPI(@PathVariable Long id){
+        return addressService.getAddress(id);
+    }
+
     public Address getAddress(Long address) {
         return  addressService.getAddress(address);
     }

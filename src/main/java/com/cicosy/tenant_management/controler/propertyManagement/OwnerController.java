@@ -34,6 +34,11 @@ public class OwnerController {
         ownerService.update(id, owner);
     }
 
+    @GetMapping("get-owner/{id}")
+    public Owner getOwnerAPI(@PathVariable Long id) {
+        return ownerService.getOwner(id);
+    }
+
     public Owner getOwner(Long id) {
         Owner owner = ownerService.getOwner(id);
         owner.setAddressObject(addressController.getAddress(owner.getAddress()));

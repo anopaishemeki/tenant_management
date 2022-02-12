@@ -26,6 +26,11 @@ public class ContactDetailsController {
         contactDetailsService.update(id, contactDetails);
     }
 
+    @GetMapping("/get-contact-details/{id}")
+    public ContactDetails getContactAPI(@PathVariable Long id) {
+        return contactDetailsService.getContact(id);
+    }
+
     public ContactDetails getContact(Long contactDetails) {
         return contactDetailsService.getContact(contactDetails);
     }
