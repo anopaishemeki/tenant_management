@@ -16,11 +16,11 @@ import org.hibernate.annotations.GenericGenerator;
 @MappedSuperclass
 public class Documents implements Serializable
 {
-  private static final long serialVersionUID = -20200109182700L;
+
   @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid2")
-  private String id;
+  private Long id;
 
   private String name;
 
@@ -38,7 +38,7 @@ public class Documents implements Serializable
     this.data = data;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 

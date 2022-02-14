@@ -76,7 +76,7 @@ public class LeaseDocumentContoller {
       String fileDownloadUri = ServletUriComponentsBuilder
           .fromCurrentContextPath()
           .path("/files/")
-          .path(dbFile.getId())
+          .path(dbFile.getId().toString())
           .toUriString();
 
       return new Response(

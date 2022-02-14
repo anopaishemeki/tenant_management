@@ -17,7 +17,7 @@ import java.util.List;
 public class MaintenanceRequests {
 
     @Id
-    @SequenceGenerator(name = "property_sequence", sequenceName = "maintenanceRequest_sequence",allocationSize = 1)
+    @SequenceGenerator(name = "request_sequence", sequenceName = "maintenanceRequest_sequence",allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maintenanceRequest_sequence")
     private Long id;
     private String request;
