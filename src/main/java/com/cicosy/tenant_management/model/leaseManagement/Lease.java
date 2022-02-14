@@ -14,18 +14,18 @@ import java.time.Period;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
-@Table
+@Entity()
+@Table()
 public class Lease {
     @Id
     @SequenceGenerator(
-            name="lease_sequence",
+            name = "lease_sequence",
             sequenceName = "lease_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "lease_sequence"
+            strategy = GenerationType.SEQUENCE,
+            generator = "lease_sequence"
     )
     private Long id;
     private String name;
@@ -39,9 +39,9 @@ public class Lease {
 
     private int duration;
     private LocalDate endDate;
+    private int timeLeft;
 
     private String status;
-
 
 
     public Lease(String name,
@@ -53,6 +53,7 @@ public class Lease {
                  int rentalFee,
                  String status,
                  int duration,
+                 int timeLeft,
                  String terms
 
     ) {
@@ -60,9 +61,10 @@ public class Lease {
         this.agreementDate = agreementDate;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.duration=duration;
-        this.status=status;
-        this.floorNumber=floorNumber;
+        this.duration = duration;
+        this.timeLeft=timeLeft;
+        this.status = status;
+        this.floorNumber = floorNumber;
         this.buildingName = buildingName;
         this.buildingLocation = buildingLocation;
         this.rentalFee = rentalFee;
@@ -70,12 +72,14 @@ public class Lease {
         this.terms = terms;
 
     }
+
     public Lease(Long id,
                  String name,
                  LocalDate agreementDate,
                  LocalDate startDate,
                  LocalDate endDate,
                  String buildingName,
+                 int timeLeft,
                  String buildingLocation,
                  String status,
                  int floorNumber,
@@ -84,14 +88,15 @@ public class Lease {
                  String terms
 
     ) {
-        this.id=id;
+        this.id = id;
         this.agreementDate = agreementDate;
-        this.duration=duration;
+        this.duration = duration;
+        this.timeLeft=timeLeft;
         this.name = name;
-        this.status=status;
+        this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.floorNumber=floorNumber;
+        this.floorNumber = floorNumber;
         this.buildingName = buildingName;
         this.buildingLocation = buildingLocation;
         this.rentalFee = rentalFee;
@@ -101,18 +106,17 @@ public class Lease {
     }
 
 
-
     public int getDuration() {
         return duration;
     }
 
     public String getStatus() {
-        if (this.getEndDate().isBefore(LocalDate.now())){
-            status="Expired";
-        }else {
-            status="Active";
+//        if (this.getEndDate().isBefore(LocalDate.now())){
+//            status="Expired";
+//        }else {
+//            status="Active";
 
-        }
+//        }
         return status;
     }
 
@@ -144,9 +148,14 @@ public class Lease {
         return rentalFee;
     }
 
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
     public int getFloorNumber() {
         return floorNumber;
     }
+
 
     public String getTerms() {
         return terms;
@@ -189,8 +198,13 @@ public class Lease {
     }
 
     public void setEndDate(LocalDate endDate) {
-       endDate= this.startDate.plusMonths(this.duration);
+        endDate = this.startDate.plusMonths(this.duration);
         this.endDate = endDate;
+    }
+
+    public void setTimeLeft(int timeLeft) {
+//        timeLeft=Period.between(LocalDate.now(),this.endDate).getDays();
+        this.timeLeft = timeLeft;
     }
 
     public void setStatus(String status) {
