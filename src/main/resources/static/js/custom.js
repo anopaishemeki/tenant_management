@@ -1,3 +1,18 @@
+function setLocal(){
+    localStorage.setItem("deactivate", "dashBoard");
+}
+
+function toggleView(id) {
+    let active = document.getElementById(id);
+
+    let local = localStorage.getItem("deactivate")
+    let deactivate = document.getElementById(local);
+    deactivate.classList.add("hide-sections")
+
+    active.classList.remove("hide-sections")
+
+    localStorage.setItem("deactivate", id);
+}
 
 function getProperties(){
     $.ajax({
@@ -15,7 +30,7 @@ function getProperties(){
             }
 
             for(let i = 0; i < items.length; i++){
-                let html = `<th scope="row" id="row ${items[i].id}">
+                let html = `<th scope="row">
                                                 <label class="control control--checkbox">
 <!--                                                    <input type="checkbox"/>-->
 <!--                                                    <div class="control__indicator"></div>-->
@@ -34,13 +49,15 @@ function getProperties(){
                                                  <small class="d-block">${items[i].ownerObject.contactDetailsObject.phone + " ,"+ items[i].ownerObject.contactDetailsObject.email}</small>
                                             </td>
                                             <td>${items[i].status}</td>
-                                            <td><i class="bi bi-eye-fill eye"></i></td>`
+                                            <td><i class="bi bi-eye-fill eye" onclick="setPropertyDetails(${items[i].id}),  toggleView('propertyDetailsDiv')" id="eyerow_${items[i].id}"></i></td>`
 
                 let tr = document.createElement("tr");
                 // tr.className = "row"
                 tr.style.boxShadow = "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"
 
                 tr.innerHTML = html;
+
+                tr.setAttribute("onclick", `setPropertyDetails(${items[i].id}), toggleView('propertyDetailsDiv') `);
 
                 let htmlSpacer = "<td colspan=\"100\">"
                 let spacer = document.createElement("tr");
@@ -415,7 +432,6 @@ function updatePropertyAddress(){
             console.log(response);
             alert("Update Completed Successfully");
 
-
         }
     })
 }
@@ -759,5 +775,17 @@ function discardEditPropertyOwnerContactDetails(id){
     })
 }
 
-
+function setPropertyDetails(id){
+    $.ajax({
+        url: 'http://localhost:8090/api/property/get-property/'+id,
+        type: 'GET',
+        success: function (response) {
+            discardEditPropertyOwnerContactDetails(response.ownerObject.contactDetails);
+            discardEditPropertyOwnerAddress(response.ownerObject.address);
+            discardEditPropertyOwnerDetails(response.owner);
+            discardEditPropertyAddress(response.address);
+            discardEditPropertyDetailsChanges(id);
+        }
+    })
+}
 
