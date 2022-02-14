@@ -1,13 +1,20 @@
 package com.cicosy.tenant_management.controler.leaseManagement;
 
 
+import com.cicosy.tenant_management.message.document_management.ResponseMessage;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
+import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,10 +22,12 @@ import java.util.List;
 public class LeaseController {
 
     private final LeaseService leaseService;
+    private final LeaseDocumentService leaseDocumentService;
 
     @Autowired
-    public LeaseController(LeaseService leaseService) {
+    public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService) {
         this.leaseService = leaseService;
+        this.leaseDocumentService = leaseDocumentService;
     }
 
     @GetMapping(path = "status/{Status}")
@@ -43,11 +52,35 @@ public class LeaseController {
     }
 
 
-    @PostMapping(path = "addlease")
-    public void registerNewLease(@RequestBody Lease lease, LeaseHistory leaseHistory) {
+    @PostMapping(path = "addlease", consumes = {
+            MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    public  ResponseEntity<ResponseMessage> registerNewLease(
+            @RequestParam("lease") String lease,
+            LeaseHistory leaseHistory,
+            @RequestParam("file") MultipartFile file) {
 
-        leaseService.addNewLease(lease, leaseHistory);
+        ObjectMapper mapper= new ObjectMapper();
 
+        try {
+            Lease leases = mapper.readValue(lease,Lease.class);
+
+            leaseService.addNewLease(leases, leaseHistory);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        String message = "";
+        try {
+            leaseDocumentService.store(file);
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
 
     }
 

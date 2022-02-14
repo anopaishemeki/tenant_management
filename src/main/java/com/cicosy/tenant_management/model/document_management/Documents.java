@@ -7,20 +7,25 @@ package com.cicosy.tenant_management.model.document_management;
 
 
 import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public class Documents implements Serializable
 {
-  private static final long serialVersionUID = -20200109182700L;
+
   @Id
-  @GeneratedValue(generator = "uuid")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
-  private String id;
+  @SequenceGenerator(
+          name = "leaseDocuments_sequence",
+          sequenceName = "leaseDocuments_sequence",
+          allocationSize = 1
+  )
+  @GeneratedValue(
+          strategy = GenerationType.SEQUENCE,
+          generator = "leaseDocuments_sequence"
+  )
+  private Long id;
 
   private String name;
 
@@ -38,7 +43,7 @@ public class Documents implements Serializable
     this.data = data;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 

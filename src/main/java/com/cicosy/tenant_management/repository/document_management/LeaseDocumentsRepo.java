@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author Dejong
  */
 @Repository
-public interface LeaseDocumentsRepo extends JpaRepository<LeaseDocuments, String> {
+public interface LeaseDocumentsRepo extends JpaRepository<LeaseDocuments, Long> {
 
    }

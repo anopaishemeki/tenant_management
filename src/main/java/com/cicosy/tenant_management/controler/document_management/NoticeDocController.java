@@ -72,7 +72,7 @@ public class NoticeDocController {
       String fileDownloadUri = ServletUriComponentsBuilder
           .fromCurrentContextPath()
           .path("/files/")
-          .path(dbFile.getId())
+          .path(dbFile.getId().toString())
           .toUriString();
 
       return new Response(
@@ -86,7 +86,7 @@ public class NoticeDocController {
   }
 
   @GetMapping("/getnoticefiles/{id}")
-  public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+  public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
     NoticeDocuments documents = noticedocumentService.getFile(id);
 
     return ResponseEntity.ok()
@@ -97,7 +97,7 @@ public class NoticeDocController {
 
   
     @GetMapping("/updatenotice/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") String Id, Model model) {
+    public String showFormForUpdate(@PathVariable(value = "id") Long Id, Model model) {
 
         // get employee from the service
         NoticeDocuments noticeDocuments = noticedocumentService.getNoticeDocumentsById(Id);
@@ -108,7 +108,7 @@ public class NoticeDocController {
     }
 
     @GetMapping("/deleteoticedocuments/{id}")
-    public String deleteNotice(@PathVariable(value = "id") String Id) {
+    public String deleteNotice(@PathVariable(value = "id") Long Id) {
 
         // call delete employee method 
         this.noticedocumentService.deleteDocumentById(Id);

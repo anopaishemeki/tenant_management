@@ -48,7 +48,7 @@ public class NoticeDocumentsService {
     return noticeRepo.save(documents);
   }
 
-  public NoticeDocuments getFile(String id) {
+  public NoticeDocuments getFile(Long id) {
     return noticeRepo.findById(id).get();
   }
   
@@ -60,7 +60,7 @@ public class NoticeDocumentsService {
       // Read operation
   
  
-  public NoticeDocuments getNoticeDocumentsById(String Id) {
+  public NoticeDocuments getNoticeDocumentsById(Long Id) {
         Optional < NoticeDocuments > optional = noticeRepo.findById(Id);
         NoticeDocuments documents = null;
         if (optional.isPresent()) {
@@ -72,7 +72,7 @@ public class NoticeDocumentsService {
     }
 
   
-    public void deleteDocumentById(String Id) {
+    public void deleteDocumentById(Long Id) {
         this.noticeRepo.deleteById(Id);
     }
  

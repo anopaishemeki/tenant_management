@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,7 +61,7 @@ public class LeaseDocumentService {
     return leaseRepo.save(leaseDocuments);
   }
 
-  public LeaseDocuments getFile(String Id) {
+  public LeaseDocuments getFile(Long Id) {
     return leaseRepo.findById(Id).get();
   }
   
@@ -69,7 +70,7 @@ public class LeaseDocumentService {
   }
 
  
-  public LeaseDocuments getLeaseDocumentsById(String Id) {
+  public LeaseDocuments getLeaseDocumentsById(Long Id) {
         Optional < LeaseDocuments > optional = leaseRepo.findById(Id);
         LeaseDocuments documents = null;
         if (optional.isPresent()) {
@@ -81,7 +82,7 @@ public class LeaseDocumentService {
     }
 
   
-    public void deleteDocumentById(String Id) {
+    public void deleteDocumentById(Long Id) {
         this.leaseRepo.deleteById(Id);
     }
     

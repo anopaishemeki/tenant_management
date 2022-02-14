@@ -47,7 +47,7 @@ public class TenantDocumentsService {
     return tenantRepo.save(documents);
   }
 
-  public TenantDocuments getFile(String id) {
+  public TenantDocuments getFile(Long id) {
     return tenantRepo.findById(id).get();
   }
   
@@ -55,7 +55,7 @@ public class TenantDocumentsService {
     return tenantRepo.findAll().stream();
   }
 
-  public TenantDocuments getTenantDocumentsById(String Id) {
+  public TenantDocuments getTenantDocumentsById(Long Id) {
         Optional < TenantDocuments > optional = tenantRepo.findById(Id);
         TenantDocuments documents = null;
         if (optional.isPresent()) {
@@ -67,7 +67,7 @@ public class TenantDocumentsService {
     }
 
   
-    public void deleteDocumentById(String Id) {
+    public void deleteDocumentById(Long Id) {
         this.tenantRepo.deleteById(Id);
     }
  

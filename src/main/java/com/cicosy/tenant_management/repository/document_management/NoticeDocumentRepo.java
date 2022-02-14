@@ -23,6 +23,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface NoticeDocumentRepo extends JpaRepository<NoticeDocuments, String> {
+public interface NoticeDocumentRepo extends JpaRepository<NoticeDocuments, Long> {
 
 }

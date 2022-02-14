@@ -70,7 +70,7 @@ public class TenantDocController {
       String fileDownloadUri = ServletUriComponentsBuilder
           .fromCurrentContextPath()
           .path("/files/")
-          .path(dbFile.getId())
+          .path(dbFile.getId().toString())
           .toUriString();
 
       return new Response(
@@ -84,7 +84,7 @@ public class TenantDocController {
   }
 
   @GetMapping("/getfiles/{id}")
-  public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+  public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
     TenantDocuments documents = tenantdocumentsService.getFile(id);
 
     return ResponseEntity.ok()
@@ -95,7 +95,7 @@ public class TenantDocController {
 
   
     @GetMapping("/update/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") String Id, Model model) {
+    public String showFormForUpdate(@PathVariable(value = "id") Long Id, Model model) {
 
         // get employee from the service
         TenantDocuments tenantDocuments = tenantdocumentsService.getTenantDocumentsById(Id);
@@ -106,7 +106,7 @@ public class TenantDocController {
     }
 
     @GetMapping("/deletedocuments/{id}")
-    public String deleteTenant(@PathVariable(value = "id") String Id) {
+    public String deleteTenant(@PathVariable(value = "id") Long Id) {
 
         // call delete employee method 
         this.tenantdocumentsService.deleteDocumentById(Id);

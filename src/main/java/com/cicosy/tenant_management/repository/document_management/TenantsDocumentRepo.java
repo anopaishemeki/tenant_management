@@ -22,6 +22,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface TenantsDocumentRepo extends JpaRepository<TenantDocuments, String> {
+public interface TenantsDocumentRepo extends JpaRepository<TenantDocuments, Long> {
 
 }

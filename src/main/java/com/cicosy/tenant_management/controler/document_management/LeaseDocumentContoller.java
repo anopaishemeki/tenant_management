@@ -76,7 +76,7 @@ public class LeaseDocumentContoller {
       String fileDownloadUri = ServletUriComponentsBuilder
           .fromCurrentContextPath()
           .path("/files/")
-          .path(dbFile.getId())
+          .path(dbFile.getId().toString())
           .toUriString();
 
       return new Response(
@@ -90,7 +90,7 @@ public class LeaseDocumentContoller {
   }
 
   @GetMapping("/getfiles/{id}")
-  public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+  public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
     LeaseDocuments leaseDocuments = leaseDocumentService.getFile(id);
 
     return ResponseEntity.ok()
@@ -102,7 +102,7 @@ public class LeaseDocumentContoller {
 
 
     @GetMapping("/leaseupdate/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") String id, Model model) {
+    public String showFormForUpdate(@PathVariable(value = "id") Long id, Model model) {
 
         // get employee from the service
         LeaseDocuments leaseDocuments = leaseDocumentService.getLeaseDocumentsById(id);
@@ -113,7 +113,7 @@ public class LeaseDocumentContoller {
     }
 
     @GetMapping("/deleteleasedocuments/{id}")
-    public String deleteLease(@PathVariable(value = "id") String id) {
+    public String deleteLease(@PathVariable(value = "id") Long id) {
 
         // call delete employee method 
         this.leaseDocumentService.deleteDocumentById(id);
