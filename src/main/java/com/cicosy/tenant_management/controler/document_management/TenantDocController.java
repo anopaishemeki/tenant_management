@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.cicosy.tenant_management.controller.document_management;
+package com.cicosy.tenant_management.controler.document_management;
 
 
 import com.cicosy.tenant_management.message.document_management.Response;
@@ -49,7 +49,7 @@ public class TenantDocController {
   @Autowired
   private TenantDocumentsService tenantdocumentsService;
 
-  @PostMapping("/uploadLease")
+  @PostMapping("/uploadtenantDocument")
   
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
     String message = "";

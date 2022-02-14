@@ -4,16 +4,17 @@
  * and open the template in the editor.
  */
 
-package com.cicosy.tenant_management.controller.document_management;
+package com.cicosy.tenant_management.controler.document_management;
 
 
 import com.cicosy.tenant_management.message.document_management.Response;
 import com.cicosy.tenant_management.message.document_management.ResponseMessage;
-import com.cicosy.tenant_management.model.document_management.NoticeDocuments;
-import com.cicosy.tenant_management.model.document_management.TenantDocuments;
-import com.cicosy.tenant_management.service.document_management.NoticeDocumentsService;
+import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 
-import com.cicosy.tenant_management.service.document_management.TenantDocumentsService;
+
+import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
+
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,20 +46,23 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
-@RequestMapping(path="/api/tenant")
-public class NoticeDocController {
+@RequestMapping("api/lease")
+public class LeaseDocumentContoller {
 
   @Autowired
-  private NoticeDocumentsService noticedocumentService;
+  private LeaseDocumentService leaseDocumentService;
 
-  @PostMapping("/uploadNotice")
   
-  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+  @PostMapping("/upoadleaseFiles")
+  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
+      
+    	 {
     String message = "";
     try {
-      noticedocumentService.store(file);
+      leaseDocumentService.store(file);
 
       message = "Uploaded the file successfully: " + file.getOriginalFilename();
+      
       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     } catch (Exception e) {
       message = "Could not upload the file: " + file.getOriginalFilename() + "!";
@@ -66,9 +70,9 @@ public class NoticeDocController {
     }
   }
 
-  @GetMapping("/getnoticedoc")
+  @GetMapping("/getLeasedocuments")
   public ResponseEntity<List<Response>> getListFiles() {
-    List<Response> files = noticedocumentService.getAllFiles().map(dbFile -> {
+    List<Response> files = leaseDocumentService.getAllFiles().map(dbFile -> {
       String fileDownloadUri = ServletUriComponentsBuilder
           .fromCurrentContextPath()
           .path("/files/")
@@ -85,35 +89,38 @@ public class NoticeDocController {
     return ResponseEntity.status(HttpStatus.OK).body(files);
   }
 
-  @GetMapping("/getnoticefiles/{id}")
+  @GetMapping("/getfiles/{id}")
   public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-    NoticeDocuments documents = noticedocumentService.getFile(id);
+    LeaseDocuments leaseDocuments = leaseDocumentService.getFile(id);
 
     return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documents.getName() + "\"")
-        .body(documents.getData());
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + leaseDocuments.getName() + "\"")
+        .body(leaseDocuments.getData());
   }
 
 
-  
-    @GetMapping("/updatenotice/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") String Id, Model model) {
+
+
+    @GetMapping("/leaseupdate/{id}")
+    public String showFormForUpdate(@PathVariable(value = "id") String id, Model model) {
 
         // get employee from the service
-        NoticeDocuments noticeDocuments = noticedocumentService.getNoticeDocumentsById(Id);
+        LeaseDocuments leaseDocuments = leaseDocumentService.getLeaseDocumentsById(id);
 
         // set employee as a model attribute to pre-populate the form
-        model.addAttribute("noticeDocuments", noticeDocuments);
-        return "update_noticedocuments";
+        model.addAttribute("leaseDocuments", leaseDocuments);
+        return "update_documents";
     }
 
-    @GetMapping("/deleteoticedocuments/{id}")
-    public String deleteNotice(@PathVariable(value = "id") String Id) {
+    @GetMapping("/deleteleasedocuments/{id}")
+    public String deleteLease(@PathVariable(value = "id") String id) {
 
         // call delete employee method 
-        this.noticedocumentService.deleteDocumentById(Id);
+        this.leaseDocumentService.deleteDocumentById(id);
         return "redirect:/";
     }
   
-  
+ 
+   
+
 }
