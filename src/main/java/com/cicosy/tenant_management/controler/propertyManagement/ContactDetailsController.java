@@ -22,7 +22,13 @@ public class ContactDetailsController {
 
     @PutMapping("/update-contact-details/{id}")
     public void updateContactDetails(@PathVariable Long id, @RequestBody ContactDetails contactDetails){
+        System.out.println(contactDetails);
         contactDetailsService.update(id, contactDetails);
+    }
+
+    @GetMapping("/get-contact-details/{id}")
+    public ContactDetails getContactAPI(@PathVariable Long id) {
+        return contactDetailsService.getContact(id);
     }
 
     public ContactDetails getContact(Long contactDetails) {

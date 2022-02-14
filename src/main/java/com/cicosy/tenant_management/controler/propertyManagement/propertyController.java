@@ -64,7 +64,8 @@ public class propertyController {
     }
 
     @PutMapping("/update-property/{id}")
-    public void updateProperty(@PathVariable Long id, @RequestBody Property property){
+    public Property updateProperty(@PathVariable Long id, @RequestBody Property property){
         propertyService.update(id, property);
+        return propertyService.getProperty(id);
     }
 }

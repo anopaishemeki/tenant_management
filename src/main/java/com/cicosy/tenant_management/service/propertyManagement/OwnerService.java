@@ -33,8 +33,6 @@ public class OwnerService {
         if (update.getLastName() != null && update.getLastName().length() > 0 && !Objects.equals(owner.getLastName(), update.getLastName())){
             owner.setLastName(update.getLastName());
         }
-
-
     }
 
     public Owner getOwner(Long owner) {

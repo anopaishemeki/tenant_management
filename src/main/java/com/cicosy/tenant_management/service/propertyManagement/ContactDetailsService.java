@@ -31,7 +31,7 @@ public class ContactDetailsService {
         }
 
         if (update.getMobileNumber() != null && update.getMobileNumber().length() > 0 && !Objects.equals(contactDetails.getMobileNumber(), update.getMobileNumber())){
-            contactDetails.setMobileNumber(update.getEmail());
+            contactDetails.setMobileNumber(update.getMobileNumber());
         }
 
         if (update.getPhone() != null && update.getPhone().length() > 0 && !Objects.equals(contactDetails.getPhone(), update.getPhone())){
