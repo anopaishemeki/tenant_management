@@ -26,6 +26,12 @@ public class LeaseController {
         return leaseService.getExpiredLeases(Status);
     }
 
+
+    @GetMapping(path = "notice/{time}")
+    public List<Lease> getAboutToExpire(@PathVariable int time) {
+        return leaseService.getAboutToExpire(time);
+    }
+
     @GetMapping(path = "getleases")
     public List<Lease> getLeases() {
         return leaseService.getLeases();
@@ -45,30 +51,48 @@ public class LeaseController {
 
     }
 
-    @DeleteMapping(path = "deletelease/{leaseId}")
-    public void deleteLease(@PathVariable("leaseId") Long leaseId, LeaseHistory leaseHistory) {
-        leaseService.SaveDelete(leaseId, leaseHistory);
-        leaseService.deleteLease(leaseId);
-
-    }
+//    @DeleteMapping(path = "deletelease/{leaseId}")
+//    public void deleteLease(@PathVariable("leaseId") Long leaseId, LeaseHistory leaseHistory) {
+//        leaseService.SaveDelete(leaseId, leaseHistory);
+//        leaseService.deleteLease(leaseId);
+//
+//    }
 
     @PutMapping(path = "updatelease/{leaseId}")
     public void updateLease(@PathVariable Long leaseId,
                             @RequestBody Lease lease,
-                            LeaseHistory leaseHistory
+                            LeaseHistory leaseHistory,
+                            String Status
     ) {
+        Status="Updated";
         leaseService.updateLease(leaseId, lease);
 
-        leaseService.SaveToHistory(leaseId, leaseHistory);
+        leaseService.SaveToHistory(leaseId, leaseHistory,Status);
+
+
+    }
+
+    @PutMapping(path = "terminatelease/{leaseId}")
+    public void terminatelease(@PathVariable Long leaseId,
+                            @RequestBody Lease lease,
+                            LeaseHistory leaseHistory,
+                               String Status
+    ) {
+        Status="Terminated";
+        leaseService.terminatelease(leaseId, lease);
+
+        leaseService.SaveToHistory(leaseId, leaseHistory,Status);
 
 
     }
 
 
     @PutMapping(path = "renewlease/{leaseId}")
-    public void renewlease(@PathVariable Long leaseId, @RequestBody Lease renewal, LeaseHistory leaseHistory) {
+    public void renewlease(@PathVariable Long leaseId, @RequestBody Lease renewal, LeaseHistory leaseHistory ,String status) {
+
+        status ="Renewed";
         leaseService.renewlease(leaseId, renewal);
 
-        leaseService.SaveRenewal(leaseId, leaseHistory);
+        leaseService.SaveToHistory(leaseId, leaseHistory,status);
     }
 }
