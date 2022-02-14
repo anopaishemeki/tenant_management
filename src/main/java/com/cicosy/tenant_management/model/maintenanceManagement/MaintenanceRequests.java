@@ -28,24 +28,14 @@ public class MaintenanceRequests {
     private LocalDate overdueDate = LocalDate.now().plusDays(7);
 
     private String status ;
-    private String maintenanceDate = "xxxx";
+
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_id")
     private Schedule schedule;
 
-    public String getStatus() {
 
-        if(this.getOverdueDate().isAfter(LocalDate.now())){
-            status = "Pending";
-        }else{
-            status ="Overdue";
-        }
-
-
-        return status;
-    }
 
 
 
