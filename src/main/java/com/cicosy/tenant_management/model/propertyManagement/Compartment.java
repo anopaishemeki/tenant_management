@@ -26,14 +26,16 @@ public class Compartment {
     private Long property;
     private int floorNumber;
     private int floorArea;
+    private String shopNumber;
     private double rentalPrice;
     private String status;
     private int compartmentNumber;
 
-    public Compartment(Long property, int floorNumber, int floorArea, double rentalPrice, String status, int compartmentNumber) {
+    public Compartment(Long property, int floorNumber, int floorArea, String shopNumber, double rentalPrice, String status, int compartmentNumber) {
         this.property = property;
         this.floorNumber = floorNumber;
         this.floorArea = floorArea;
+        this.shopNumber = shopNumber;
         this.rentalPrice = rentalPrice;
         this.status = status;
         this.compartmentNumber = compartmentNumber;
