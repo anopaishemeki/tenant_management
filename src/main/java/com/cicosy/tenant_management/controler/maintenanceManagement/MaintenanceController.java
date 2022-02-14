@@ -26,6 +26,11 @@ public class MaintenanceController {
        return maintenanceService.getMaintenanceRequestsById(id);
     }
 
+    @GetMapping(path = "/status/{status}")
+    public List<MaintenanceRequests> getMaintenanceRequestsByStatus(@PathVariable String status) {
+        return maintenanceService.overdueRequest(status);
+    }
+
     @PostMapping
     public void addStudent( @RequestBody MaintenanceRequests maintenanceRequest) {
         maintenanceService.addMaintenanceRequest(maintenanceRequest);

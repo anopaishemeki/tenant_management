@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,14 +23,29 @@ public class MaintenanceRequests {
     private String request;
     private String description;
     private String levelOfUrgency;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateLogged = new Date(System.currentTimeMillis());
-    @Column(columnDefinition = "varchar(255) default 'Pending'")
-    private String status;
-    private String maintenanceDate = "Pending";
+
+    private LocalDate dateLogged = LocalDate.now();
+    private LocalDate overdueDate = LocalDate.now().plusDays(7);
+
+    private String status ;
+    private String maintenanceDate = "xxxx";
 
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_id")
+    private Schedule schedule;
 
+    public String getStatus() {
+
+        if(this.getOverdueDate().isAfter(LocalDate.now())){
+            status = "Pending";
+        }else{
+            status ="Overdue";
+        }
+
+
+        return status;
+    }
 
 
 

@@ -141,11 +141,12 @@ function  saveProperty(){
         success: function (response) {
             alert("success" + response)
             console.log(response)
+            getProperties();
         }
     })
-    getProperties();
 }
 
+//Property Details
 function editPropertyDetails(id){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
@@ -205,7 +206,7 @@ function editPropertyDetails(id){
             container.innerHTML = html;
 
             let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyDetails()"></span>
-                                                    <span class="bi bi-trash-fill"></span>`
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyDetailsChanges()"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -241,13 +242,109 @@ function updatePropertyDetails(id){
         data: JSON.stringify(data),
         success: function (response) {
 
+            // editPropertyDetails();
+            alert("Update Completed Successfully");
+
+            let html =  `<div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
+                                                <p><span class="bi bi-file">&nbsp;</span> Name : ${response.name}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Description is required">
+                                                <p> <span class="bi bi-file-earmark-text">&nbsp;</span>Description : ${response.description}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Type is required">
+                                                <p><span class="bi bi-house-door">&nbsp;</span>Property Type : ${response.propertyType} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "status is required">
+                                                <p><span class="bi bi-person-workspace">&nbsp;</span>Status : ${response.status}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                <p><span class="bi bi-map">&nbsp;</span>Country : ${response.province}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Asset Value is required">
+                                                <p><span class="bi bi-currency-dollar">&nbsp;</span>Asset Value : ${response.assetValue} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>`
+
+            let container = document.getElementById("update_propertyDetails");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
     })
 }
 
-function editPropertyAddress(id){
+function discardEditPropertyDetailsChanges(id){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
+        type: 'GET',
+        success: function (response) {
+            let html =  `<div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
+                                                <p><span class="bi bi-file">&nbsp;</span> Name : ${response.name}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Description is required">
+                                                <p> <span class="bi bi-file-earmark-text">&nbsp;</span>Description : ${response.description}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Type is required">
+                                                <p><span class="bi bi-house-door">&nbsp;</span>Property Type : ${response.propertyType} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "status is required">
+                                                <p><span class="bi bi-person-workspace">&nbsp;</span>Status : ${response.status}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                <p><span class="bi bi-map">&nbsp;</span>Country : ${response.province}</p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Asset Value is required">
+                                                <p><span class="bi bi-currency-dollar">&nbsp;</span>Asset Value : ${response.assetValue} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>`
+
+            let container = document.getElementById("update_propertyDetails");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
+
+        }
+    })
+}
+
+//Property Address
+function editPropertyAddress(id){
+    $.ajax({
+        url: 'http://localhost:8090/api/address/get-address/1',
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -284,7 +381,7 @@ function editPropertyAddress(id){
             container.innerHTML = html;
 
             let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyAddress()"></span>
-                                                    <span class="bi bi-trash-fill"></span>`
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyAddress()"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyAddress");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -300,7 +397,7 @@ function updatePropertyAddress(){
     let country = document.getElementById("update_propertyCountry").value;
 
     let data = {
-        name,
+        name : name,
         address,
         zipCode,
         city,
@@ -315,11 +412,57 @@ function updatePropertyAddress(){
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: function (response) {
+            console.log(response);
+            alert("Update Completed Successfully");
+
 
         }
     })
 }
 
+function discardEditPropertyAddress(id){
+    $.ajax({
+        url: 'http://localhost:8090/api/address/get-address/1',
+        type: 'GET',
+        success: function (response) {
+            let html = `<div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Name : ${response.name}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
+                                                    <p><span class="bi bi-file-earmark-zip">&nbsp;Zip Code : ${response.zipCode}</span></p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
+                                                    <p><span class="bi bi-map">&nbsp;</span>Country : ${response.country}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Address : ${response.address}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                    <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>`
+
+            let container = document.getElementById("update_PropertyAddress");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyAddress()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyAddress");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
+        }
+    })
+}
+
+//Property Owner Details
 function editPropertyOwnerDetails(id){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
@@ -344,7 +487,7 @@ function editPropertyOwnerDetails(id){
             container.innerHTML = html;
 
             let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerDetails()"></span>
-                                                    <span class="bi bi-trash-fill"></span>`
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerDetails()"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -353,8 +496,8 @@ function editPropertyOwnerDetails(id){
 }
 
 function updatePropertyOwnerDetails(id){
-    let name = document.createElement("update_ownerFirstName").value;
-    let lastName = document.createElement("ownerLastName").value;
+    let name = document.getElementById("update_ownerFirstName").value;
+    let lastName = document.getElementById("update_ownerLastName").value;
 
     let data = {
         name,
@@ -374,6 +517,37 @@ function updatePropertyOwnerDetails(id){
     })
 }
 
+function discardEditPropertyOwnerDetails(id){
+    $.ajax({
+        url: 'http://localhost:8090/api/owner/get-owner/1',
+        type: 'GET',
+        success: function (response) {
+            let html = `<div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "First Name is required">
+                                                <p><span class="bi bi-person-bounding-box">&nbsp;</span>First Name : ${response.name} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Owner Last Name is required">
+                                                <p><span class="bi bi-person-bounding-box"></span>Last Name : ${response.lastName} </p>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>`;
+
+            let container = document.getElementById("update_PropertyOwnerDetails");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerDetails()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerDetails");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
+        }
+    })
+}
+
+//Property Owner Address
 function editPropertyOwnerAddress(){
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/1',
@@ -382,29 +556,29 @@ function editPropertyOwnerAddress(){
             let html = `<div class="col-sm-6">
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
                                                 <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="update_ownerAddressName" name="ownerAddressName" placeholder="${response.ownerObject.addressObject.name}">
+                                                <input class="input100" type="text" id="update_ownerAddressName" name="ownerAddressName" placeholder="${response.ownerObject.name}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                             <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
                                                 <span class="bi bi-file-earmark-zip"></span>
-                                                <input class="input100" type="text" id="update_OwnerZipCode" name="OwnerZipCode" placeholder="${response.ownerObject.addressObject.zipCode}">
+                                                <input class="input100" type="text" id="update_OwnerZipCode" name="OwnerZipCode" placeholder="${response.ownerObject.zipCode}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
                                                 <span class="bi bi-map"></span>
-                                                <input class="input100" type="text" id="update_ownerCountry" name="ownerCountry" placeholder="${response.ownerObject.addressObject.country}">
+                                                <input class="input100" type="text" id="update_ownerCountry" name="ownerCountry" placeholder="${response.ownerObject.country}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
                                                 <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="update_ownerAddress" name="ownerAddress" placeholder="${response.ownerObject.addressObject.address}">
+                                                <input class="input100" type="text" id="update_ownerAddress" name="ownerAddress" placeholder="${response.ownerObject.address}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
                                                 <span class="bi bi-building"></span>
-                                                <input class="input100" type="text" id="update_ownerCity" name="ownerCity" placeholder="${response.ownerObject.addressObject.city}">
+                                                <input class="input100" type="text" id="update_ownerCity" name="ownerCity" placeholder="${response.ownerObject.city}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>`
@@ -413,7 +587,7 @@ function editPropertyOwnerAddress(){
             container.innerHTML = html;
 
             let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerAddress()"></span>
-                                                    <span class="bi bi-trash-fill"></span>`
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerAddress()"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerAddress");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -449,25 +623,68 @@ function updatePropertyOwnerAddress(id){
     })
 }
 
+function discardEditPropertyOwnerAddress(id){
+    $.ajax({
+        url: 'http://localhost:8090/api/address/get-address/1',
+        type: 'GET',
+        success: function (response) {
+            let html = `<div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Name : ${response.name}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
+                                                    <p><span class="bi bi-file-earmark-zip">&nbsp;Zip Code : ${response.zipCode}</span></p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
+                                                    <p><span class="bi bi-map">&nbsp;</span>Country : ${response.country}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
+                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Address : ${response.address}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
+                                                    <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>`
+
+            let container = document.getElementById("update_PropertyOwnerAddress");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerAddress()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerAddress");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
+        }
+    })
+}
+
+//Property Owner Contact Details
 function editPropertyOwnerContactDetails(){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/2',
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
                                             <div class="wrap-input100 bi bi-telephone d-flex validate-input m-b-16" data-validate = "Owner Phone is required">
-                                                <input class="input100" type="text" id="update_ownerPhone" name="ownerPhone" placeholder="${response.ownerObject.contactDetailsObject.phone}">
+                                                <input class="input100" type="text" id="update_ownerPhone" name="ownerPhone" placeholder="${response.phone}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                             <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Email Address is required">
                                                 <span class="bi bi-envelope"></span>
-                                                <input class="input100" type="text" id="update_ownerEmailAddress" name="ownerEmailAddress" placeholder="${response.ownerObject.contactDetailsObject.email}">
+                                                <input class="input100" type="text" id="update_ownerEmailAddress" name="ownerEmailAddress" placeholder="${response.email}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="wrap-input100 bi bi-phone d-flex validate-input m-b-16" data-validate = "Cell Number is required">
-                                                <input class="input100" type="text" id="update_ownerCellNumber" name="ownerCellNumber" placeholder="${response.ownerObject.contactDetailsObject.MobileNumber}">
+                                                <input class="input100" type="text" id="update_ownerCellNumber" name="ownerCellNumber" placeholder="${response.MobileNumber}">
                                                 <span class="focus-input100"></span>
                                             </div>
                                         </div>`
@@ -475,8 +692,8 @@ function editPropertyOwnerContactDetails(){
             let container = document.getElementById("update_PropertyOwnerContactDetails");
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerDetails()"></span>
-                                                    <span class="bi bi-trash-fill"></span>`
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerContactDetails()"></span>
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerContactDetails()"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -504,6 +721,40 @@ function updatePropertyOwnerContactDetails(id){
         data: JSON.stringify(data),
         success: function (response) {
 
+        }
+    })
+}
+
+function discardEditPropertyOwnerContactDetails(id){
+    $.ajax({
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
+        type: 'GET',
+        success: function (response) {
+            let html = `<div class="col-sm-6">
+                                                <div class="wrap-input100  d-flex validate-input m-b-16" data-validate = "Owner Phone is required">
+                                                    <p><span class="bi bi-telephone">&nbsp;</span>Phone : ${response.phone} </p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Email Address is required">
+                                                    <p><span class="bi bi-envelope">&nbsp;</span>Email : ${response.email}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Cell Number is required">
+                                                    <p><span class="bi bi-phone">&nbsp;</span>Cell Number : ${response.MobileNumber}</p>
+                                                    <span class="focus-input100"></span>
+                                                </div>
+                                            </div>`
+
+            let container = document.getElementById("update_PropertyOwnerContactDetails");
+
+            container.innerHTML = html;
+
+
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerContactDetails()"></span>`
+            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
+            iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
     })
 }

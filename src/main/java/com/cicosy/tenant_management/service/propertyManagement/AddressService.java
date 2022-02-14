@@ -26,6 +26,10 @@ public class AddressService {
     public void update(Long id, Address update) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Addresss with id: " + id +" does not exist"));
 
+        if (update.getName() != null && update.getName().length() > 0 && !Objects.equals(address.getName(), update.getName())){
+            address.setName(update.getAddress());
+        }
+
         if (update.getAddress() != null && update.getAddress().length() > 0 && !Objects.equals(address.getAddress(), update.getAddress())){
             address.setAddress(update.getAddress());
         }
