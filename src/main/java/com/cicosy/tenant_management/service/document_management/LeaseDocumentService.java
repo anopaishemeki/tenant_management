@@ -11,8 +11,7 @@ import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 
 
-
-
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 
@@ -68,7 +67,8 @@ public class LeaseDocumentService {
   public LeaseDocuments store(MultipartFile file) throws IOException {
 
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
- 
+
+
     LeaseDocuments leaseDocuments = new LeaseDocuments(fileName, file.getContentType(), file.getBytes());
     if(fileName.contains(".."))
     {
