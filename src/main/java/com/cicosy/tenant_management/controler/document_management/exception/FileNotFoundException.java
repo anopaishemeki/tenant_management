@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cicosy.tenant_management.exception.document_management;
-import com.cicosy.tenant_management.message.document_management.ResponseMessage;
+package com.cicosy.tenant_management.controler.document_management.exception;
+import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
 
 /**
  *

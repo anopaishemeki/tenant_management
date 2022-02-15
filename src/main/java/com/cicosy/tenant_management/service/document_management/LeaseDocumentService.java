@@ -9,23 +9,23 @@ package com.cicosy.tenant_management.service.document_management;
 
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 
-import com.cicosy.tenant_management.model.leaseManagement.Lease;
+
+
+
 import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
+
 
 import java.io.IOException;
 
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+
+
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
-import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,10 +48,11 @@ public class LeaseDocumentService {
 
   @Autowired
   private LeaseDocumentsRepo leaseRepo;
-  private LeaseRepository leaseRepository;
- 
 
-  public LeaseDocuments store(MultipartFile file, Lease lease) throws IOException {
+
+
+
+  public LeaseDocuments store(MultipartFile file) throws IOException {
 
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
  
@@ -97,7 +98,7 @@ public class LeaseDocumentService {
         
         
         return leaseRepo.save(leaseDocuments);
-    } 
+    }
 
 }
            
