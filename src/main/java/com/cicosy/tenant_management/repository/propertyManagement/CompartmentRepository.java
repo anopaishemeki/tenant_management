@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CompartmentRepository extends JpaRepository<Compartment, Long> {
-    @Query("from Compartment where property = id")
-    List<Compartment> findByProperty(@Param("id") Long id);
+    @Query("SELECT s FROM Compartment  s WHERE s.property = ?1")
+    List<Compartment> findByProperty(Long id);
 }
