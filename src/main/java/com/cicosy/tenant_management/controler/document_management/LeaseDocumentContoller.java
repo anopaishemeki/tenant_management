@@ -35,7 +35,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -54,6 +54,7 @@ public class LeaseDocumentContoller {
   private LeaseDocumentService leaseDocumentService;
 
   
+
   @RequestMapping(value="/upoadleaseFiles", method = RequestMethod.POST, consumes = "application/pdf")
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
       
@@ -70,6 +71,26 @@ public class LeaseDocumentContoller {
       return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
     }
   }
+
+//  @PostMapping("/upoadleaseFiles")
+//  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
+//
+//    	 {
+//    String message = "";
+//    Lease lease= new Lease();
+//
+//    try {
+//      leaseDocumentService.store(file,lease);
+//
+//      message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//
+//      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+//    } catch (Exception e) {
+//      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+//    }
+//  }
+
 
   @GetMapping("/getLeasedocuments")
   public ResponseEntity<List<Response>> getListFiles() {
