@@ -35,6 +35,7 @@ public class Tenant {
     @Embedded
     private Address address;
 
+    
     @Embedded
     private TenantBusiness tenantBusiness;
 
