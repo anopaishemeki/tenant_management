@@ -73,7 +73,7 @@ public class LeaseController {
         String message = "";
         try {
 
-            leaseDocumentService.store(file,lease);
+            leaseDocumentService.Store(file,lease);
 
             message = "Record Saved with Agreement file successfully : " + file.getOriginalFilename();
 

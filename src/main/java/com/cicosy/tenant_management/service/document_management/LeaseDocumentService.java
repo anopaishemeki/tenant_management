@@ -10,8 +10,7 @@ package com.cicosy.tenant_management.service.document_management;
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 
 
-
-
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
 
 
@@ -50,12 +49,29 @@ public class LeaseDocumentService {
   private LeaseDocumentsRepo leaseRepo;
 
 
+    public LeaseDocuments Store(MultipartFile file,Lease lease) throws IOException {
 
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        int leaseId=lease.getId().intValue();
+
+        LeaseDocuments leaseDocuments = new LeaseDocuments(fileName, file.getContentType(), file.getBytes(),leaseId);
+        if(fileName.contains(".."))
+        {
+            System.out.println("not a a valid file");
+        }
+
+
+
+
+
+        return leaseRepo.save(leaseDocuments);
+    }
 
   public LeaseDocuments store(MultipartFile file) throws IOException {
 
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
- 
+
+
     LeaseDocuments leaseDocuments = new LeaseDocuments(fileName, file.getContentType(), file.getBytes());
     if(fileName.contains(".."))
     {
