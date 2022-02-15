@@ -42,6 +42,7 @@ public class TenantController {
 
     public Tenant getTenant(Long id){
         return tenantService.getTenant(id);
+        //for mpume
 
     }
 
