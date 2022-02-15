@@ -40,6 +40,11 @@ public class TenantController {
 
         }
 
+    public Tenant getTenant(Long id){
+        return tenantService.getTenant(id);
+
+    }
+
     @GetMapping("/getTenant/{name}")
     public Tenant getTenantByName(@RequestBody Tenant tenant ,@PathVariable String name){
         return tenantService.getTenantByName(tenant, name);

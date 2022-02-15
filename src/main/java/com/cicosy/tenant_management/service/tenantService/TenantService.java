@@ -13,15 +13,15 @@ public class TenantService {
     @Autowired
     private TenantRepository tenantRepository;
 
-    public Tenant addTenant(Tenant tenant){
+    public Tenant addTenant(Tenant tenant) {
         return tenantRepository.save(tenant);
     }
 
-    public List<Tenant> addTenants(List<Tenant> tenants){
+    public List<Tenant> addTenants(List<Tenant> tenants) {
         return tenantRepository.saveAll(tenants);
     }
 
-    public String updateTenant(Long id, Tenant tenant){
+    public String updateTenant(Long id, Tenant tenant) {
         Tenant existing_tenant = tenantRepository.getById(id);
         existing_tenant.setLease(tenant.getLease());
         existing_tenant.setPhone(tenant.getPhone());
@@ -39,13 +39,17 @@ public class TenantService {
         return tenantRepository.findAll();
     }
 
-    public Tenant getTenantById(Tenant tenant, Long id){
-        Tenant existing_tenant  = tenantRepository.getById(id);
+    public Tenant getTenantById(Tenant tenant, Long id) {
+        Tenant existing_tenant = tenantRepository.getById(id);
         return existing_tenant;
     }
 
-    public Tenant getTenantByName(Tenant tenant, String name){
-        Tenant existing_tenant  = tenantRepository.getByName(name);
+    public Tenant getTenantByName(Tenant tenant, String name) {
+        Tenant existing_tenant = tenantRepository.getByName(name);
         return existing_tenant;
+    }
+
+    public Tenant getTenant(Long id) {
+        return tenantRepository.findById(id).orElseThrow(() -> new IllegalStateException("Tenant with id" + id + " does not exist"));
     }
 }
