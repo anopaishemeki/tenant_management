@@ -1,6 +1,8 @@
 package com.cicosy.tenant_management.repository.leaseManagement;
 
+import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
+import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +21,9 @@ public interface LeaseRepository
 
     @Query("select s from Lease s WHERE s.buildingLocation = ?1 ")
     Optional<Lease>findLeaseByBuildingLocation(String buildingLocation);
+
+//    @Query("select s,p from lease s,lease_documents p where s.Status=?1  and s.id= p.id")
+//    List<LeaseDocuments> findstatus(String status);
 
 
 

@@ -1,5 +1,10 @@
 package com.cicosy.tenant_management.model.leaseManagement;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,13 +12,14 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
+
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@JsonAutoDetect
 @Entity()
 @Table()
 public class Lease {
@@ -29,7 +35,15 @@ public class Lease {
     )
     private Long id;
     private String name;
+
+//    @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate agreementDate;
+
+   // @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
+   @JsonDeserialize(using = LocalDateDeserializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
     private String buildingName;
     private String buildingLocation;
@@ -104,6 +118,8 @@ public class Lease {
         this.terms = terms;
 
     }
+
+
 
 
     public int getDuration() {

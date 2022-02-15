@@ -59,7 +59,7 @@ public class LeaseService {
             throw new IllegalStateException("Tenant Name Is Required");
         }
         if ((lease.getStartDate().toString().isEmpty())) {
-            throw new IllegalStateException("Start Date Is Required");
+            lease.setStartDate(LocalDate.now());
         }
 
 //        if (!(lease.getStartDate().toString().isEmpty()) &&
@@ -261,23 +261,23 @@ public class LeaseService {
 
 
             if ((lease.getEndDate().isBefore(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus().toString() , "Expired"))) &&
-                    (!(Objects.equals(lease.getStatus().toString(),"Terminated"))))
+                    (!(Objects.equals(lease.getStatus() , "Expired"))) &&
+                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
             {
                 lease.setStatus("Expired");
             } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus().toString() , "Active"))) &&
-                    (!(Objects.equals(lease.getStatus().toString(),"Terminated"))))
+                    (!(Objects.equals(lease.getStatus() , "Active"))) &&
+                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
             {
                 lease.setStatus("Active");
             }
-            if (Objects.equals(lease.getStatus().toString(),"Expired")){
+            if (Objects.equals(lease.getStatus(),"Expired")){
                 lease.setTimeLeft(0);
             }
-            if (Objects.equals(lease.getStatus().toString(),"Terminated")){
+            if (Objects.equals(lease.getStatus(),"Terminated")){
                 lease.setTimeLeft(0);
             }
-            if(Objects.equals(lease.getStatus().toString(),"Active")){
+            if(Objects.equals(lease.getStatus(),"Active")){
                 lease.setTimeLeft(Period.between(LocalDate.now(),lease.getEndDate()).getMonths());
             }
 
@@ -303,13 +303,13 @@ public class LeaseService {
             lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
 
             if ((lease.getEndDate().isBefore(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus().toString() , "Expired"))) &&
-                    (!(Objects.equals(lease.getStatus().toString(),"Terminated"))))
+                    (!(Objects.equals(lease.getStatus() , "Expired"))) &&
+                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
             {
                 lease.setStatus("Expired");
             } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus().toString() , "Active"))) &&
-                    (!(Objects.equals(lease.getStatus().toString(),"Terminated"))))
+                    (!(Objects.equals(lease.getStatus() , "Active"))) &&
+                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
             {
                 lease.setStatus("Active");
             }
@@ -332,7 +332,7 @@ public class LeaseService {
 
         String s = String.valueOf(renewal.getDuration());
 
-        if (s == null) {
+        if (s.isEmpty()) {
             throw new IllegalStateException("New duration is Required");
         }
 
@@ -346,14 +346,14 @@ public class LeaseService {
         }
 
         if ((renewal.getStartDate() == null) &&
-                s != null) {
+                !s.isEmpty()) {
             lease.setStartDate(LocalDate.now());
             lease.setDuration(renewal.getDuration());
             lease.setEndDate(LocalDate.now().plusMonths(renewal.getDuration()));
             lease.setStatus("Renewed");
         }
         if ((renewal.getStartDate() != null) &&
-                s != null) {
+                !s.isEmpty()) {
             lease.setStartDate(renewal.getStartDate());
             lease.setDuration(renewal.getDuration());
             lease.setEndDate(renewal.getStartDate().plusMonths(renewal.getDuration()));
