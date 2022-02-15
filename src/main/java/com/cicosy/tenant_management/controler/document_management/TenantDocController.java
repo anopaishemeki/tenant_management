@@ -91,7 +91,7 @@ public class TenantDocController {
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documents.getName() + "\"")
         .body(documents.getData());
   }
-    @GetMapping("/getfiles/{id}")
+    @GetMapping("/getfiless/{id}")
   public ResponseEntity<byte[]> getFiles(@PathVariable Long id) {
     TenantDocuments documents = tenantdocumentsService.getTenantDocumentsById(id);
 
