@@ -7,8 +7,8 @@
 package com.cicosy.tenant_management.controler.document_management;
 
 
-import com.cicosy.tenant_management.message.document_management.Response;
-import com.cicosy.tenant_management.message.document_management.ResponseMessage;
+import com.cicosy.tenant_management.controler.document_management.message.Response;
+import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
 import com.cicosy.tenant_management.model.document_management.NoticeDocuments;
 import com.cicosy.tenant_management.model.document_management.TenantDocuments;
 import com.cicosy.tenant_management.service.document_management.NoticeDocumentsService;

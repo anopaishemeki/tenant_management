@@ -1,7 +1,7 @@
 package com.cicosy.tenant_management.controler.leaseManagement;
 
 
-import com.cicosy.tenant_management.message.document_management.ResponseMessage;
+import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
