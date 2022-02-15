@@ -18,24 +18,12 @@ import javax.persistence.*;
 @Entity
 @Table(name="lease_documents")
 public class LeaseDocuments  extends Documents {
-    private int leaseID;
+
 
     public LeaseDocuments() {
         super();
     }
 
-    public int getLeaseID() {
-        return leaseID;
-    }
-
-    public void setLeaseID(int leaseID) {
-        this.leaseID = leaseID;
-    }
-
-    public LeaseDocuments(String name, String type, byte[] data, int leaseID) {
-        super(name, type, data);
-        this.leaseID = leaseID;
-    }
 
     public LeaseDocuments(String name, String type, byte[] data) {
         super(name, type, data);

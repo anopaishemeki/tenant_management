@@ -49,23 +49,7 @@ public class LeaseDocumentService {
   private LeaseDocumentsRepo leaseRepo;
 
 
-    public LeaseDocuments Store(MultipartFile file,Lease lease) throws IOException {
 
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        int leaseId=lease.getId().intValue();
-
-        LeaseDocuments leaseDocuments = new LeaseDocuments(fileName, file.getContentType(), file.getBytes(),leaseId);
-        if(fileName.contains(".."))
-        {
-            System.out.println("not a a valid file");
-        }
-
-
-
-
-
-        return leaseRepo.save(leaseDocuments);
-    }
 
   public LeaseDocuments store(MultipartFile file) throws IOException {
 
