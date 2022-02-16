@@ -7,8 +7,8 @@
 package com.cicosy.tenant_management.controler.document_management;
 
 
-import com.cicosy.tenant_management.message.document_management.Response;
-import com.cicosy.tenant_management.message.document_management.ResponseMessage;
+import com.cicosy.tenant_management.controler.document_management.message.Response;
+import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
 import com.cicosy.tenant_management.model.document_management.TenantDocuments;
 
 import com.cicosy.tenant_management.service.document_management.TenantDocumentsService;
@@ -91,19 +91,19 @@ public class TenantDocController {
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documents.getName() + "\"")
         .body(documents.getData());
   }
+    @GetMapping("/getfiless/{id}")
+  public ResponseEntity<byte[]> getFiles(@PathVariable Long id) {
+    TenantDocuments documents = tenantdocumentsService.getTenantDocumentsById(id);
+
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documents.getName() + "\"")
+        .body(documents.getData());
+  }
+  
 
 
   
-    @GetMapping("/update/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") Long Id, Model model) {
-
-        // get employee from the service
-        TenantDocuments tenantDocuments = tenantdocumentsService.getTenantDocumentsById(Id);
-
-        // set employee as a model attribute to pre-populate the form
-        model.addAttribute("tenantDocuments", tenantDocuments);
-        return "update_documents";
-    }
+  
 
     @GetMapping("/deletedocuments/{id}")
     public String deleteTenant(@PathVariable(value = "id") Long Id) {

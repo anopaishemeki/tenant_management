@@ -7,11 +7,12 @@
 package com.cicosy.tenant_management.controler.document_management;
 
 
-import com.cicosy.tenant_management.message.document_management.Response;
-import com.cicosy.tenant_management.message.document_management.ResponseMessage;
+import com.cicosy.tenant_management.controler.document_management.message.Response;
+import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 
 
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 
 
@@ -35,8 +36,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +55,8 @@ public class LeaseDocumentContoller {
   private LeaseDocumentService leaseDocumentService;
 
   
-  @PostMapping("/upoadleaseFiles")
+
+  @RequestMapping(value="/upoadleaseFiles", method = RequestMethod.POST, consumes = "application/pdf")
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
       
     	 {
@@ -65,10 +68,30 @@ public class LeaseDocumentContoller {
       
       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     } catch (Exception e) {
-      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+      message = "Could not upload the ,Upload a  pdf file: " + file.getOriginalFilename() + "!";
       return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
     }
   }
+
+//  @PostMapping("/upoadleaseFiles")
+//  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
+//
+//    	 {
+//    String message = "";
+//    Lease lease= new Lease();
+//
+//    try {
+//      leaseDocumentService.store(file,lease);
+//
+//      message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//
+//      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+//    } catch (Exception e) {
+//      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+//    }
+//  }
+
 
   @GetMapping("/getLeasedocuments")
   public ResponseEntity<List<Response>> getListFiles() {
@@ -104,10 +127,10 @@ public class LeaseDocumentContoller {
     @GetMapping("/leaseupdate/{id}")
     public String showFormForUpdate(@PathVariable(value = "id") Long id, Model model) {
 
-        // get employee from the service
+        
         LeaseDocuments leaseDocuments = leaseDocumentService.getLeaseDocumentsById(id);
 
-        // set employee as a model attribute to pre-populate the form
+        
         model.addAttribute("leaseDocuments", leaseDocuments);
         return "update_documents";
     }
@@ -119,6 +142,10 @@ public class LeaseDocumentContoller {
         this.leaseDocumentService.deleteDocumentById(id);
         return "redirect:/";
     }
+  @GetMapping(path = "status/{Status}")
+  public List<LeaseDocuments> getExpiredLeasesDoc(@PathVariable String Status) {
+    return leaseDocumentService.getExpiredLeasesDoc(Status);
+  }
   
  
    

@@ -18,16 +18,16 @@ import javax.persistence.*;
 @Entity
 @Table(name="lease_documents")
 public class LeaseDocuments  extends Documents {
-    
+
 
     public LeaseDocuments() {
         super();
     }
 
-  
 
     public LeaseDocuments(String name, String type, byte[] data) {
         super(name, type, data);
+
     }
    
     

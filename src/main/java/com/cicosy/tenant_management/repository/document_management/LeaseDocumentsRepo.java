@@ -5,8 +5,12 @@
  */
 package com.cicosy.tenant_management.repository.document_management;
 
+
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author Dejong
  */
 @Repository
-public interface LeaseDocumentsRepo extends JpaRepository<LeaseDocuments, Long> {
-
+public interface LeaseDocumentsRepo extends JpaRepository<LeaseDocuments, Long > {
+          @Query(value="SELECT p.id,p.name,p.data,p.type FROM lease_documents p INNER JOIN lease s   on p.id where p.id=s.id and s.status=?1 ",nativeQuery = true)
+          List<LeaseDocuments> findExpired(String status);
    }

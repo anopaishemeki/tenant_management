@@ -8,10 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tenants")
 public class TenantController {
 
     @Autowired
     private TenantService tenantService;
+
+    @GetMapping("/get-all-tenants")
+    public List<Tenant> getTenants(){
+        return tenantService.getAll();
+    }
 
     @PostMapping("/addTenant")
     public Tenant addTenant(@RequestBody Tenant tenant){
@@ -26,6 +32,23 @@ public class TenantController {
     @PutMapping("/updateTenant/{id}")
     public String updateTenant(@PathVariable Long id,@RequestBody Tenant tenant){
         return tenantService.updateTenant(id, tenant);
+    }
+
+        @GetMapping("/getTenant/{id}")
+        public Tenant getTenantById(@RequestBody Tenant tenant ,@PathVariable Long id){
+        return tenantService.getTenantById(tenant, id);
+
+        }
+
+    public Tenant getTenant(Long id){
+        return tenantService.getTenant(id);
+
+    }
+
+    @GetMapping("/getTenant/{name}")
+    public Tenant getTenantByName(@RequestBody Tenant tenant ,@PathVariable String name){
+        return tenantService.getTenantByName(tenant, name);
+
     }
 
 
