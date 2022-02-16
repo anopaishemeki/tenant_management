@@ -116,7 +116,7 @@ public class LeaseDocumentService {
     @Transactional
     public List<LeaseDocuments> getExpiredLeasesDoc(String status) {
 
-        List<LeaseDocuments> list = leaseRepo.findAll();
+
         List<Lease> list2 = leaseRepository.findAll();
         for (int i = 0; i < leaseRepository.findAll().size(); i++) {
             Long leaseID = list2.get(i).getId();
