@@ -32,7 +32,7 @@ public class MaintenanceRequests {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_id")
+    @JoinColumn(name = "fk_id" )
     private Schedule schedule;
 
 
