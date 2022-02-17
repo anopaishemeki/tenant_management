@@ -18,9 +18,28 @@ public class MaintenanceService {
     @Autowired
     public MaintenanceRepo maintenanceRepo;
 
+    public void setStatus(){
+        List<MaintenanceRequests> maintenanceRequest = maintenanceRepo.findAll();
+
+        for(int i=0; i< maintenanceRepo.findAll().size();i++) {
+            Long maintenanceRequestId = maintenanceRequest.get(i).getId();
+            MaintenanceRequests maintenanceRequests = maintenanceRepo.findById(maintenanceRequestId)
+                    .orElseThrow(()-> new IllegalStateException("Request with Id"+maintenanceRequestId+"does not exist"));
+
+            if(maintenanceRequests.getOverdueDate().isBefore(LocalDate.now())){
+                maintenanceRequests.setStatus("Overdue");
+            }else {
+                maintenanceRequests.setStatus("Pending");
+            }
+        }
+
+    }
 
 
+    @Transactional
     public List<MaintenanceRequests> getAllMaintenanceRequests(){
+        setStatus();
+
         return maintenanceRepo.findAll();
     }
 
@@ -34,20 +53,7 @@ public class MaintenanceService {
 }
         @Transactional
         public List<MaintenanceRequests> overdueRequest(String status)  {
-            List<MaintenanceRequests> maintenanceRequest = maintenanceRepo.findAll();
-
-            for(int i=0; i< maintenanceRepo.findAll().size();i++) {
-                Long maintenanceRequestId = maintenanceRequest.get(i).getId();
-                MaintenanceRequests maintenanceRequests = maintenanceRepo.findById(maintenanceRequestId)
-                        .orElseThrow(()-> new IllegalStateException("Request with Id"+maintenanceRequestId+"does not exist"));
-
-                if(maintenanceRequests.getOverdueDate().isBefore(LocalDate.now())){
-                    maintenanceRequests.setStatus("Overdue");
-                }else {
-                    maintenanceRequests.setStatus("Pending");
-                }
-            }
-
+           setStatus();
         return maintenanceRepo.getMaintenanceRequestsByStatus(status);
         }
 

@@ -17,7 +17,7 @@ import java.util.List;
 public class MaintenanceRequests {
 
     @Id
-    @SequenceGenerator(name = "property_sequence", sequenceName = "maintenanceRequest_sequence",allocationSize = 1)
+    @SequenceGenerator(name = "maintenanceRequest_sequence", sequenceName = "maintenanceRequest_sequence",allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maintenanceRequest_sequence")
     private Long id;
     private String request;
@@ -28,24 +28,14 @@ public class MaintenanceRequests {
     private LocalDate overdueDate = LocalDate.now().plusDays(7);
 
     private String status ;
-    private String maintenanceDate = "xxxx";
+
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_id")
     private Schedule schedule;
 
-    public String getStatus() {
 
-        if(this.getOverdueDate().isAfter(LocalDate.now())){
-            status = "Pending";
-        }else{
-            status ="Overdue";
-        }
-
-
-        return status;
-    }
 
 
 

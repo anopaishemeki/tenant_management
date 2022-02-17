@@ -1,11 +1,25 @@
+function setLocal(){
+    localStorage.setItem("deactivate", "dashBoard");
+}
 
-function getTenants(){
+function toggleView(id) {
+    let active = document.getElementById(id);
+
+    let local = localStorage.getItem("deactivate")
+    let deactivate = document.getElementById(local);
+    deactivate.classList.add("hide-sections")
+
+    active.classList.remove("hide-sections")
+
+    localStorage.setItem("deactivate", id);
+}
+
+function getProperties(){
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: 'http://localhost:8090/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             let items = response
-            const today = new Date();
 
             console.log(response)
 
@@ -16,107 +30,143 @@ function getTenants(){
             }
 
             for(let i = 0; i < items.length; i++){
-                let html = `<tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474 ${items[i].id}">
-                            <td>${items[i].id}</td>
-                            <td>${items[i].name} ${items[i].surname}</td>
-                            <td>${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()}</td>
-                            <td>${items[i].tenantBusiness.shop_number}</td>
-                            
-                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rentStatus}</small></td>
-                            <td>$37.39</td>
-                            <td>$80.11</td>
-                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted sr-only">Action</span>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="#">Remove</a>
-                                <a class="dropdown-item" href="#">Assign</a>
-                              </div>
-                            </td>
-                          </tr`
-
+                let html = `<th scope="row">
+                                                <label class="control control--checkbox">
+<!--                                                    <input type="checkbox"/>-->
+<!--                                                    <div class="control__indicator"></div>-->
+                                                </label>
+                                            </th>
+                                            <td>
+                                                ${items[i].id}
+                                            </td>
+                                            <td><a href="#">${items[i].name}</a></td>
+                                            <td>
+                                                ${items[i].addressObject.city +" ,"+ items[i].addressObject.country}
+                                                <small class="d-block">${items[i].addressObject.address}</small>
+                                            </td>
+                                            <td>
+                                                 ${items[i].ownerObject.name}
+                                                 <small class="d-block">${items[i].ownerObject.contactDetailsObject.phone + " ,"+ items[i].ownerObject.contactDetailsObject.email}</small>
+                                            </td>
+                                            <td>${items[i].status}</td>
+                                            <td><i class="bi bi-eye-fill eye" onclick="setPropertyDetails(${items[i].id}),  toggleView('propertyDetailsDiv')" id="eyerow_${items[i].id}"></i></td>`
 
                 let tr = document.createElement("tr");
                 // tr.className = "row"
+                tr.style.boxShadow = "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"
 
                 tr.innerHTML = html;
 
+                tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+
+                let htmlSpacer = "<td colspan=\"100\">"
+                let spacer = document.createElement("tr");
+                spacer.className = "spacer";
+
+                spacer.innerHTML = htmlSpacer;
+
+                t_body.appendChild(spacer);
                 t_body.appendChild(tr);
             }
         }
     })
 }
 
-function  saveTenant() {
-    let name = document.getElementById("tenantName").value
-
-    let surname = document.getElementById("surname").value
-    let email = document.getElementById("email").value
-    let phone = document.getElementById("phone").value;
-
+function  saveProperty(){
+    let  name = document.getElementById("propertyName").value
+    let  address = "";
+    let  tenant = "";
+    let  insurance = ""
+    let  description = document.getElementById("description").value
+    let  propertyType = document.getElementById("propertyType").value
+    let  city = document.getElementById("city").value;
+    let  owner = ""
     // let  province = document.getElementById().value;
-    let id_passport = document.getElementById("passport").value;
-    let house = document.getElementById("house").value;
-
+    let  status = document.getElementById("status").value;
+    let  assetValue = document.getElementById("assetValue").value;
+    let province = "";
 
 
     //owner Object properties
-    let street = document.getElementById("street").value;
-    let city = document.getElementById("city").value;
+    let ownerName = document.getElementById("ownerFirstName").value;
+    let ownerLastname = document.getElementById("ownerLastName").value;
 
+    let ownerAddressName = document.getElementById("ownerAddressName").value;
+    let OwnerAddressAddress = document.getElementById("ownerAddress").value;
+    let owerZipCode = document.getElementById("OwnerZipCode").value;
+    let ownerCity = document.getElementById("ownerCity").value;
+    let ownerCountry = document.getElementById("ownerCountry").value;
 
-    let country = document.getElementById("country").value;
-    let rentStatus = "Paid";
+    let ownerPhone = document.getElementById("ownerPhone").value;
+    let ownerCell = document.getElementById("ownerCellNumber").value;
+    let ownerEmail = document.getElementById("ownerEmailAddress").value;
+
     //property address object properties
-    let businessName = document.getElementById("businessName").value;
-    let businessType = document.getElementById("businessType").value;
-    let shopNumber = document.getElementById("shopNumber").value;
+    let propertyAddressName = document.getElementById("propertyAddressName").value;
+    let propertyAddressAddress = document.getElementById("propertyAddress").value;
+    let propertyZipCode = document.getElementById("propertyZipCode").value;
+    let propertyCity = document.getElementById("propertyCity").value;
+    let propertyCountry = document.getElementById("propertyCountry").value;
 
-    let dataObj = {
+    let data = {
         name,
-        surname,
-        email,
-        phone,
-        id_passport,
-        rentStatus,
-
-        tenantBusiness: {
-            business_name: businessName,
-            businessTypes_type: businessType,
-            shop_number: shopNumber,
-            services: services,
+        addressObject: {
+            name: propertyAddressName,
+            address : propertyAddressAddress,
+            zipCode : propertyZipCode,
+            city : propertyCity,
+            country : propertyCountry,
+            property : 0
         },
-
-        address: {
-            house_no: house,
-            street: street,
-            city: city,
-            country: country
+        address,
+        tenant,
+        insurance,
+        description,
+        propertyType,
+        city,
+        ownerObject : {
+            name : ownerName,
+            lastName : ownerLastname,
+            address : "",
+            addressObject : {
+                name: ownerAddressName,
+                address : OwnerAddressAddress,
+                zipCode: owerZipCode,
+                city: ownerCity,
+                country : ownerCountry,
+                property : 0
+            },
+            contactDetailsObject : {
+                phone: ownerPhone,
+                MobileNumber : ownerCell,
+                email : ownerEmail
+            }
         },
-
+        owner,
+        province,
+        status,
+        assetValue
     }
 
-
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/addTenant',
+        url: 'http://localhost:8090/api/property/save-property',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(dataObj),
+        data: JSON.stringify(data),
         success: function (response) {
             alert("success" + response)
             console.log(response)
-            // saveTenant();
+            getProperties();
         }
     })
 }
 
-
+//Property Details
 function editPropertyDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
+        url: 'http://localhost:8090/api/property/get-property/'+id,
         type: 'GET',
         success: function (response) {
 
@@ -172,8 +222,8 @@ function editPropertyDetails(id){
 
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyDetails()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyDetailsChanges()"></span>`
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyDetails('${id}')"></span>
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyDetailsChanges('${id}')"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -201,7 +251,7 @@ function updatePropertyDetails(id){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/property/update-property/1',
+        url: 'http://localhost:8090/api/property/update-property/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -250,7 +300,7 @@ function updatePropertyDetails(id){
             container.innerHTML = html;
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails('${id}')"></span>`
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
@@ -259,7 +309,7 @@ function updatePropertyDetails(id){
 
 function discardEditPropertyDetailsChanges(id){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
+        url: 'http://localhost:8090/api/property/get-property/'+id,
         type: 'GET',
         success: function (response) {
             let html =  `<div class="col-sm-6">
@@ -300,7 +350,7 @@ function discardEditPropertyDetailsChanges(id){
             container.innerHTML = html;
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails('${id}')"></span>`
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
 
@@ -311,7 +361,7 @@ function discardEditPropertyDetailsChanges(id){
 //Property Address
 function editPropertyAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/1',
+        url: 'http://localhost:8090/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -347,8 +397,8 @@ function editPropertyAddress(id){
             let container = document.getElementById("update_PropertyAddress");
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyAddress()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyAddress()"></span>`
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyAddress('${id}')"></span>
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyAddress('${id}')"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyAddress");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -356,7 +406,7 @@ function editPropertyAddress(id){
     })
 }
 
-function updatePropertyAddress(){
+function updatePropertyAddress(id){
     let name = document.getElementById("update_propertyAddressName").value;
     let address = document.getElementById("update_propertyAddress").value;
     let zipCode = document.getElementById("update_propertyZipCode").value;
@@ -372,7 +422,7 @@ function updatePropertyAddress(){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/1',
+        url: ' http://localhost:8090/api/address/update-address/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -382,14 +432,13 @@ function updatePropertyAddress(){
             console.log(response);
             alert("Update Completed Successfully");
 
-
         }
     })
 }
 
 function discardEditPropertyAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/1',
+        url: 'http://localhost:8090/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -422,7 +471,7 @@ function discardEditPropertyAddress(id){
             container.innerHTML = html;
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyAddress()"></span>`
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyAddress('${id}')"></span>`
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyAddress");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
@@ -432,7 +481,7 @@ function discardEditPropertyAddress(id){
 //Property Owner Details
 function editPropertyOwnerDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
+        url: 'http://localhost:8090/api/property/get-property/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -453,8 +502,8 @@ function editPropertyOwnerDetails(id){
             let container = document.getElementById("update_PropertyOwnerDetails");
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerDetails()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerDetails()"></span>`
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerDetails('${id}')"></span>
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerDetails('${id}')"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -472,7 +521,7 @@ function updatePropertyOwnerDetails(id){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/owner/update-owner/1',
+        url: 'http://localhost:8090/api/owner/update-owner/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -486,7 +535,7 @@ function updatePropertyOwnerDetails(id){
 
 function discardEditPropertyOwnerDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/owner/get-owner/1',
+        url: 'http://localhost:8090/api/owner/get-owner/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -507,7 +556,7 @@ function discardEditPropertyOwnerDetails(id){
             container.innerHTML = html;
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerDetails()"></span>`
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerDetails('${id}')"></span>`
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
@@ -515,9 +564,9 @@ function discardEditPropertyOwnerDetails(id){
 }
 
 //Property Owner Address
-function editPropertyOwnerAddress(){
+function editPropertyOwnerAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
+        url: 'http://localhost:8090/api/property/get-property/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -553,8 +602,8 @@ function editPropertyOwnerAddress(){
             let container = document.getElementById("update_PropertyOwnerAddress");
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerAddress()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerAddress()"></span>`
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerAddress('${id}')"></span>
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerAddress('${id}')"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerAddress");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -578,7 +627,7 @@ function updatePropertyOwnerAddress(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/1',
+        url: ' http://localhost:8090/api/address/update-address/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -592,7 +641,7 @@ function updatePropertyOwnerAddress(id){
 
 function discardEditPropertyOwnerAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/1',
+        url: 'http://localhost:8090/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -625,7 +674,7 @@ function discardEditPropertyOwnerAddress(id){
             container.innerHTML = html;
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerAddress()"></span>`
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerAddress('${id}')"></span>`
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerAddress");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
@@ -633,9 +682,9 @@ function discardEditPropertyOwnerAddress(id){
 }
 
 //Property Owner Contact Details
-function editPropertyOwnerContactDetails(){
+function editPropertyOwnerContactDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -659,8 +708,8 @@ function editPropertyOwnerContactDetails(){
             let container = document.getElementById("update_PropertyOwnerContactDetails");
             container.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerContactDetails()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerContactDetails()"></span>`
+            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerContactDetails('${id}')"></span>
+                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerContactDetails('${id}')"></span>`
 
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
@@ -680,7 +729,7 @@ function updatePropertyOwnerContactDetails(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/contact-details/update-contact-details/1',
+        url: ' http://localhost:8090/api/contact-details/update-contact-details/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -694,7 +743,7 @@ function updatePropertyOwnerContactDetails(id){
 
 function discardEditPropertyOwnerContactDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -719,7 +768,7 @@ function discardEditPropertyOwnerContactDetails(id){
             container.innerHTML = html;
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerContactDetails()"></span>`
+            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerContactDetails('${id}')"></span>`
             let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
             iconsPropertyOwnerContactDetails.innerHTML = html2;
         }
@@ -727,4 +776,20 @@ function discardEditPropertyOwnerContactDetails(id){
 }
 
 
+function setPropertyDetails(id){
+    alert(id)
+     let url = 'http://localhost:8090/api/property/get-property/'+id
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (response) {
+            discardEditPropertyOwnerContactDetails(response.ownerObject.contactDetails);
+            discardEditPropertyOwnerAddress(response.ownerObject.address);
+            discardEditPropertyOwnerDetails(response.owner);
+            discardEditPropertyAddress(response.address);
+            discardEditPropertyDetailsChanges(id);
+        }
+    })
+}
 

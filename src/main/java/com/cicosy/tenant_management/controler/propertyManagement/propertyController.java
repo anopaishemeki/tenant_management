@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping(path = "/api/property")
 public class propertyController {
@@ -38,6 +37,7 @@ public class propertyController {
         return property;
     }
 
+    @CrossOrigin()
     @GetMapping("/get-all-properties")
     public List<Property> getProperties(){
         List<Property> properties =  propertyService.getProperties();
