@@ -12,6 +12,7 @@ import com.cicosy.tenant_management.controler.document_management.message.Respon
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 
 
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 
 
@@ -141,6 +142,10 @@ public class LeaseDocumentContoller {
         this.leaseDocumentService.deleteDocumentById(id);
         return "redirect:/";
     }
+  @GetMapping(path = "status/{Status}")
+  public List<LeaseDocuments> getExpiredLeasesDoc(@PathVariable String Status) {
+    return leaseDocumentService.getExpiredLeasesDoc(Status);
+  }
   
  
    

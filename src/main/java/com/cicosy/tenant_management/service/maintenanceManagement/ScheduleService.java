@@ -15,7 +15,7 @@ public class ScheduleService {
     @Autowired
     ScheduleRepo scheduleRepo;
     public void addSchedule(Schedule schedule, Long id) {
-        schedule.setRequestId(id);
+
         scheduleRepo.save(schedule);
     }
     public List<Schedule> getAllSchedule(){
