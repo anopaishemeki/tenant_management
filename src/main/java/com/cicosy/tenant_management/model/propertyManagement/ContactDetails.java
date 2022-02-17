@@ -24,6 +24,6 @@ public class ContactDetails {
     )
     private Long id;
     private String phone;
-    private String MobileNumber;
+    private String mobileNumber;
     private String email;
 }

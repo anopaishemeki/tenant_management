@@ -12,12 +12,14 @@ public class propertyController {
     private final PropertyService propertyService;
     private final AddressController addressController;
     private final OwnerController ownerController;
+    private final ContactDetailsController contactDetailsController;
 
     @Autowired
-    public propertyController(PropertyService propertyService, AddressController addressController, OwnerController ownerController) {
+    public propertyController(PropertyService propertyService, AddressController addressController, OwnerController ownerController, ContactDetailsController contactDetailsController) {
         this.propertyService = propertyService;
         this.addressController = addressController;
         this.ownerController = ownerController;
+        this.contactDetailsController = contactDetailsController;
     }
 
     @PostMapping("/save-property")
@@ -30,6 +32,9 @@ public class propertyController {
 
         //setting owner id
         property.setOwner(ownerController.newOwner(property.getOwnerObject()));
+
+        //setting contact object
+        property.setContact(contactDetailsController.saveContact(property.getPropertyContactObject()));
 
         propertyService.saveProperty(property);
 
@@ -45,6 +50,7 @@ public class propertyController {
         for(int i = 0; i < properties.size(); i++){
             properties.get(i).setAddressObject(addressController.getAddress( properties.get(i).getAddress()));
             properties.get(i).setOwnerObject(ownerController.getOwner( properties.get(i).getOwner()));
+            properties.get(i).setPropertyContactObject(contactDetailsController.getContact(properties.get(i).getContact()));
         }
 
 

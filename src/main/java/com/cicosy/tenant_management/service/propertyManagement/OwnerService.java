@@ -23,7 +23,7 @@ public class OwnerService {
     }
 
     @Transactional
-    public void update(Long id, Owner update) {
+    public Owner update(Long id, Owner update) {
         Owner owner = ownerRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Owner with id: " + id +" does not exist"));
 
         if (update.getName() != null && update.getName().length() > 0 && !Objects.equals(owner.getName(), update.getName())){
@@ -33,6 +33,8 @@ public class OwnerService {
         if (update.getLastName() != null && update.getLastName().length() > 0 && !Objects.equals(owner.getLastName(), update.getLastName())){
             owner.setLastName(update.getLastName());
         }
+
+        return ownerRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Owner with id: " + id +" does not exist"));
     }
 
     public Owner getOwner(Long owner) {

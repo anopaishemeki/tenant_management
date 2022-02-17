@@ -53,12 +53,8 @@ public class PropertyService {
             property.setPropertyType(update.getPropertyType());
         }
 
-        if (update.getCity() != null && update.getCity().length() > 0 && !Objects.equals(property.getCity(), update.getCity())){
-            property.setCity(update.getCity());
-        }
-
-        if (update.getProvince() != null && update.getProvince().length() > 0 && !Objects.equals(property.getProvince(), update.getProvince())){
-            property.setProvince(update.getProvince());
+        if (update.getContact() != null && !Objects.equals(property.getContact(), update.getContact())){
+            property.setContact(update.getContact());
         }
 
         if (update.getStatus() != null && update.getStatus().length() > 0 && !Objects.equals(property.getStatus(), update.getStatus())){
