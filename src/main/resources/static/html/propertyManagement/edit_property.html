@@ -8,18 +8,18 @@
     <link rel="icon" href="favicon.ico">
     <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
     <!-- Simple bar CSS -->
-    <link rel="stylesheet" href="../../../css/simplebar.css">
+    <link rel="stylesheet" href="../../css/simplebar.css">
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
-    <link rel="stylesheet" href="../../../css/feather.css">
+    <link rel="stylesheet" href="../../css/feather.css">
     <!-- Date Range Picker CSS -->
-    <link rel="stylesheet" href="../../../css/daterangepicker.css">
+    <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
-    <link rel="stylesheet" href="../../../css/app-light.css" id="lightTheme">
-    <link rel="stylesheet" href="../../../css/app-dark.css" id="darkTheme" disabled>
+    <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light  ">
+  <body class="vertical  light  " onload="setPropertyDetails()">
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -48,7 +48,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="../../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+                <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -66,7 +66,7 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="index.html">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="../../index.html">
               <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
@@ -84,7 +84,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
                 <li class="nav-item active">
-                  <a class="nav-link pl-3" href="index.html"><span class="ml-1 item-text">Default</span></a>
+                  <a class="nav-link pl-3" href="../../index.html"><span class="ml-1 item-text">Default</span></a>
                 </li>
                 <!-- <li class="nav-item">
                    <a class="nav-link pl-3" href="./dashboard-analytics.html"><span class="ml-1 item-text">Analytics</span></a>
@@ -112,11 +112,11 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/propertyManagement/LeaseManagement/property-list.html"><span class="ml-1 item-text">Properties</span>
+                  <a class="nav-link pl-3" href="property-list.html"><span class="ml-1 item-text">Properties</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/propertyManagement/LeaseManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
+                  <a class="nav-link pl-3" href="add_property.html"><span class="ml-1 item-text">Add Property</span></a>
                 </li>
                 <!--                <li class="nav-item">-->
                 <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
@@ -145,16 +145,16 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/documentsManagement/teant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
+                  <a class="nav-link pl-3" href="../tenantManagement/teant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/documentsManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
+                  <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
+                  <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/documentsManagement/teanant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
+                  <a class="nav-link pl-3" href="../tenantManagement/teanant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
                 </li>
                 <!--                <li class="nav-item">-->
                 <!--                  <a class="nav-link pl-3" href="./form_layouts.html"><span class="ml-1 item-text">Layouts</span></a>-->
@@ -171,16 +171,16 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/LeaseManagement/View-Lease.html"><span class="ml-1 item-text">View Leases</span></a>
+                  <a class="nav-link pl-3" href="../LeaseManagement/View-Lease.html"><span class="ml-1 item-text">View Leases</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/LeaseManagement/Add-Lease.html"><span class="ml-1 item-text">Add Lease</span></a>
+                  <a class="nav-link pl-3" href="../LeaseManagement/Add-Lease.html"><span class="ml-1 item-text">Add Lease</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/LeaseManagement/Terminate-Lease.html"><span class="ml-1 item-text">Terminate </span></a>
+                  <a class="nav-link pl-3" href="../LeaseManagement/Terminate-Lease.html"><span class="ml-1 item-text">Terminate </span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/LeaseManagement/Lease-Notices.html"><span class="ml-1 item-text">Lease Notices </span></a>
+                  <a class="nav-link pl-3" href="../LeaseManagement/Lease-Notices.html"><span class="ml-1 item-text">Lease Notices </span></a>
                 </li>
               </ul>
             </li>
@@ -191,13 +191,13 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="charts">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
+                  <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
+                  <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
+                  <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
                 </li>
               </ul>
             </li>
@@ -208,16 +208,16 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
+                  <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/mantainanceManagement/schedule.html"><span class="ml-1 item-text">Schedule</span></a>
+                  <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span class="ml-1 item-text">Schedule</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="html/mantainanceManagement/overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
+                  <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
+                  <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
                 </li>
               </ul>
             </li>
@@ -521,7 +521,7 @@
                       <strong class="card-title"> Property Details</strong>
                     </div>
                     <div class="card-body">
-                      <form>
+                      <form id="update_propertyDetails">
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="propertyName">Property Name</label>
@@ -548,6 +548,8 @@
                                   <textarea class="form-control" id="description" rows="4"></textarea>
                                 </div>
                               </div> <!-- /.card-body -->
+                              <hr class="my-4">
+                              <button type="button" class="btn mb-2 btn-outline-success" onclick="updatePropertyDetails()"><span class="fe fe-upload-cloud fe-16"> Update Property Details</span></button>
                             </div> <!-- /.card -->
                           </div> <!-- /.col -->
                         </div>
@@ -565,48 +567,56 @@
                     </div>
                     <div class="card-body">
                       <form>
-                        <div class="form-group">
-                          <label for="propertyAddress">Address</label>
-                          <input type="text" class="form-control" id="propertyAddress" placeholder="1234 Main St">
-                        </div>
-                        <!--<div class="form-group">
-                          <label for="inputAddress2">Address 2</label>
-                          <input type="text" class="form-control" id="inputAddress6" placeholder="Apartment, studio, or floor">
-                        </div>-->
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="propertyCity">City</label>
-                            <input type="text" class="form-control" id="propertyCity">
+                        <div id="update_PropertyAddress">
+                          <div class="form-group">
+                            <label for="propertyAddress">Address</label>
+                            <input type="text" class="form-control" id="propertyAddress" placeholder="1234 Main St">
                           </div>
-                          <div class="form-group col-md-4">
-                            <label for="propertyCountry">Country</label>
-                            <select id="propertyCountry" class="form-control">
-                              <option selected>Choose...</option>
-                              <option>...</option>
-                            </select>
+                          <!--<div class="form-group">
+                            <label for="inputAddress2">Address 2</label>
+                            <input type="text" class="form-control" id="inputAddress6" placeholder="Apartment, studio, or floor">
+                          </div>-->
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="propertyCity">City</label>
+                              <input type="text" class="form-control" id="propertyCity">
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label for="propertyCountry">Country</label>
+                              <select id="propertyCountry" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                              <label for="propertyZipCode">Zip</label>
+                              <input type="text" class="form-control" id="propertyZipCode">
+                            </div>
                           </div>
-                          <div class="form-group col-md-2">
-                            <label for="propertyZipCode">Zip</label>
-                            <input type="text" class="form-control" id="propertyZipCode">
-                          </div>
+                          <hr class="my-4">
+                          <button type="button" class="btn mb-2 btn-outline-success" onclick="updatePropertyAddress()"><span class="fe fe-upload-cloud fe-16"> Update Address</span></button>
                         </div>
                         <hr class="my-4">
                         <h5 class="mb-2 mt-4">Contact Details</h5>
                         <p class="mb-4">Input property owner contact details </p>
-                        <div class="form-row">
-                          <div class="form-group col-md-12">
-                            <label for="propertyEmail">Email</label>
-                            <input type="email" class="form-control" id="propertyEmail">
+                        <div>
+                          <div class="form-row">
+                            <div class="form-group col-md-12">
+                              <label for="propertyEmail">Email</label>
+                              <input type="email" class="form-control" id="propertyEmail">
+                            </div>
                           </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="propertyPhone">Phone</label>
-                            <input type="text" class="form-control" id="propertyPhone">
-                          </div>
-                          <div class="form-group col-md-6">
-                            <label for="propertMobileNumber">Mobile Number</label>
-                            <input type="text" class="form-control" id="propertMobileNumber">
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="propertyPhone">Phone</label>
+                              <input type="text" class="form-control" id="propertyPhone">
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="propertMobileNumber">Mobile Number</label>
+                              <input type="text" class="form-control" id="propertMobileNumber">
+                            </div>
+                            <hr class="my-4">
+                            <button type="button" class="btn mb-2 btn-outline-success" ><span class="fe fe-upload-cloud fe-16"> Update Contacts</span></button>
                           </div>
                         </div>
                       </form>
@@ -624,68 +634,79 @@
                     </div>
                     <div class="card-body">
                       <form>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="ownerFirstName">Firstname</label>
-                            <input type="text" id="ownerFirstName" class="form-control">
+                        <div id="update_PropertyOwnerDetails">
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="ownerFirstName">Firstname</label>
+                              <input type="text" id="ownerFirstName" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="ownerLastName">Lastname</label>
+                              <input type="text" id="ownerLastName" class="form-control">
+                            </div>
                           </div>
-                          <div class="form-group col-md-6">
-                            <label for="ownerLastName">Lastname</label>
-                            <input type="text" id="ownerLastName" class="form-control">
-                          </div>
+                          <hr class="my-4">
+                          <button type="button" class="btn mb-2 btn-outline-success" onclick="updatePropertyOwnerDetails()"><span class="fe fe-upload-cloud fe-16"> Update Owner</span></button>
                         </div>
                         <hr class="my-4">
                         <h5 class="mb-2 mt-4">Address</h5>
                         <p class="mb-4">Input Property Owner Address</p>
-                        <div class="form-row">
-                          <div class="form-group col-md-12">
-                            <div class="form-group">
-                              <label for="ownerAddress">Address</label>
-                              <input type="text" class="form-control" id="ownerAddress">
+                        <div id="update_PropertyOwnerAddress">
+                          <div class="form-row">
+                            <div class="form-group col-md-12">
+                              <div class="form-group">
+                                <label for="ownerAddress">Address</label>
+                                <input type="text" class="form-control" id="ownerAddress">
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-4">
-                            <label for="ownerZipCode">Zip code</label>
-                            <input class="form-control input-zip" id="ownerZipCode">
+                          <div class="form-row">
+                            <div class="form-group col-md-4">
+                              <label for="ownerZipCode">Zip code</label>
+                              <input class="form-control input-zip" id="ownerZipCode">
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label for="ownerCountry">Country</label>
+                              <select id="ownerCountry" class="form-control">
+                                <option valye="">Select country...</option>
+                                <option>...</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label for="ownerCity">City</label>
+                              <select id="ownerCity" class="form-control">
+                                <option selected="">Choose state...</option>
+                                <option>...</option>
+                              </select>
+                            </div>
                           </div>
-                          <div class="form-group col-md-4">
-                            <label for="ownerCountry">Country</label>
-                            <select id="ownerCountry" class="form-control">
-                              <option valye="">Select country...</option>
-                              <option>...</option>
-                            </select>
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="ownerCity">City</label>
-                            <select id="ownerCity" class="form-control">
-                              <option selected="">Choose state...</option>
-                              <option>...</option>
-                            </select>
-                          </div>
+                          <hr class="my-4">
+                          <button type="button" class="btn mb-2 btn-outline-success" onclick="discardEditPropertyOwnerAddress()"><span class="fe fe-upload-cloud fe-16"> Update Address</span></button>
                         </div>
                         <hr class="my-4">
                         <h5 class="mb-2 mt-4">Contact Details</h5>
                         <p class="mb-4">Input property owner contact details </p>
-                        <div class="form-row">
-                          <div class="form-group col-md-12">
-                            <label for="ownerEmailAddress">Email</label>
-                            <input type="email" class="form-control" id="ownerEmailAddress">
-                          </div>
+                        <div id="update_PropertyOwnerContactDetails">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="ownerEmailAddress">Email</label>
+                                    <input type="email" class="form-control" id="ownerEmailAddress">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="ownerPhone">Phone</label>
+                                    <input type="text" class="form-control" id="ownerPhone">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ownerCellNumber">Mobile Number</label>
+                                    <input type="text" class="form-control" id="ownerCellNumber">
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <button type="button" class="btn mb-2 btn-outline-success" onclick="updatePropertyOwnerContactDetails()"><span class="fe fe-upload-cloud fe-16"> Update Contacts</span></button>
+
                         </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="ownerPhone">Phone</label>
-                            <input type="text" class="form-control" id="ownerPhone">
-                          </div>
-                          <div class="form-group col-md-6">
-                            <label for="ownerCellNumber">Mobile Number</label>
-                            <input type="text" class="form-control" id="ownerCellNumber">
-                          </div>
-                        </div>
-                        <hr class="my-4">
-                        <button type="button" class="btn mb-2 btn-outline-success" onclick="saveProperty()"><span class="fe fe-upload-cloud fe-16">Add Property</span></button>
                       </form>
                     </div> <!-- /. card-body -->
                   </div> <!-- /. card -->
@@ -819,17 +840,17 @@
         </div>
       </main> <!-- main -->
     </div> <!-- .wrapper -->
-    <script src="../../../js/jquery.min.js"></script>
-    <script src="../../../js/popper.min.js"></script>
-    <script src="../../../js/moment.min.js"></script>
-    <script src="../../../js/bootstrap.min.js"></script>
-    <script src="../../../js/simplebar.min.js"></script>
-    <script src='../../../js/daterangepicker.js'></script>
-    <script src='../../../js/jquery.stickOnScroll.js'></script>
-    <script src="../../../js/tinycolor-min.js"></script>
-    <script src="../../../js/config.js"></script>
-    <script src="../../../js/apps.js"></script>
-    <script src="../../../js/custom.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/popper.min.js"></script>
+    <script src="../../js/moment.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/simplebar.min.js"></script>
+    <script src='../../js/daterangepicker.js'></script>
+    <script src='../../js/jquery.stickOnScroll.js'></script>
+    <script src="../../js/tinycolor-min.js"></script>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/apps.js"></script>
+    <script src="../../js/custom.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
