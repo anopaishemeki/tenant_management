@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -17,7 +18,7 @@ import javax.persistence.Id;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
-    Long requestId;
-    String scheduleDate;
+    private Long Id;
+
+    private LocalDate scheduleDate;
 }

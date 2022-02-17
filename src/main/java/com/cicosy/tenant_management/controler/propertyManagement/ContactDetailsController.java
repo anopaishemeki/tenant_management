@@ -21,9 +21,8 @@ public class ContactDetailsController {
     }
 
     @PutMapping("/update-contact-details/{id}")
-    public void updateContactDetails(@PathVariable Long id, @RequestBody ContactDetails contactDetails){
-        System.out.println(contactDetails);
-        contactDetailsService.update(id, contactDetails);
+    public ContactDetails updateContactDetails(@PathVariable Long id, @RequestBody ContactDetails contactDetails){
+        return contactDetailsService.update(id, contactDetails);
     }
 
     @GetMapping("/get-contact-details/{id}")

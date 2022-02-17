@@ -1,11 +1,14 @@
 package com.cicosy.tenant_management.controler.maintenanceManagement;
 
+import com.cicosy.tenant_management.model.maintenanceManagement.AttendedRequest;
 import com.cicosy.tenant_management.model.maintenanceManagement.MaintenanceRequests;
 import com.cicosy.tenant_management.service.maintenanceManagement.MaintenanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/maintenance")
@@ -44,5 +47,10 @@ public class MaintenanceController {
     @PutMapping("/{id}/schedule")
     public void addSchedule(@PathVariable Long id, @RequestBody MaintenanceRequests scheduleDetails) throws Exception {
         maintenanceService.addSchedule(id, scheduleDetails);
+    }
+
+    @DeleteMapping("/{id}/attended")
+    public ResponseEntity<Map<String, Boolean>> deleteRequest(@PathVariable Long id , AttendedRequest attendedRequestDetails){
+        return maintenanceService.deleteRequest(id,attendedRequestDetails);
     }
 }

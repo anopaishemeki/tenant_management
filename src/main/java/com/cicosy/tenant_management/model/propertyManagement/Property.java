@@ -3,6 +3,8 @@ package com.cicosy.tenant_management.model.propertyManagement;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -31,25 +33,30 @@ public class Property {
     private Long insurance;
     private String description;
     private String propertyType;
-    private String city;
     @Transient
     private Owner ownerObject;
     private Long owner;
-    private String province;
     private String status;
     private double assetValue;
+    @Transient
+    private ContactDetails propertyContactObject;
+    private Long contact;
+    private LocalDateTime dateAdded;
 
-    public Property(String name, Long address, String tenant, Long insurance, String description, String propertyType, String city, Long owner, String province, String status, double assetValue) {
+    public Property(String name, Address addressObject, Long address, String tenant, Long insurance, String description, String propertyType, Owner ownerObject, Long owner, String status, double assetValue, ContactDetails propertyContactObject, Long contact) {
         this.name = name;
+        this.addressObject = addressObject;
         this.address = address;
         this.tenant = tenant;
         this.insurance = insurance;
         this.description = description;
         this.propertyType = propertyType;
-        this.city = city;
+        this.ownerObject = ownerObject;
         this.owner = owner;
-        this.province = province;
         this.status = status;
         this.assetValue = assetValue;
+        this.propertyContactObject = propertyContactObject;
+        this.contact = contact;
+        this.dateAdded = LocalDateTime.now();
     }
 }

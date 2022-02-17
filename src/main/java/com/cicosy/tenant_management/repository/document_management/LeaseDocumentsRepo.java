@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author Dejong
  */
 @Repository
-public interface LeaseDocumentsRepo extends JpaRepository<LeaseDocuments, Long> {
-          @Query("select s,p  from Lease s,LeaseDocuments p WHERE s.status = ?1 and s.id = p.id ")
+public interface LeaseDocumentsRepo extends JpaRepository<LeaseDocuments, Long > {
+          @Query(value="SELECT p.id,p.name,p.data,p.type FROM lease_documents p INNER JOIN lease s   on p.id where p.id=s.id and s.status=?1 ",nativeQuery = true)
           List<LeaseDocuments> findExpired(String status);
    }

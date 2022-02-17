@@ -30,8 +30,8 @@ public class OwnerController {
     }
 
     @PutMapping("/update-owner/{id}")
-    public void updateOwner(@PathVariable Long id, @RequestBody Owner owner){
-        ownerService.update(id, owner);
+    public Owner updateOwner(@PathVariable Long id, @RequestBody Owner owner){
+        return ownerService.update(id, owner);
     }
 
     @GetMapping("get-owner/{id}")

@@ -23,7 +23,7 @@ public class ContactDetailsService {
     }
 
     @Transactional
-    public void update(Long id, ContactDetails update) {
+    public ContactDetails update(Long id, ContactDetails update) {
         ContactDetails contactDetails = contactRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Contact details with id: " + id +" does not exist"));
 
         if (update.getEmail() != null && update.getEmail().length() > 0 && !Objects.equals(contactDetails.getEmail(), update.getEmail())){
@@ -37,6 +37,9 @@ public class ContactDetailsService {
         if (update.getPhone() != null && update.getPhone().length() > 0 && !Objects.equals(contactDetails.getPhone(), update.getPhone())){
             contactDetails.setPhone(update.getEmail());
         }
+
+        return contactRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Contact details with id: " + id +" does not exist"));
+
     }
 
     public ContactDetails getContact(Long contactDetails) {
