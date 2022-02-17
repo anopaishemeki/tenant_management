@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -32,6 +33,13 @@ public class Tenant {
     private String phone;
     private String id_passport;
 
+
+    private String rentStatus;
+
+    private BigDecimal deposit,rentalFee;
+
+
+
     @Embedded
     private Address address;
 
@@ -42,10 +50,14 @@ public class Tenant {
     private String lease;
     private String property;
 
+    public Tenant(BigDecimal deposit, BigDecimal rentalFee) {
+        this.deposit = deposit;
+        this.rentalFee = rentalFee;
+    }
 
-    public Tenant(String name,String surname, String email, String phone,
+    public Tenant(String name, String surname, String email, String phone,
                   String id_passport, String residential_address,
-                  String lease, String property) {
+                  String lease, String property, String rentStatus) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -53,6 +65,7 @@ public class Tenant {
         this.id_passport = id_passport;
         this.lease = lease;
         this.property = property;
+        this.rentStatus = rentStatus;
     }
 
 }
