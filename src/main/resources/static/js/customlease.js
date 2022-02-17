@@ -15,52 +15,125 @@ function toggleView(id) {
 }
 
 
+//Save Lesase
+$(document).ready(function () {
+
+    $(".alert-success").hide();
+    $(".alert-danger").hide();
+    $("#btnSubmit").click(function () {
+
+        if(document.getElementById("buildingName").val()==""){
+            window.alert("Name Is Required");
+        }
+
+        var file = $('#fileUploadForm')[0];
+        var data = new FormData(file);
+
+
+
+        var jsonDataObj = {
+            "name": $("#leaseName").val(),
+            "buildingName": $("#buildingName").val(),
+            "buildingLocation": $("#buildingLocation").val(),
+            "rentalFee": $("#rentalFee").val(),
+            "startDate": $("#startDate").val(),
+            "duration": $("#duration").val(),
+            "agreementDate": $("#agreementDate").val(),
+            "terms": $("#terms").val()
+        };
+        data.append("jsondata", JSON.stringify(jsonDataObj));
+        $("#btnSubmit").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/api/v1/lease/addlease",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+                $(".alert-success").show();
+                $(".alert-danger").hide();
+
+
+            },
+            error: function (e) {
+
+                $(".alert-success").hide();
+                $(".alert-danger").show();
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+            }
+
+        });
+
+    });
+
+});
+
+
+
 
 //Save Lease
-
-function saveLease() {
-    let name = document.getElementById("leaseName").value
-    let buildingName = getElementById("buildingName").value
-    let buildingLocation = getElementById("buildingLocation").value;
-    let rentalFee = getElementById("rentalFee").value
-    let startDate = document.getElementById("startDate").value
-    let duration = document.getElementById("duration").value
-    let agreementDate = document.getElementById("agreementDate").value;
-    let terms=document.getElementById("terms").value;
-    let file = document.getElementById("file").value
-
-    let jsondata = {
-        name,
-        buildingName,
-        buildingLocation,
-        rentalFee,
-        startDate,
-        duration,
-        terms,
-        agreementDate,
-
-    }
-
-
-
-    $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/addlease',
-        type: 'POST',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(jsondata),
-        success: function (response) {
-            alert("success" + response)
-            console.log(response)
-            getProperties();
-        },
-        file : file
-    })
-}
-
-
-
+// $(document).ready(function () {
+//     $('.alert-success').hide()
+//     $('.alert-danger').hide()
+//     $('#submitBtn').onclick(function () {
+//
+//
+//         var form = $('#fileUploadForm')[0];
+//         var data = new FormData(form);
+//
+//
+//         var jsonDataObj = {
+//             "name": $("#leaseName").val(),
+//             "buildingName": $("#buildingName").val(),
+//             "buildingLocation": $("#buildingLocation").val(),
+//             "rentalFee": $("#rentalFee").val(),
+//             "startDate": $("#startDate").val(),
+//             "duration": $("#duration").val(),
+//             "agreementDate": $("#agreementDate").val(),
+//             "terms": $("#terms").val()
+//         };
+//         data.append("jsondata", JSON.stringify(jsonDataObj));
+//         $("#submitBtn").prop("disabled", true);
+//         $.ajax({
+//             type: "POST",
+//             enctype: 'multipart/form-data',
+//             url: 'http:localhost:8090/api/v1/lease/addlease',
+//             data: data,
+//             processData: false,
+//             contentType: false,
+//             cache: false,
+//             timeout: 600000,
+//             success: funtion(data)
+//         {
+//             console.log('SUCCESS:', data);
+//             $('#submitBtn').prop("disabled", false);
+//             $('.alert-success').show();
+//             $('.alert-danger').hide();
+//
+//         }
+//     ,
+//
+//         error:funtion(e)
+//         {
+//             $('.alert-success').hide();
+//             $('.alert-danger').show();
+//             console.log('ERROR :', e);
+//             $('#submitBtn').prop("disabled", false);
+//
+//         }
+//
+//     });
+//     });
+// });
 
 
 //Get Leases
@@ -220,8 +293,6 @@ function saveProperty() {
         }
     })
 }
-
-
 
 
 //Property Details

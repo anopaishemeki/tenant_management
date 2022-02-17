@@ -32,10 +32,11 @@ public class LeaseController {
         this.leaseDocumentService = leaseDocumentService;
     }
 
-    @GetMapping(path = "status/{Status}")
-    public List<Lease> getExpiredLeases(@PathVariable String Status) {
-        return leaseService.getExpiredLeases(Status);
-    }
+//    @GetMapping(path = "home")
+//    public List<Lease> getExpiredLeases(@PathVariable String Status) {
+//        return leaseService.getExpiredLeases(Status);
+//    }
+
 
 
     @GetMapping(path = "notice/{time}")
@@ -53,6 +54,8 @@ public class LeaseController {
         return leaseService.getLeaseHistory();
     }
 
+
+
     ObjectMapper objectmapper= new ObjectMapper();
 
     @RequestMapping(path = "addlease",method = RequestMethod.POST,
@@ -60,7 +63,7 @@ public class LeaseController {
     public  ResponseEntity<Object> registerNewLease(
             @RequestParam(required = true, value = "jsondata") String jsondata,
             LeaseHistory leaseHistory,
-            @RequestParam(required = true, value = "file") MultipartFile file) throws IOException {
+            @RequestParam(required = true, value="file") MultipartFile file) throws IOException {
 
 
         Lease lease = objectmapper.readValue(jsondata,Lease.class);
