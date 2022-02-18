@@ -38,7 +38,6 @@ public class LeaseController {
 //    }
 
 
-
     @GetMapping(path = "notice/{time}")
     public List<Lease> getAboutToExpire(@PathVariable int time) {
         return leaseService.getAboutToExpire(time);
@@ -55,22 +54,19 @@ public class LeaseController {
     }
 
 
+    ObjectMapper objectmapper = new ObjectMapper();
 
-    ObjectMapper objectmapper= new ObjectMapper();
-
-    @RequestMapping(path = "addlease",method = RequestMethod.POST,
+    @RequestMapping(path = "addlease", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public  ResponseEntity<Object> registerNewLease(
+    public ResponseEntity<Object> registerNewLease(
             @RequestParam(required = true, value = "jsondata") String jsondata,
             LeaseHistory leaseHistory,
-            @RequestParam(required = true, value="file") MultipartFile file) throws IOException {
+            @RequestParam(required = true, value = "file") MultipartFile file) throws IOException {
 
 
-        Lease lease = objectmapper.readValue(jsondata,Lease.class);
+        Lease lease = objectmapper.readValue(jsondata, Lease.class);
 
         leaseService.addNewLease(lease, leaseHistory);
-
-
 
 
         String message = "";
@@ -88,12 +84,17 @@ public class LeaseController {
 
     }
 
-//    @DeleteMapping(path = "deletelease/{leaseId}")
+    //    @DeleteMapping(path = "deletelease/{leaseId}")
 //    public void deleteLease(@PathVariable("leaseId") Long leaseId, LeaseHistory leaseHistory) {
 //        leaseService.SaveDelete(leaseId, leaseHistory);
 //        leaseService.deleteLease(leaseId);
 //
 //    }
+    @GetMapping(path = "getLease/{leaseId}")
+    public Lease getLease(@PathVariable Long leaseId) {
+        return leaseService.findLeaseById(leaseId);
+
+    }
 
     @PutMapping(path = "updatelease/{leaseId}")
     public void updateLease(@PathVariable Long leaseId,
@@ -101,35 +102,35 @@ public class LeaseController {
                             LeaseHistory leaseHistory,
                             String Status
     ) {
-        Status="Updated";
+        Status = "Updated";
         leaseService.updateLease(leaseId, lease);
 
-        leaseService.SaveToHistory(leaseId, leaseHistory,Status);
+        leaseService.SaveToHistory(leaseId, leaseHistory, Status);
 
 
     }
 
     @PutMapping(path = "terminatelease/{leaseId}")
     public void terminatelease(@PathVariable Long leaseId,
-                            @RequestBody Lease lease,
-                            LeaseHistory leaseHistory,
+                               @RequestBody Lease lease,
+                               LeaseHistory leaseHistory,
                                String Status
     ) {
-        Status="Terminated";
+        Status = "Terminated";
         leaseService.terminatelease(leaseId, lease);
 
-        leaseService.SaveToHistory(leaseId, leaseHistory,Status);
+        leaseService.SaveToHistory(leaseId, leaseHistory, Status);
 
 
     }
 
 
     @PutMapping(path = "renewlease/{leaseId}")
-    public void renewlease(@PathVariable Long leaseId, @RequestBody Lease renewal, LeaseHistory leaseHistory ,String status) {
+    public void renewlease(@PathVariable Long leaseId, @RequestBody Lease renewal, LeaseHistory leaseHistory, String status) {
 
-        status ="Renewed";
+        status = "Renewed";
         leaseService.renewlease(leaseId, renewal);
 
-        leaseService.SaveToHistory(leaseId, leaseHistory,status);
+        leaseService.SaveToHistory(leaseId, leaseHistory, status);
     }
 }

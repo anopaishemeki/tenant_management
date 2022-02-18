@@ -364,6 +364,10 @@ public class LeaseService {
     }
 
 
-
-
+    public  Lease findLeaseById(Long leaseId) {
+        return leaseRepository.findById(leaseId)
+                .orElseThrow(() -> new IllegalStateException(
+                "Record With ID " + leaseId + " Does Not Exist"
+        ));
+    }
 }
