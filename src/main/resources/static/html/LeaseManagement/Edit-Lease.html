@@ -10,11 +10,8 @@
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="../../css/simplebar.css">
     <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
     <link rel="stylesheet" href="../../css/feather.css">
     <link rel="stylesheet" href="../../css/select2.css">
     <link rel="stylesheet" href="../../css/dropzone.css">
@@ -28,15 +25,14 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light" onload="fetchRecord()">
+<body class="vertical  light  ">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
             <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
         <form class="form-inline mr-auto searchform text-muted">
-            <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
-                   placeholder="Type something..." aria-label="Search">
+            <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Type something..." aria-label="Search">
         </form>
         <ul class="nav">
             <li class="nav-item">
@@ -45,21 +41,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal"
-                   data-target=".modal-shortcut">
+                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-shortcut">
                     <span class="fe fe-grid fe-16"></span>
                 </a>
             </li>
             <li class="nav-item nav-notif">
-                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal"
-                   data-target=".modal-notif">
+                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-notif">
                     <span class="fe fe-bell fe-16"></span>
                     <span class="dot dot-md bg-success"></span>
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
                 <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
               </span>
@@ -145,20 +138,16 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span
-                                    class="ml-1 item-text">Tenant List</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span
-                                    class="ml-1 item-text">Add Tenant</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span
-                                    class="ml-1 item-text">Assign Property</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span
-                                    class="ml-1 item-text">Leasing</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
                         </li>
                     </ul>
                 </li>
@@ -191,16 +180,13 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="charts">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span
-                                    class="ml-1 item-text">Tenant Documents</span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span
-                                    class="ml-1 item-text">Notice Documents</span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span
-                                    class="ml-1 item-text">Lease Documents </span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
                         </li>
                     </ul>
                 </li>
@@ -212,20 +198,16 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span
-                                    class="ml-1 item-text">Request</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span
-                                    class="ml-1 item-text">Schedule</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span class="ml-1 item-text">Schedule</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span
-                                    class="ml-1 item-text">Overdue</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span
-                                    class="ml-1 item-text">Pending</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
                         </li>
                     </ul>
                 </li>
@@ -238,124 +220,114 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <h2 class="page-title">Lease Detail</h2>
-
+                    <p class="text-muted">...</p>
                     <div class="row">
 
                         <div class="col-md-12">
                             <div class="card shadow mb-4">
-
+                                <span style="padding: 20px;padding-bottom: 10px;font-size: 14px"> ID = ?</span>
                                 <div class="card-body">
-                                    <div class=" col-md-12 d-flex justify-content-center"
-                                         style="background-color: cornflowerblue">
-                                        <span style="font-size: 20px; padding: 15px;color: #FFFFFF"> ID =  <label
-                                                style="margin-left: 10px;font-weight: bold; " id="id"> </label></span>
-                                    </div>
-                                    <form class="needs-validation" novalidate
-                                          style="padding-left: 50px;padding-top: 20px">
+                                    <form class="needs-validation" novalidate style="padding-left: 50px">
 
-                                        <div id="TenantleaseError" class=" d-flex justify-content-center"
-                                             style="visibility: hidden">
-                                            <span><label class="animate__animated animate__rubberBand animate__delay-2s" style="color: red;font-size: 15px">Sorry You Cant Edit a Terminated Lease!!</label></span>
-                                        </div>
-                                        <p class="mb-2"><strong> </strong></p>
+                                        <p class="mb-2"><strong></strong></p>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="TenantName">Tenant Name:</label>
-                                                <input type="text" class="form-control" id="TenantName">
-                                                <div class="valid-feedback"> </div>
-
+                                                <label for="simple-select2">Tenant Name :</label>
+                                                <select class="form-control select2" id="simple-select2">
+                                                    <optgroup label="Available Tenants">
+                                                        <option value="AK">John</option>
+                                                        <option value="HI">Peter</option>
+                                                        <option value="CA">Marry</option>
+                                                        <option value="NV" disabled="disabled">Winny (disabled)</option>
+                                                        <option value="OR">Denzel</option>
+                                                        <option value="WA">Privie</option>
+                                                    </optgroup>
+                                                </select>
                                             </div> <!-- form-group -->
                                             <div class="col-md-2"></div>
-                                            <div class="col-md-4 form-group mb-3">
-                                                <label for="buildingName">Building Name:</label>
-                                                <input type="text" class="form-control" id="buildingName">
-                                                <div class="valid-feedback"></div>
+                                            <div class="col-md-4 form-group mb-3" >
+                                                <label for="validationCustom3">Building Name:</label>
+                                                <input type="text" class="form-control" id="validationCustom3"  required>
+                                                <div class="valid-feedback"> Looks good! </div>
                                             </div>
                                             <!-- form-group -->
                                         </div> <!-- form-row -->
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="buildingLocation">Building Location:</label>
-                                                <input type="text" class="form-control" id="buildingLocation">
-                                                <div class="valid-feedback"></div>
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="validationCustom3">Building Location:</label>
+                                                <input type="text" class="form-control" id="validationCustom4"  required>
+                                                <div class="valid-feedback"> Looks good! </div>
                                             </div>
                                             <div class="col-md-2"></div>
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="floorNumber">Floor Number:</label>
-                                                <input class="form-control" id="floorNumber" type="number" name="number">
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="floor-number">Floor Number:</label>
+                                                <input class="form-control" id="floor-number" type="number" name="number">
                                             </div>
 
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="duration">Duration :</label>
-                                                <input class="form-control" id="duration" type="number" name="number">
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="duration-number">Duration :</label>
+                                                <input class="form-control" id="duration-number" type="number" name="number">
                                             </div>
                                             <div class="col-md-2"></div>
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="rentalFee">Rental Fee:</label>
-                                                <input class="form-control input-money" id="rentalFee" type="text"
-                                                       name="money">
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="custom-money">Rental Fee:</label>
+                                                <input class="form-control input-money" id="custom-money" type="text" name="money">
                                             </div>
 
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="startDate">Start Date</label>
-                                                <input class="form-control" id="startDate" type="date" name="date">
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="start-date">Start Date</label>
+                                                <input class="form-control" id="start-date" type="date" name="date">
                                             </div>
                                             <div class="col-md-2"></div>
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="agreementDate">Lease Agreement Date</label>
-                                                <input class="form-control" id="agreementDate" type="date" name="date">
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="start-date">Lease Agreement Date</label>
+                                                <input class="form-control" id="agreement-date" type="date" name="date">
                                             </div>
-                                        </div>
-                                        <br>
+                                        </div><br>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="endDate">End Date</label>
-                                                <input class="form-control" id="endDate" type="date" name="date"
-                                                       disabled="false">
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="start-date">End Date</label>
+                                                <input class="form-control" id="end-date" type="date" name="date">
                                             </div>
                                             <div class="col-md-2"></div>
-                                            <div class="col-md-4 form-group mb-3">
-                                                <label for="status">Status:</label>
-                                                <input type="text" class="form-control" id="status" disabled>
-                                                <div class="valid-feedback"></div>
+                                            <div class="col-md-4 form-group mb-3" >
+                                                <label for="validationCustom3">Status:</label>
+                                                <input type="text" class="form-control" id="status"  required>
+                                                <div class="valid-feedback"> Looks good! </div>
                                             </div>
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="timeLeft">Days Left:</label>
-                                                <input class="form-control" id="timeLeft" type="number" name="number"
-                                                       disabled>
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="floor-number">Days Left:</label>
+                                                <input class="form-control" id="Days-left" type="number" name="number">
                                             </div>
                                             <div class="col-md-2"></div>
-                                            <div class="form-group col-md-4 mb-3">
-
+                                            <div class="form-group col-md-4 mb-3" >
+                                                <label for="example-fileinput">Lease Agreement :</label><br>
+                                                <button type="button" class="btn btn-success" id="example-fileinput"  >Open</button>
                                             </div>
                                         </div>
 
 
-                                        <div class="col-md-12"
-                                             style="padding-left:0px!important; padding-top: 20px!important;">
-                                            <div class="card shadow">
-                                                <div class="card-body">
+
+                                        <div class="col-md-12" style="padding-left:0px!important; padding-top: 20px!important;">
+                                            <div class="card shadow" >
+                                                <div class="card-body" >
                                                     <div class="form-group mb-4">
-                                                        <label for="terms">Lease Terms</label>
-                                                        <textarea class="form-control" id="terms" rows="4"></textarea>
+                                                        <label for="example-textarea">Lease  Terms</label>
+                                                        <textarea class="form-control" id="example-textarea" rows="4"></textarea>
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
-                                        <div style="margin-top: 35px!important;" class="d-flex justify-content-center">
-                                            <button class="btn btn-primary " type="submit" id="btnSaveUpdate">Save
-                                                Update
-                                            </button>
-                                        </div>
+                                        <div style="margin-top: 35px!important;"><button class="btn btn-primary" type="submit">Save Update </button></div>
                                     </form>
                                 </div> <!-- /.card -->
 
@@ -370,8 +342,13 @@
             </div> <!-- .container-fluid -->
 
 
-            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
-                 aria-labelledby="defaultModalLabel" aria-hidden="true">
+
+
+
+
+
+
+            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -401,9 +378,7 @@
                                         </div>
                                         <div class="col">
                                             <small><strong>Widgets are updated successfull</strong></small>
-                                            <div class="my-0 text-muted small">Just create new layout Index, form,
-                                                table
-                                            </div>
+                                            <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
                                             <small class="badge badge-pill badge-light text-muted">2m ago</small>
                                         </div>
                                     </div>
@@ -415,8 +390,7 @@
                                         </div>
                                         <div class="col">
                                             <small><strong>Notifications have been sent</strong></small>
-                                            <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo
-                                            </div>
+                                            <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
                                             <small class="badge badge-pill badge-light text-muted">30m ago</small>
                                         </div>
                                     </div> <!-- / .row -->
@@ -428,9 +402,7 @@
                                         </div>
                                         <div class="col">
                                             <small><strong>Link was attached to menu</strong></small>
-                                            <div class="my-0 text-muted small">New layout has been attached to the
-                                                menu
-                                            </div>
+                                            <div class="my-0 text-muted small">New layout has been attached to the menu</div>
                                             <small class="badge badge-pill badge-light text-muted">1h ago</small>
                                         </div>
                                     </div>
@@ -438,14 +410,12 @@
                             </div> <!-- / .list-group -->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
-                            </button>
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-                 aria-labelledby="defaultModalLabel" aria-hidden="true">
+            <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -504,7 +474,6 @@
     </main> <!-- main -->
 </div> <!-- .wrapper -->
 <script src="../../js/jquery.min.js"></script>
-<script src="../../js/customlease.js"></script>
 <script src="../../js/popper.min.js"></script>
 <script src="../../js/moment.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
@@ -547,7 +516,8 @@
             'zindex': '9999' /* fix modal open */
         });
     /** date range picker */
-    if ($('.datetimes').length) {
+    if ($('.datetimes').length)
+    {
         $('.datetimes').daterangepicker(
             {
                 timePicker: true,
@@ -562,10 +532,10 @@
     var start = moment().subtract(29, 'days');
     var end = moment();
 
-    function cb(start, end) {
+    function cb(start, end)
+    {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     }
-
     $('#reportrange').daterangepicker(
         {
             startDate: start,
@@ -609,7 +579,8 @@
         });
     // editor
     var editor = document.getElementById('editor');
-    if (editor) {
+    if (editor)
+    {
         var toolbarOptions = [
             [
                 {
@@ -676,15 +647,20 @@
             });
     }
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
+    (function()
+    {
         'use strict';
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function()
+        {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
+            var validation = Array.prototype.filter.call(forms, function(form)
+            {
+                form.addEventListener('submit', function(event)
+                {
+                    if (form.checkValidity() === false)
+                    {
                         event.preventDefault();
                         event.stopPropagation();
                     }
@@ -696,7 +672,8 @@
 </script>
 <script>
     var uptarg = document.getElementById('drag-drop-area');
-    if (uptarg) {
+    if (uptarg)
+    {
         var uppy = Uppy.Core().use(Uppy.Dashboard,
             {
                 inline: true,
@@ -710,11 +687,10 @@
             {
                 endpoint: 'https://master.tus.io/files/'
             });
-        uppy.on('complete', (result) = >
+        uppy.on('complete', (result) =>
         {
             console.log('Upload complete! We’ve uploaded these files:', result.successful)
-    })
-        ;
+    });
     }
 </script>
 <script src="../../js/apps.js"></script>
@@ -723,10 +699,10 @@
 <script>
     window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
+    function gtag()
+    {
         dataLayer.push(arguments);
     }
-
     gtag('js', new Date());
     gtag('config', 'UA-56159088-1');
 </script>

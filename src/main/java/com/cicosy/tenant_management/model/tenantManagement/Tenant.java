@@ -40,12 +40,20 @@ public class Tenant {
 
 
 
-    @Embedded
-    private Address address;
 
-    
-    @Embedded
-    private TenantBusiness tenantBusiness;
+    private String house_no;
+    private String street;
+    private String city;
+    private String country;
+
+    private String business_name;
+    private String business_type;
+    private String services;
+    private String shop_number;
+
+
+
+
 
     private String lease;
     private String property;

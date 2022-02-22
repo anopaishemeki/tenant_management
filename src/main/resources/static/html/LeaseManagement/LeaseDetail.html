@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="FetchRecord()">
+<body class="vertical  light  ">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -227,91 +227,90 @@
                             <div class="card shadow mb-4">
                                 <span style="padding: 20px;padding-bottom: 10px;font-size: 14px"> </span>
                                 <div class="card-body">
-                                    <div class=" col-md-12 d-flex justify-content-center"
-                                         style="background-color: cornflowerblue">
-                                        <span style="font-size: 20px; padding: 15px;color: #FFFFFF"> ID =  <label
-                                                style="margin-left: 10px;font-weight: bold; " id="id"> </label></span>
-                                    </div>
                                     <form class="needs-validation" novalidate style="padding-left: 50px">
 
                                         <p class="mb-2"><strong></strong></p>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="TenantName">Tenant Name:</label>
-                                                <input type="text" class="form-control" id="TenantName">
-                                                <div class="valid-feedback"></div>
+                                                <label for="simple-select2">Tenant Name :</label>
+                                                <select class="form-control select2" id="simple-select2">
+                                                    <optgroup label="Available Tenants">
+                                                        <option value="AK">John</option>
+                                                        <option value="HI">Peter</option>
+                                                        <option value="CA">Marry</option>
+                                                        <option value="NV" disabled="disabled">Winny (disabled)</option>
+                                                        <option value="OR">Denzel</option>
+                                                        <option value="WA">Privie</option>
+                                                    </optgroup>
+                                                </select>
                                             </div> <!-- form-group -->
                                             <div class="col-md-2"></div>
                                             <div class="col-md-4 form-group mb-3" >
-
-                                                <label for="buildingName">Building Name:</label>
-                                                <input type="text" class="form-control" id="buildingName">
-                                                <div class="valid-feedback"></div>
+                                                <label for="validationCustom3">Building Name:</label>
+                                                <input type="text" class="form-control" id="validationCustom3"  required>
+                                                <div class="valid-feedback"> Looks good! </div>
                                             </div>
                                             <!-- form-group -->
                                         </div> <!-- form-row -->
 
                                         <div class="form-row">
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="buildingLocation">Building Location:</label>
-                                                <input type="text" class="form-control" id="buildingLocation">
-                                                <div class="valid-feedback"></div>
+                                                <label for="validationCustom3">Building Location:</label>
+                                                <input type="text" class="form-control" id="validationCustom4"  required>
+                                                <div class="valid-feedback"> Looks good! </div>
                                             </div>
                                             <div class="col-md-2"></div>
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="floorNumber">Floor Number:</label>
-                                                <input class="form-control" id="floorNumber" type="number" name="number">
+                                                <label for="floor-number">Floor Number:</label>
+                                                <input class="form-control" id="floor-number" type="number" name="number">
                                             </div>
 
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="duration">Duration :</label>
-                                                <input class="form-control" id="duration" type="number" name="number">
+                                                <label for="duration-number">Duration :</label>
+                                                <input class="form-control" id="duration-number" type="number" name="number">
                                             </div>
                                             <div class="col-md-2"></div>
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="rentalFee">Rental Fee:</label>
-                                                <input class="form-control input-money" id="rentalFee" type="text"
-                                                       name="money">
+                                                <label for="custom-money">Rental Fee:</label>
+                                                <input class="form-control input-money" id="custom-money" type="text" name="money">
                                             </div>
 
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="startDate">Start Date</label>
-                                                <input class="form-control" id="startDate" type="date" name="date">
+                                                <label for="start-date">Start Date</label>
+                                                <input class="form-control" id="start-date" type="date" name="date">
                                             </div>
                                             <div class="col-md-2"></div>
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="agreementDate">Lease Agreement Date</label>
-                                                <input class="form-control" id="agreementDate" type="date" name="date">
+                                                <label for="start-date">Lease Agreement Date</label>
+                                                <input class="form-control" id="agreement-date" type="date" name="date">
                                             </div>
                                         </div><br>
                                         <div class="form-row">
                                             <div class="form-group col-md-4 mb-3" >
-                                                <label for="endDate">End Date</label>
-                                                <input class="form-control" id="endDate" type="date" name="date"
-                                                       disabled="false">
+                                                <label for="start-date">End Date</label>
+                                                <input class="form-control" id="end-date" type="date" name="date">
                                             </div>
                                             <div class="col-md-2"></div>
                                             <div class="col-md-4 form-group mb-3" >
-                                                <label for="status">Status:</label>
-                                                <input type="text" class="form-control" id="status" disabled>
-                                                <div class="valid-feedback"></div>
+                                                <label for="validationCustom3">Status:</label>
+                                                <input type="text" class="form-control" id="status"  required>
+                                                <div class="valid-feedback"> Looks good! </div>
                                             </div>
                                         </div>
 
                                             <div class="form-row">
                                                 <div class="form-group col-md-4 mb-3" >
-                                                    <label for="timeLeft">Days Left:</label>
-                                                    <input class="form-control" id="timeLeft" type="number" name="number"
-                                                           disabled>
+                                                    <label for="floor-number">Days Left:</label>
+                                                    <input class="form-control" id="Days-left" type="number" name="number">
                                                 </div>
                                                 <div class="col-md-2"></div>
                                                 <div class="form-group col-md-4 mb-3" >
-                                                    <label for="fileinput">Lease Agreement :</label><br>
-                                                    <button type="button" class="btn btn-success" id="fileinput">Open</button>
+                                                    <label for="example-fileinput">Lease Agreement :</label><br>
+                                                    <button type="button" class="btn btn-success" id="example-fileinput">Open</button>
                                                 </div>
                                             </div>
 
@@ -321,8 +320,8 @@
                                             <div class="card shadow" >
                                                 <div class="card-body" >
                                                     <div class="form-group mb-4">
-                                                        <label for="terms">Lease Terms</label>
-                                                        <textarea class="form-control" id="terms" rows="4"></textarea>
+                                                        <label for="example-textarea">Lease  Terms</label>
+                                                        <textarea class="form-control" id="example-textarea" rows="4"></textarea>
                                                     </div>
 
                                                     </div>
@@ -474,7 +473,6 @@
     </main> <!-- main -->
 </div> <!-- .wrapper -->
 <script src="../../js/jquery.min.js"></script>
-<script src="../../js/customlease.js"></script>
 <script src="../../js/popper.min.js"></script>
 <script src="../../js/moment.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>

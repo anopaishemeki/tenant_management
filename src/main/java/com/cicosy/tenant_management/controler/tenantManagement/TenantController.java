@@ -3,12 +3,13 @@ package com.cicosy.tenant_management.controler.tenantManagement;
 import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.tenantService.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tenants")
+@RequestMapping(value = "/api/tenants")
 public class TenantController {
 
     @Autowired
