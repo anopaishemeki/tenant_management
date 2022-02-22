@@ -1,7 +1,3 @@
-
-
-
-
 //Save Lesase
 $(document).ready(function () {
 
@@ -9,7 +5,7 @@ $(document).ready(function () {
     $(".alert-danger").hide();
     $("#btnSubmit").click(function () {
 
-        if (document.getElementById("buildingName").val() == "") {
+        if (document.getElementById("buildingName").value == "") {
             window.alert("Name Is Required");
         }
 
@@ -23,6 +19,7 @@ $(document).ready(function () {
             "buildingLocation": $("#buildingLocation").val(),
             "rentalFee": $("#rentalFee").val(),
             "startDate": $("#startDate").val(),
+            "floorNumber":$("#floorNumber").val(),
             "duration": $("#duration").val(),
             "agreementDate": $("#agreementDate").val(),
             "terms": $("#terms").val()
@@ -124,13 +121,130 @@ function setLocal(id) {
     localStorage.setItem("id", JSON.stringify(id));
 
 }
+
+function SetLocal(id, name) {
+    localStorage.removeItem("id");
+    localStorage.removeItem("name");
+    localStorage.setItem("id", JSON.stringify(id));
+    localStorage.setItem("name", JSON.stringify(name));
+
+}
+
+// Renewing Lease
+function loadData() {
+    var id = JSON.parse(localStorage.getItem("id"));
+    var name = JSON.parse(localStorage.getItem("name"));
+
+
+    let nametag = document.getElementById("TenantName2");
+    let id2 = document.getElementById("id2");
+
+
+    nametag.placeholder = name;
+    id2.innerText = id;
+
+}
+
+function renewlease() {
+
+    // var h=document.getElementsByClassName("err");
+    // if (h.length>=1) {
+    //    for (let i =0;i<=h.length;i++){
+    //        var n =h[i];
+    //         document.body.removeChild(n);
+    //       // n.setAttribute("display","none");
+    //    }
+    //
+    // }
+
+
+    var id = JSON.parse(localStorage.getItem("id"));
+
+    var startDate = document.getElementById("startDate2").value;
+    var duration = document.getElementById("duration2").value;
+
+
+    let data = {
+        startDate,
+        duration
+    }
+    $.ajax({
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        type: "PUT",
+        url: "/api/v1/lease/renewlease/" + id,
+
+
+        success: function (response) {
+            console.log(response);
+            let btn = document.getElementById("liveAlertBtn");
+            let div = document.getElementById("renewalInfo");
+            let Close = document.getElementById("Close");
+
+
+            div.setAttribute("style", "display:none");
+            btn.setAttribute("style", "display:none");
+            Close.setAttribute("style", "display:all");
+            alert2('Lease Renewed Successfully !!', 'success')
+
+        }
+        ,
+        error: function (e) {
+            if (e.status.toString() == "200") {
+                let btn = document.getElementById("liveAlertBtn2");
+                let div = document.getElementById("renewalInfo");
+                let Close = document.getElementById("Close2");
+
+
+                div.setAttribute("style", "display:none");
+                btn.setAttribute("style", "display:none");
+                Close.setAttribute("style", "display:all");
+                alert2('Lease Renewed Successfully !!', 'success')
+                console.log("ERROR : ", e);
+                return;
+            } else if ((e.status.toString() == "500")) {
+                // let ar = document.getElementById("alrt");
+                // let btn = document.getElementById("liveAlertBtn");
+                // let btn2 = document.getElementById("liveAlertkBtn");
+                // let Close = document.getElementById("Close");
+                //
+                // ar.setAttribute("style", "display:none");
+                // btn.setAttribute("style", "display:none");
+                // btn2.setAttribute("style", "display:none");
+                // Close.setAttribute("style", "display:all");
+                alert2(e.responseJSON.message.toString(), 'danger')
+                console.log("ERROR : ", e.responseJSON.message.toString());
+                return;
+            } else {
+                let btn = document.getElementById("liveAlertBtn");
+                let div = document.getElementById("renewalInfo");
+                let Close = document.getElementById("Close");
+
+
+                div.setAttribute("style", "display:none");
+                btn.setAttribute("style", "display:none");
+                Close.setAttribute("style", "display:all");
+                alert2('There was an Error in renewing the lease ! Please try again !!', 'danger')
+                console.log("ERROR : ", e);
+                return;
+            }
+
+
+        }
+    });
+
+}
+
 // Terminating Lease
 
 function Terminate() {
-    var id = JSON.parse(localStorage.getItem("id"));
-    let status="Terminated";
 
-    let data={
+    var id = JSON.parse(localStorage.getItem("id"));
+    let status = "Terminated";
+
+    let data = {
         status
     }
     $.ajax({
@@ -144,37 +258,165 @@ function Terminate() {
 
         success: function (response) {
             console.log(response)
-            let ar =document.getElementById("alrt");
-            let btn=document.getElementById("liveAlertBtn");
+            let ar = document.getElementById("alrt");
+            let btn = document.getElementById("liveAlertBtn");
+            let btn2 = document.getElementById("liveAlertkBtn");
+            let Close = document.getElementById("Close");
 
-            ar.style.visibility("hidden");
-            btn.style.visibility("hidden");
+            ar.setAttribute("style", "display:none");
+            btn.setAttribute("style", "display:none");
+            btn2.setAttribute("style", "display:none");
+            Close.setAttribute("style", "display:all");
+            alert('Lease Terminated Successfully !!', 'success')
+            return;
 
         }
         ,
         error: function (e) {
+            if (e.status.toString() == "200") {
+                let ar = document.getElementById("alrt");
+                let btn = document.getElementById("liveAlertBtn");
+                let btn2 = document.getElementById("liveAlertkBtn");
+                let Close = document.getElementById("Close");
 
-            console.log("ERROR : ", e.message);
+                ar.setAttribute("style", "display:none");
+                btn.setAttribute("style", "display:none");
+                btn2.setAttribute("style", "display:none");
+                Close.setAttribute("style", "display:all");
+                alert('Lease Terminated Successfully !!', 'success')
+                return;
+            } else if (e.status.toString() == "500") {
+                let ar = document.getElementById("alrt");
+                let btn = document.getElementById("liveAlertBtn");
+                let btn2 = document.getElementById("liveAlertkBtn");
+                let Close = document.getElementById("Close");
+
+                ar.setAttribute("style", "display:none");
+                btn.setAttribute("style", "display:none");
+                btn2.setAttribute("style", "display:none");
+                Close.setAttribute("style", "display:all");
+                alert('Lease Was already Terminated ', 'danger')
+                console.log("ERROR : ", e.responseJSON.message);
+                return;
+            }
 
 
         }
     });
 }
-var alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-var alertTrigger = document.getElementById('liveAlertBtn')
+
+// Updating Lease
+
+function saveUpdate() {
+    var id = JSON.parse(localStorage.getItem("id"));
+    var jsonDataObj = {
+        "name": $("#TenantName").val(),
+        "buildingName": $("#buildingName").val(),
+        "buildingLocation": $("#buildingLocation").val(),
+        "floorNumber":$("#floorNumber").val(),
+        "rentalFee": $("#rentalFee").val(),
+        "startDate": $("#startDate").val(),
+        "duration": $("#duration").val(),
+        "agreementDate": $("#agreementDate").val(),
+        "terms": $("#terms").val()
+    };
+
+    $.ajax({
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(jsonDataObj),
+        type: "PUT",
+        url: "/api/v1/lease/updatelease/" + id,
+
+
+        success: function (response) {
+            console.log(response)
+            // let ar = document.getElementById("alrt");
+            // let btn = document.getElementById("liveAlertBtn");
+            // let btn2 = document.getElementById("liveAlertkBtn");
+            // let Close = document.getElementById("Close");
+            //
+            // ar.setAttribute("style", "display:none");
+            // btn.setAttribute("style", "display:none");
+            // btn2.setAttribute("style", "display:none");
+            // Close.setAttribute("style", "display:all");
+            alert('Lease Updated Successfully !!', 'success')
+            return;
+
+        }
+        ,
+        error: function (e) {
+            if (e.status.toString() == "200") {
+                // let ar = document.getElementById("alrt");
+                // let btn = document.getElementById("liveAlertBtn");
+                // let btn2 = document.getElementById("liveAlertkBtn");
+                // let Close = document.getElementById("Close");
+                //
+                // ar.setAttribute("style", "display:none");
+                // btn.setAttribute("style", "display:none");
+                // btn2.setAttribute("style", "display:none");
+                // Close.setAttribute("style", "display:all");
+                alert('Lease Updated Successfully !!', 'success')
+                return;
+            } else if (e.status.toString() == "500") {
+                // let ar = document.getElementById("alrt");
+                // let btn = document.getElementById("liveAlertBtn");
+                // let btn2 = document.getElementById("liveAlertkBtn");
+                // let Close = document.getElementById("Close");
+                //
+                // ar.setAttribute("style", "display:none");
+                // btn.setAttribute("style", "display:none");
+                // btn2.setAttribute("style", "display:none");
+                // Close.setAttribute("style", "display:all");
+                alert( e.responseJSON.message, 'danger')
+                console.log("ERROR : ", e.responseJSON.message);
+                return;
+            }else{
+                alert( e.responseJSON.message, 'danger')
+                console.log("ERROR : ", e);
+                return;
+            }
+
+
+        }
+    });
+}
+
+var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+var alertPlaceholder2 = document.getElementById('liveAlertPlaceholder2');
+
 
 function alert(message, type) {
-    var wrapper = document.createElement('div')
-    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
-
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
     alertPlaceholder.append(wrapper);
 }
 
-if (alertTrigger) {
-    alertTrigger.addEventListener('click', function () {
-        alert('Lease Terminated Successfully !!', 'success')
-    })
+function alert2(message, type) {
+
+    var h=document.getElementById("err");
+    if (h) {
+
+        h.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+        }else{
+        var wrapper = document.createElement('div');
+        wrapper.setAttribute("id","err");
+        wrapper.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+        alertPlaceholder2.append(wrapper);
+    }
+
+
+
 }
+
+// if (alertTrigger) {
+//     alertTrigger.addEventListener('click', function () {
+//         alert('Lease Terminated Successfully !!', 'success')
+//     })
+// }
 
 // Fetching Record For Viewing
 function FetchRecord() {
@@ -191,20 +433,15 @@ function FetchRecord() {
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
-            let rentalFee=document.getElementById("rentalFee");
-            let duration=document.getElementById("duration");
-            let startDate=document.getElementById("startDate");
-            let agreementDate=document.getElementById("agreementDate");
-            let status=document.getElementById("status");
-            let endDate=document.getElementById("endDate");
-            let floorNumber=document.getElementById("floorNumber");
-            let timeLeft=document.getElementById("timeLeft");
-            let terms=document.getElementById("terms");
-
-
-
-
-
+            let rentalFee = document.getElementById("rentalFee");
+            let duration = document.getElementById("duration");
+            let startDate = document.getElementById("startDate");
+            let agreementDate = document.getElementById("agreementDate");
+            let status = document.getElementById("status");
+            let endDate = document.getElementById("endDate");
+            let floorNumber = document.getElementById("floorNumber");
+            let timeLeft = document.getElementById("timeLeft");
+            let terms = document.getElementById("terms");
 
 
             id.innerText = `${response.id}`;
@@ -219,23 +456,18 @@ function FetchRecord() {
             endDate.value = `${response.endDate}`;
             floorNumber.placeholder = `${response.floorNumber}`;
             timeLeft.placeholder = `${response.timeLeft}`;
-            terms.placeholder=`${response.terms}`;
+            terms.placeholder = `${response.terms}`;
 
 
-                tenantName.setAttribute("disabled",true);
-                buildingName.setAttribute("disabled",true);
-                buildingLocation.setAttribute("disabled",true);
-                rentalFee.setAttribute("disabled",true);
-                duration.setAttribute("disabled",true);
-                startDate.setAttribute("disabled",true);
-                agreementDate.setAttribute("disabled",true);
-                floorNumber.setAttribute("disabled",true);
-                terms.setAttribute("disabled",true);
-
-
-
-
-
+            tenantName.setAttribute("disabled", true);
+            buildingName.setAttribute("disabled", true);
+            buildingLocation.setAttribute("disabled", true);
+            rentalFee.setAttribute("disabled", true);
+            duration.setAttribute("disabled", true);
+            startDate.setAttribute("disabled", true);
+            agreementDate.setAttribute("disabled", true);
+            floorNumber.setAttribute("disabled", true);
+            terms.setAttribute("disabled", true);
 
 
         }
@@ -258,21 +490,17 @@ function fetchRecord() {
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
-            let rentalFee=document.getElementById("rentalFee");
-            let duration=document.getElementById("duration");
-            let startDate=document.getElementById("startDate");
-            let agreementDate=document.getElementById("agreementDate");
-            let status=document.getElementById("status");
-            let endDate=document.getElementById("endDate");
-            let floorNumber=document.getElementById("floorNumber");
-            let timeLeft=document.getElementById("timeLeft");
-            let terms=document.getElementById("terms");
-            let btnSubmit=document.getElementById("btnSaveUpdate");
-           let tlError=document.getElementById("TenantleaseError")
-
-
-
-
+            let rentalFee = document.getElementById("rentalFee");
+            let duration = document.getElementById("duration");
+            let startDate = document.getElementById("startDate");
+            let agreementDate = document.getElementById("agreementDate");
+            let status = document.getElementById("status");
+            let endDate = document.getElementById("endDate");
+            let floorNumber = document.getElementById("floorNumber");
+            let timeLeft = document.getElementById("timeLeft");
+            let terms = document.getElementById("terms");
+            let btnSubmit = document.getElementById("btnSaveUpdate");
+            let tlError = document.getElementById("TenantleaseError")
 
 
             id.innerText = `${response.id}`;
@@ -287,26 +515,25 @@ function fetchRecord() {
             endDate.value = `${response.endDate}`;
             floorNumber.placeholder = `${response.floorNumber}`;
             timeLeft.placeholder = `${response.timeLeft}`;
-            terms.placeholder=`${response.terms}`;
+            terms.placeholder = `${response.terms}`;
 
-            let terminate="Terminated";
-            let Cstatus=`${response.status}`;
-            if(terminate==Cstatus){
-                tenantName.setAttribute("disabled",true);
-                buildingName.setAttribute("disabled",true);
-                buildingLocation.setAttribute("disabled",true);
-                rentalFee.setAttribute("disabled",true);
-                duration.setAttribute("disabled",true);
-                startDate.setAttribute("disabled",true);
-                agreementDate.setAttribute("disabled",true);
-                floorNumber.setAttribute("disabled",true);
-                terms.setAttribute("disabled",true);
-                btnSubmit.setAttribute("disabled",true);
-                tlError.style.visibility="visible";
+            let terminate = "Terminated";
+            let Cstatus = `${response.status}`;
+            if (terminate == Cstatus) {
+                tenantName.setAttribute("disabled", true);
+                buildingName.setAttribute("disabled", true);
+                buildingLocation.setAttribute("disabled", true);
+                rentalFee.setAttribute("disabled", true);
+                duration.setAttribute("disabled", true);
+                startDate.setAttribute("disabled", true);
+                agreementDate.setAttribute("disabled", true);
+                floorNumber.setAttribute("disabled", true);
+                terms.setAttribute("disabled", true);
+                btnSubmit.setAttribute("disabled", true);
+                tlError.style.visibility = "visible";
 
 
             }
-
 
 
         }
@@ -325,12 +552,13 @@ function getLeases() {
 
             var t_body = document.getElementById("t_body");
 
-            while (t_body.hasChildNodes()) {
-                t_body.removeChild(t_body.firstChild);
-            }
+
+            // while (t_body.hasChildNodes()) {
+            //     t_body.removeChild(t_body.firstChild);
+            // }
 
             for (let i = 0; i < items.length; i++) {
-                let html = `<td>  ${items[i].id}
+                let html = `<td class="sorting_1">  ${items[i].id}
                         </td>
                         <td>  ${items[i].name}
                         </td>
@@ -354,15 +582,20 @@ function getLeases() {
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
-                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More</a>
+                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
                         </div>
                     </td>`
 
 
                 let tr = document.createElement("tr");
-                // tr.className = "row"
-
+                if (i % 2 == 0) {
+                    tr.setAttribute("class", "even");
+                } else {
+                    tr.setAttribute("class", "odd");
+                }
+                tr.setAttribute("role", "row");
                 tr.innerHTML = html;
 
                 // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
@@ -378,6 +611,73 @@ function getLeases() {
             }
         }
     })
+    var body = document.getElementById("body");
+    //
+    //
+    let st = document.createElement("script");
+    st.setAttribute("src", "../../js/jquery.dataTables.min.js");
+    body.append(st);
+    //
+    //  let a = document.createElement("script");
+    //  a.setAttribute("src","../../js/jquery.min.js");
+    //  body.append(a);
+    //
+    //
+    //  let b = document.createElement("script");
+    //  b.setAttribute("src","../../js/popper.min.js");
+    //  body.append(b);
+    //
+    //  let d= document.createElement("script");
+    //  d.setAttribute("src","../../js/moment.min.js");
+    //  body.append(d);
+    //
+    //  let u= document.createElement("script");
+    //  u.setAttribute("src","../../js/bootstrap.min.js");
+    //  body.append(u);
+    //
+    //  let e= document.createElement("script");
+    //  e.setAttribute("src","../../js/simplebar.min.js");
+    //  body.append(e);
+    //
+    //  let f= document.createElement("script");
+    //  f.setAttribute("src","../../js/jquery.stickOnScroll.js");
+    //  body.append(f);
+    //
+    //  let g= document.createElement("script");
+    //  g.setAttribute("src","../../js/config.js");
+    //  body.append(g);
+    //
+    //  let h= document.createElement("script");
+    //  h.setAttribute("src","../../js/bootstrap.bundle.min.js");
+    //  body.append(h);
+    //
+    //  let j= document.createElement("script");
+    //  j.setAttribute("src","../../js/popper.min.js");
+    //  body.append(j);
+    //
+    //  let k= document.createElement("script");
+    //  k.setAttribute("src","../../js/apps.js");
+    //  body.append(k);
+    //
+    //
+    //
+    //
+    //
+    //
+    //  let rt=document.createElement("script");
+    //  rt.setAttribute("src","../../js/dataTables.bootstrap4.min.js");
+    //  body.append(rt);
+    //
+    //
+    //  let stt = document.createElement("script");
+    //  stt.setAttribute("type","text/javascript")
+    //  stt.innerText=`$('#dataTable-1').DataTable({autoWidth: true,"lengthMenu": [[16, 32, 64, -1],[16, 32, 64, "All"]]});`
+    //  body.append(stt);
+    //
+    //
+    //  console.log(st);
+    //  console.log(stt);
+    //  console.log(rt);
 }
 
 function saveProperty() {
