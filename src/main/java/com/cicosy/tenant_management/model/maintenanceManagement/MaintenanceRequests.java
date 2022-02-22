@@ -29,7 +29,69 @@ public class MaintenanceRequests {
 
     private String status ;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLevelOfUrgency() {
+        return levelOfUrgency;
+    }
+
+    public void setLevelOfUrgency(String levelOfUrgency) {
+        this.levelOfUrgency = levelOfUrgency;
+    }
+
+    public LocalDate getDateLogged() {
+        return dateLogged;
+    }
+
+    public void setDateLogged(LocalDate dateLogged) {
+        this.dateLogged = dateLogged;
+    }
+
+    public LocalDate getOverdueDate() {
+        return overdueDate;
+    }
+
+    public void setOverdueDate(LocalDate overdueDate) {
+        this.overdueDate = overdueDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_id" )
