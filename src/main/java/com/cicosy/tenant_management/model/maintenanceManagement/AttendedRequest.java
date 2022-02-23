@@ -19,7 +19,7 @@ public class AttendedRequest {
     private String request;
     private String description;
     private LocalDate dateLogged;
-    private LocalDate datAttended = LocalDate.now();
+    private LocalDate dateAttended = LocalDate.now();
 
     public Long getId() {
         return Id;
@@ -54,10 +54,10 @@ public class AttendedRequest {
     }
 
     public LocalDate getDatAttended() {
-        return datAttended;
+        return dateAttended;
     }
 
     public void setDatAttended(LocalDate datAttended) {
-        this.datAttended = datAttended;
+        this.dateAttended = datAttended;
     }
 }
