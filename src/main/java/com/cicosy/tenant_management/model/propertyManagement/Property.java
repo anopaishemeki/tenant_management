@@ -42,6 +42,7 @@ public class Property {
     private ContactDetails propertyContactObject;
     private Long contact;
     private LocalDateTime dateAdded;
+    private LocalDateTime lastUpdate;
 
     public Property(String name, Address addressObject, Long address, String tenant, Long insurance, String description, String propertyType, Owner ownerObject, Long owner, String status, double assetValue, ContactDetails propertyContactObject, Long contact) {
         this.name = name;
