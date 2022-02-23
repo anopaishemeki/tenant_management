@@ -66,6 +66,8 @@ public class propertyController {
 
         property.setOwnerObject(ownerController.getOwner(property.getOwner()));
 
+        property.setPropertyContactObject(contactDetailsController.getContact(property.getContact()));
+
         return property;
     }
 
@@ -73,5 +75,10 @@ public class propertyController {
     public Property updateProperty(@PathVariable Long id, @RequestBody Property property){
         propertyService.update(id, property);
         return propertyService.getProperty(id);
+    }
+
+    @GetMapping("/get-property-id-and-name")
+    public List<Object> propertyIdAndName(){
+        return propertyService.getPropertyIdAndName();
     }
 }
