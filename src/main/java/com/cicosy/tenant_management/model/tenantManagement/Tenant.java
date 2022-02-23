@@ -36,7 +36,7 @@ public class Tenant {
 
     private String rentStatus;
 
-    private BigDecimal deposit,rentalFee;
+    private String deposit,rentalFee;
 
 
 
@@ -58,7 +58,7 @@ public class Tenant {
     private String lease;
     private String property;
 
-    public Tenant(BigDecimal deposit, BigDecimal rentalFee) {
+    public Tenant(String deposit, String rentalFee) {
         this.deposit = deposit;
         this.rentalFee = rentalFee;
     }
