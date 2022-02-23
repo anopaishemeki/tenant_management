@@ -36,7 +36,8 @@ public class Tenant {
 
     private String rentStatus;
 
-    private String deposit,rentalFee;
+    private String deposit;
+    private String rentalFee;
 
 
 
