@@ -77,4 +77,8 @@ public class PropertyService {
     public Property getProperty(Long id) {
         return propertyRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Property with id" + id +" does not exist"));
     }
+
+    public List<Object> getPropertyIdAndName() {
+        return propertyRepository.selectNameAndID();
+    }
 }

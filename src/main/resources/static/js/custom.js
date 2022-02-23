@@ -1,7 +1,518 @@
-function setLocal(id){
+function setLocal(id) {
     localStorage.removeItem("id");
     localStorage.setItem("id", JSON.stringify(id));
     alert(id)
+}
+
+function setDropDownLocal(){
+    localStorage.removeItem("drop_id");
+    localStorage.setItem("drop_id",JSON.stringify(id));
+}
+
+function setAddPropertyDropDown() {
+    $.ajax({
+        url: 'http://localhost:8090/api/property/get-property-id-and-name',
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+            let dropDown = document.getElementById("propertyType");
+
+            for (let i = 0; i < response.length; i++){
+                let option = document.createElement("option");
+
+                option.text = response[i];
+                option.setAttribute("value", `${response[i].id}`)
+
+                dropDown.appendChild(option);
+            }
+        }
+    })
+}
+
+function saveCompartment(){
+
+}
+
+function viewProperty(){
+    let id = JSON.parse(localStorage.getItem("id"));
+    $.ajax({
+        url: 'http://localhost:8090/api/property/get-property/' + id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+            let html = `<div class="row my-4">
+                            <div class="col-md-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header">
+                                        <strong class="card-title">Donec id elit non mi porta gravida at eget
+                                            metus.</strong>
+                                        <span class="float-right"><i class="fe fe-flag mr-2"></i><span
+                                                class="badge badge-pill badge-success text-white">Payment</span></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted"> Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.name}</strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Type</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.propertyType}</strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Compartments Number</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.numberOfCompartments}</strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Number Of Floors</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.numberOfFloors}</strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Asset NBV</dt>
+                                            <dd class="col-sm-4 mb-3">${response.assetValue}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
+                                            <dd class="col-sm-4 mb-3">${response.propertyContactObject.email}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3"> ${response.propertyContactObject.phone}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">${response.propertyContactObject.mobileNumber}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Created On</dt>
+                                            <dd class="col-sm-4 mb-3">${response.dateAdded}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
+                                            <dd class="col-sm-4 mb-3">${response.lastUpdate}</dd>
+                                            <dt class="col-sm-2 text-muted">Description</dt>
+                                            <dd class="col-sm-10"> ${response.description}</dd>
+                                            <dt class="col-sm-2 text-muted">Address</dt>
+                                            <dd class="col-sm-10"> ${response.addressObject.address} , ${response.addressObject.city} , ${response.addressObject.country}</dd>
+                                        </dl>
+                                        <hr class="my-4">
+                                        <h5 class="mb-2 mt-4">Property Owner Details</h5>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.name}
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Surname</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.lastName}
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.contactDetailsObject.phone}
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.contactDetailsObject.mobileNumber}
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
+                                            <dd class="col-sm-4 mb-3">${response.ownerObject.contactDetailsObject.email}</dd>
+                                            <!--<dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>Kelley Sonya</strong>
+                                            </dd>-->
+                                        </dl>
+                                    </div> <!-- .card-body -->
+                                </div> <!-- .card -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-header">
+                                        <strong class="card-title">Ticket Thread</strong>
+                                        <span class="float-right"><i class="fe fe-message-circle mr-2"></i>4</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center mb-4">
+                                            <div class="col-auto">
+                                                <div class="avatar avatar-sm mb-3 mx-4">
+                                                    <img src="../../assets/avatars/face-3.jpg" alt="..."
+                                                         class="avatar-img rounded-circle">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <strong>Hester Nissim</strong>
+                                                <div class="mb-2">Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                                                    condimentum nibh, ut fermentum massa justo sit amet risus.
+                                                </div>
+                                                <div class="card mb-3 bg-light w-50">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col-md-2 text-center">
+                                                            <img src="../../assets/products/p1.jpg" alt="..."
+                                                                 class="img-fluid rounded m-1">
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="card-body py-0">
+                                                                <p class="card-title mb-0">New screenshot-12.png</p>
+                                                                <div class="card-text my-0 text-muted small"><span
+                                                                        class="mr-2">1.2M</span><span
+                                                                        class="mr-2">SVG</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <small class="text-muted">2020-04-21 08:48:18</small>
+                                            </div>
+                                            <div class="col-auto">
+                          <span class="circle circle-sm bg-light">
+                            <i class="fe fe-corner-down-left"></i>
+                          </span>
+                                            </div>
+                                        </div> <!-- .row-->
+                                        <div class="row align-items-center mb-4">
+                                            <div class="col-auto">
+                                                <div class="avatar avatar-sm mb-3 mx-4">
+                                                    <img src="../../assets/avatars/face-4.jpg" alt="..."
+                                                         class="avatar-img rounded-circle">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <strong>Kelley Sonya</strong>
+                                                <div class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Phasellus sollicitudin luctus pretium. <br/>Pellentesque porta massa ac
+                                                    nibh finibus iaculis. Maecenas vel interdum urna. Integer auctor
+                                                    ultrices faucibus. Aliquam consequat et ligula nec sodales.
+                                                </div>
+                                                <small class="text-muted">2020-04-21 12:01:22</small>
+                                            </div>
+                                            <div class="col-auto">
+                          <span class="circle circle-sm bg-light">
+                            <i class="fe fe-corner-down-left"></i>
+                          </span>
+                                            </div>
+                                        </div> <!-- .row-->
+                                        <hr class="my-4">
+                                        <h6 class="mb-3">Response</h6>
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1" class="sr-only">Your
+                                                    Message</label>
+                                                <textarea class="form-control bg-light" id="exampleFormControlTextarea1"
+                                                          rows="2"></textarea>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="form-check form-check-inline ml-1">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                           value="option1">
+                                                    <label class="form-check-label" for="inlineCheckbox1">Email
+                                                        Notification</label>
+                                                </div>
+                                                <div class="flex-fill mr-2 text-right">
+                                                    <a href="#" class="btn"><i class="fe fe-upload"></i></a>
+                                                    <a href="#" class="btn"><i class="fe fe-at-sign"></i></a>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div> <!-- .card-body -->
+                                </div> <!-- .card -->
+                            </div> <!-- .col-md -->
+
+                            <!-- compartments list-->
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <div class="row align-items-center my-4">
+                                            <div class="col">
+                                                <h2 class="h3 mb-0 page-title">Compartments List</h2>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
+                                                <button type="button" class="btn btn-primary"><span class="fe fe-filter fe-12 mr-2"></span>Create</button>
+                                            </div>
+                                        </div>
+                                        <!-- table -->
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <table class="table table-borderless table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="all2">
+                                                                <label class="custom-control-label" for="all2"></label>
+                                                            </div>
+                                                        </th>
+                                                        <th>ID</th>
+                                                        <th>User</th>
+                                                        <th>Tenant</th>
+                                                        <th>Country</th>
+                                                        <th>Floor Area</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2474">
+                                                                <label class="custom-control-label" for="2474"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-3.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Brown, Asher D.</strong></p>
+                                                            <small class="mb-0 text-muted">2474</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Accumsan Consulting</p>
+                                                            <small class="mb-0 text-muted">Ap #331-7123 Lobortis Avenue</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(958) 421-0798</a></p>
+                                                            <small class="mb-0 text-muted">Nigeria</small>
+                                                        </td>
+                                                        <td class="text-muted">13/09/2020</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2786">
+                                                                <label class="custom-control-label" for="2786"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Leblanc, Yoshio V.</strong></p>
+                                                            <small class="mb-0 text-muted">2786</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Fringilla Ornare Placerat Consulting</p>
+                                                            <small class="mb-0 text-muted">287-8300 Nisl. St</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(899) 881-3833</a></p>
+                                                            <small class="mb-0 text-muted">Papua New Guinea</small>
+                                                        </td>
+                                                        <td class="text-muted">04/05/2019</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2747">
+                                                                <label class="custom-control-label" for="2747"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-2.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Hester, Nissim L.</strong></p>
+                                                            <small class="mb-0 text-muted">2747</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Tristique Ltd</p>
+                                                            <small class="mb-0 text-muted">4577 Cras St.</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(977) 220-6518</a></p>
+                                                            <small class="mb-0 text-muted">Central African Republic</small>
+                                                        </td>
+                                                        <td class="text-muted">21/08/2019</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2639">
+                                                                <label class="custom-control-label" for="2639"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Gardner, Leigh S.</strong></p>
+                                                            <small class="mb-0 text-muted">2639</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Orci Luctus Et Inc.</p>
+                                                            <small class="mb-0 text-muted">P.O. Box 228, 7512 Lectus Ave</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(537) 315-1481</a></p>
+                                                            <small class="mb-0 text-muted">United Kingdom</small>
+                                                        </td>
+                                                        <td class="text-muted">04/08/2019</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2238">
+                                                                <label class="custom-control-label" for="2238"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-5.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Higgins, Uriah L.</strong></p>
+                                                            <small class="mb-0 text-muted">2238</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Sit Amet Lorem Industries</p>
+                                                            <small class="mb-0 text-muted">Ap #377-5357 Sed Road</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(238) 386-0247</a></p>
+                                                            <small class="mb-0 text-muted">Canada</small>
+                                                        </td>
+                                                        <td class="text-muted">26/07/2020</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2152">
+                                                                <label class="custom-control-label" for="2152"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-6.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Wheeler, Ralph F.</strong></p>
+                                                            <small class="mb-0 text-muted">2152</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Suspendisse LLC</p>
+                                                            <small class="mb-0 text-muted">Ap #410-5363 Non, Avenue</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(587) 675-3258</a></p>
+                                                            <small class="mb-0 text-muted">Chad</small>
+                                                        </td>
+                                                        <td class="text-muted">11/09/2019</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="2488">
+                                                                <label class="custom-control-label" for="2488"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/face-7.jpg" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>Kelley, Sonya Y.</strong></p>
+                                                            <small class="mb-0 text-muted">2488</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Dolor Incorporated</p>
+                                                            <small class="mb-0 text-muted">8250 Molestie St.</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(934) 582-9495</a></p>
+                                                            <small class="mb-0 text-muted">British Indian Ocean Territory</small>
+                                                        </td>
+                                                        <td class="text-muted">30/03/2021</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <nav aria-label="Table Paging" class="my-3">
+                                            <ul class="pagination justify-content-end mb-0">
+                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div> <!-- .col-12 -->
+                                </div> <!-- .row -->
+                            </div> <!-- .container-fluid -->
+                        </div>`
+
+
+            let propertyDetails = document.getElementById("propertyDetails");
+            propertyDetails.innerHTML = html;
+        }
+    })
 }
 
 function toggleView(id) {
@@ -16,7 +527,7 @@ function toggleView(id) {
     localStorage.setItem("deactivate", id);
 }
 
-function getProperties(){
+function getProperties() {
     $.ajax({
         url: 'http://localhost:8090/api/property/get-all-properties',
         type: 'GET',
@@ -31,7 +542,7 @@ function getProperties(){
                 t_body.removeChild(t_body.firstChild);
             }
 
-            for(let i = 0; i < items.length; i++){
+            for (let i = 0; i < items.length; i++) {
                 let new_html = `<td>
                             <div class="custom-control custom-checkbox">
                               <input type="checkbox" class="custom-control-input" id="2474">
@@ -65,7 +576,7 @@ function getProperties(){
                           </button>
                             <div class="dropdown-menu dropdown-menu-right"  >
                               <a class="dropdown-item" href="edit_property.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                              <a class="dropdown-item" href="#">View</a>
+                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('${items[i].id}')">View</a>
 <!--                              <a class="dropdown-item" href="#">Assign</a>-->
                             </div>
                           </td>`
@@ -81,20 +592,20 @@ function getProperties(){
     })
 }
 
-function  saveProperty(){
-    let  name = document.getElementById("propertyName").value
-    let  address = "";
-    let  tenant = "";
-    let  insurance = ""
-    let  description = document.getElementById("description").value
-    let  propertyType = document.getElementById("propertyType").value
-    let  owner = ""
-    let  assetValue = document.getElementById("assetValue").value;
+function saveProperty() {
+    let name = document.getElementById("propertyName").value
+    let address = "";
+    let tenant = "";
+    let insurance = ""
+    let description = document.getElementById("description").value
+    let propertyType = document.getElementById("propertyType").value
+    let owner = ""
+    let assetValue = document.getElementById("assetValue").value;
 
     //property contact details
     let propertyEmail = document.getElementById("propertyEmail").value;
     let propertyPhone = document.getElementById("propertyPhone").value;
-    let propertMobileNumber = document.getElementById("propertMobileNumber").value;
+    let propertyMobileNumber = document.getElementById("propertyMobileNumber").value;
 
 
     //owner Object properties
@@ -119,38 +630,38 @@ function  saveProperty(){
     let data = {
         name,
         addressObject: {
-            address : propertyAddressAddress,
-            zipCode : propertyZipCode,
-            city : propertyCity,
-            country : propertyCountry,
-            property : 0
+            address: propertyAddressAddress,
+            zipCode: propertyZipCode,
+            city: propertyCity,
+            country: propertyCountry,
+            property: 0
         },
         address,
         tenant,
         insurance,
         description,
         propertyType,
-        ownerObject : {
-            name : ownerName,
-            lastName : ownerLastname,
-            address : "",
-            addressObject : {
-                address : OwnerAddressAddress,
+        ownerObject: {
+            name: ownerName,
+            lastName: ownerLastname,
+            address: "",
+            addressObject: {
+                address: OwnerAddressAddress,
                 zipCode: owerZipCode,
                 city: ownerCity,
-                country : ownerCountry,
-                property : 0
+                country: ownerCountry,
+                property: 0
             },
-            contactDetailsObject : {
+            contactDetailsObject: {
                 phone: ownerPhone,
-                MobileNumber : ownerCell,
-                email : ownerEmail
+                mobileNumber: ownerCell,
+                email: ownerEmail
             }
         },
-        propertyContactObject : {
-            phone : propertyEmail,
-            mobileNumber : propertyPhone,
-            email : propertMobileNumber
+        propertyContactObject: {
+            phone: propertyPhone,
+            mobileNumber: propertyMobileNumber,
+            email: propertyEmail
         },
         owner,
         assetValue
@@ -172,9 +683,9 @@ function  saveProperty(){
 }
 
 //Property Details
-function editPropertyDetails(id){
+function editPropertyDetails(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/'+id,
+        url: 'http://localhost:8090/api/property/get-property/' + id,
         type: 'GET',
         success: function (response) {
 
@@ -213,7 +724,6 @@ function editPropertyDetails(id){
                         </div>`
 
 
-
             let container = document.getElementById("update_propertyDetails");
 
             container.innerHTML = html;
@@ -222,21 +732,21 @@ function editPropertyDetails(id){
     })
 }
 
-function updatePropertyDetails(id){
-    let  name = document.getElementById("propertyName").value
-    let  description = document.getElementById("description").value
-    let  propertyType = document.getElementById("propertyType").value
-    let  propertyAssetValue = document.getElementById("assetValue").value;
+function updatePropertyDetails(id) {
+    let name = document.getElementById("propertyName").value
+    let description = document.getElementById("description").value
+    let propertyType = document.getElementById("propertyType").value
+    let propertyAssetValue = document.getElementById("assetValue").value;
 
     let data = {
-        name : name,
-        description :description,
-        propertyType : propertyType,
-        assetValue : propertyAssetValue
+        name: name,
+        description: description,
+        propertyType: propertyType,
+        assetValue: propertyAssetValue
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/property/update-property/'+id,
+        url: 'http://localhost:8090/api/property/update-property/' + id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -340,9 +850,9 @@ function updatePropertyDetails(id){
 }*/
 
 //Property Address
-function editPropertyAddress(id){
+function editPropertyAddress(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: 'http://localhost:8090/api/address/get-address/' + id,
         type: 'GET',
         success: function (response) {
 
@@ -382,7 +892,7 @@ function editPropertyAddress(id){
     })
 }
 
-function updatePropertyAddress(id){
+function updatePropertyAddress(id) {
     //property address object properties
     let name = document.getElementById("propertyAddress").value;
     let address = document.getElementById("propertyAddress").value;
@@ -400,7 +910,7 @@ function updatePropertyAddress(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/'+id,
+        url: ' http://localhost:8090/api/address/update-address/' + id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -459,9 +969,9 @@ function updatePropertyAddress(id){
 }*/
 
 //Property Owner Details
-function editPropertyOwnerDetails(id){
+function editPropertyOwnerDetails(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/owner/get-owner/'+id,
+        url: 'http://localhost:8090/api/owner/get-owner/' + id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="form-row">
@@ -484,7 +994,7 @@ function editPropertyOwnerDetails(id){
     })
 }
 
-function updatePropertyOwnerDetails(id){
+function updatePropertyOwnerDetails(id) {
     let name = document.getElementById("ownerFirstName").value;
     let lastName = document.getElementById("ownerFirstName").value;
 
@@ -494,7 +1004,7 @@ function updatePropertyOwnerDetails(id){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/owner/update-owner/'+id,
+        url: 'http://localhost:8090/api/owner/update-owner/' + id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -537,9 +1047,9 @@ function updatePropertyOwnerDetails(id){
 }*/
 
 //Property Owner Address
-function editPropertyOwnerAddress(id){
+function editPropertyOwnerAddress(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: 'http://localhost:8090/api/address/get-address/' + id,
         type: 'GET',
         success: function (response) {
             let html = `                          <hr class="my-4">
@@ -581,7 +1091,7 @@ function editPropertyOwnerAddress(id){
     })
 }
 
-function updatePropertyOwnerAddress(id){
+function updatePropertyOwnerAddress(id) {
     let address = document.getElementById("ownerAddress").value;
     let zipCode = document.getElementById("ownerZipCode").value;
     let city = document.getElementById("ownerCity").value;
@@ -595,7 +1105,7 @@ function updatePropertyOwnerAddress(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/'+id,
+        url: ' http://localhost:8090/api/address/update-address/' + id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -607,9 +1117,9 @@ function updatePropertyOwnerAddress(id){
     })
 }
 
-function discardEditPropertyOwnerAddress(id){
+function discardEditPropertyOwnerAddress(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: 'http://localhost:8090/api/address/get-address/' + id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -650,9 +1160,9 @@ function discardEditPropertyOwnerAddress(id){
 }
 
 //Property Owner Contact Details
-function editPropertyOwnerContactDetails(id){
+function editPropertyOwnerContactDetails(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/'+id,
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/' + id,
         type: 'GET',
         success: function (response) {
 
@@ -683,7 +1193,7 @@ function editPropertyOwnerContactDetails(id){
     })
 }
 
-function updatePropertyOwnerContactDetails(id){
+function updatePropertyOwnerContactDetails(id) {
     let phone = document.getElementById("ownerPhone").value;
     let MobileNumber = document.getElementById("ownerCellNumber").value;
     let email = document.getElementById("ownerEmailAddress").value;
@@ -695,7 +1205,7 @@ function updatePropertyOwnerContactDetails(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/contact-details/update-contact-details/'+id,
+        url: ' http://localhost:8090/api/contact-details/update-contact-details/' + id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -707,9 +1217,9 @@ function updatePropertyOwnerContactDetails(id){
     })
 }
 
-function discardEditPropertyOwnerContactDetails(id){
+function discardEditPropertyOwnerContactDetails(id) {
     $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/'+id,
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/' + id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -742,10 +1252,10 @@ function discardEditPropertyOwnerContactDetails(id){
 }
 
 
-function setPropertyDetails(){
+function setPropertyDetails() {
     let id = JSON.parse(localStorage.getItem("id"))
 
-    let url = 'http://localhost:8090/api/property/get-property/'+id
+    let url = 'http://localhost:8090/api/property/get-property/' + id
 
     $.ajax({
         url: url,
