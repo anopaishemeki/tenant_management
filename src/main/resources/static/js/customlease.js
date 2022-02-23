@@ -1,64 +1,202 @@
 //Save Lesase
-$(document).ready(function () {
-
-    $(".alert-success").hide();
-    $(".alert-danger").hide();
-    $("#btnSubmit").click(function () {
-
-        if (document.getElementById("buildingName").value == "") {
-            window.alert("Name Is Required");
-        }
-
-        var file = $('#fileUploadForm')[0];
-        var data = new FormData(file);
+function saveLease() {
 
 
-        var jsonDataObj = {
-            "name": $("#leaseName").val(),
-            "buildingName": $("#buildingName").val(),
-            "buildingLocation": $("#buildingLocation").val(),
-            "rentalFee": $("#rentalFee").val(),
-            "startDate": $("#startDate").val(),
-            "floorNumber":$("#floorNumber").val(),
-            "duration": $("#duration").val(),
-            "agreementDate": $("#agreementDate").val(),
-            "terms": $("#terms").val()
-        };
-        data.append("jsondata", JSON.stringify(jsonDataObj));
-        $("#btnSubmit").prop("disabled", true);
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/api/v1/lease/addlease",
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
+    var file = $('#fileUploadForm')[0];
+    var data = new FormData(file);
+
+    var s = document.getElementById("startDate");
+
+    if (s.value.toString().length == 0) {
+        alert("Start Date is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+
+    var p = document.getElementById("duration");
+
+    if (p.value.toString().length == 0) {
+        alert("Lease Duration is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+    var we = document.getElementById("leaseName");
+    if (we.value.toString().length == 0) {
+        alert("Tenant Name is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+
+    var pr = document.getElementById("buildingLocation");
+    if (pr.value.toString().length == 0) {
+        alert("Building Location is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+    var yp = document.getElementById("rentalFee");
+
+    if (yp.value.toString().length == 0) {
+        alert("Rental Fee is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+
+    }
+    var ys = document.getElementById("agreementDate");
+
+    if (ys.value.toString().length == 0) {
+        alert("Lease Agreement Date is Required!!", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+    var qs = document.getElementById("file");
+
+    if (qs.value.toString().length == 0) {
+        alert("Lease Agreement File Not Uploaded!!", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
 
 
-                console.log("SUCCESS : ", data);
-                $("#btnSubmit").prop("disabled", false);
-                $(".alert-success").show();
-                $(".alert-danger").hide();
+    var jsonDataObj = {
+        "name": $("#leaseName").val(),
+        "buildingName": $("#buildingName").val(),
+        "buildingLocation": $("#buildingLocation").val(),
+        "rentalFee": $("#rentalFee").val(),
+        "startDate": $("#startDate").val(),
+        "floorNumber": $("#floorNumber").val(),
+        "duration": $("#duration").val(),
+        "agreementDate": $("#agreementDate").val(),
+        "terms": $("#terms").val()
+    };
+    data.append("jsondata", JSON.stringify(jsonDataObj));
+    $("#btnSubmit").prop("disabled", true);
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "/api/v1/lease/addlease",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+
+            var r = document.getElementById("retry");
+            r.setAttribute("style", "display:none");
+            console.log("SUCCESS : ", data);
+            $("#btnSubmit").prop("disabled", false);
+            alert('Lease Saved Successfully ', 'success')
 
 
-            },
-            error: function (e) {
+        },
+        error: function (e) {
+            if (e.status.toString() == "200") {
 
-                $(".alert-success").hide();
-                $(".alert-danger").show();
+                var r = document.getElementById("retry");
+                r.setAttribute("style", "display:none");
+                alert("Lease  Saved Successfully ", 'success');
                 console.log("ERROR : ", e);
-                $("#btnSubmit").prop("disabled", false);
 
+            } else if (e.status.toString() == "500") {
+
+                var r = document.getElementById("retry");
+                r.setAttribute("style", "display:all");
+                alert(e.responseJSON.message, 'danger');
+                $("#btnSubmit").prop("disabled", false);
+                console.log("Date :", document.getElementById("startDate").value)
+                console.log("ERROR : ", e);
+
+            } else {
+
+                var r = document.getElementById("retry");
+                r.setAttribute("style", "display:all");
+                console.log("ERROR : ", e);
+                alert(e.message, 'success');
+                $("#btnSubmit").prop("disabled", false);
             }
 
-        });
+
+        }
 
     });
 
-});
+}
+
+// //Save Lesase
+// $(document).ready(function () {
+//
+//     $(".alert-success").hide();
+//     $(".alert-danger").hide();
+//     $("#btnSubmit").click(function () {
+//
+//         if (document.getElementById("buildingName").value == "") {
+//             window.alert("Name Is Required");
+//         }
+//
+//         var file = $('#fileUploadForm')[0];
+//         var data = new FormData(file);
+//
+//
+//         var jsonDataObj = {
+//             "name": $("#leaseName").val(),
+//             "buildingName": $("#buildingName").val(),
+//             "buildingLocation": $("#buildingLocation").val(),
+//             "rentalFee": $("#rentalFee").val(),
+//             "startDate": $("#startDate").val(),
+//             "floorNumber":$("#floorNumber").val(),
+//             "duration": $("#duration").val(),
+//             "agreementDate": $("#agreementDate").val(),
+//             "terms": $("#terms").val()
+//         };
+//         data.append("jsondata", JSON.stringify(jsonDataObj));
+//         $("#btnSubmit").prop("disabled", true);
+//         $.ajax({
+//             type: "POST",
+//             enctype: 'multipart/form-data',
+//             url: "/api/v1/lease/addlease",
+//             data: data,
+//             processData: false,
+//             contentType: false,
+//             cache: false,
+//             timeout: 600000,
+//             success: function (data) {
+//
+//
+//                 console.log("SUCCESS : ", data);
+//                 $("#btnSubmit").prop("disabled", false);
+//                 $(".alert-success").show();
+//                 $(".alert-danger").hide();
+//
+//
+//             },
+//             error: function (e) {
+//
+//                 $(".alert-success").hide();
+//                 $(".alert-danger").show();
+//                 console.log("ERROR : ", e);
+//                 $("#btnSubmit").prop("disabled", false);
+//
+//             }
+//
+//         });
+//
+//     });
+//
+// });
 
 
 //Save Lease
@@ -295,7 +433,7 @@ function Terminate() {
                 btn.setAttribute("style", "display:none");
                 btn2.setAttribute("style", "display:none");
                 Close.setAttribute("style", "display:all");
-                alert('Lease Was already Terminated ', 'danger')
+                alert('Lease Was already Terminated ', 'danger');
                 console.log("ERROR : ", e.responseJSON.message);
                 return;
             }
@@ -313,7 +451,7 @@ function saveUpdate() {
         "name": $("#TenantName").val(),
         "buildingName": $("#buildingName").val(),
         "buildingLocation": $("#buildingLocation").val(),
-        "floorNumber":$("#floorNumber").val(),
+        "floorNumber": $("#floorNumber").val(),
         "rentalFee": $("#rentalFee").val(),
         "startDate": $("#startDate").val(),
         "duration": $("#duration").val(),
@@ -321,6 +459,8 @@ function saveUpdate() {
         "terms": $("#terms").val()
     };
 
+    let ar = document.getElementById("retry");
+    ar.setAttribute("style", "display:none");
     $.ajax({
         dataType: "json",
         crossDomain: "true",
@@ -332,15 +472,8 @@ function saveUpdate() {
 
         success: function (response) {
             console.log(response)
-            // let ar = document.getElementById("alrt");
-            // let btn = document.getElementById("liveAlertBtn");
-            // let btn2 = document.getElementById("liveAlertkBtn");
-            // let Close = document.getElementById("Close");
-            //
-            // ar.setAttribute("style", "display:none");
-            // btn.setAttribute("style", "display:none");
-            // btn2.setAttribute("style", "display:none");
-            // Close.setAttribute("style", "display:all");
+
+            Close.setAttribute("style", "display:all");
             alert('Lease Updated Successfully !!', 'success')
             return;
 
@@ -348,32 +481,21 @@ function saveUpdate() {
         ,
         error: function (e) {
             if (e.status.toString() == "200") {
-                // let ar = document.getElementById("alrt");
-                // let btn = document.getElementById("liveAlertBtn");
-                // let btn2 = document.getElementById("liveAlertkBtn");
-                // let Close = document.getElementById("Close");
-                //
-                // ar.setAttribute("style", "display:none");
-                // btn.setAttribute("style", "display:none");
-                // btn2.setAttribute("style", "display:none");
-                // Close.setAttribute("style", "display:all");
+
+                Close.setAttribute("style", "display:all");
                 alert('Lease Updated Successfully !!', 'success')
                 return;
             } else if (e.status.toString() == "500") {
-                // let ar = document.getElementById("alrt");
-                // let btn = document.getElementById("liveAlertBtn");
-                // let btn2 = document.getElementById("liveAlertkBtn");
-                // let Close = document.getElementById("Close");
-                //
-                // ar.setAttribute("style", "display:none");
-                // btn.setAttribute("style", "display:none");
-                // btn2.setAttribute("style", "display:none");
-                // Close.setAttribute("style", "display:all");
-                alert( e.responseJSON.message, 'danger')
+
+                ar.setAttribute("display", "all");
+                Close.setAttribute("style", "display:all");
+                alert("There was an error in Updating record !!", 'danger')
                 console.log("ERROR : ", e.responseJSON.message);
                 return;
-            }else{
-                alert( e.responseJSON.message, 'danger')
+            } else {
+                ar.setAttribute("style", "display:all");
+                Close.setAttribute("style", "display:all");
+                alert(e.responseJSON.message, 'danger')
                 console.log("ERROR : ", e);
                 return;
             }
@@ -388,26 +510,39 @@ var alertPlaceholder2 = document.getElementById('liveAlertPlaceholder2');
 
 
 function alert(message, type) {
-    var wrapper = document.createElement('div');
-    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
-    alertPlaceholder.append(wrapper);
-}
-
-function alert2(message, type) {
-
-    var h=document.getElementById("err");
+    var h = document.getElementById("err");
     if (h) {
 
         h.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
 
-        }else{
+    } else {
         var wrapper = document.createElement('div');
-        wrapper.setAttribute("id","err");
+        wrapper.setAttribute("id", "err");
+        wrapper.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+        alertPlaceholder.append(wrapper);
+    }
+
+
+    // var wrapper = document.createElement('div');
+    // wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+    // alertPlaceholder.append(wrapper);
+}
+
+function alert2(message, type) {
+
+    var h = document.getElementById("err");
+    if (h) {
+
+        h.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+    } else {
+        var wrapper = document.createElement('div');
+        wrapper.setAttribute("id", "err");
         wrapper.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
 
         alertPlaceholder2.append(wrapper);
     }
-
 
 
 }
@@ -539,6 +674,140 @@ function fetchRecord() {
         }
     })
 }
+
+
+// Load Terminate Table
+
+function T_Records() {
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getleases',
+        type: 'GET',
+        success: function (response) {
+            let items = response
+
+            console.log(response)
+
+            var t_body = document.getElementById("t_body");
+
+
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
+
+            for (let i = 0; i < items.length; i++) {
+                let html = `<td class="sorting_1">  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].name}
+                        </td>
+                        <td>  ${items[i].rentalFee}
+                        </td>
+                        <td> ${items[i].buildingName}
+                        </td> 
+                        <td> ${items[i].buildingLocation}
+                        </td>
+                        </td>
+                        <td > ${items[i].status}
+                        </td>
+                        <td >${items[i].agreementDate}
+                    </td>
+                    <td>
+                        
+                            <!--<a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>-->
+                           <a href="#"> <span class="badge badge-pill badge-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</span></a>
+                    </td>`
+
+
+                let tr = document.createElement("tr");
+                if (i % 2 == 0) {
+                    tr.setAttribute("class", "even");
+                } else {
+                    tr.setAttribute("class", "odd");
+                }
+                tr.setAttribute("role", "row");
+                tr.innerHTML = html;
+
+                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+
+                // let htmlSpacer = "<td colspan=\"100\">"
+                // let spacer = document.createElement("tr");
+                // spacer.className = "spacer";
+                //
+                // spacer.innerHTML = htmlSpacer;
+
+                // t_body.appendChild(spacer);
+                t_body.appendChild(tr);
+            }
+        }
+    })
+    var body = document.getElementById("body");
+    //
+    //
+    let st = document.createElement("script");
+    st.setAttribute("src", "../../js/jquery.dataTables.min.js");
+    body.append(st);
+    //
+    //  let a = document.createElement("script");
+    //  a.setAttribute("src","../../js/jquery.min.js");
+    //  body.append(a);
+    //
+    //
+    //  let b = document.createElement("script");
+    //  b.setAttribute("src","../../js/popper.min.js");
+    //  body.append(b);
+    //
+    //  let d= document.createElement("script");
+    //  d.setAttribute("src","../../js/moment.min.js");
+    //  body.append(d);
+    //
+    //  let u= document.createElement("script");
+    //  u.setAttribute("src","../../js/bootstrap.min.js");
+    //  body.append(u);
+    //
+    //  let e= document.createElement("script");
+    //  e.setAttribute("src","../../js/simplebar.min.js");
+    //  body.append(e);
+    //
+    //  let f= document.createElement("script");
+    //  f.setAttribute("src","../../js/jquery.stickOnScroll.js");
+    //  body.append(f);
+    //
+    //  let g= document.createElement("script");
+    //  g.setAttribute("src","../../js/config.js");
+    //  body.append(g);
+    //
+    //  let h= document.createElement("script");
+    //  h.setAttribute("src","../../js/bootstrap.bundle.min.js");
+    //  body.append(h);
+    //
+    //  let j= document.createElement("script");
+    //  j.setAttribute("src","../../js/popper.min.js");
+    //  body.append(j);
+    //
+    //  let k= document.createElement("script");
+    //  k.setAttribute("src","../../js/apps.js");
+    //  body.append(k);
+    //
+    //
+    //
+    //
+    //
+    //
+    //  let rt=document.createElement("script");
+    //  rt.setAttribute("src","../../js/dataTables.bootstrap4.min.js");
+    //  body.append(rt);
+    //
+    //
+    //  let stt = document.createElement("script");
+    //  stt.setAttribute("type","text/javascript")
+    //  stt.innerText=`$('#dataTable-1').DataTable({autoWidth: true,"lengthMenu": [[16, 32, 64, -1],[16, 32, 64, "All"]]});`
+    //  body.append(stt);
+    //
+    //
+    //  console.log(st);
+    //  console.log(stt);
+    //  console.log(rt);
+}
+
 
 //Get Leases
 function getLeases() {
@@ -679,6 +948,186 @@ function getLeases() {
     //  console.log(stt);
     //  console.log(rt);
 }
+
+//Get Leases
+function NoticeRec() {
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getleases',
+        type: 'GET',
+        success: function (response) {
+            let items = response
+
+            console.log(response)
+
+            var t_body = document.getElementById("t_body");
+
+
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
+
+            for (let i = 0; i < items.length; i++) {
+                let html = `<td class="sorting_1">  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].name}
+                        </td>
+                        <td> ${items[i].buildingName}  ${items[i].buildingLocation}
+                        </td>
+                        <td >${items[i].endDate}
+                        </td>
+                        <td > ${items[i].status}
+                        </td>
+                        <td>
+                            <div class="progress progress-sm" style="height:3px">
+                                <div class="progress-bar" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                        <td><a href="#"> <span class="badge badge-pill badge-primary">Notify</span></a></td>
+                       
+                   `
+                // <td>
+                // <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                //         data-toggle="dropdown" aria-haspopup="true"
+                //         aria-expanded="false" >
+                //     <span class="text-muted sr-only">Action</span>
+                // </button>
+                // <div class="dropdown-menu dropdown-menu-right">
+                //     <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                //     <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
+                //     <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
+                //     <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
+                // </div>
+                // </td>
+
+
+                let tr = document.createElement("tr");
+                if (i % 2 == 0) {
+                    tr.setAttribute("class", "even");
+                } else {
+                    tr.setAttribute("class", "odd");
+                }
+                tr.setAttribute("role", "row");
+                tr.innerHTML = html;
+
+                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+
+                // let htmlSpacer = "<td colspan=\"100\">"
+                // let spacer = document.createElement("tr");
+                // spacer.className = "spacer";
+                //
+                // spacer.innerHTML = htmlSpacer;
+
+                // t_body.appendChild(spacer);
+                t_body.appendChild(tr);
+            }
+        }
+    })
+    var body = document.getElementById("body");
+    //
+    //
+    let st = document.createElement("script");
+    st.setAttribute("src", "../../js/jquery.dataTables.min.js");
+    body.append(st);
+    //
+    //  let a = document.createElement("script");
+    //  a.setAttribute("src","../../js/jquery.min.js");
+    //  body.append(a);
+    //
+    //
+    //  let b = document.createElement("script");
+    //  b.setAttribute("src","../../js/popper.min.js");
+    //  body.append(b);
+    //
+    //  let d= document.createElement("script");
+    //  d.setAttribute("src","../../js/moment.min.js");
+    //  body.append(d);
+    //
+    //  let u= document.createElement("script");
+    //  u.setAttribute("src","../../js/bootstrap.min.js");
+    //  body.append(u);
+    //
+    //  let e= document.createElement("script");
+    //  e.setAttribute("src","../../js/simplebar.min.js");
+    //  body.append(e);
+    //
+    //  let f= document.createElement("script");
+    //  f.setAttribute("src","../../js/jquery.stickOnScroll.js");
+    //  body.append(f);
+    //
+    //  let g= document.createElement("script");
+    //  g.setAttribute("src","../../js/config.js");
+    //  body.append(g);
+    //
+    //  let h= document.createElement("script");
+    //  h.setAttribute("src","../../js/bootstrap.bundle.min.js");
+    //  body.append(h);
+    //
+    //  let j= document.createElement("script");
+    //  j.setAttribute("src","../../js/popper.min.js");
+    //  body.append(j);
+    //
+    //  let k= document.createElement("script");
+    //  k.setAttribute("src","../../js/apps.js");
+    //  body.append(k);
+    //
+    //
+    //
+    //
+    //
+    //
+    //  let rt=document.createElement("script");
+    //  rt.setAttribute("src","../../js/dataTables.bootstrap4.min.js");
+    //  body.append(rt);
+    //
+    //
+    //  let stt = document.createElement("script");
+    //  stt.setAttribute("type","text/javascript")
+    //  stt.innerText=`$('#dataTable-1').DataTable({autoWidth: true,"lengthMenu": [[16, 32, 64, -1],[16, 32, 64, "All"]]});`
+    //  body.append(stt);
+    //
+    //
+    //  console.log(st);
+    //  console.log(stt);
+    //  console.log(rt);
+}
+
+
+function getTenants() {
+    $.ajax({
+        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        type: 'GET',
+        success: function (response) {
+            let items = response
+            // const today = new Date();
+
+            console.log(response)
+
+            var t_body = document.getElementById("t_body");
+
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
+
+
+            for (let i = 0; i < items.length; i++) {
+                let html = `${items[i].name} ${items[i].surname}`
+
+                let tr = document.createElement("option");
+
+                var name = `${items[i].name} ${items[i].surname}`;
+                //tr.setAttribute("value","${items[i].name} ${items[i].surname}")
+                tr.setAttribute("value", name.toString())
+
+                < !-- < td >${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()} < /td>-->
+
+                tr.innerHTML = html;
+
+                t_body.appendChild(tr);
+            }
+        }
+    })
+}
+
 
 function saveProperty() {
     let name = document.getElementById("propertyName").value
