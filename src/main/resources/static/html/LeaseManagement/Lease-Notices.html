@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,7 +31,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="NoticeRec()">
+<body class="vertical  light" onload="getNotices()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -39,12 +48,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-shortcut">
+                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal"
+                   data-target=".modal-shortcut">
                     <span class="fe fe-grid fe-16"></span>
                 </a>
             </li>
             <li class="nav-item nav-notif">
-                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-notif">
+                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal"
+                   data-target=".modal-notif">
                     <span class="fe fe-bell fe-16"></span>
                     <span class="dot dot-md bg-success"></span>
                 </a>
@@ -137,16 +148,20 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span
+                                    class="ml-1 item-text">Tenant List</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span
+                                    class="ml-1 item-text">Add Tenant</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span
+                                    class="ml-1 item-text">Assign Property</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span
+                                    class="ml-1 item-text">Leasing</span></a>
                         </li>
                     </ul>
                 </li>
@@ -179,13 +194,16 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="charts">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span
+                                    class="ml-1 item-text">Tenant Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span
+                                    class="ml-1 item-text">Notice Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span
+                                    class="ml-1 item-text">Lease Documents </span></a>
                         </li>
                     </ul>
                 </li>
@@ -197,16 +215,20 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span
+                                    class="ml-1 item-text">Request</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span class="ml-1 item-text">Schedule</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span
+                                    class="ml-1 item-text">Schedule</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span
+                                    class="ml-1 item-text">Overdue</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span
+                                    class="ml-1 item-text">Pending</span></a>
                         </li>
                     </ul>
                 </li>
@@ -249,10 +271,12 @@
                                             <td>Jun 8, 2019</td>
                                             <td>
                                                 <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width: 87%"
+                                                         aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-primary">Notify</span></a></td>
+                                            <td><a href="#"> <span class="badge badge-pill badge-primary">Notify</span></a>
+                                            </td>
                                         </tr>
 
                                         </tfoot>
@@ -394,21 +418,22 @@
         </div>
     </main> <!-- main -->
 </div> <!-- .wrapper -->
+<script src="../../js/customlease.js"></script>
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/popper.min.js"></script>
 <script src="../../js/moment.min.js"></script>
-<script src="../../js/customlease.js"></script>
+
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/simplebar.min.js"></script>
-<script src='../../js/daterangepicker.js'></script>
+<!--<script src='../../js/daterangepicker.js'></script>-->
 <script src='../../js/jquery.stickOnScroll.js'></script>
 <script src="../../js/tinycolor-min.js"></script>
 <script src="../../js/config.js"></script>
-<!--<script src='../../js/jquery.dataTabl.min.js'></script>-->
-<scriespt src='../../js/dataTables.bootstrap4.min.js'></scriespt>
+<script src='../../js/jquery.dataTable.min.js'></script>
+<script src='../../js/dataTables.bootstrap4.min.js'></script>
 
 <!--<script src="../../js/jquery.min.js"></script>-->
-<script src="../../js/customlease.js"></script>
+<!--<script src="../../js/customlease.js"></script>-->
 <!--<script src="../../js/popper.min.js"></script>-->
 <!--<script src="../../js/moment.min.js"></script>-->
 <!--<script src="../../js/bootstrap.min.js"></script>-->
