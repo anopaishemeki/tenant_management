@@ -42,6 +42,9 @@ public class Property {
     private ContactDetails propertyContactObject;
     private Long contact;
     private LocalDateTime dateAdded;
+    private LocalDateTime lastUpdate;
+    private int numberOfCompartments;
+    private int numberOfFloors;
 
     public Property(String name, Address addressObject, Long address, String tenant, Long insurance, String description, String propertyType, Owner ownerObject, Long owner, String status, double assetValue, ContactDetails propertyContactObject, Long contact) {
         this.name = name;
@@ -58,5 +61,10 @@ public class Property {
         this.propertyContactObject = propertyContactObject;
         this.contact = contact;
         this.dateAdded = LocalDateTime.now();
+    }
+
+    public Property(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }

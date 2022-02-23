@@ -54,6 +54,11 @@ public class MaintenanceService {
         return maintenanceRepo.findAll();
     }
 
+    public List<MaintenanceRequests> getScheduled(){
+        setStatus();
+        return maintenanceRepo.findByScheduleNotNull();
+    }
+
 
     public MaintenanceRequests getMaintenanceRequestsById(long Id) throws Exception {
         return maintenanceRepo.findById(Id).orElseThrow(() -> new Exception("MaintenanceRequest is not found"));
@@ -91,6 +96,7 @@ public class MaintenanceService {
     public void addSchedule(Long id, MaintenanceRequests scheduleDetails) throws Exception {
         MaintenanceRequests maintenanceRequest = maintenanceRepo.findById(id)
                 .orElseThrow(() -> new Exception("Employee not exist with id :" + id));
+
 
 
         maintenanceRequest.setSchedule(scheduleDetails.getSchedule());

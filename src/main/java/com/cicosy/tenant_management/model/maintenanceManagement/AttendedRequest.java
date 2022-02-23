@@ -19,7 +19,45 @@ public class AttendedRequest {
     private String request;
     private String description;
     private LocalDate dateLogged;
-    private LocalDate datAttended = LocalDate.now();
+    private LocalDate dateAttended = LocalDate.now();
 
+    public Long getId() {
+        return Id;
+    }
 
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getDateLogged() {
+        return dateLogged;
+    }
+
+    public void setDateLogged(LocalDate dateLogged) {
+        this.dateLogged = dateLogged;
+    }
+
+    public LocalDate getDatAttended() {
+        return dateAttended;
+    }
+
+    public void setDatAttended(LocalDate datAttended) {
+        this.dateAttended = datAttended;
+    }
 }

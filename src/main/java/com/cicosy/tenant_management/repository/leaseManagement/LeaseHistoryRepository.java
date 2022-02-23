@@ -16,6 +16,6 @@ public interface LeaseHistoryRepository
 //    @Query("select s from Lease s WHERE s.buildingLocation = ?1 ")
     Optional<LeaseHistory>findLeaseByBuildingLocation(String buildingLocation);
 
-
+           
 
 }
