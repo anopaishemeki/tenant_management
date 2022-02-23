@@ -21,6 +21,11 @@ public class MaintenanceController {
         return maintenanceService.getAllMaintenanceRequests();
 
     }
+    @RequestMapping("getAllScheduled")
+    public List<MaintenanceRequests> getAllScheduled() {
+        return maintenanceService.getAllMaintenanceRequests();
+
+    }
 
 
     // get maintenance  by id rest api

@@ -54,6 +54,11 @@ public class MaintenanceService {
         return maintenanceRepo.findAll();
     }
 
+    public List<MaintenanceRequests> getScheduled(){
+        setStatus();
+        return maintenanceRepo.findByScheduleNotNull();
+    }
+
 
     public MaintenanceRequests getMaintenanceRequestsById(long Id) throws Exception {
         return maintenanceRepo.findById(Id).orElseThrow(() -> new Exception("MaintenanceRequest is not found"));
