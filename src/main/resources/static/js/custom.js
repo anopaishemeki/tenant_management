@@ -15,7 +15,7 @@ function setAddPropertyDropDown() {
         type: 'GET',
         success: function (response) {
             console.log(response)
-            let dropDown = document.getElementById("propertyType");
+            let dropDown = document.getElementById("property");
 
             while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
