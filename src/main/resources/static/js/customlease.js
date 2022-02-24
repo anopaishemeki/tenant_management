@@ -713,16 +713,16 @@ function T_Records() {
                         <td> ${items[i].buildingLocation}
                         </td>
                         </td>
-                        <td > ${items[i].status}
+                        <td> ${items[i].status}
                         </td>
                         <td >${items[i].agreementDate}
                     </td>
                     <td>
+                    
                         
                             <!--<a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>-->
                            <a href="#"> <span class="badge badge-pill badge-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</span></a>
                     </td>`
-
 
                 let tr = document.createElement("tr");
                 if (i % 2 == 0) {
@@ -957,7 +957,7 @@ function getLeases() {
     //  console.log(rt);
 }
 
-
+// Get Tenant Names
 function getTenants(){
     $.ajax({
         url: 'http://localhost:8090/api/tenants/get-all-tenants',
@@ -994,6 +994,204 @@ function getTenants(){
     })
 }
 
+
+// get Property details
+function getProperty() {
+    $.ajax({
+        url: 'http://localhost:8090/api/property/get-all-properties',
+        type: 'GET',
+        success: function (response) {
+            let items = response
+
+            console.log(response)
+
+            var t_body = document.getElementById("BN_body");
+
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
+
+            for(let i = 0; i < items.length; i++){
+                let html = `${items[i].name}`
+
+                let tr = document.createElement("option");
+
+                var name=`${items[i].name}`;
+                //tr.setAttribute("value","${items[i].name} ${items[i].surname}")
+                tr.setAttribute("value",name);
+
+                tr.innerHTML = html;
+
+                t_body.appendChild(tr);
+            }
+
+
+
+
+            var tl_body = document.getElementById("BL_body");
+
+            while (tl_body.hasChildNodes()) {
+                tl_body.removeChild(tl_body.firstChild);
+            }
+
+            for(let i = 0; i < items.length; i++){
+                let html = `${items[i].addressObject.city}`
+
+                let tr = document.createElement("option");
+
+                var name=`${items[i].addressObject.city}`;
+                //tr.setAttribute("value","${items[i].name} ${items[i].surname}")
+                tr.setAttribute("value",name);
+
+                tr.innerHTML = html;
+
+                tl_body.appendChild(tr);
+            }
+
+
+        }
+    })
+}
+
+//Get Lease Notices
+function getLeaseNotice() {
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getleases',
+        type: 'GET',
+        success: function (response) {
+            let items = response
+
+            console.log(response)
+
+            var t_body = document.getElementById("t_body");
+
+
+            // while (t_body.hasChildNodes()) {
+            //     t_body.removeChild(t_body.firstChild);
+            // }
+
+            for (let i = 0; i < items.length; i++) {
+                let html = `<td class="sorting_1">  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].name}
+                        </td>
+                        <td>  ${items[i].rentalFee}
+                        </td>
+                        <td> ${items[i].buildingName}
+                        </td> 
+                        <td> ${items[i].buildingLocation}
+                        </td>
+                        <td > ${items[i].terms}
+                        </td>
+                        <td > ${items[i].status}
+                        </td>
+                        <td >${items[i].agreementDate}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                                data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" >
+                            <span class="text-muted sr-only">Action</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
+                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
+                        </div>
+                    </td>`
+
+
+                let tr = document.createElement("tr");
+                if (i % 2 == 0) {
+                    tr.setAttribute("class", "even");
+                } else {
+                    tr.setAttribute("class", "odd");
+                }
+                tr.setAttribute("role", "row");
+                tr.innerHTML = html;
+
+                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+
+                // let htmlSpacer = "<td colspan=\"100\">"
+                // let spacer = document.createElement("tr");
+                // spacer.className = "spacer";
+                //
+                // spacer.innerHTML = htmlSpacer;
+
+                // t_body.appendChild(spacer);
+                t_body.appendChild(tr);
+            }
+        }
+    })
+    var body = document.getElementById("body");
+    //
+    //
+    let st = document.createElement("script");
+    st.setAttribute("src", "../../js/jquery.dataTables.min.js");
+    body.append(st);
+    //
+    //  let a = document.createElement("script");
+    //  a.setAttribute("src","../../js/jquery.min.js");
+    //  body.append(a);
+    //
+    //
+    //  let b = document.createElement("script");
+    //  b.setAttribute("src","../../js/popper.min.js");
+    //  body.append(b);
+    //
+    //  let d= document.createElement("script");
+    //  d.setAttribute("src","../../js/moment.min.js");
+    //  body.append(d);
+    //
+    //  let u= document.createElement("script");
+    //  u.setAttribute("src","../../js/bootstrap.min.js");
+    //  body.append(u);
+    //
+    //  let e= document.createElement("script");
+    //  e.setAttribute("src","../../js/simplebar.min.js");
+    //  body.append(e);
+    //
+    //  let f= document.createElement("script");
+    //  f.setAttribute("src","../../js/jquery.stickOnScroll.js");
+    //  body.append(f);
+    //
+    //  let g= document.createElement("script");
+    //  g.setAttribute("src","../../js/config.js");
+    //  body.append(g);
+    //
+    //  let h= document.createElement("script");
+    //  h.setAttribute("src","../../js/bootstrap.bundle.min.js");
+    //  body.append(h);
+    //
+    //  let j= document.createElement("script");
+    //  j.setAttribute("src","../../js/popper.min.js");
+    //  body.append(j);
+    //
+    //  let k= document.createElement("script");
+    //  k.setAttribute("src","../../js/apps.js");
+    //  body.append(k);
+    //
+    //
+    //
+    //
+    //
+    //
+    //  let rt=document.createElement("script");
+    //  rt.setAttribute("src","../../js/dataTables.bootstrap4.min.js");
+    //  body.append(rt);
+    //
+    //
+    //  let stt = document.createElement("script");
+    //  stt.setAttribute("type","text/javascript")
+    //  stt.innerText=`$('#dataTable-1').DataTable({autoWidth: true,"lengthMenu": [[16, 32, 64, -1],[16, 32, 64, "All"]]});`
+    //  body.append(stt);
+    //
+    //
+    //  console.log(st);
+    //  console.log(stt);
+    //  console.log(rt);
+}
 
 function saveProperty() {
     let name = document.getElementById("propertyName").value

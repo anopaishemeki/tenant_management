@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="getTenants()">
+<body class="vertical  light  " onload="getTenants(), getProperty()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -252,21 +252,25 @@
                                                 <select class="form-control select2" id="leaseName" name="leaseName"
                                                         required>
                                                     <optgroup label="Available Tenants" id="t_body">
-                                                        <option value="AK">John</option>
-                                                        <option value="HI">Peter</option>
-                                                        <option value="CA">Marry</option>
-                                                        <option value="NV" disabled="disabled">Winny (disabled)</option>
-                                                        <option value="OR">Denzel</option>
-                                                        <option value="WA">Privie</option>
+                                                        <option value="">...Select Tenant Name...</option>
+
                                                     </optgroup>
                                                 </select>
                                             </div> <!-- form-group -->
                                             <div class="col-md-2"></div>
                                             <div class="col-md-4 form-group mb-3">
                                                 <label for="buildingName">Building Name:</label>
-                                                <input type="text" class="form-control" id="buildingName"
-                                                       name="buildingName" required>
-                                                <!--<div class="valid-feedback"> Looks good! </div>-->
+                                                <select class="form-control select2" id="buildingName" name="buildingName"
+                                                        required>
+                                                    <optgroup label="Available Buildings" id="BN_body">
+                                                        <option value="">..Select Building Name..</option>
+
+                                                    </optgroup>
+                                                </select>
+
+
+                                                <!--<input type="text" class="form-control" id="buildingName" name="buildingName" required>-->
+
                                             </div>
                                             <!-- form-group -->
                                         </div> <!-- form-row -->
@@ -274,8 +278,16 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4 mb-3">
                                                 <label for="buildingLocation">Building Location:</label>
-                                                <input type="text" class="form-control" id="buildingLocation"
-                                                       name="buildingLocation" required>
+                                                <select class="form-control select2" id="buildingLocation" name="buildingLocation"
+                                                        required>
+                                                    <optgroup label="Locations" id="BL_body">
+                                                        <option value="">..Select Building Location..</option>
+
+                                                    </optgroup>
+                                                </select>
+
+
+                                                <!--<input type="text" class="form-control" id="buildingLocation" name="buildingLocation" required>-->
                                                 <!--<div class="valid-feedback"> Looks good! </div>-->
                                             </div>
                                             <div class="col-md-2"></div>
