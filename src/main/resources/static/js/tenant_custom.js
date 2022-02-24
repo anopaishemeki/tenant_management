@@ -449,7 +449,7 @@ function getTenantsAssign(){
 
             for (let i = 0; i < items.length; i++) {
                 let html =
-                    `<td>${items[i].name}</td>`
+                    `<option onclick="getCompartmentDetails(i)">${items[i].name}</option>`
 
                 let tr = document.createElement("option");
 
@@ -457,7 +457,7 @@ function getTenantsAssign(){
                 tr.innerHTML = html;
 
                 buildings.appendChild(tr);
-                buildings.onchange(getCompartmentDetails(i))
+
 
 
             }
