@@ -9,7 +9,6 @@ package com.cicosy.tenant_management.model.document_management;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public class Documents implements Serializable
@@ -17,13 +16,13 @@ public class Documents implements Serializable
 
   @Id
   @SequenceGenerator(
-          name = "leaseDocuments_sequence",
-          sequenceName = "leaseDocuments_sequence",
+          name = "Documents_sequence",
+          sequenceName = "Documents_sequence",
           allocationSize = 1
   )
   @GeneratedValue(
           strategy = GenerationType.SEQUENCE,
-          generator = "leaseDocuments_sequence"
+          generator = "Documents_sequence"
   )
   private Long id;
 
@@ -41,6 +40,9 @@ public class Documents implements Serializable
     this.name = name;
     this.type = type;
     this.data = data;
+  }
+  public Documents(String name){
+    this.name=name;
   }
 
   public Long getId() {
