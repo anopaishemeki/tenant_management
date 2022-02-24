@@ -28,54 +28,64 @@ import org.springframework.web.multipart.MultipartFile;
  */
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
+import com.cicosy.tenant_management.controler.document_management.exception.FileNotFoundException;
+import com.cicosy.tenant_management.controler.document_management.exception.FileStorageException;
+import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
+import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
+
+import java.io.File;
+
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class NoticeDocumentsService {
+@Transactional	
+public class NoticeDocumentsService  {
 
-  @Autowired
-  private NoticeDocumentRepo noticeRepo;
+	@Autowired
+	NoticeDocumentRepo noticeDocumentRepo;
+	
+	public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/noticeDocuments";
+	private final Path fileStorageLocation= Paths.get(uploadDirectory)
+			.toAbsolutePath().normalize();
+	
+	public String saveFile(NoticeDocuments noticeDocuments) throws IOException {
+		// Save Employee With File
+		noticeDocumentRepo.save(noticeDocuments);
+		return "success";
+	}
 
-  public NoticeDocuments store(MultipartFile file) throws IOException {
-      
-      
-    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-    NoticeDocuments documents = new NoticeDocuments(fileName, file.getContentType(), file.getBytes());
-
-    return noticeRepo.save(documents);
-  }
-
-  public NoticeDocuments getFile(Long id) {
-    return noticeRepo.findById(id).get();
-  }
-  
-  public Stream<NoticeDocuments> getAllFiles() {
-    return noticeRepo.findAll().stream();
-  }
-
-  
-      // Read operation
-  
- 
-  public NoticeDocuments getNoticeDocumentsById(Long Id) {
-        Optional < NoticeDocuments > optional = noticeRepo.findById(Id);
-        NoticeDocuments documents = null;
-        if (optional.isPresent()) {
-            documents = optional.get();
-        } else {
-            throw new RuntimeException(" Document not found for id :: " + Id);
+	
+	public Resource loadFileAsResource(String fileName) {
+		try {
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            System.out.println(filePath+" "+resource);
+            if(resource.exists()) {
+                return resource;
+            } else {
+                throw new FileNotFoundException("File not found " + fileName);
+            }
+        } catch (MalformedURLException ex) {
+            throw new FileNotFoundException("File not found " + fileName, ex);
         }
-        return documents;
-    }
+	}
 
-  
-    public void deleteDocumentById(Long Id) {
-        this.noticeRepo.deleteById(Id);
-    }
- 
-  
-  
+	
 }
+

@@ -7,147 +7,121 @@
 package com.cicosy.tenant_management.controler.document_management;
 
 
-import com.cicosy.tenant_management.controler.document_management.message.Response;
-import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
-
-
-import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-
-
-
-/**
- *
- * @author Dejong
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.ui.Model;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 
-@RestController
-@RequestMapping("api/lease")
+
+@Controller
+@RequestMapping("/file-upload")
 public class LeaseDocumentContoller {
 
-  @Autowired
-  private LeaseDocumentService leaseDocumentService;
+	private static Logger log = LoggerFactory.getLogger(LeaseDocumentContoller.class);
+	public static String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
 
+	@Autowired
+	LeaseDocumentService leaseDocumentService;
+  
   
 
-  @RequestMapping(value="/upoadleaseFiles", method = RequestMethod.POST, consumes = "application/pdf")
-  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
-      
-    	 {
-    String message = "";
-    try {
-      leaseDocumentService.store(file);
-
-      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-      
-      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-    } catch (Exception e) {
-      message = "Could not upload the ,Upload a  pdf file: " + file.getOriginalFilename() + "!";
-      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-    }
-  }
-
-//  @PostMapping("/upoadleaseFiles")
-//  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file)
-//
-//    	 {
-//    String message = "";
-//    Lease lease= new Lease();
-//
-//    try {
-//      leaseDocumentService.store(file,lease);
-//
-//      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-//
-//      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-//    } catch (Exception e) {
-//      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-//      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-//    }
-//  }
 
 
-  @GetMapping("/getLeasedocuments")
-  public ResponseEntity<List<Response>> getListFiles() {
-    List<Response> files = leaseDocumentService.getAllFiles().map(dbFile -> {
-      String fileDownloadUri = ServletUriComponentsBuilder
-          .fromCurrentContextPath()
-          .path("/files/")
-          .path(dbFile.getId().toString())
-          .toUriString();
+	@PostMapping("/upload")
+	public @ResponseBody ResponseEntity<?> createFile(LeaseDocuments leaseDocuments,
+			 final @RequestParam("file") MultipartFile file) {
+		try {
+		
+			String fileName = file.getOriginalFilename();
+			String filePath = Paths.get(uploadDirectory, fileName).toString();
+			String fileType = file.getContentType();
+			long size = file.getSize();
+			String fileSize = String.valueOf(size);
+			
 
-      return new Response(
-          dbFile.getName(),
-          fileDownloadUri,
-          dbFile.getType(),
-          dbFile.getData().length);
-    }).collect(Collectors.toList());
+		
+			log.info("FileName: " + file.getOriginalFilename());
+			log.info("FileType: " + file.getContentType());
+			log.info("FileSize: " + file.getSize());
 
-    return ResponseEntity.status(HttpStatus.OK).body(files);
-  }
+			// Save the file locally
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
+			stream.write(file.getBytes());
+			stream.close();
 
-  @GetMapping("/getfiles/{id}")
-  public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
-    LeaseDocuments leaseDocuments = leaseDocumentService.getFile(id);
+	;
+			leaseDocuments.setFileName(fileName);
+			leaseDocuments.setFilePath(filePath);
+			leaseDocuments.setFileType(fileType);
+			leaseDocuments.setFileSize(fileSize);
+			
 
-    return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + leaseDocuments.getName() + "\"")
-        .body(leaseDocuments.getData());
-  }
+			String status = leaseDocumentService.saveFile(leaseDocuments);
+			if (status.equals("success")) {
+				log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
+				return new ResponseEntity<>(" File Saved - " + fileName, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("Exception: " + e);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping("/downloadFile/{fileName}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+		// Load file as Resource
+		Resource resource = leaseDocumentService.loadFileAsResource(fileName);
+		log.info("resource: " + resource);
+		// Try to determine file's content type
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+			log.info("contentType: " + contentType);
+		} catch (IOException ex) {
+			log.info("Could not determine file type.");
+		}
+
+		// Fallback to the default content type if type could not be determined
+		if (contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
 
 
 
-
-    @GetMapping("/leaseupdate/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") Long id, Model model) {
-
-        
-        LeaseDocuments leaseDocuments = leaseDocumentService.getLeaseDocumentsById(id);
-
-        
-        model.addAttribute("leaseDocuments", leaseDocuments);
-        return "update_documents";
-    }
-
-    @GetMapping("/deleteleasedocuments/{id}")
-    public String deleteLease(@PathVariable(value = "id") Long id) {
-
-        // call delete employee method 
-        this.leaseDocumentService.deleteDocumentById(id);
-        return "redirect:/";
-    }
-  @GetMapping(path = "status/{Status}")
-  public List<LeaseDocuments> getExpiredLeasesDoc(@PathVariable String Status) {
-    return leaseDocumentService.getExpiredLeasesDoc(Status);
-  }
-  
- 
-   
 
 }

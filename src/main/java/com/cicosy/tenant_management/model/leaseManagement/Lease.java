@@ -50,7 +50,8 @@ public class Lease {
     private int rentalFee;
     private int floorNumber;
     private String terms;
-
+    private String email;
+    private String phone;
     private int duration;
     private LocalDate endDate;
     private int timeLeft;
@@ -66,6 +67,8 @@ public class Lease {
                  int floorNumber,
                  int rentalFee,
                  String status,
+                 String email,
+                 String phone,
                  int duration,
                  int timeLeft,
                  String terms
@@ -78,6 +81,8 @@ public class Lease {
         this.duration = duration;
         this.timeLeft=timeLeft;
         this.status = status;
+        this.email=email;
+        this.phone=phone;
         this.floorNumber = floorNumber;
         this.buildingName = buildingName;
         this.buildingLocation = buildingLocation;
@@ -96,6 +101,8 @@ public class Lease {
                  int timeLeft,
                  String buildingLocation,
                  String status,
+                 String email,
+                 String phone,
                  int floorNumber,
                  int duration,
                  int rentalFee,
@@ -107,6 +114,8 @@ public class Lease {
         this.duration = duration;
         this.timeLeft=timeLeft;
         this.name = name;
+        this.email=email;
+        this.phone=phone;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;

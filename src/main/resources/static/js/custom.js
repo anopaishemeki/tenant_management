@@ -370,9 +370,14 @@ function saveProperty() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: function (response) {
-            alert("success" + response)
+            // alert("success" + response)
             console.log(response)
             // getProperties();
+            let element = document.getElementById("toast");
+
+            // Create toast instance
+            let myToast = new bootstrap.Toast(element);
+            myToast.show();
         }
     })
 }
