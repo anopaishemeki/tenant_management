@@ -1,5 +1,10 @@
 package com.cicosy.tenant_management.model.maintenanceManagement;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonAutoDetect
 public class MaintenanceRequests {
 
     @Id
@@ -28,7 +34,12 @@ public class MaintenanceRequests {
     private LocalDate overdueDate = LocalDate.now().plusDays(7);
 
     private String status ;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_id" )
 
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
+//    @JsonSerialize(using = LocalDateSerializer.class)
+    private Schedule schedule;
     public Long getId() {
         return id;
     }
@@ -93,9 +104,7 @@ public class MaintenanceRequests {
         this.schedule = schedule;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_id" )
-    private Schedule schedule;
+
 
 
 

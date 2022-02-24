@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../../css/select2.css">
     <link rel="stylesheet" href="../../css/dropzone.css">
     <link rel="stylesheet" href="../../css/uppy.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/jquery.steps.css">
     <link rel="stylesheet" href="../../css/jquery.timepicker.css">
     <link rel="stylesheet" href="../../css/quill.snow.css">
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  ">
+<body class="vertical  light  " onload="getTenants()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -141,16 +142,20 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span
+                                    class="ml-1 item-text">Tenant List</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span
+                                    class="ml-1 item-text">Add Tenant</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span
+                                    class="ml-1 item-text">Assign Property</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
+                            <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span
+                                    class="ml-1 item-text">Leasing</span></a>
                         </li>
                     </ul>
                 </li>
@@ -183,13 +188,16 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="charts">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span
+                                    class="ml-1 item-text">Tenant Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span
+                                    class="ml-1 item-text">Notice Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
+                            <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span
+                                    class="ml-1 item-text">Lease Documents </span></a>
                         </li>
                     </ul>
                 </li>
@@ -201,16 +209,20 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span
+                                    class="ml-1 item-text">Request</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span class="ml-1 item-text">Schedule</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/schedule.html"><span
+                                    class="ml-1 item-text">Schedule</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/overdueRequest.html"><span
+                                    class="ml-1 item-text">Overdue</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
+                            <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span
+                                    class="ml-1 item-text">Pending</span></a>
                         </li>
                     </ul>
                 </li>
@@ -239,7 +251,7 @@
                                                 <label for="leaseName">Tenant Name :</label>
                                                 <select class="form-control select2" id="leaseName" name="leaseName"
                                                         required>
-                                                    <optgroup label="Available Tenants">
+                                                    <optgroup label="Available Tenants" id="t_body">
                                                         <option value="AK">John</option>
                                                         <option value="HI">Peter</option>
                                                         <option value="CA">Marry</option>
@@ -284,7 +296,7 @@
                                             <div class="col-md-2"></div>
                                             <div class="form-group col-md-4 mb-3">
                                                 <label for="rentalFee">Rental Fee:</label>
-                                                <input class="form-control input-money" id="rentalFee" type="text"
+                                                <input class="form-control" id="rentalFee" type="number"
                                                        name="rentalFee" required>
                                             </div>
 
@@ -312,7 +324,7 @@
                                                     <div class="form-group mb-4">
                                                         <label for="terms">Lease Terms</label>
                                                         <textarea class="form-control" id="terms" rows="4"
-                                                                  placeholder="Type Lease terms Here, If none type 'N/A' "
+                                                                  placeholder="Type Lease terms Here "
                                                                   required></textarea>
                                                     </div>
 
@@ -333,19 +345,17 @@
                                                     <div class="col-md-2"></div>
                                                     <div class="form-group col-md-4 mb-3"
                                                          style="margin-bottom: 0px!important;">
-                                                        <div class="alert alert-success " style="display:none"> Record
-                                                            Saved Successfully
-                                                        </div>
-                                                        <div class="alert alert-danger " style="display: none;: hidden">
-                                                            Failed: Fill in all details
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="d-flex justify-content-center">
 
-                                            <button class="btn btn-primary " type="submit" id="btnSubmit">Save
+                                            <button class="btn btn-primary " type="submit" onclick="saveLease()"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" id="btnSubmit">
+                                                Save
                                                 Lease
                                             </button>
 
@@ -365,6 +375,41 @@
                     </div> <!-- .col-12 -->
                 </div> <!-- .row -->
             </div> <!-- .container-fluid -->
+
+            <div class="modal fade" id="exampleModal" tabindex="-1"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                 data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Save Record Dialog</h5>
+                            <a href="View-Lease.html">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-info" role="alert" id="alerrt">
+                                <div id="liveAlertPlaceholder"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
+                                    style="display: none">Edit & Retry
+                            </button>
+                            <a href="View-Lease.html">
+
+                                <button type="button" class="btn btn-success"
+                                        data-bs-dismiss="modal" id="Close"
+                                >Ok
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
@@ -498,7 +543,9 @@
                     </div>
                 </div>
             </div>
+        </div>
     </main> <!-- main -->
+
 </div> <!-- .wrapper -->
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/customlease.js"></script>
@@ -518,6 +565,9 @@
 <script src='../../js/dropzone.min.js'></script>
 <script src='../../js/uppy.min.js'></script>
 <script src='../../js/quill.min.js'></script>
+
+
+<script src='../../js/bootstrap.bundle.min.js'></script>
 <script>
     $('.select2').select2(
         {

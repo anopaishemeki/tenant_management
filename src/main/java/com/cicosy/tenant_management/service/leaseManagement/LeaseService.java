@@ -49,18 +49,23 @@ public class LeaseService {
             throw new IllegalStateException("Record with provided name already Exists");
 
         }
-
-
-        if ((lease.getBuildingLocation().isEmpty())) {
-            throw new IllegalStateException("Building Location Is Required");
+        if ((lease.getBuildingName().isEmpty())) {
+            lease.setBuildingName("Unspecified");
         }
-
-        if ((lease.getName().isEmpty())) {
-            throw new IllegalStateException("Tenant Name Is Required");
+        if ((lease.getTerms().isEmpty())) {
+            lease.setTerms("Unspecified");
         }
-        if ((lease.getStartDate().toString().isEmpty())) {
-            lease.setStartDate(LocalDate.now());
-        }
+//
+//        if ((lease.getBuildingLocation().isEmpty())) {
+//            throw new IllegalStateException("Building Location Is Required");
+//        }
+//
+//        if ((lease.getName().isEmpty())) {
+//            throw new IllegalStateException("Tenant Name Is Required");
+//        }
+//        if ((lease.getStartDate().toString().isEmpty())) {
+//            lease.setStartDate(LocalDate.now());
+//        }
 
 //        if (!(lease.getStartDate().toString().isEmpty()) &&
 //                !(lease.getEndDate().toString().isEmpty())) ;
@@ -70,10 +75,10 @@ public class LeaseService {
 //            }
 //        }
 
-        String s = String.valueOf(lease.getRentalFee());
-        if ((s.isEmpty())) {
-            throw new IllegalStateException("Rent Amount Is Required");
-        }
+//        String s = String.valueOf(lease.getRentalFee());
+//        if ((s.isEmpty())) {
+//            throw new IllegalStateException("Rent Amount Is Required");
+//        }
 //        if ((lease.getEndDate().toString().isEmpty())) {
 //            throw new IllegalStateException("End Date Is Required");
 //        }

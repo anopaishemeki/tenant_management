@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light  ">
+  <body class="vertical  light  " onload="getAttended()">
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -398,7 +398,7 @@
                             <!-- <th>Action</th> -->
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="t_body">
                           <tr>
                             <td>
                               <div class="custom-control custom-checkbox">
@@ -594,6 +594,7 @@
       </main> <!-- main -->
     </div> <!-- .wrapper -->
     <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/maintenanceApi.js"></script>
     <script src="../../js/popper.min.js"></script>
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
