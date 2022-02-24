@@ -457,11 +457,64 @@ function getTenantsAssign(){
                 tr.innerHTML = html;
 
                 buildings.appendChild(tr);
+                buildings.onchange(getCompartmentDetails(i))
+
+
             }
 
         }
 
     })
+
+    }
+
+    function getCompartmentDetails(id){
+
+        $.ajax({
+            url: 'http://localhost:8090/api/property/get-all-properties',
+            type: 'GET',
+            success: function (response) {
+                let buildings = response
+
+                console.log(response)
+
+
+
+                var fl = document.getElementById("building_option");
+                // while (tenant_list.hasChildNodes()) {
+                //     tenant_list.removeChild(tenant_list.firstChild);
+                // }
+
+                $.ajax({
+                    url: 'http://localhost:8090/api/compartment/get-compartments',
+                    type: 'GET',
+                    success: function (response) {
+                        let floors = response
+
+                        if (buildings[id].id == floors[i].property) {
+
+
+                            for (let i = 0; i < items.length; i++) {
+                                let html =
+                                    `<td>${items[i].floorNumber}</td>`
+
+                                let tr = document.createElement("option");
+
+
+                                tr.innerHTML = html;
+
+                                fl.appendChild(tr);
+
+
+                            }
+                        }
+                    }
+                })
+
+            }
+
+        })
+
 
     }
 
