@@ -989,6 +989,8 @@ function getTenants(){
                 tr.innerHTML = html;
 
                 t_body.appendChild(tr);
+
+
             }
         }
     })
