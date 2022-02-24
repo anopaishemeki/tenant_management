@@ -11,16 +11,20 @@ function setDropDownLocal(){
 
 function setAddPropertyDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property-id-and-name',
+        url: 'http://localhost:8090/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             console.log(response)
-            let dropDown = document.getElementById("propertyType");
+            let dropDown = document.getElementById("property");
+
+            while (dropDown.hasChildNodes()) {
+                dropDown.removeChild(dropDown.firstChild);
+            }
 
             for (let i = 0; i < response.length; i++){
                 let option = document.createElement("option");
 
-                option.text = response[i];
+                option.text = response[i].name;
                 option.setAttribute("value", `${response[i].id}`)
 
                 dropDown.appendChild(option);
@@ -30,7 +34,34 @@ function setAddPropertyDropDown() {
 }
 
 function saveCompartment(){
+    let property = document.getElementById("property").value;
+    let floorNumber = document.getElementById("propertyFloor").value;
+    let floorArea = document.getElementById("floorArea").value;
+    let rentalRate = document.getElementById("rentalRate").value;
+    let description = document.getElementById("description").value;
+    let compartmentNumber = document.getElementById("compartmentNumber").value;
 
+    let data = {
+        property,
+        floorNumber,
+        floorArea,
+        rentalRate,
+        description,
+        compartmentNumber
+    }
+
+    $.ajax({
+        url: 'http://localhost:8090/api/compartment/save-compartment',
+        type: 'POST',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            alert("success")
+            console.log(response)
+        }
+    })
 }
 
 function viewProperty(){
@@ -40,16 +71,7 @@ function viewProperty(){
         type: 'GET',
         success: function (response) {
             console.log(response)
-            let html = `<div class="row my-4">
-                            <div class="col-md-12">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header">
-                                        <strong class="card-title">Donec id elit non mi porta gravida at eget
-                                            metus.</strong>
-                                        <span class="float-right"><i class="fe fe-flag mr-2"></i><span
-                                                class="badge badge-pill badge-success text-white">Payment</span></span>
-                                    </div>
-                                    <div class="card-body">
+            let html = `<div class="card-body">
                                         <dl class="row align-items-center mb-0">
                                             <dt class="col-sm-2 mb-3 text-muted"> Name</dt>
                                             <dd class="col-sm-4 mb-3">
@@ -118,401 +140,74 @@ function viewProperty(){
                                                 <strong>Kelley Sonya</strong>
                                             </dd>-->
                                         </dl>
-                                    </div> <!-- .card-body -->
-                                </div> <!-- .card -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header">
-                                        <strong class="card-title">Ticket Thread</strong>
-                                        <span class="float-right"><i class="fe fe-message-circle mr-2"></i>4</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row align-items-center mb-4">
-                                            <div class="col-auto">
-                                                <div class="avatar avatar-sm mb-3 mx-4">
-                                                    <img src="../../assets/avatars/face-3.jpg" alt="..."
-                                                         class="avatar-img rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <strong>Hester Nissim</strong>
-                                                <div class="mb-2">Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                                                    condimentum nibh, ut fermentum massa justo sit amet risus.
-                                                </div>
-                                                <div class="card mb-3 bg-light w-50">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col-md-2 text-center">
-                                                            <img src="../../assets/products/p1.jpg" alt="..."
-                                                                 class="img-fluid rounded m-1">
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="card-body py-0">
-                                                                <p class="card-title mb-0">New screenshot-12.png</p>
-                                                                <div class="card-text my-0 text-muted small"><span
-                                                                        class="mr-2">1.2M</span><span
-                                                                        class="mr-2">SVG</span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <small class="text-muted">2020-04-21 08:48:18</small>
-                                            </div>
-                                            <div class="col-auto">
-                          <span class="circle circle-sm bg-light">
-                            <i class="fe fe-corner-down-left"></i>
-                          </span>
-                                            </div>
-                                        </div> <!-- .row-->
-                                        <div class="row align-items-center mb-4">
-                                            <div class="col-auto">
-                                                <div class="avatar avatar-sm mb-3 mx-4">
-                                                    <img src="../../assets/avatars/face-4.jpg" alt="..."
-                                                         class="avatar-img rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <strong>Kelley Sonya</strong>
-                                                <div class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                    Phasellus sollicitudin luctus pretium. <br/>Pellentesque porta massa ac
-                                                    nibh finibus iaculis. Maecenas vel interdum urna. Integer auctor
-                                                    ultrices faucibus. Aliquam consequat et ligula nec sodales.
-                                                </div>
-                                                <small class="text-muted">2020-04-21 12:01:22</small>
-                                            </div>
-                                            <div class="col-auto">
-                          <span class="circle circle-sm bg-light">
-                            <i class="fe fe-corner-down-left"></i>
-                          </span>
-                                            </div>
-                                        </div> <!-- .row-->
-                                        <hr class="my-4">
-                                        <h6 class="mb-3">Response</h6>
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1" class="sr-only">Your
-                                                    Message</label>
-                                                <textarea class="form-control bg-light" id="exampleFormControlTextarea1"
-                                                          rows="2"></textarea>
-                                            </div>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="form-check form-check-inline ml-1">
-                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                           value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Email
-                                                        Notification</label>
-                                                </div>
-                                                <div class="flex-fill mr-2 text-right">
-                                                    <a href="#" class="btn"><i class="fe fe-upload"></i></a>
-                                                    <a href="#" class="btn"><i class="fe fe-at-sign"></i></a>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </form>
-                                    </div> <!-- .card-body -->
-                                </div> <!-- .card -->
-                            </div> <!-- .col-md -->
-
-                            <!-- compartments list-->
-                            <div class="container-fluid">
-                                <div class="row justify-content-center">
-                                    <div class="col-12">
-                                        <div class="row align-items-center my-4">
-                                            <div class="col">
-                                                <h2 class="h3 mb-0 page-title">Compartments List</h2>
-                                            </div>
-                                            <div class="col-auto">
-                                                <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>
-                                                <button type="button" class="btn btn-primary"><span class="fe fe-filter fe-12 mr-2"></span>Create</button>
-                                            </div>
-                                        </div>
-                                        <!-- table -->
-                                        <div class="card shadow">
-                                            <div class="card-body">
-                                                <table class="table table-borderless table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="all2">
-                                                                <label class="custom-control-label" for="all2"></label>
-                                                            </div>
-                                                        </th>
-                                                        <th>ID</th>
-                                                        <th>User</th>
-                                                        <th>Tenant</th>
-                                                        <th>Country</th>
-                                                        <th>Floor Area</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2474">
-                                                                <label class="custom-control-label" for="2474"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-3.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Brown, Asher D.</strong></p>
-                                                            <small class="mb-0 text-muted">2474</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Accumsan Consulting</p>
-                                                            <small class="mb-0 text-muted">Ap #331-7123 Lobortis Avenue</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(958) 421-0798</a></p>
-                                                            <small class="mb-0 text-muted">Nigeria</small>
-                                                        </td>
-                                                        <td class="text-muted">13/09/2020</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2786">
-                                                                <label class="custom-control-label" for="2786"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Leblanc, Yoshio V.</strong></p>
-                                                            <small class="mb-0 text-muted">2786</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Fringilla Ornare Placerat Consulting</p>
-                                                            <small class="mb-0 text-muted">287-8300 Nisl. St</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(899) 881-3833</a></p>
-                                                            <small class="mb-0 text-muted">Papua New Guinea</small>
-                                                        </td>
-                                                        <td class="text-muted">04/05/2019</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2747">
-                                                                <label class="custom-control-label" for="2747"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-2.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Hester, Nissim L.</strong></p>
-                                                            <small class="mb-0 text-muted">2747</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Tristique Ltd</p>
-                                                            <small class="mb-0 text-muted">4577 Cras St.</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(977) 220-6518</a></p>
-                                                            <small class="mb-0 text-muted">Central African Republic</small>
-                                                        </td>
-                                                        <td class="text-muted">21/08/2019</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2639">
-                                                                <label class="custom-control-label" for="2639"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Gardner, Leigh S.</strong></p>
-                                                            <small class="mb-0 text-muted">2639</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Orci Luctus Et Inc.</p>
-                                                            <small class="mb-0 text-muted">P.O. Box 228, 7512 Lectus Ave</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(537) 315-1481</a></p>
-                                                            <small class="mb-0 text-muted">United Kingdom</small>
-                                                        </td>
-                                                        <td class="text-muted">04/08/2019</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2238">
-                                                                <label class="custom-control-label" for="2238"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-5.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Higgins, Uriah L.</strong></p>
-                                                            <small class="mb-0 text-muted">2238</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Sit Amet Lorem Industries</p>
-                                                            <small class="mb-0 text-muted">Ap #377-5357 Sed Road</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(238) 386-0247</a></p>
-                                                            <small class="mb-0 text-muted">Canada</small>
-                                                        </td>
-                                                        <td class="text-muted">26/07/2020</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2152">
-                                                                <label class="custom-control-label" for="2152"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-6.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Wheeler, Ralph F.</strong></p>
-                                                            <small class="mb-0 text-muted">2152</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Suspendisse LLC</p>
-                                                            <small class="mb-0 text-muted">Ap #410-5363 Non, Avenue</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(587) 675-3258</a></p>
-                                                            <small class="mb-0 text-muted">Chad</small>
-                                                        </td>
-                                                        <td class="text-muted">11/09/2019</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="2488">
-                                                                <label class="custom-control-label" for="2488"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/face-7.jpg" alt="..." class="avatar-img rounded-circle">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><strong>Kelley, Sonya Y.</strong></p>
-                                                            <small class="mb-0 text-muted">2488</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">Dolor Incorporated</p>
-                                                            <small class="mb-0 text-muted">8250 Molestie St.</small>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">(934) 582-9495</a></p>
-                                                            <small class="mb-0 text-muted">British Indian Ocean Territory</small>
-                                                        </td>
-                                                        <td class="text-muted">30/03/2021</td>
-                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <nav aria-label="Table Paging" class="my-3">
-                                            <ul class="pagination justify-content-end mb-0">
-                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div> <!-- .col-12 -->
-                                </div> <!-- .row -->
-                            </div> <!-- .container-fluid -->
-                        </div>`
+                                    </div> <!-- .card-body -->`
 
 
             let propertyDetails = document.getElementById("propertyDetails");
             propertyDetails.innerHTML = html;
+
+            let propNameOne = document.getElementById("propNameOne");
+            let propNameTwo = document.getElementById("propNameTwo");
+
+            propNameOne.innerText = response.name;
+            propNameTwo.innerText = response.name;
         }
     })
+}
+
+function appendCompartments(){
+    let id = JSON.parse(localStorage.getItem("id"));
+    alert(id + "compart")
+        $.ajax({
+            url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/'+id,
+            type: 'GET',
+            success: function (response) {
+                let t_body = document.getElementById("t_body");
+                while (t_body.hasChildNodes()) {
+                    t_body.removeChild(t_body.firstChild);
+                }
+
+                for (let i = 0; i < response.length; i++){
+                    let html = `<td>
+<!--                                                            <div class="custom-control custom-checkbox">-->
+<!--                                                                <input type="checkbox" class="custom-control-input" id="2474">-->
+<!--                                                                <label class="custom-control-label" for="2474"></label>-->
+<!--                                                            </div>-->
+                                                        </td>
+                                                        <td>
+                                                            <div class="avatar avatar-sm">
+                                                                <img src="../../assets/avatars/data-random-squares.png" alt="..." class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><strong>${response[i].compartmentNumber}, floor : ${response[i].compartmentNumber} </strong></p>
+                                                            <small class="mb-0 text-muted">${response[i].id}</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted">Tenant Bussiness</p>
+                                                            <small class="mb-0 text-muted">teneant email , tenant phone</small>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 text-muted"><a href="#" class="text-muted">status:<span class="badge badge-secondary">owing</span></a></p>
+                                                            <small class="mb-0 text-muted">${response[i].floorArea * response[i].rentalRate}</small>
+                                                        </td>
+                                                        <td class="text-muted">${response[i].floorArea} &#13217;</td>
+                                                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#">Edit</a>
+                                                                <a class="dropdown-item" href="#">Remove</a>
+                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                            </div>
+                                                        </td>`
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = html;
+
+                    t_body.appendChild(tr);
+                }
+            }
+        });
 }
 
 function toggleView(id) {
