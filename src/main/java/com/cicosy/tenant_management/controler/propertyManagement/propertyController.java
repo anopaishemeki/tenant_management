@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+@CrossOrigin()
 @RestController
 @RequestMapping(path = "/api/property")
 public class propertyController {
@@ -42,7 +44,6 @@ public class propertyController {
         return property;
     }
 
-    @CrossOrigin()
     @GetMapping("/get-all-properties")
     public List<Property> getProperties(){
         List<Property> properties =  propertyService.getProperties();
@@ -66,6 +67,8 @@ public class propertyController {
 
         property.setOwnerObject(ownerController.getOwner(property.getOwner()));
 
+        property.setPropertyContactObject(contactDetailsController.getContact(property.getContact()));
+
         return property;
     }
 
@@ -73,5 +76,10 @@ public class propertyController {
     public Property updateProperty(@PathVariable Long id, @RequestBody Property property){
         propertyService.update(id, property);
         return propertyService.getProperty(id);
+    }
+
+    @GetMapping("/get-property-id-and-name")
+    public List<Object> propertyIdAndName(){
+        return propertyService.getPropertyIdAndName();
     }
 }

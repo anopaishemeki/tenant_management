@@ -30,9 +30,17 @@ public class Address {
     private String country;
     private Long property;
 
+    public Long getProperty() {
+        return property;
+    }
+
+    public void setProperty(Long property) {
+        this.property = property;
+    }
+
     public Address(String name, String address, String zipCode, String city, String country, Long property) {
         this.name = name;
-        this.address = address;
+        this.address = address; 
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;

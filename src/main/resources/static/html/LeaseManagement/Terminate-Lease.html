@@ -17,11 +17,12 @@
     <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  ">
+<body class="vertical  light  " onload="T_Records()" id="body">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -241,7 +242,7 @@
                                             <th>Terminate</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="t_body">
                                         <tr>
 
                                             <td>368</td>
@@ -254,79 +255,6 @@
                                             <td>Jun 8, 2019</td>
                                             <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
                                         </tr>
-                                        <tr>
-
-                                            <td>323</td>
-                                            <td>Walter Sawyer</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Active</td>
-                                            <td>May 8, 2020</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>371</td>
-                                            <td>Noelle Ray</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Active</td>
-                                            <td>Apr 2, 2021</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>302</td>
-                                            <td>Portia Nolan</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td> Active</td>
-                                            <td>Dec 4, 2019</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>443</td>
-                                            <td>Scarlett Anderson</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Expired</td>
-                                            <td>Dec 27, 2019</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>345</td>
-                                            <td>Kevyn Mills</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Expired</td>
-                                            <td>Dec 24, 2020</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>356</td>
-                                            <td>Sharon Buckley</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Expired</td>
-                                            <td>Mar 3, 2021</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-
 
                                         </tbody>
                                     </table>
@@ -337,6 +265,47 @@
                 </div> <!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+
+        <div class="modal fade" id="exampleModal" tabindex="-1"
+             aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+             data-bs-keyboard="false" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lease Termination
+                            Dialog</h5>
+                        <a href="View-Lease.html">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info" role="alert" id="alerrt">
+                            <p id="alrt" style="visibility: visible">Are You Sure you want
+                                to Terminate This Lease</p>
+
+                            <div id="liveAlertPlaceholder"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+
+
+                        <a href="Terminate-Lease.html">
+                            <button type="button" class="btn btn-danger"
+                                    data-bs-dismiss="modal" id="Close"
+                                    style="display: none">Close
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
+                        </button>
+                        <button type="button" id="liveAlertBtn" class="btn btn-primary"
+                                onclick="Terminate()">Yes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
@@ -478,6 +447,10 @@
 <script src="../../js/config.js"></script>
 <script src='../../js/jquery.dataTables.min.js'></script>
 <script src='../../js/dataTables.bootstrap4.min.js'></script>
+<script src="../../js/customlease.js"></script>
+<script src='../../js/bootstrap.bundle.min.js'></script>
+<script src='../../js/popper.min.js'></script>
+<script src='../../js/bootstrap.min.js'></script>
 <script>
     $('#dataTable-1').DataTable(
         {
