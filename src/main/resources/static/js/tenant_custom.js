@@ -496,7 +496,7 @@ function getTenantsAssign(){
 
                             for (let i = 0; i < items.length; i++) {
                                 let html =
-                                    `<td>${items[i].floorNumber}</td>`
+                                    `<option>${items[i].floorNumber}</option>`
 
                                 let tr = document.createElement("option");
 
@@ -507,6 +507,8 @@ function getTenantsAssign(){
 
 
                             }
+                        }else{
+                            console.log("Dont work bro!!!")
                         }
                     }
                 })
