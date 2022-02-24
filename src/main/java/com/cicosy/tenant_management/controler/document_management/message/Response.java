@@ -22,6 +22,9 @@ public class Response {
     this.type = type;
     this.size = size;
   }
+  public Response(String url){
+    this.url=url;
+  }
 
   public String getName() {
     return name;

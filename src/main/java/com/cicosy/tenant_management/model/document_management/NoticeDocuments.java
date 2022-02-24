@@ -7,28 +7,114 @@ package com.cicosy.tenant_management.model.document_management;
 
 
 
-import javax.persistence.*;
-
-
-/**
- *
- * @author Dejong
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
+
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.*;
+
 @Entity
-@Table(name="noticeDocuments")
-public class NoticeDocuments  extends Documents {
-    
+@Table(name = "notice_documents")
+public class NoticeDocuments {
 
-    public NoticeDocuments() {
-        super();
-    }
+    @Id
+    @SequenceGenerator(
+            name = "leaseDocuments_sequence",
+            sequenceName = "leaseDocuments_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "leaseDocuments_sequence"
+    )
+    private Long id;
+	
+	@Column(name = "file_name")
+	private String fileName;
+	
+	@Column(name = "file_path")
+	private String filePath;
+	
+	@Column(name = "file_type")
+	private String fileType;
+	
+	@Column(name = "file_size")
+	private String fileSize;
+	
 
-  
+	public NoticeDocuments() {
+		
+	}
 
-    public NoticeDocuments(String name, String type, byte[] data) {
-        super(name, type, data);
-    }
-   
-    
+	public NoticeDocuments(Long id, String fileName, String filePath, String fileType,
+			String fileSize) {
+		this.id = id;
+		
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.fileType = fileType;
+		this.fileSize = fileSize;
+		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "NoticeDocuments [id=" + id +  ", fileName=" + fileName
+				+ ", filePath=" + filePath + ", fileType=" + fileType + ", fileSize=" + fileSize +"]";
+	}
+	
 }

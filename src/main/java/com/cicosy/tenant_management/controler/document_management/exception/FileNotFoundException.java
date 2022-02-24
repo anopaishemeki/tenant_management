@@ -14,19 +14,16 @@ import com.cicosy.tenant_management.controler.document_management.message.Respon
 
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class FileNotFoundException extends FileStorageException {
 
+    public FileNotFoundException(String message) {
+        super(message);
+    }
 
-@ControllerAdvice
-public class FileNotFoundException extends ResponseEntityExceptionHandler {
-
-  @ExceptionHandler(MaxUploadSizeExceededException.class)
-  public ResponseEntity<ResponseMessage> handleMaxSizeException(MaxUploadSizeExceededException exc) {
-    return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File too large!"));
-  }
+    public FileNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
