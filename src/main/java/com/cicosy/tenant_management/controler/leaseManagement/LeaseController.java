@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.controler.leaseManagement;
 
 
 import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
+import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
@@ -61,6 +62,7 @@ public class LeaseController {
     public ResponseEntity<Object> registerNewLease(
             @RequestParam(required = true, value = "jsondata") String jsondata,
             LeaseHistory leaseHistory,
+            LeaseDocuments leaseDocuments,
             @RequestParam(required = true, value = "file") MultipartFile file) throws IOException {
 
 
@@ -72,7 +74,7 @@ public class LeaseController {
         String message = "";
         try {
 
-            leaseDocumentService.saveFile(file);
+            leaseDocumentService.saveFile(file,leaseDocuments);
 
             message = "Record Saved with Agreement file successfully : " + file.getOriginalFilename();
 
