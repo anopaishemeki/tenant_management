@@ -1,0 +1,5 @@
+#Base Docker File
+
+FROM openjdk:17
+ADD target/tenant-docker.jar tenant-docker.jar
+ENTRYPOINT ["java", "-jar", "/tenant-docker.jar"]

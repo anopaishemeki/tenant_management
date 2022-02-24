@@ -37,7 +37,7 @@ public class Tenant {
     private String rentStatus;
 
     private String deposit;
-    private String rentalFee;
+    private String rental_fee;
 
 
 
@@ -59,9 +59,9 @@ public class Tenant {
     private String lease;
     private String property;
 
-    public Tenant(String deposit, String rentalFee) {
+    public Tenant(String deposit, String rental_fee) {
         this.deposit = deposit;
-        this.rentalFee = rentalFee;
+        this.rental_fee = rental_fee;
     }
 
     public Tenant(String name, String surname, String email, String phone,
