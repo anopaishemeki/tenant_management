@@ -58,7 +58,13 @@ function saveCompartment(){
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: function (response) {
-            alert("success")
+            let element = document.getElementById("toast");
+
+            // Create toast instance
+            let myToast = new bootstrap.Toast(element);
+            myToast.show()
+
+            document.getElementById("_form").reset();
             console.log(response)
         }
     })
@@ -377,7 +383,9 @@ function saveProperty() {
 
             // Create toast instance
             let myToast = new bootstrap.Toast(element);
-            myToast.show();
+            myToast.show()
+
+            document.getElementById("_form").reset();
         }
     })
 }

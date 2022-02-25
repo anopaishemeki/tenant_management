@@ -623,7 +623,7 @@
                       <strong class="card-title">Property Owner Details</strong>
                     </div>
                     <div class="card-body">
-                      <form>
+                      <form id="_form">
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="ownerFirstName">Firstname</label>
@@ -685,18 +685,21 @@
                           </div>
                         </div>
                         <hr class="my-4">
-                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast" data-bs-delay="20000">
-                          <div class="toast-header">
-                            <img src="../../assets/images/check.png" class="rounded me-2" alt="...">
-                            <strong class="me-auto ">Success</strong>
-                            <small>1 sec ago</small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        <div class="form-row">
+                          <div class="form-group col-sm-3">
+                            <button type="button" class="btn mb-2 btn-outline-success" onclick="saveProperty()"><span class="fe fe-upload-cloud fe-16">Add Property</span></button> &nbsp;
                           </div>
-                          <div class="toast-body">
-                            The Property was successfully saved!
+                          <div class="form-group col-sm-9">
+                            <div id="toast" class="toast align-items-center text-white bg-success-light border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                              <div class="d-flex">
+                                <div class="toast-body">
+                                  Property was added successfully
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <button type="button" class="btn mb-2 btn-outline-success" onclick="saveProperty()"><span class="fe fe-upload-cloud fe-16">Add Property</span></button>
                       </form>
                     </div> <!-- /. card-body -->
                   </div> <!-- /. card -->

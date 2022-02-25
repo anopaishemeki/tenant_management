@@ -570,7 +570,21 @@
                                             </div> <!-- /.col -->
                                         </div>
                                         <hr class="my-4">
-                                        <button type="button" class="btn mb-2 btn-outline-success" onclick="saveCompartment()"><span class="fe fe-upload-cloud fe-16"> Save Compartment</span></button>
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-3">
+                                                <button type="button" class="btn mb-2 btn-outline-success" onclick="saveCompartment()"><span class="fe fe-upload-cloud fe-16"> Save Compartment</span></button>
+                                            </div>
+                                            <div class="form-group col-sm-9">
+                                                <div id="toast" class="toast align-items-center text-white bg-success-light border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="d-flex">
+                                                        <div class="toast-body">
+                                                            Compartment was added successfully
+                                                        </div>
+                                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div> <!-- /. card-body -->
                             </div> <!-- /. card -->
