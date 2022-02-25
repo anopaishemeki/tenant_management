@@ -252,7 +252,7 @@ function getProperties() {
                           </td>
                           <td>
                             <div class="avatar avatar-md">
-                              <img src="../../assets/avatars/face-3.jpg" alt="..." class="avatar-img rounded-circle">
+                              <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
                             </div>
                           </td>
                           <td>
