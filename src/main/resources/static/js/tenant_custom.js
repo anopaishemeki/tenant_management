@@ -150,11 +150,11 @@ function viewTenant(id) {
                           <div class="col-12">
                             <h2 class="h3 mb-4 page-title text-muted">Tenant id: ${items[id].id}</h2>
                             <div class="row mt-5 align-items-center">
-                              <div class="col-md-3 text-center mb-5">
-                                <div class="avatar avatar-xl">
-                                  <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-                                </div>
-                              </div>
+<!--                              <div class="col-md-3 text-center mb-5">-->
+<!--                                <div class="avatar avatar-xl">-->
+<!--                                  <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">-->
+<!--                                </div>-->
+<!--                              </div>-->
                               <div class="col">
                                 <div class="row align-items-center">
                                   <div class="col-md-7">
