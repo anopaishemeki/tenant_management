@@ -130,8 +130,7 @@ function  saveTenant(){
 
 
 
-
-
+//to view tenant details
 function viewTenant(id) {
     console.log("Working!");
     $("#tenant_table").addClass("d-none");
