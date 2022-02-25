@@ -390,30 +390,22 @@
                             <th>Document Name</th>
                             <th>Document Size</th>
                             <th>Type</th>
+                            <th>Period</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <c:choose>
-                            <c:when test="${not empty leaseDocuments}">
-                              
-                            <c:forEach var="noticeDocuments" items="${noticeDocuments}">
                               <tr>
-                                <td> ${noticeDocuments.id} </td>
-                                <td> ${noticeDocuments.fileName} </td>
-                                <td> ${noticeDocuments.fileSize} </td>
-                                <td> ${noticeDocuments.fileType} </td>
+                                <td> 1</td>
+                                <td> TakudzwaNotice</td>
+                                <td> 20KB </td>
+                                <td> PDF</td>
+                                <td>3</td>
                                
                         <td> 
                         <a href="${pageContext.request.contextPath}/file-upload/downloadFile/${noticeDocuments.fileName}">Download</a>
                         </td>
                               </tr>
-                            </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                              <center><h1>No Document Found.</h1></center>
-                            </c:otherwise>
-                          </c:choose>
                         </tbody>
                       </table>
                     </div>
