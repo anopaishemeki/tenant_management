@@ -35,8 +35,9 @@ public class LeaseDocumentService  {
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
 			.toAbsolutePath().normalize();
 	
-	public String saveFile(LeaseDocuments leaseDocuments) throws IOException {
+	public String saveFile(MultipartFile file,LeaseDocuments leaseDocuments) throws IOException {
 		// Save Employee With File
+
 		leaseDocumentsRepo.save(leaseDocuments);
 		return "success";
 	}
