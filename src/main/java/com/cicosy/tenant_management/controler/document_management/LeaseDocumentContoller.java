@@ -84,7 +84,7 @@ public class LeaseDocumentContoller {
 			leaseDocuments.setFileSize(fileSize);
 			
 
-			String status = leaseDocumentService.saveFile(file,leaseDocuments);
+			String status = leaseDocumentService.saveFile(leaseDocuments);
 			if (status.equals("success")) {
 				log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
 				return new ResponseEntity<>(" File Saved - " + fileName, HttpStatus.OK);
