@@ -383,37 +383,30 @@
                     <div class="card-body">
                       <!-- table -->
                       <table class="table datatables" id="dataTable-1">
-                        <thead>
+                        <thead class="thead-dark">
                           <tr>
-                            <th></th>
+              
                             <th>id</th>
+                            <th>Tenant Name</th>
                             <th>Document Name</th>
-                            <th>Size</th>
-                            <th>Type</th>
+                            
                             <th>Action</th>
+                            <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
-                        <c:choose>
-                          <c:when test="${not empty leaseDocuments}">
-                            
-                          <c:forEach var="leaseDocuments" items="${leaseDocuments}">
+                  
                             <tr>
-                              <td> ${leaseDocuments.id} </td>
-                              <td> ${leaseDocuments.fileName} </td>
-                              <td> ${leaseDocuments.fileSize} </td>
-                              <td> ${leaseDocuments.fileType} </td>
-                             
+                              <td> 368</td>
+                              <td>Takudzwa</td>
+                              <td> TakudzaLease </td>
+                                   
                       <td> 
                       <a href="${pageContext.request.contextPath}/file-upload/downloadFile/${leaseDocuments.fileName}">Download</a>
                       </td>
+                      <td><span class="badge badge-danger">Terminated</span></td>
                             </tr>
-                          </c:forEach>
-                          </c:when>
-                          <c:otherwise>
-                            <center><h1>No Docuemnt Found.</h1></center>
-                          </c:otherwise>
-                        </c:choose>
+                       
                       </tbody>
                          
                       </table>
