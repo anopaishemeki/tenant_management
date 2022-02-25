@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="../../css/feather.css">
-    <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
+    <!--<link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">-->
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
@@ -390,7 +390,8 @@
                                 <div class="card-body">
 
                                     <!-- table -->
-                                    <table class="table datatables table-hover" id="dataTable-1">
+                                    <table class="table datatables table-hover   table-borderless border-v" id="dataTable-1">
+
                                         <thead class="thead-dark">
                                         <tr role="row" >
 
@@ -441,7 +442,12 @@
                                                         <p id="alrt" style="visibility: visible">Are You Sure you want
                                                             to Terminate This Lease</p>
 
-                                                        <div id="liveAlertPlaceholder"></div>
+                                                        <div id="liveAlertPlaceholder">
+                                                            <button id="ldiD" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                                Terminating ...
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
@@ -480,7 +486,12 @@
                                                 <div class="modal-body">
 
                                                     <div class="alert alert-info" role="alert" id="alerrt">
-                                                        <div id="liveAlertPlaceholder2"></div>
+                                                        <div id="liveAlertPlaceholder2">
+                                                            <button id="ldID" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                                Renewing ...
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
                                                         <div id="renewalInfo">
                                                             <div class="form-group col-md-12">
                                                                 <label for="id2">ID = </label>
@@ -666,7 +677,6 @@
     </main> <!-- main -->
 </div> <!-- .wrapper -->
 <script src="../../js/jquery.min.js"></script>
-<script src="../../js/maintenanceApi.js"></script>
 <script src="../../js/popper.min.js"></script>
 <script src="../../js/moment.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
