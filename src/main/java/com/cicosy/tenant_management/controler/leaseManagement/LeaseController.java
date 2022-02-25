@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.controler.leaseManagement;
 
 
 import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
+import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,7 @@ public class LeaseController {
 
     private final LeaseService leaseService;
     private final LeaseDocumentService leaseDocumentService;
+    public static String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
 
     @Autowired
     public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService) {

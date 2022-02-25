@@ -382,169 +382,101 @@
               <h2 class="page-title">Add new tenant</h2>
               <p class="text-muted"> Register a new tenant into the system</p>
 
-                <form class="needs-validation" novalidate>
-                   <div class="">
-                  <div class="card shadow mb-4">
-                    <div class="card-header">
-                      <strong class="card-title">Tenant Details</strong>
-                    </div>
-                    <div class="card-body">
-                      <form class="needs-validation" novalidate>
-                        <div class="form-row">
-                          <div class="col-md-6 mb-3">
-                            <label for="validationCustom3">First name</label>
-                            <input type="text" class="form-control" id="tenantName" placeholder="Tafadzwa" required>
-                            <div class="valid-feedback"> Looks good! </div>
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <label for="validationCustom4">Last name</label>
-                            <input type="text" class="form-control" id="surname" placeholder="Madzanire" required>
-                            <div class="valid-feedback"> Looks good! </div>
-                          </div>
-                        </div> <!-- /.form-row -->
-                        <div class="form-row">
-                          <div class="col-md-4 mb-3">
-                            <label for="exampleInputEmail2">Email address</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp1" required>
-                            <div class="invalid-feedback"> Please use a valid email </div>
-                            <small id="emailHelp1" class="form-text text-muted"></small>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="custom-phone">Phone Number</label>
-                            <input class="form-control" type="text" id="phone" maxlength="14" required>
-                            <div class="invalid-feedback"> Please enter a correct phone </div>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="custom-phone">Id/Passport Number</label>
-                            <input class="form-control" type="text" id="passport" maxlength="14" required>
-                            <div class="invalid-feedback"> Please enter a correct id/passport number </div>
-                          </div>
-                        </div> <!-- /.form-row -->
-                        
-                        
-                        
-                        
-                    </div> <!-- /.card-body -->
-                  </div> <!-- /.card -->
-
-                  <div class="card shadow mb-4">
-                    <div class="card-header">
-                      <strong class="card-title">Tenant Address</strong>
-                    </div>
-                    <div class="card-body">
-                       
-                        <div class="form-row">
-                          <div class="col-md-4 mb-3">
-                            <label for="exampleInputEmail2">House No</label>
-                            <input class="form-control" type="text" id="house" aria-describedby="emailHelp1" required>
-                            <div class="invalid-feedback"> Please use a valid house no </div>
-                            <small id="emailHelp1" class="form-text text-muted"></small>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="custom-phone">Street</label>
-                            <input class="form-control" type="text" id="street" maxlength="14" required>
-                            <div class="invalid-feedback"> Please enter a correct street </div>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="custom-phone">City</label>
-                            <input class="form-control" type="text" id="city" maxlength="14" required>
-                            <div class="invalid-feedback"> Please enter a correct city </div>
-                          </div>
-                        </div> <!-- /.form-row -->
-
-                        <div class="form-row">
-                          <div class="col-md-4 mb-3">
-                            <label for="exampleInputEmail2">Country</label>
-                            <input class="form-control" type="text" id="country" aria-describedby="emailHelp1" required>
-                            <div class="invalid-feedback"> Please use a valid country </div>
-                            <small id="emailHelp1" class="form-text text-muted"></small>
-                          </div>
-                          
-                        </div> <!-- /.form-row -->
-                        
-                        
-                        
-                    </div> <!-- /.card-body -->
-                  </div> <!-- /.card -->
-
-                  <div class="card shadow mb-4">
-                    <div class="card-header">
-                      <strong class="card-title">Tenant Business Details</strong>
-                    </div>
-                    <div class="card-body">
-                       
-                        <div class="form-row">
-                          <div class="col-md-4 mb-3">
-                            <label for="exampleInputEmail2">Business Name</label>
-                            <input class="form-control" type="text" id="businessName" aria-describedby="emailHelp1" required>
-                            <div class="invalid-feedback"> Please use a valid business name </div>
-                            <small id="emailHelp1" class="form-text text-muted"></small>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="custom-phone">Business Type</label>
-                            <input class="form-control" type="text" id="custom-phone" maxlength="14" required>
-                            <div class="invalid-feedback"> Please enter a correct type of business </div>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label for="custom-phone">Shop Number</label>
-                            <input class="form-control" type="text" id="passport" maxlength="14" required>
-                            <div class="invalid-feedback"> Please enter a correct shop number </div>
-                          </div>
-                        </div> <!-- /.form-row -->
-
-                        <div class="form-row">
-                          <div class="form-group col-md-4">
-                          <label for="inputState">Building</label>
-                          <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>Joina City</option>
-                            <option>Kwame Mall</option>
-                            <option>Shaha Mall</option>
-                            <option>Construction House</option>
-                          </select>
+               <div class="card shadow mb-4">
+                  <div class="card-header">
+                    <strong class="card-title">Tenant Details</strong>
+                  </div>
+                  <div class="card-body">
+                    <form>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">First Name</label>
+                          <input type="text" name="name" class="form-control" id="name" placeholder="John">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Last Name</label>
+                          <input type="text" class="form-control" name="surname" id="surname" placeholder="Doe">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputEmail4">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" placeholder="">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="inputState">Floor</label>
-                          <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>Floor 1</option>
-                            <option>Floor 2</option>
-                            <option>Floor 3</option>
-                            <option>Floor 4</option>
-                          </select>
+                          <label for="inputPassword4">Id/Passport No</label>
+                          <input type="text" class="form-control" id="passport" name="id_passport" placeholder="">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="inputState">Compartment</label>
-                          <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                          </select>
+                          <label for="inputPassword4">Phone Number</label>
+                          <input type="text" class="form-control" id="phone" name="phone" placeholder="">
                         </div>
-                        </div> <!-- /.form-row -->
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputEmail4">House No</label>
+                          <input type="text" class="form-control" id="house" name="house_no" placeholder="">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputPassword4">Street</label>
+                          <input type="text" class="form-control" id="street" name="street" placeholder="">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="city">City</label>
+                          <input type="text" class="form-control" id="city" name="city" placeholder="">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputEmail4">Country</label>
+                          <input type="text" class="form-control" id="country" name="country" placeholder="">
+                        </div>
+                        
+                      </div>
 
-                        
+                      <div class="mb-2">
+                    <strong class="card-title">Business Details</strong>
+                  </div>
 
-                        
-                        
-                        
-                        <div class="form-group mb-3">
-                          <label for="validationTextarea1">Services Offered</label>
-                          <textarea class="form-control" id="validationTextarea1" placeholder="Enter services offered by business" required="" rows="3"></textarea>
-                          <div class="invalid-feedback"> </div>
+                  <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputEmail4">Business Name</label>
+                          <input type="text" class="form-control" id="business_name" name="business_name" placeholder="">
                         </div>
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input type="checkbox" class="custom-control-input" id="customControlValidation16" required="">
-                          <label class="custom-control-label" for="customControlValidation16"> Agree to terms and conditions</label>
-                          <div class="invalid-feedback"> You must agree before submitting. </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputPassword4">Business Type</label>
+                          <input type="text" class="form-control" id="business_type" name="business_type" placeholder="">
                         </div>
-                        <button class="btn btn-primary" type="submit" onclick="saveTenant()">Add Tenant</button>
-                    </div> <!-- /.card-body -->
-                  </div> <!-- /.card -->
+                        <div class="form-group col-md-4">
+                          <label for="inputPassword4">Services</label>
+                          <input type="text" class="form-control" id="services" name="services" placeholder="">
+                        </div>
+                      </div>
+
+                       <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputEmail4">Shop Number</label>
+                          <input type="number" class="form-control" id="shop_no" name="shop_number" placeholder="">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputPassword4">Deposit</label>
+                          <input type="number" class="form-control" id="deposit" name="deposit" placeholder="">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputPassword4">Rental Fee</label>
+                          <input type="number" class="form-control" id="rent" name="rental_fee" placeholder="">
+                        </div>
+                      </div>
+
+                      
+                      
+                     
+                      <button type="button" id="btnSubmit" class="btn btn-primary" onclick="saveTenant()">Submit</button>
+                    </form>
+                  </div>
                 </div>
-                </form>
+
+               
     
 
             </div>
@@ -553,6 +485,7 @@
       </main> <!-- main -->
     </div> <!-- .wrapper -->
     <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/tenant_custom.js"></script>
     <script src="../../js/popper.min.js"></script>
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
@@ -569,7 +502,6 @@
     <script src='../../js/dropzone.min.js'></script>
     <script src='../../js/uppy.min.js'></script>
     <script src='../../js/quill.min.js'></script>
-    <script src='../../js/tenant_custom.js'></script>
     <script>
       $('.select2').select2(
       {

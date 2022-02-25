@@ -10,7 +10,6 @@ function getTenants(){
             console.log(response)
 
             var t_body = document.getElementById("t_body");
-
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
@@ -20,17 +19,17 @@ function getTenants(){
                             <td>${items[i].id}</td>
                             <td>${items[i].name} ${items[i].surname}</td>
                             <td>${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()}</td>
-                            <td>${items[i].tenantBusiness.shop_number}</td>
+                            <td>${items[i].shop_number}</td>
                             
-                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rentStatus}</small></td>
-                            <td>$37.39</td>
-                            <td>$80.11</td>
+                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rent_status}</small></td>
+                            <td>${items[i].deposit}</td>
+                            <td>${items[i].rental_fee}</td>
                             <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#" onclick="viewTenant('${i}')">View</a>
                                 <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="#">Remove</a>
                                 <a class="dropdown-item" href="#">Assign</a>
                               </div>
                             </td>
@@ -38,65 +37,78 @@ function getTenants(){
 
 
                 let tr = document.createElement("tr");
-                // tr.className = "row"
+
 
                 tr.innerHTML = html;
 
                 t_body.appendChild(tr);
+
+
+
+
+
+
+
             }
+
+            profile_execute();
         }
     })
 }
 
-function  saveTenant() {
-    let name = document.getElementById("tenantName").value
 
-    let surname = document.getElementById("surname").value
-    let email = document.getElementById("email").value
+
+function  saveTenant(){
+    let  name = document.getElementById("name").value
+    let  property = "Joina City";
+    let  lease = " Active"
+    let  surname = document.getElementById("surname").value
+    let  email = document.getElementById("email").value
+    let  id_passport = document.getElementById("passport").value;
+
+    //property contact details
     let phone = document.getElementById("phone").value;
-
-    // let  province = document.getElementById().value;
-    let id_passport = document.getElementById("passport").value;
-    let house = document.getElementById("house").value;
-
+    let deposit = document.getElementById("deposit").value;
 
 
     //owner Object properties
+    let rental_fee = document.getElementById("rent").value;
+    let business_name = document.getElementById("business_name").value;
+
+    let business_type = document.getElementById("business_type").value;
+    let services = document.getElementById("services").value;
+    let shop_number = document.getElementById("shop_no").value;
     let street = document.getElementById("street").value;
+
+
     let city = document.getElementById("city").value;
-
-
+    let house_no = document.getElementById("house").value;
     let country = document.getElementById("country").value;
-    let rentStatus = "Paid";
+
     //property address object properties
-    let businessName = document.getElementById("businessName").value;
-    let businessType = document.getElementById("businessType").value;
-    let shopNumber = document.getElementById("shopNumber").value;
+    let rent_status = "Paid";
 
-    let dataObj = {
-        name,
-        surname,
+
+    let data = {
+        city,
+        country,
+        house_no,
+        street,
+        deposit,
         email,
-        phone,
         id_passport,
-        rentStatus,
-
-        tenantBusiness: {
-            business_name: businessName,
-            businessTypes_type: businessType,
-            shop_number: shopNumber,
-            services: services,
-        },
-
-        address: {
-            house_no: house,
-            street: street,
-            city: city,
-            country: country
-        },
-
+        lease,
+        name,
+        phone,
+        property,
+        rent_status,
+        rental_fee,
+        surname,
+        business_name,
+        business_type,
+        services,
+        shop_number
     }
-
 
     $.ajax({
         url: 'http://localhost:8090/api/tenants/addTenant',
@@ -104,627 +116,409 @@ function  saveTenant() {
         dataType: "json",
         crossDomain: "true",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(dataObj),
+        data: JSON.stringify(data),
         success: function (response) {
             alert("success" + response)
             console.log(response)
-            // saveTenant();
+            
+        },
+        error: function (e){
+            console.log(e);
         }
     })
 }
 
 
-function editPropertyDetails(id){
+
+
+
+function viewTenant(id) {
+    console.log("Working!");
+    $("#tenant_table").addClass("d-none");
+    $("#view_Tenant").addClass("d-block");
+    var view_tenant = document.getElementById("view_Tenant");
+
+
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
+            url: 'http://localhost:8090/api/tenants/get-all-tenants',
+            type: 'GET',
+            success: function (response) {
+                let items = response
+
+                let tenant_profile_html = `
+                <div class="row justify-content-center">
+                          <div class="col-12">
+                            <h2 class="h3 mb-4 page-title text-muted">Tenant id: ${items[id].id}</h2>
+                            <div class="row mt-5 align-items-center">
+<!--                              <div class="col-md-3 text-center mb-5">-->
+<!--                                <div class="avatar avatar-xl">-->
+<!--                                  <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">-->
+<!--                                </div>-->
+<!--                              </div>-->
+                              <div class="col">
+                                <div class="row align-items-center">
+                                  <div class="col-md-7">
+                                    <h4 class="mb-1">${items[id].name} ${items[id].surname}</h4>
+                                    <p class="small mb-3"><span class="badge badge-dark">${items[id].city}, ${items[id].country}</span></p>
+                                  </div>
+                                </div>
+                                <div class="row mb-4">
+                                  <div class="col-md-7">
+                                    <p class="text-muted"><strong> Identification No:</strong>  ${items[id].id_passport} <br> <strong>Email Address:</strong>  ${items[id].email} <br> <strong>Phone Number:</strong>  ${items[id].phone} </p>
+                                  </div>
+                                  <div class="col">
+                                    <p class="small mb-0 text-muted">House ${items[id].house_no}</p>
+                                    <p class="small mb-0 text-muted">P.O. Box 464, ${items[id].city}</p>
+                                    <p class="small mb-0 text-muted">${items[id].country}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row my-4">
+                              <div class="col-md-4">
+                                <div class="card mb-4 shadow">
+                                  <div class="card-body my-n3">
+                                    <div class="row align-items-center">
+                                      <div class="col-3 text-center">
+<!--                          <span class="circle circle-lg bg-light">-->
+<!--&lt;!&ndash;                            <i class="fe fe-user fe-24 text-primary"></i>&ndash;&gt;-->
+<!--                          </span>-->
+                                      </div> <!-- .col -->
+                                      <div class="col">
+                                        <a href="#">
+                                          <h3 class="h5 mt-4 mb-1">Services to Personal</h3>
+                                        </a>
+                                        <p class="text-muted">
+                                        <ul class="list-unstyled">
+                                        <li>Parking</li>
+                                        <li>.</li>
+                                        <li>.</li>
+                                        <li>.</li>
+</ul></p>
+                                      </div> <!-- .col -->
+                                    </div> <!-- .row -->
+                                  </div> <!-- .card-body -->
+<!--                                  <div class="card-footer">-->
+<!--                                    <a href="" class="d-flex justify-content-between text-muted"><span>Account Settings</span><i class="fe fe-chevron-right"></i></a>-->
+<!--                                  </div> &lt;!&ndash; .card-footer &ndash;&gt;-->
+                                </div> <!-- .card -->
+                              </div> <!-- .col-md-->
+                              <div class="col-md-4">
+                                <div class="card mb-4 shadow">
+                                  <div class="card-body my-n3">
+                                    <div class="row align-items-center">
+                                      <div class="col-3 text-center">
+<!--                          <span class="circle circle-lg bg-light">-->
+<!--&lt;!&ndash;                            <i class="fe fe-shield fe-24 text-primary"></i>&ndash;&gt;-->
+<!--                          </span>-->
+                                      </div> <!-- .col -->
+                                      <div class="col">
+                                        <a href="#">
+                                          <h3 class="h5 mt-4 mb-1">Business Details</h3>
+                                        </a>
+                                        <p class="text-muted">
+                                        <ul class="list-unstyled">
+                                        <li><strong>Name:</strong> ${items[id].business_name}</li>
+                                        <li><strong>Type:</strong> ${items[id].business_type}</li>
+                                        <li><strong>Shop No:</strong> ${items[id].shop_number}</li>
+                                        <li><strong>Services:</strong> ${items[id].services}</li>
+</ul></p>
+                                      </div> <!-- .col -->
+                                    </div> <!-- .row -->
+                                  </div> <!-- .card-body -->
+<!--                                  <div class="card-footer">-->
+<!--                                    <a href="" class="d-flex justify-content-between text-muted"><span>Security Settings</span><i class="fe fe-chevron-right"></i></a>-->
+<!--                                  </div> &lt;!&ndash; .card-footer &ndash;&gt;-->
+                                </div> <!-- .card -->
+                              </div> <!-- .col-md-->
+                              <div class="col-md-4">
+                                <div class="card mb-4 shadow">
+                                  <div class="card-body my-n3">
+                                    <div class="row align-items-center">
+                                      <div class="col-3 text-center">
+<!--                          <span class="circle circle-lg bg-light">-->
+<!--&lt;!&ndash;                            <i class="fe fe-bell fe-24 text-primary"></i>&ndash;&gt;-->
+<!--                          </span>-->
+                                      </div> <!-- .col -->
+                                      <div class="col">
+                                        <a href="#">
+                                          <h3 class="h5 mt-4 mb-1">Notifications</h3>
+                                        </a>
+                                        <p class="text-muted">
+                                        <ul class="list-unstyled">
+                                        <li>Maintance Due</li>
+                                        <li>Missing Documents</li>
+                                        <li>Lease Updated</li>
+                                        <li>Late Rent</li>
+                                        </ul></p>
+                                      </div> <!-- .col -->
+                                    </div> <!-- .row -->
+                                  </div> <!-- .card-body -->
+<!--                                  <div class="card-footer">-->
+<!--                                    <a href="" class="d-flex justify-content-between text-muted"><span>Notification Settings</span><i class="fe fe-chevron-right"></i></a>-->
+<!--                                  </div> &lt;!&ndash; .card-footer &ndash;&gt;-->
+                                </div> <!-- .card -->
+                              </div> <!-- .col-md-->
+                            </div> <!-- .row-->
+                            <h3>Subscription & Payments</h3>
+                            <p class="text-muted">Tenant Lease and Rental details...</p>
+                            <div class="card-deck my-4">
+                              <div class="card mb-4 shadow">
+                                <div class="card-body text-center my-4">
+                                  <a href="#">
+                                    <h3 class="h5 mt-4 mb-0">Lease</h3>
+                                  </a>
+                                  <p class="text-muted">package</p>
+                                  <span class="h1 mb-0">$ 6000</span>
+                                  <p class="text-muted">year</p>
+                                  <ul class="list-unstyled">
+                                    <li>Lorem ipsum dolor sit amet</li>
+                                    <li>Consectetur adipiscing elit</li>
+                                    <li>Integer molestie lorem at massa</li>
+                                    <li>Eget porttitor lorem</li>
+                                  </ul>
+                                  <span class="dot dot-lg bg-success"></span>
+                                  <span class="text-muted ml-3">Active</span>
+                                </div> <!-- .card-body -->
+                              </div> <!-- .card -->
+                              <div class="card mb-4">
+                                <div class="card-body text-center my-4">
+                                  <a href="#">
+                                    <h3 class="h5 mt-4 mb-0">Rent</h3>
+                                  </a>
+                                  <p class="text-muted">package</p>
+                                  <span class="h1 mb-0">$ ${items[id].rental_fee}</span>
+                                  <p class="text-muted">month</p>
+                                  <ul class="list-unstyled">
+                                    <li>Lorem ipsum dolor sit amet</li>
+                                    <li>Consectetur adipiscing elit</li>
+                                    <li>Integer molestie lorem at massa</li>
+                                    <li>Eget porttitor lorem</li>
+                                  </ul>
+                                  <button type="button" class="btn mb-2 btn-primary btn-lg">Review</button>
+                                </div> <!-- .card-body -->
+                              </div> <!-- .card -->
+                            </div> <!-- .card-group -->
+                            <h6 class="mb-3">Last payments</h6>
+                            <table class="table table-borderless table-striped">
+                              <thead>
+                              <tr role="row">
+                                <th>ID</th>
+                                <th>Payment Date</th>
+                                <th>Total</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                <th scope="col">1331</th>
+                                <td>2020-12-26 01:32:21</td>
+                                <td>$16.9</td>
+                                <td>Paypal</td>
+                                <td><span class="dot dot-lg bg-warning mr-2"></span>Due</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="text-muted sr-only">Action</span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                      <a class="dropdown-item" href="#">Edit</a>
+                                      <a class="dropdown-item" href="#">Remove</a>
+                                      <a class="dropdown-item" href="#">Assign</a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="col">1156</th>
+                                <td>2020-04-21 00:38:38</td>
+                                <td>$9.9</td>
+                                <td>Paypal</td>
+                                <td><span class="dot dot-lg bg-danger mr-2"></span>False</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="text-muted sr-only">Action</span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                      <a class="dropdown-item" href="#">Edit</a>
+                                      <a class="dropdown-item" href="#">Remove</a>
+                                      <a class="dropdown-item" href="#">Assign</a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="col">1038</th>
+                                <td>2019-06-25 19:13:36</td>
+                                <td>$9.9</td>
+                                <td>Credit Card </td>
+                                <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="text-muted sr-only">Action</span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                      <a class="dropdown-item" href="#">Edit</a>
+                                      <a class="dropdown-item" href="#">Remove</a>
+                                      <a class="dropdown-item" href="#">Assign</a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="col">1227</th>
+                                <td>2021-01-22 13:28:00</td>
+                                <td>$9.9</td>
+                                <td>Paypal</td>
+                                <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="text-muted sr-only">Action</span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                      <a class="dropdown-item" href="#">Edit</a>
+                                      <a class="dropdown-item" href="#">Remove</a>
+                                      <a class="dropdown-item" href="#">Assign</a>
+                                    </div>`
+
+                let div = document.createElement("div");
+
+
+                div.innerHTML = tenant_profile_html;
+
+                view_tenant.appendChild(div);
+
+            }
+
+
+        });
+
+
+
+
+}
+
+
+function getTenantsAssign(){
+        $.ajax({
+            url: 'http://localhost:8090/api/tenants/get-all-tenants',
+            type: 'GET',
+            success: function (response) {
+                let items = response
+
+                console.log(response)
+
+                var tenant_list = document.getElementById("tenant_list");
+                // while (tenant_list.hasChildNodes()) {
+                //     tenant_list.removeChild(tenant_list.firstChild);
+                // }
+
+                for (let i = 0; i < items.length; i++) {
+                    let html =
+                        `<td>${items[i].name} ${items[i].name}</td>`
+
+                    let tr = document.createElement("option");
+
+
+                    tr.innerHTML = html;
+
+                    tenant_list.appendChild(tr);
+                }
+
+            }
+
+        })
+
+    $.ajax({
+        url: 'http://localhost:8090/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
+            let items = response
 
-            let html =  `                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
-                                                <span class="bi bi-file"></span>
-                                                <input class="input100" id="update_propertyName" type="text" name="propertyName" placeholder="${response.name}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Description is required">
-                                                <span class="bi bi-file-earmark-text"></span>
-                                                <input class="input100" id="update_description" type="text" name="description" placeholder="${response.description}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Type is required">
-                                                <span class="bi bi-house-door"></span>
-                                                <select id="update_propertyType" class="btn input100 text-left" style="color: #8F91A5">
-                                                    <option>Property Type</option>
-                                                    <option value="Multi Story"> Multi Story</option>
-                                                    <option value="Complex Building">Complex Building</option>
-                                                    <option value="Shopping Mall">Shopping Mall</option>
-                                                </select>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "status is required">
-                                                <span class="bi bi-person-workspace"></span>
-                                                <select id="update_status" class="btn input100 text-left" style="color: #8F91A5">
-                                                    <option>Property Status</option>
-                                                    <option value="Occupied"> Occupied</option>
-                                                    <option value Vacant>Vacant</option>
-                                                </select>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-building"></span>
-                                                <input class="input100" type="text" id="update_city" name="City" placeholder="${response.city} ">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-map"></span>
-                                                <input class="input100" id="update_country" type="text" name="country" placeholder="${response.province}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 validate-input m-b-16" data-validate = "Asset Value is required">
-                                                <input class="input100" type="number" min="0" id="update_assetValue" name="assetValue" placeholder="${response.assetValue} ">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
+            console.log(response)
 
-            let container = document.getElementById("update_propertyDetails");
+            var buildings = document.getElementById("building_option");
+            // while (tenant_list.hasChildNodes()) {
+            //     tenant_list.removeChild(tenant_list.firstChild);
+            // }
 
-            container.innerHTML = html;
+            for (let i = 0; i < items.length; i++) {
+                let html =
+                    `<option onclick="getCompartmentDetails(i)">${items[i].name}</option>`
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyDetails()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyDetailsChanges()"></span>`
+                let tr = document.createElement("option");
 
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
+
+                tr.innerHTML = html;
+
+                buildings.appendChild(tr);
+
+
+
+            }
+
         }
+
     })
-}
 
-function updatePropertyDetails(id){
-    let name = document.getElementById("update_propertyName").value;
-    let description = document.getElementById("update_description").value;
-    let propertyType= document.getElementById("update_propertyType").value;
-    let propertyStatus = document.getElementById("update_status").value;
-    let propertyCity = document.getElementById("update_city").value;
-    let propertyCountry = document.getElementById("update_country").value;
-    let propertyAssetValue = document.getElementById("update_assetValue").value;
-
-    let data = {
-        name : name,
-        description :description,
-        propertyType : propertyType,
-        city : propertyCity,
-        province : propertyCountry,
-        status : propertyStatus,
-        assetValue : propertyAssetValue
     }
 
-    $.ajax({
-        url: 'http://localhost:8090/api/property/update-property/1',
-        type: 'PUT',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        success: function (response) {
+    function getCompartmentDetails(id){
 
-            // editPropertyDetails();
-            alert("Update Completed Successfully");
+        $.ajax({
+            url: 'http://localhost:8090/api/property/get-all-properties',
+            type: 'GET',
+            success: function (response) {
+                let buildings = response
 
-            let html =  `<div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
-                                                <p><span class="bi bi-file">&nbsp;</span> Name : ${response.name}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Description is required">
-                                                <p> <span class="bi bi-file-earmark-text">&nbsp;</span>Description : ${response.description}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Type is required">
-                                                <p><span class="bi bi-house-door">&nbsp;</span>Property Type : ${response.propertyType} </p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "status is required">
-                                                <p><span class="bi bi-person-workspace">&nbsp;</span>Status : ${response.status}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <p><span class="bi bi-map">&nbsp;</span>Country : ${response.province}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Asset Value is required">
-                                                <p><span class="bi bi-currency-dollar">&nbsp;</span>Asset Value : ${response.assetValue} </p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
-
-            let container = document.getElementById("update_propertyDetails");
-
-            container.innerHTML = html;
+                console.log(response)
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
 
-function discardEditPropertyDetailsChanges(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
-        type: 'GET',
-        success: function (response) {
-            let html =  `<div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Name is required">
-                                                <p><span class="bi bi-file">&nbsp;</span> Name : ${response.name}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Description is required">
-                                                <p> <span class="bi bi-file-earmark-text">&nbsp;</span>Description : ${response.description}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Property Type is required">
-                                                <p><span class="bi bi-house-door">&nbsp;</span>Property Type : ${response.propertyType} </p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "status is required">
-                                                <p><span class="bi bi-person-workspace">&nbsp;</span>Status : ${response.status}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <p><span class="bi bi-map">&nbsp;</span>Country : ${response.province}</p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Asset Value is required">
-                                                <p><span class="bi bi-currency-dollar">&nbsp;</span>Asset Value : ${response.assetValue} </p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
+                var fl = document.getElementById("building_option");
+                // while (tenant_list.hasChildNodes()) {
+                //     tenant_list.removeChild(tenant_list.firstChild);
+                // }
 
-            let container = document.getElementById("update_propertyDetails");
+                $.ajax({
+                    url: 'http://localhost:8090/api/compartment/get-compartments',
+                    type: 'GET',
+                    success: function (response) {
+                        let floors = response
 
-            container.innerHTML = html;
+                        if (buildings[id].id == floors[i].property) {
 
 
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyDetails()"></span>`
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
+                            for (let i = 0; i < items.length; i++) {
+                                let html =
+                                    `<option>${items[i].floorNumber}</option>`
 
-        }
-    })
-}
+                                let tr = document.createElement("option");
 
-//Property Address
-function editPropertyAddress(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
-                                                <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="update_propertyAddressName" name="propertyAddressName" placeholder="${response.name}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
-                                                <span class="bi bi-file-earmark-zip"></span>
-                                                <input class="input100" type="text" id="update_propertyZipCode" name="propertyZipCode" placeholder="${response.zipCode}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
-                                                <span class="bi bi-map"></span>
-                                                <input class="input100" type="text" id="update_propertyCountry" name="propertyCountry" placeholder="${response.country}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
-                                                <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="update_propertyAddress" name="propertyAddress" placeholder="${response.address}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-building"></span>
-                                                <input class="input100" type="text" id="update_propertyCity" name="propertyCity" placeholder="${response.property}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
 
-            let container = document.getElementById("update_PropertyAddress");
-            container.innerHTML = html;
+                                tr.innerHTML = html;
 
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyAddress()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyAddress()"></span>`
+                                fl.appendChild(tr);
 
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyAddress");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
 
-function updatePropertyAddress(){
-    let name = document.getElementById("update_propertyAddressName").value;
-    let address = document.getElementById("update_propertyAddress").value;
-    let zipCode = document.getElementById("update_propertyZipCode").value;
-    let city = document.getElementById("update_propertyCity").value;
-    let country = document.getElementById("update_propertyCountry").value;
+                            }
+                        }else{
+                            console.log("Dont work bro!!!")
+                        }
+                    }
+                })
 
-    let data = {
-        name : name,
-        address,
-        zipCode,
-        city,
-        country
+            }
+
+        })
+
+
     }
-
-    $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/1',
-        type: 'PUT',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log(response);
-            alert("Update Completed Successfully");
-
-
-        }
-    })
-}
-
-function discardEditPropertyAddress(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
-                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Name : ${response.name}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
-                                                    <p><span class="bi bi-file-earmark-zip">&nbsp;Zip Code : ${response.zipCode}</span></p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
-                                                    <p><span class="bi bi-map">&nbsp;</span>Country : ${response.country}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
-                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Address : ${response.address}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                    <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>`
-
-            let container = document.getElementById("update_PropertyAddress");
-
-            container.innerHTML = html;
-
-
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyAddress()"></span>`
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyAddress");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
-
-//Property Owner Details
-function editPropertyOwnerDetails(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "First Name is required">
-                                                <span class="bi bi-person-bounding-box"></span>
-                                                <input class="input100" type="text" id="update_ownerFirstName" name="ownerFirstName" placeholder="${response.ownerObject.name}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Owner Last Name is required">
-                                                <span class="bi bi-person-bounding-box"></span>
-                                                <input class="input100" type="text" id="update_ownerLastName" name="ownerLastName" placeholder="${response.ownerObject.lastName}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
-
-            let container = document.getElementById("update_PropertyOwnerDetails");
-            container.innerHTML = html;
-
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerDetails()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerDetails()"></span>`
-
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
-
-function updatePropertyOwnerDetails(id){
-    let name = document.getElementById("update_ownerFirstName").value;
-    let lastName = document.getElementById("update_ownerLastName").value;
-
-    let data = {
-        name,
-        lastName
-    }
-
-    $.ajax({
-        url: 'http://localhost:8090/api/owner/update-owner/1',
-        type: 'PUT',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        success: function (response) {
-
-        }
-    })
-}
-
-function discardEditPropertyOwnerDetails(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/owner/get-owner/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "First Name is required">
-                                                <p><span class="bi bi-person-bounding-box">&nbsp;</span>First Name : ${response.name} </p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Owner Last Name is required">
-                                                <p><span class="bi bi-person-bounding-box"></span>Last Name : ${response.lastName} </p>
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`;
-
-            let container = document.getElementById("update_PropertyOwnerDetails");
-
-            container.innerHTML = html;
-
-
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerDetails()"></span>`
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
-
-//Property Owner Address
-function editPropertyOwnerAddress(){
-    $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
-                                                <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="update_ownerAddressName" name="ownerAddressName" placeholder="${response.ownerObject.name}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
-                                                <span class="bi bi-file-earmark-zip"></span>
-                                                <input class="input100" type="text" id="update_OwnerZipCode" name="OwnerZipCode" placeholder="${response.ownerObject.zipCode}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-map"></span>
-                                                <input class="input100" type="text" id="update_ownerCountry" name="ownerCountry" placeholder="${response.ownerObject.country}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
-                                                <span class="bi bi-geo-alt"></span>
-                                                <input class="input100" type="text" id="update_ownerAddress" name="ownerAddress" placeholder="${response.ownerObject.address}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                <span class="bi bi-building"></span>
-                                                <input class="input100" type="text" id="update_ownerCity" name="ownerCity" placeholder="${response.ownerObject.city}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
-
-            let container = document.getElementById("update_PropertyOwnerAddress");
-            container.innerHTML = html;
-
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerAddress()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerAddress()"></span>`
-
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerAddress");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
-
-function updatePropertyOwnerAddress(id){
-    let name = document.getElementById("update_ownerAddressName").value;
-    let address = document.getElementById("update_ownerAddress").value;
-    let zipCode = document.getElementById("update_OwnerZipCode").value;
-    let city = document.getElementById("update_ownerCity").value;
-    let country = document.getElementById("update_ownerCountry").value;
-
-    let data = {
-        name,
-        address,
-        zipCode,
-        city,
-        country
-    }
-
-    $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/1',
-        type: 'PUT',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        success: function (response) {
-
-        }
-    })
-}
-
-function discardEditPropertyOwnerAddress(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address Name is required">
-                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Name : ${response.name}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 validate-input d-flex m-b-16" data-validate = "Zip Code is required">
-                                                    <p><span class="bi bi-file-earmark-zip">&nbsp;Zip Code : ${response.zipCode}</span></p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Country is required">
-                                                    <p><span class="bi bi-map">&nbsp;</span>Country : ${response.country}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Address is required">
-                                                    <p><span class="bi bi-geo-alt">&nbsp;</span>Address : ${response.address}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Username is required">
-                                                    <p><span class="bi bi-building">&nbsp;</span>City : ${response.city}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>`
-
-            let container = document.getElementById("update_PropertyOwnerAddress");
-
-            container.innerHTML = html;
-
-
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerAddress()"></span>`
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerAddress");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
-
-//Property Owner Contact Details
-function editPropertyOwnerContactDetails(){
-    $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                            <div class="wrap-input100 bi bi-telephone d-flex validate-input m-b-16" data-validate = "Owner Phone is required">
-                                                <input class="input100" type="text" id="update_ownerPhone" name="ownerPhone" placeholder="${response.phone}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                            <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Email Address is required">
-                                                <span class="bi bi-envelope"></span>
-                                                <input class="input100" type="text" id="update_ownerEmailAddress" name="ownerEmailAddress" placeholder="${response.email}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="wrap-input100 bi bi-phone d-flex validate-input m-b-16" data-validate = "Cell Number is required">
-                                                <input class="input100" type="text" id="update_ownerCellNumber" name="ownerCellNumber" placeholder="${response.MobileNumber}">
-                                                <span class="focus-input100"></span>
-                                            </div>
-                                        </div>`
-
-            let container = document.getElementById("update_PropertyOwnerContactDetails");
-            container.innerHTML = html;
-
-            let html2 = `<span class="bi bi-save2-fill" onclick="updatePropertyOwnerContactDetails()"></span>
-                                                    <span class="bi bi-trash-fill" onclick="discardEditPropertyOwnerContactDetails()"></span>`
-
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
-
-function updatePropertyOwnerContactDetails(id){
-    let phone = document.getElementById("update_ownerPhone").value;
-    let MobileNumber = document.getElementById("update_ownerCellNumber").value;
-    let email = document.getElementById("update_ownerEmailAddress").value;
-
-    let data = {
-        phone,
-        MobileNumber,
-        email
-    }
-
-    $.ajax({
-        url: ' http://localhost:8090/api/contact-details/update-contact-details/1',
-        type: 'PUT',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        success: function (response) {
-
-        }
-    })
-}
-
-function discardEditPropertyOwnerContactDetails(id){
-    $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/1',
-        type: 'GET',
-        success: function (response) {
-            let html = `<div class="col-sm-6">
-                                                <div class="wrap-input100  d-flex validate-input m-b-16" data-validate = "Owner Phone is required">
-                                                    <p><span class="bi bi-telephone">&nbsp;</span>Phone : ${response.phone} </p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Email Address is required">
-                                                    <p><span class="bi bi-envelope">&nbsp;</span>Email : ${response.email}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="wrap-input100 d-flex validate-input m-b-16" data-validate = "Cell Number is required">
-                                                    <p><span class="bi bi-phone">&nbsp;</span>Cell Number : ${response.MobileNumber}</p>
-                                                    <span class="focus-input100"></span>
-                                                </div>
-                                            </div>`
-
-            let container = document.getElementById("update_PropertyOwnerContactDetails");
-
-            container.innerHTML = html;
-
-
-            let html2 = `<span class="bi bi-pen-fill pen-big" onclick="editPropertyOwnerContactDetails()"></span>`
-            let iconsPropertyOwnerContactDetails = document.getElementById("iconsPropertyOwnerContactDetails");
-            iconsPropertyOwnerContactDetails.innerHTML = html2;
-        }
-    })
-}
 
 
 

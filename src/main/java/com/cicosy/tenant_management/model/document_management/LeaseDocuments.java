@@ -7,6 +7,9 @@ package com.cicosy.tenant_management.model.document_management;
 
 
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+
 @Table(name = "lease_documents")
 public class LeaseDocuments {
 
@@ -43,12 +47,18 @@ public class LeaseDocuments {
 	public LeaseDocuments(Long id, String fileName, String filePath, String fileType,
 			String fileSize) {
 		this.id = id;
-		
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileType = fileType;
 		this.fileSize = fileSize;
 		
+	}
+
+	public LeaseDocuments(String fileName, String filePath, String fileType, String fileSize) {
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.fileType = fileType;
+		this.fileSize = fileSize;
 	}
 
 	public Long getId() {

@@ -30,6 +30,7 @@ public class LeaseDocumentService  {
 
 	@Autowired
 	LeaseDocumentsRepo leaseDocumentsRepo;
+
 	
 	public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/lease";
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
@@ -37,6 +38,7 @@ public class LeaseDocumentService  {
 	
 	public String saveFile(LeaseDocuments leaseDocuments) throws IOException {
 		// Save Employee With File
+
 		leaseDocumentsRepo.save(leaseDocuments);
 		return "success";
 	}
@@ -57,6 +59,26 @@ public class LeaseDocumentService  {
         }
 	}
 
+
+	public LeaseDocuments store(MultipartFile file) throws IOException {
+		 String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
+
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+		String size = String.valueOf(file.getSize());
+		String filePath = Paths.get(uploadDirectory, file.getOriginalFilename()).toString();
+
+		LeaseDocuments leaseDocuments = new LeaseDocuments(
+				fileName,filePath,size,  file.getContentType());
+		if(fileName.contains(".."))
+		{
+			System.out.println("not a a valid file");
+		}
+
+
+
+		return leaseDocumentsRepo.save(leaseDocuments);
+	}
 	
 }
 

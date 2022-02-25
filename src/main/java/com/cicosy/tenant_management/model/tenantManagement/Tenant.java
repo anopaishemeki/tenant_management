@@ -36,23 +36,32 @@ public class Tenant {
 
     private String rentStatus;
 
-    private BigDecimal deposit,rentalFee;
+    private String deposit;
+    private String rental_fee;
 
 
 
-    @Embedded
-    private Address address;
 
-    
-    @Embedded
-    private TenantBusiness tenantBusiness;
+    private String house_no;
+    private String street;
+    private String city;
+    private String country;
+
+    private String business_name;
+    private String business_type;
+    private String services;
+    private String shop_number;
+
+
+
+
 
     private String lease;
     private String property;
 
-    public Tenant(BigDecimal deposit, BigDecimal rentalFee) {
+    public Tenant(String deposit, String rental_fee) {
         this.deposit = deposit;
-        this.rentalFee = rentalFee;
+        this.rental_fee = rental_fee;
     }
 
     public Tenant(String name, String surname, String email, String phone,
