@@ -587,7 +587,7 @@ function editPropertyAddress(id) {
                             </div>
                             <div class="form-group col-md-2">
                               <label for="propertyZipCode">Zip</label>
-                              <input type="text" class="form-control" id="propertyZipCode" ${response.country}>
+                              <input type="text" class="form-control" id="propertyZipCode" ${response.zipCode}>
                             </div>
                           </div>
                           <hr class="my-4">
