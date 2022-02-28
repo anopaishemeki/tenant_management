@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,7 @@ public class LeaseController {
 
     private final LeaseService leaseService;
     private final LeaseDocumentService leaseDocumentService;
+    public static String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
 
     @Autowired
     public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService) {
@@ -62,7 +64,6 @@ public class LeaseController {
     public ResponseEntity<Object> registerNewLease(
             @RequestParam(required = true, value = "jsondata") String jsondata,
             LeaseHistory leaseHistory,
-            LeaseDocuments leaseDocuments,
             @RequestParam(required = true, value = "file") MultipartFile file) throws IOException {
 
 
@@ -74,7 +75,7 @@ public class LeaseController {
         String message = "";
         try {
 
-            leaseDocumentService.saveFile(file,leaseDocuments);
+            leaseDocumentService.store(file);
 
             message = "Record Saved with Agreement file successfully : " + file.getOriginalFilename();
 

@@ -6,21 +6,26 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Tenant Management System</title>
+    <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
     <!-- Simple bar CSS -->
-    <link rel="stylesheet" href="../../css/simplebar.css">
+    <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
-    <link rel="stylesheet" href="../../css/feather.css">
-    <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="css/feather.css">
+    <link rel="stylesheet" href="css/select2.css">
+    <link rel="stylesheet" href="css/dropzone.css">
+    <link rel="stylesheet" href="css/uppy.min.css">
+    <link rel="stylesheet" href="css/jquery.steps.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="css/quill.snow.css">
     <!-- Date Range Picker CSS -->
-    <link rel="stylesheet" href="../../css/daterangepicker.css">
+    <link rel="stylesheet" href="css/daterangepicker.css">
     <!-- App CSS -->
-    <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
-    <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
+    <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light  " onload="getPending()">
+  <body class="vertical  light  ">
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -36,12 +41,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-shortcut">
+            <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-shortcut">
               <span class="fe fe-grid fe-16"></span>
             </a>
           </li>
           <li class="nav-item nav-notif">
-            <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-notif">
+            <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
               <span class="fe fe-bell fe-16"></span>
               <span class="dot dot-md bg-success"></span>
             </a>
@@ -49,7 +54,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+                <img src="./assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -67,7 +72,7 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="../../index.html">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
               <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
@@ -85,20 +90,20 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
                 <li class="nav-item active">
-                  <a class="nav-link pl-3" href="../../index.html"><span class="ml-1 item-text">Default</span></a>
+                  <a class="nav-link pl-3" href="./index.html"><span class="ml-1 item-text">Default</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../../dashboard-analytics.html"><span class="ml-1 item-text">Analytics</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../../dashboard-sales.html"><span class="ml-1 item-text">E-commerce</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../../dashboard-saas.html"><span class="ml-1 item-text">Saas Dashboard</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../../dashboard-system.html"><span class="ml-1 item-text">Systems</span></a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link pl-3" href="./dashboard-analytics.html"><span class="ml-1 item-text">Analytics</span></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link pl-3" href="./dashboard-sales.html"><span class="ml-1 item-text">E-commerce</span></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link pl-3" href="./dashboard-saas.html"><span class="ml-1 item-text">Saas Dashboard</span></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                  <a class="nav-link pl-3" href="./dashboard-system.html"><span class="ml-1 item-text">Systems</span></a>-->
+<!--                </li>-->
               </ul>
             </li>
           </ul>
@@ -113,78 +118,34 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Properties</span>
+                  <a class="nav-link pl-3" href="html/propertyManagement/property-list.html"><span class="ml-1 item-text">Properties</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
+                  <a class="nav-link pl-3" href="html/propertyManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
+                  <a class="nav-link pl-3" href="html/propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
                 </li>
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./ui-notification.html"><span class="ml-1 item-text">Notifications</span></a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./ui-modals.html"><span class="ml-1 item-text">Modals</span></a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./ui-tabs-accordion.html"><span class="ml-1 item-text">Tabs & Accordion</span></a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./ui-progress.html"><span class="ml-1 item-text">Progress</span></a>-->
-                <!--                </li>-->
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-credit-card fe-16"></i>
+              <a href="#tenant" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-pie-chart fe-16"></i>
                 <span class="ml-3 item-text">Tenant Management</span>
               </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+              <ul class="collapse list-unstyled pl-4 w-100" id="tenant">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../tenantManagement/tenant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
+                  <a class="nav-link pl-3" href="html/tenantManagement/tenant_list.html"><span class="ml-1 item-text">Tenant List</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../tenantManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
+                  <a class="nav-link pl-3" href="html/tenantManagement/add_tenant.html"><span class="ml-1 item-text">Add Tenant</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
+                  <a class="nav-link pl-3" href="html/tenantManagement/assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../tenantManagement/tenant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
-                </li>
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./form_layouts.html"><span class="ml-1 item-text">Layouts</span></a>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item">-->
-                <!--                  <a class="nav-link pl-3" href="./form_upload.html"><span class="ml-1 item-text">File upload</span></a>-->
-                <!--                </li>-->
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-grid fe-16"></i>
-                <span class="ml-3 item-text">Lease Management</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="tables">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../LeaseManagement/View-Lease.html"><span class="ml-1 item-text">View Leases</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../LeaseManagement/Add-Lease.html"><span class="ml-1 item-text">Add Lease</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../LeaseManagement/Terminate-Lease.html"><span class="ml-1 item-text">Terminate </span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="../LeaseManagement/Lease-Notices.html"><span class="ml-1 item-text">Lease Notices </span></a>
+                  <a class="nav-link pl-3" href="html/tenantManagement/tenant_leasing.html"><span class="ml-1 item-text">Leasing</span></a>
                 </li>
               </ul>
             </li>
@@ -195,139 +156,108 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="charts">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
+                  <a class="nav-link pl-3" href="html/documentsManagement/tenant_documents.html"><span class="ml-1 item-text">Tenant Documents</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
+                  <a class="nav-link pl-3" href="html/documentsManagement/notice_documents.html"><span class="ml-1 item-text">Notice Documents</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
+                  <a class="nav-link pl-3" href="html/documentsManagement/lease_documents.html"><span class="ml-1 item-text">Lease Documents </span></a>
                 </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a href="#maintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-pie-chart fe-16"></i>
+              <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-grid fe-16"></i>
+                <span class="ml-3 item-text">Lease Management</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="html/LeaseManagement/View-Lease.html"><span class="ml-1 item-text">View Leases</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="html/LeaseManagement/Add-Lease.html"><span class="ml-1 item-text">Add Lease</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="html/LeaseManagement/Terminate-Lease.html"><span class="ml-1 item-text">Terminate </span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="html/LeaseManagement/Lease-Notices.html"><span class="ml-1 item-text">Lease Notices </span></a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-credit-card fe-16"></i>
                 <span class="ml-3 item-text">Maintenance</span>
               </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
-
+              <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="request.html"><span class="ml-1 item-text">Request</span></a>
+                  <a class="nav-link pl-3" href="html/mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="schedule.html"><span class="ml-1 item-text">Schedule</span></a>
+                  <a class="nav-link pl-3" href="html/mantainanceManagement/schedule.html"><span class="ml-1 item-text">Schedule</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
+                  <a class="nav-link pl-3" href="html/mantainanceManagement/overdueRequest.html"><span class="ml-1 item-text">Overdue</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="attendedRequest.html"><span class="ml-1 item-text">Attended</span></a>
+                  <a class="nav-link pl-3" href="html/mantainanceManagement/pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
                 </li>
               </ul>
             </li>
           </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-
         </nav>
       </aside>
       <main role="main" class="main-content">
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
-              <h2 class="mb-2 page-title">Pending Requests</h2>
-              
-              <div class="row my-4">
-                <!-- Small table -->
-                <div class="col-md-12">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <!-- table -->
-                      <table class="table datatables" id="dataTable-1">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th></th>
-                            <th>id</th>
-                            <th>Request</th>
-                            <th>Description</th>
-                            <th>Date Logged</th>
-                            
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody id="t_body">
-                          <tr>
-                            <td>
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <label class="custom-control-label"></label>
-                              </div>
-                            </td>
-                            <td>368</td>
-                            <td>Imani Lara</td>
-                            <td>(478) 446-9234</td>
-                            <td>Asset Management</td>
-                            
-                            
-                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted sr-only">Action</span>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">Schedule</a>
-                               
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+              <div class="container-fluid">
+                <div class="container">
+                  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
                     </div>
-                  </div>
-                </div> <!-- simple table -->
-              </div> <!-- end section -->
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="./assets/images/im1.jpg" class="d-block w-100 img-fluid" alt="..." width="70%" height="800px">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>First Image Name</h5>
+                          <p>Some representative placeholder for building </p>
+                        </div>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./assets/images/im1.jpg" class="d-block w-100 img-fluid" alt="..." width="70%" height="800px">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>Second Image  Name</h5>
+                          <p>Some representative placeholder for Building</p>
+                        </div>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./assets/images/im1.jpg" class="d-block w-100 img-fluid" alt="..." width="70%" height="800px">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>Joina City</h5>
+                          <p>Home for everyone</p>
+                        </div>
+                      </div>
+
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div><!-- .row-->
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-        
-        <div class="col-md-4 mb-4">
-          
-            
-             
-              
-              <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="varyModalLabel">Schedule</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="form-row mb-3">
-                        <div class="col-md-6 mb-3">
-                          <label for="date-input1">Schedule Date</label>
-                          <div class="input-group">
-                            <input type="text" class="form-control drgpicker" id="date-input1" value="04/24/2020" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                              <div class="input-group-text" id="button-addon-date"><span class="fe fe-calendar fe-16 mx-2"></span></div>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn mb-2 btn-primary">Assign</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-          
-        </div>
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -453,19 +383,38 @@
         </div>
       </main> <!-- main -->
     </div> <!-- .wrapper -->
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/maintenanceApi.js"></script>
-    <script src="../../js/popper.min.js"></script>
-    <script src="../../js/moment.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/simplebar.min.js"></script>
-    
-    <script src='../../js/daterangepicker.js'></script>
-    <script src='../../js/jquery.stickOnScroll.js'></script>
-    <script src="../../js/tinycolor-min.js"></script>
-    <script src="../../js/config.js"></script>
-    <script src='../../js/jquery.dataTables.min.js'></script>
-    <script src='../../js/dataTables.bootstrap4.min.js'></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/simplebar.min.js"></script>
+    <script src='js/daterangepicker.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
+    <script src="js/tinycolor-min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="js/topojson.min.js"></script>
+    <script src="js/datamaps.all.min.js"></script>
+    <script src="js/datamaps-zoomto.js"></script>
+    <script src="js/datamaps.custom.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script>
+      /* defind global options */
+      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+      Chart.defaults.global.defaultFontColor = colors.mutedColor;
+    </script>
+    <script src="js/gauge.min.js"></script>
+    <script src="js/jquery.sparkline.min.js"></script>
+    <script src="js/apexcharts.min.js"></script>
+    <script src="js/apexcharts.custom.js"></script>
+    <script src='js/jquery.mask.min.js'></script>
+    <script src='js/select2.min.js'></script>
+    <script src='js/jquery.steps.min.js'></script>
+    <script src='js/jquery.validate.min.js'></script>
+    <script src='js/jquery.timepicker.js'></script>
+    <script src='js/dropzone.min.js'></script>
+    <script src='js/uppy.min.js'></script>
+    <script src='js/quill.min.js'></script>
     <script>
       $('.select2').select2(
       {
@@ -647,16 +596,29 @@
       })();
     </script>
     <script>
-      $('#dataTable-1').DataTable(
+      var uptarg = document.getElementById('drag-drop-area');
+      if (uptarg)
       {
-        autoWidth: true,
-        "lengthMenu": [
-          [16, 32, 64, -1],
-          [16, 32, 64, "All"]
-        ]
-      });
+        var uppy = Uppy.Core().use(Uppy.Dashboard,
+        {
+          inline: true,
+          target: uptarg,
+          proudlyDisplayPoweredByUppy: false,
+          theme: 'dark',
+          width: 770,
+          height: 210,
+          plugins: ['Webcam']
+        }).use(Uppy.Tus,
+        {
+          endpoint: 'https://master.tus.io/files/'
+        });
+        uppy.on('complete', (result) =>
+        {
+          console.log('Upload complete! We’ve uploaded these files:', result.successful)
+        });
+      }
     </script>
-    <script src="../../js/apps.js"></script>
+    <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
@@ -669,202 +631,5 @@
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
     </script>
-   
-   
-    
-    
-    <script src='../../js/daterangepicker.js'></script>
-    
-  
-    
-    <script src='../../js/select2.min.js'></script>
- 
-    <script src='../../js/jquery.validate.min.js'></script>
-    
-    
-  
-
-    <script>
-      $('.select2').select2(
-      {
-        theme: 'bootstrap4',
-      });
-      $('.select2-multi').select2(
-      {
-        multiple: true,
-        theme: 'bootstrap4',
-      });
-      $('.drgpicker').daterangepicker(
-      {
-        singleDatePicker: true,
-        timePicker: false,
-        showDropdowns: true,
-        locale:
-        {
-          format: 'MM/DD/YYYY'
-        }
-      });
-      $('.time-input').timepicker(
-      {
-        'scrollDefault': 'now',
-        'zindex': '9999' /* fix modal open */
-      });
-      /** date range picker */
-      if ($('.datetimes').length)
-      {
-        $('.datetimes').daterangepicker(
-        {
-          timePicker: true,
-          startDate: moment().startOf('hour'),
-          endDate: moment().startOf('hour').add(32, 'hour'),
-          locale:
-          {
-            format: 'M/DD hh:mm A'
-          }
-        });
-      }
-      var start = moment().subtract(29, 'days');
-      var end = moment();
-
-      function cb(start, end)
-      {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-      }
-      $('#reportrange').daterangepicker(
-      {
-        startDate: start,
-        endDate: end,
-        ranges:
-        {
-          'Today': [moment(), moment()],
-          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month': [moment().startOf('month'), moment().endOf('month')],
-          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-      }, cb);
-      cb(start, end);
-      $('.input-placeholder').mask("00/00/0000",
-      {
-        placeholder: "__/__/____"
-      });
-      $('.input-zip').mask('00000-000',
-      {
-        placeholder: "____-___"
-      });
-      $('.input-money').mask("#.##0,00",
-      {
-        reverse: true
-      });
-      $('.input-phoneus').mask('(000) 000-0000');
-      $('.input-mixed').mask('AAA 000-S0S');
-      $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
-      {
-        translation:
-        {
-          'Z':
-          {
-            pattern: /[0-9]/,
-            optional: true
-          }
-        },
-        placeholder: "___.___.___.___"
-      });
-      // editor
-      var editor = document.getElementById('editor');
-      if (editor)
-      {
-        var toolbarOptions = [
-          [
-          {
-            'font': []
-          }],
-          [
-          {
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote', 'code-block'],
-          [
-          {
-            'header': 1
-          },
-          {
-            'header': 2
-          }],
-          [
-          {
-            'list': 'ordered'
-          },
-          {
-            'list': 'bullet'
-          }],
-          [
-          {
-            'script': 'sub'
-          },
-          {
-            'script': 'super'
-          }],
-          [
-          {
-            'indent': '-1'
-          },
-          {
-            'indent': '+1'
-          }], // outdent/indent
-          [
-          {
-            'direction': 'rtl'
-          }], // text direction
-          [
-          {
-            'color': []
-          },
-          {
-            'background': []
-          }], // dropdown with defaults from theme
-          [
-          {
-            'align': []
-          }],
-          ['clean'] // remove formatting button
-        ];
-        var quill = new Quill(editor,
-        {
-          modules:
-          {
-            toolbar: toolbarOptions
-          },
-          theme: 'snow'
-        });
-      }
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function()
-      {
-        'use strict';
-        window.addEventListener('load', function()
-        {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form)
-          {
-            form.addEventListener('submit', function(event)
-            {
-              if (form.checkValidity() === false)
-              {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
-   
-    
   </body>
 </html>
