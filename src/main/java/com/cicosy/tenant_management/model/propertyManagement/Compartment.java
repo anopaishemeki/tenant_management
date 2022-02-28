@@ -28,14 +28,14 @@ public class Compartment {
     private int floorNumber;
     private int floorArea;
     private double rentalRate;
-    private String status;
+    private boolean status;
     private String compartmentNumber;
     private String description;
     @Transient
     private Tenant tenantObject;
     private Long tenant;
 
-    public Compartment(Long property, int floorNumber, int floorArea, double rentalRate, String status, String compartmentNumber, Tenant tenantObject, Long tenant) {
+    public Compartment(Long property, int floorNumber, int floorArea, double rentalRate, boolean status, String compartmentNumber, Tenant tenantObject, Long tenant) {
         this.property = property;
         this.floorNumber = floorNumber;
         this.floorArea = floorArea;

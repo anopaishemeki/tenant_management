@@ -448,7 +448,7 @@ function getTenantsAssign(){
 
             for (let i = 0; i < items.length; i++) {
                 let html =
-                    `<option onclick="getCompartmentDetails(i)">${items[i].name}</option>`
+                    `<option value="${items[i].id}" onclick="getCompartmentDetails('${items[i].id}')">${items[i].name}</option>`
 
                 let tr = document.createElement("option");
 
@@ -470,47 +470,35 @@ function getTenantsAssign(){
     function getCompartmentDetails(id){
 
         $.ajax({
-            url: 'http://localhost:8090/api/property/get-all-properties',
+            url: 'http://localhost:8090/api/compartment/get-compartment/'+id,
             type: 'GET',
             success: function (response) {
-                let buildings = response
+                let compartments = response
 
                 console.log(response)
 
 
 
-                var fl = document.getElementById("building_option");
+                let fl = document.getElementById("compartmentDropdown");
                 // while (tenant_list.hasChildNodes()) {
                 //     tenant_list.removeChild(tenant_list.firstChild);
                 // }
 
-                $.ajax({
-                    url: 'http://localhost:8090/api/compartment/get-compartments',
-                    type: 'GET',
-                    success: function (response) {
-                        let floors = response
+                for (let i = 0; i < compartments.length; i++) {
+                   if (compartments[i].status){
+                       let html =
+                           `<option>${compartments[i].compartmentNumber}</option>`
 
-                        if (buildings[id].id == floors[i].property) {
-
-
-                            for (let i = 0; i < items.length; i++) {
-                                let html =
-                                    `<option>${items[i].floorNumber}</option>`
-
-                                let tr = document.createElement("option");
+                       let tr = document.createElement("option");
 
 
-                                tr.innerHTML = html;
+                       tr.innerHTML = html;
 
-                                fl.appendChild(tr);
+                       fl.appendChild(tr);
+                   }
 
 
-                            }
-                        }else{
-                            console.log("Dont work bro!!!")
-                        }
-                    }
-                })
+                }
 
             }
 
