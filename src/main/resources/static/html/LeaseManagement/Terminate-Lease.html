@@ -447,7 +447,12 @@
                             <p id="alrt" style="visibility: visible">Are You Sure you want
                                 to Terminate This Lease</p>
 
-                            <div id="liveAlertPlaceholder"></div>
+                            <div id="liveAlertPlaceholder">
+                                <button id="ldID" style="background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                    Terminating ...
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
