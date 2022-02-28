@@ -60,9 +60,10 @@ function saveCompartment(){
         success: function (response) {
             let element = document.getElementById("toast");
 
+            $('#successModal').modal('show')
             // Create toast instance
-            let myToast = new bootstrap.Toast(element);
-            myToast.show()
+            // let myToast = new bootstrap.Toast(element);
+            // myToast.show()
 
             document.getElementById("_form").reset();
             console.log(response)
@@ -380,11 +381,12 @@ function saveProperty() {
             // alert("success" + response)
             console.log(response)
             // getProperties();
-            let element = document.getElementById("toast");
+            let element = document.getElementById("successModal");
 
+            $('#successModal').modal('show')
             // Create toast instance
-            let myToast = new bootstrap.Toast(element);
-            myToast.show()
+            // let myToast = new bootstrap.Toast(element);
+            // myToast.show()
 
             document.getElementById("_form").reset();
         }

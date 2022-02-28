@@ -19,8 +19,8 @@ public class CompartmentController {
     }
 
     @PostMapping("/save-compartment")
-    public void saveCompartment(@RequestBody Compartment compartment){
-        compartmentService.save(compartment);
+    public Compartment saveCompartment(@RequestBody Compartment compartment){
+        return compartmentService.save(compartment);
     }
 
     @GetMapping("/get-compartments")
