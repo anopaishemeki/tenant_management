@@ -60,12 +60,14 @@ function saveCompartment(){
         success: function (response) {
             let element = document.getElementById("toast");
 
+            $('#successModal').modal('show')
             // Create toast instance
-            let myToast = new bootstrap.Toast(element);
-            myToast.show()
+            // let myToast = new bootstrap.Toast(element);
+            // myToast.show()
 
             document.getElementById("_form").reset();
             console.log(response)
+
         }
     })
 }
@@ -379,11 +381,12 @@ function saveProperty() {
             // alert("success" + response)
             console.log(response)
             // getProperties();
-            let element = document.getElementById("toast");
+            let element = document.getElementById("successModal");
 
+            $('#successModal').modal('show')
             // Create toast instance
-            let myToast = new bootstrap.Toast(element);
-            myToast.show()
+            // let myToast = new bootstrap.Toast(element);
+            // myToast.show()
 
             document.getElementById("_form").reset();
         }
@@ -586,7 +589,7 @@ function editPropertyAddress(id) {
                             </div>
                             <div class="form-group col-md-2">
                               <label for="propertyZipCode">Zip</label>
-                              <input type="text" class="form-control" id="propertyZipCode" ${response.country}>
+                              <input type="text" class="form-control" id="propertyZipCode" ${response.zipCode}>
                             </div>
                           </div>
                           <hr class="my-4">
@@ -675,6 +678,64 @@ function updatePropertyAddress(id) {
         }
     })
 }*/
+
+//Property  Contact Details
+function editPropertyContactDetails(id) {
+    $.ajax({
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/' + id,
+        type: 'GET',
+        success: function (response) {
+
+            let html = `<div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="ownerEmailAddress">Email</label>
+                                    <input type="email" class="form-control" id="propertyEmail" placeholder="${response.email}">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="ownerPhone">Phone</label>
+                                    <input type="text" class="form-control" id="propertyPhone" placeholder="${response.phone}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ownerCellNumber">Mobile Number</label>
+                                    <input type="text" class="form-control" id="propertyMobileNumber" placeholder="${response.mobileNumber}">
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <button type="button" class="btn mb-2 btn-outline-success" onclick="updatePropertyContactDetails('${id}')"><span class="fe fe-upload-cloud fe-16"> Update Contacts</span></button>
+`
+
+
+            let container = document.getElementById("propertyContactDetails");
+            container.innerHTML = html;
+        }
+    })
+}
+
+function updatePropertyContactDetails(id) {
+    let phone = document.getElementById("propertyPhone").value;
+    let mobileNumber = document.getElementById("propertyMobileNumber").value;
+    let email = document.getElementById("propertyEmail").value;
+
+    let data = {
+        phone,
+        mobileNumber,
+        email
+    }
+
+    $.ajax({
+        url: ' http://localhost:8090/api/contact-details/update-contact-details/' + id,
+        type: 'PUT',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            editPropertyContactDetails(id);
+        }
+    })
+}
 
 //Property Owner Details
 function editPropertyOwnerDetails(id) {
@@ -903,12 +964,12 @@ function editPropertyOwnerContactDetails(id) {
 
 function updatePropertyOwnerContactDetails(id) {
     let phone = document.getElementById("ownerPhone").value;
-    let MobileNumber = document.getElementById("ownerCellNumber").value;
+    let mobileNumber = document.getElementById("ownerCellNumber").value;
     let email = document.getElementById("ownerEmailAddress").value;
 
     let data = {
         phone,
-        MobileNumber,
+        mobileNumber,
         email
     }
 
@@ -963,7 +1024,7 @@ function discardEditPropertyOwnerContactDetails(id) {
 function setPropertyDetails() {
     let id = JSON.parse(localStorage.getItem("id"))
 
-    let url = 'http://localhost:8090/api/property/get-property/' + id
+    let url = 'http://localhost:8090/api/property/get-property/' + id;
 
     $.ajax({
         url: url,
@@ -972,7 +1033,7 @@ function setPropertyDetails() {
             editPropertyDetails(id);
             editPropertyAddress(response.address);
             editPropertyOwnerDetails(response.owner);
-            alert("owner" + response.owner)
+            editPropertyContactDetails(response.propertyContactObject.id)
             editPropertyOwnerAddress(response.ownerObject.address);
             editPropertyOwnerContactDetails(response.ownerObject.contactDetailsObject.id);
         }
