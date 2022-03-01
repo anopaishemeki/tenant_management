@@ -1014,7 +1014,7 @@ function getTenants(){
                 //tr.setAttribute("value","${items[i].name} ${items[i].surname}")
                 tr.setAttribute("value",name);
 
-            <!--<td>${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()}</td>-->
+            /*<!--<td>${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()}</td>-->*/
 
                 tr.innerHTML = html;
 
