@@ -451,6 +451,8 @@
                     <div class="modal-body">
                       <div class="form-row mb-3">
                         <div class="col-md-6 mb-3">
+                          <div class="liveAlertPlaceholder" id="liveAlertPlaceholder"></div>
+                          <div id="cont">
                           <label for="date-input1">Schedule Date</label>
                           <div class="input-group">
                             <input type="text" class="form-control drgpicker" id="date-input1" value="04/24/2020" aria-describedby="button-addon2">
@@ -458,12 +460,23 @@
                               <div class="input-group-text" id="button-addon-date"><span class="fe fe-calendar fe-16 mx-2"></span></div>
                             </div>
                           </div>
+                          </div>
                         </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn mb-2 btn-primary">Assign</button>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <!--                            <a href="request.html" >-->
+                      <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                      <!--                            </a>-->
+                      <a href="request.html">
+                        <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+                                class="btn mb-2 btn-success" aria-label="Close">OK
+                        </button>
+                      </a>
+                      <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                      </button>
+                      <button type="button" class="btn mb-2 btn-primary" onclick="schedule()" id="2">Assign
+                      </button>
                     </div>
                   </div>
                 </div>

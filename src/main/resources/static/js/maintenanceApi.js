@@ -31,7 +31,7 @@ function toggleView(id) {
 //Get All Request
 function getRequest() {
     $.ajax({
-        url: 'http://localhost:8080/api/maintenance/getAll',
+        url: 'http://localhost:8090/api/maintenance/getAll',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -104,7 +104,7 @@ function alert(message,type){
 //Get Overdue Request
 function getOverdue() {
     $.ajax({
-        url: 'http://localhost:8080/api/maintenance/status/overdue',
+        url: 'http://localhost:8090/api/maintenance/status/overdue',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -159,10 +159,10 @@ function getOverdue() {
     })
 }
 
-//Get Overdue Request
+//Get Pending Request
 function getPending() {
     $.ajax({
-        url: 'http://localhost:8080/api/maintenance/status/pending',
+        url: 'http://localhost:8090/api/maintenance/status/pending',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -192,7 +192,7 @@ function getPending() {
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">Schedule</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal( ${items[i].id})">Schedule</a>
                        
                       </div>
                     </td>`
@@ -234,7 +234,7 @@ $.ajax({
     contentType:"application/json; charset=utf-8",
     data:JSON.stringify(jsonDataObj),
     type:"PUT",
-    url:"http://localhost:8080/api/maintenance/"+ id+"/schedule",
+    url:"http://localhost:8090/api/maintenance/"+ id+"/schedule",
     success: function (response){
         console.log(response);
 
@@ -262,7 +262,7 @@ $.ajax({
 //Get Scheduled
 function getScheduled() {
     $.ajax({
-        url: 'http://localhost:8080/api/maintenance/getAllScheduled',
+        url: 'http://localhost:8090/api/maintenance/getAllScheduled',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -346,7 +346,7 @@ function Attend(){
         contentType:"application/json; charset=utf-8",
         data:JSON.stringify(data),
         type:"POST",
-        url:"http://localhost:8080/api/maintenance/attended",
+        url:"http://localhost:8090/api/maintenance/attended",
         success: function (response){
             console.log(response);
 
@@ -373,7 +373,7 @@ function Attend(){
         crossDomain:"true",
         contentType:"application/json; charset=utf-8",
         type:"DELETE",
-        url:"http://localhost:8080/api/maintenance/"+id+"/attended",
+        url:"http://localhost:8090/api/maintenance/"+id+"/attended",
         success: function (response){
             var r=document.getElementById("1");
             r.setAttribute("style","display:all")
@@ -421,7 +421,7 @@ function Attend(){
 //Get Overdue Request
 function getAttended() {
     $.ajax({
-        url: 'http://localhost:8080/api/maintenance/getAllAttended',
+        url: 'http://localhost:8090/api/maintenance/getAllAttended',
         type: 'GET',
         success: function (response) {
             let items = response
