@@ -45,6 +45,9 @@ function getRequest() {
             }
 
             for (let i = 0; i < items.length; i++) {
+
+                let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
+
                 let html = `
                         <td></td>
                         <td>  ${items[i].id}
@@ -55,6 +58,8 @@ function getRequest() {
                         </td>
                         <td> ${items[i].dateLogged}
                         </td> 
+                        
+                        <td> ${scheduledDate}</td>
                         <td> ${items[i].status}
                         </td>                        
                         <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -118,6 +123,7 @@ function getOverdue() {
             }
 
             for (let i = 0; i < items.length; i++) {
+                let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
                 let html = `
                         <td></td>
                         <td>  ${items[i].id}
@@ -128,6 +134,7 @@ function getOverdue() {
                         </td>
                         <td> ${items[i].dateLogged}
                         </td> 
+                        <td>${scheduledDate}</td>
                                               
                         <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
@@ -176,7 +183,7 @@ function getPending() {
             }
 
             for (let i = 0; i < items.length; i++) {
-
+                let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
                 let html = `
                         <td></td>
                         <td>  ${items[i].id}
@@ -187,6 +194,7 @@ function getPending() {
                         </td>
                         <td> ${items[i].dateLogged}
                         </td> 
+                        <th>${scheduledDate}</th>
                                               
                         <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>

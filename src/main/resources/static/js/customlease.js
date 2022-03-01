@@ -297,6 +297,8 @@ function renewlease() {
     //    }
     //
     // }
+    var e=document.getElementById("ldID");
+    e.setAttribute("style","display:all");
 
 
     var id = JSON.parse(localStorage.getItem("id"));
@@ -381,6 +383,8 @@ function renewlease() {
 // Terminating Lease
 
 function Terminate() {
+    var e=document.getElementById("ldiD");
+    e.setAttribute("style","display:all");
 
     var id = JSON.parse(localStorage.getItem("id"));
     let status = "Terminated";
@@ -449,6 +453,7 @@ function Terminate() {
 // Updating Lease
 
 function saveUpdate() {
+
     var id = JSON.parse(localStorage.getItem("id"));
     var jsonDataObj = {
         "name": $("#TenantName").val(),
@@ -513,6 +518,19 @@ var alertPlaceholder2 = document.getElementById('liveAlertPlaceholder2');
 
 
 function alert(message, type) {
+
+    var y=document.getElementById("ldID");
+    if(y){
+        y.setAttribute("style","display:none");
+    }
+
+
+    var e=document.getElementById("ldiD");
+    if(e){
+        e.setAttribute("style","display:none");
+    }
+
+
     var h=document.getElementById("err");
     if (h) {
 
@@ -536,6 +554,18 @@ function alert(message, type) {
 }
 
 function alert2(message, type) {
+
+    var e=document.getElementById("ldID");
+    if(e){
+        e.setAttribute("style","display:none");
+    }
+
+
+    var i=document.getElementById("ldiD");
+    if (i){
+        i.setAttribute("style","display:none");
+    }
+
 
     var h=document.getElementById("err");
     if (h) {
@@ -960,7 +990,7 @@ function getLeases() {
 // Get Tenant Names
 function getTenants(){
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -984,7 +1014,7 @@ function getTenants(){
                 //tr.setAttribute("value","${items[i].name} ${items[i].surname}")
                 tr.setAttribute("value",name);
 
-            <!--<td>${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()}</td>-->
+            /*<!--<td>${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()}</td>-->*/
 
                 tr.innerHTML = html;
 
@@ -1000,7 +1030,7 @@ function getTenants(){
 // get Property details
 function getProperty() {
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             let items = response

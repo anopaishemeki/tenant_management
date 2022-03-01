@@ -27,7 +27,7 @@ public class Schedule {
     private Long Id;
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
 //    @JsonSerialize(using = LocalDateSerializer.class)
-    private String scheduleDate;
+    private String scheduleDate ;
 
 
     public Long getId() {
