@@ -19,6 +19,69 @@ function setDropDownLocal(){
     localStorage.setItem("drop_id",JSON.stringify(id));
 }
 
+function searchFilter(){
+    let items = JSON.parse(localStorage.getItem("properties"));
+
+    let field = document.getElementById("propertySearch").value;
+
+    var t_body = document.getElementById("t_body");
+
+    while (t_body.hasChildNodes()) {
+        t_body.removeChild(t_body.firstChild);
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        let string = JSON.stringify(items[i])
+
+        if (string.toLowerCase().includes(field.toLowerCase())){
+            let new_html = `<td>
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="2474">
+                              <label class="custom-control-label" for="2474"></label>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="avatar avatar-md">
+                              <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
+                            </div>
+                          </td>
+                          <td>
+<!--                            <p class="mb-0 text-muted"><strong>Brown, Asher D.</strong></p>-->
+                            <small class="mb-0 text-muted">${items[i].id}</small>
+                          </td>
+                          <td>
+                            <p class="mb-0 text-muted">${items[i].name}</p>
+                            <small class="mb-0 text-muted">${items[i].addressObject.address}</small>
+                          </td>
+                          <td>
+                            <p class="mb-0 text-muted"><a href="#" class="text-muted">${items[i].propertyContactObject.phone} ${items[i].propertyContactObject.mobileNumber}</a></p>
+                            <small class="mb-0 text-muted">${items[i].propertyContactObject.email}</small>
+                          </td>
+                          <td class="w-25">
+                          <p class="mb-0 text-muted">${items[i].ownerObject.name} ${items[i].ownerObject.lastName}</p>
+                          <small class="text-muted"> ${items[i].ownerObject.contactDetailsObject.mobileNumber} ${items[i].ownerObject.contactDetailsObject.email} </small>
+                          </td>
+                          <td class="text-muted">13/09/2020</td>
+                          <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="text-muted sr-only">Action</span>
+                          </button>
+                            <div class="dropdown-menu dropdown-menu-right"  >
+                              <a class="dropdown-item" href="edit_property.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('${items[i].id}','${items[i].name}')">View</a>
+<!--                              <a class="dropdown-item" href="#">Assign</a>-->
+                            </div>
+                          </td>`
+
+
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = new_html;
+
+            t_body.appendChild(tr);
+        }
+    }
+}
+
 /************************************compartment section******************************************************/
 
 function setAddPropertyDropDown() {
@@ -248,6 +311,8 @@ function getProperties() {
         type: 'GET',
         success: function (response) {
             let items = response
+
+            localStorage.setItem("properties", JSON.stringify(items));
 
             console.log(response)
 

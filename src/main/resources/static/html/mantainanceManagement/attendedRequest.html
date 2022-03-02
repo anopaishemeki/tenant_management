@@ -213,7 +213,7 @@
               <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
 
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="request.html"><span class="ml-1 item-text">Request</span></a>
+                  <a class="nav-link pl-3" href="request.html"><span class="ml-1 item-text">Requests</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="schedule.html"><span class="ml-1 item-text">Scheduled</span></a>
@@ -388,8 +388,28 @@
                 <div class="col-md-12">
                   <div class="card shadow">
                     <div class="card-body">
+                      <div class="toolbar">
+                        <form class="form">
+                          <div class="form-row">
+                            <div class="form-group col-auto mr-auto">
+                              <label class="my-1 mr-2 sr-only" for="inlineFormCustomSelectPref1">Show</label>
+                              <select class="custom-select mr-sm-2" id="inlineFormCustomSelectPref1">
+                                <option value="">...</option>
+                                <option value="1">12</option>
+                                <option value="2" selected>32</option>
+                                <option value="3">64</option>
+                                <option value="3">128</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-auto">
+                              <label for="attendedSearch" class="sr-only">Search</label>
+                              <input type="text" class="form-control" onkeyup="searchFilterAttended()" id="attendedSearch" value="" placeholder="Search">
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                       <!-- table -->
-                      <table class="table datatables" id="dataTable-1">
+                      <table class="table datatables" >
                         <thead class="thead-dark">
                           <tr>
                             <th></th>
