@@ -306,6 +306,12 @@ function SetLocal(id, name) {
 
 }
 
+function setLocalLease(lease){
+    localStorage.removeItem("lease");
+    localStorage.setItem("lease", JSON.stringify(lease));
+
+}
+
 //Send Email from notices page
 function SendMail(){
     return;
@@ -325,6 +331,8 @@ function ChangeIconAndSearch(){
     }*/
 
     var record = document.getElementById("searchbox").value.trim();
+
+
 
     if (record.length!=0) {
         $.ajax({
@@ -1279,6 +1287,7 @@ function getLeases() {
             let items = response
 
             console.log(response)
+
 
             var t_body = document.getElementById("t_body");
 
