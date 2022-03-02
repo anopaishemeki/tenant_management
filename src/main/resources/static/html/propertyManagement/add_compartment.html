@@ -539,17 +539,17 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="floorArea">Square Area</label>
+                                                <label for="floorArea">Compartment Square Area</label>
                                                 <input type="number" class="form-control" id="floorArea" placeholder="0 &#13217;">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="compartmentNumber">Compartment Number </label>
-                                                <input type="number" class="form-control" id="compartmentNumber" placeholder="0">
+                                                <label for="compartmentNumber">Compartment ID </label>
+                                                <input type="text" class="form-control" id="compartmentNumber" placeholder="0">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="propertyFloor">Property Floor Number</label>
+                                                <label for="propertyFloor">Compartment Floor Number</label>
                                                 <input type="number" class="form-control" id="propertyFloor" placeholder="0">
                                             </div>
                                             <div class="form-group col-md-4">
@@ -709,6 +709,27 @@
                 </div><!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+        <!-- Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        The Compartment was successfully saved
+                    </div>
+                    <div class="modal-footer">
+                        <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                        <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">

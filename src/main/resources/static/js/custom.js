@@ -1,13 +1,25 @@
-function setLocal(id) {
+function setLocal(id, name) {
     localStorage.removeItem("id");
     localStorage.setItem("id", JSON.stringify(id));
-    alert(id)
+
+    localStorage.removeItem("nameProp");
+    localStorage.setItem("nameProp", JSON.stringify(name));
+}
+
+function setLocalCompartment(id, name){
+    localStorage.removeItem("idComp");
+    localStorage.setItem("idComp", JSON.stringify(id));
+
+    localStorage.removeItem("nameComp");
+    localStorage.setItem("nameComp", JSON.stringify(name));
 }
 
 function setDropDownLocal(){
     localStorage.removeItem("drop_id");
     localStorage.setItem("drop_id",JSON.stringify(id));
 }
+
+/************************************compartment section******************************************************/
 
 function setAddPropertyDropDown() {
     $.ajax({
@@ -60,110 +72,20 @@ function saveCompartment(){
         success: function (response) {
             let element = document.getElementById("toast");
 
+            $('#successModal').modal('show')
             // Create toast instance
-            let myToast = new bootstrap.Toast(element);
-            myToast.show()
+            // let myToast = new bootstrap.Toast(element);
+            // myToast.show()
 
             document.getElementById("_form").reset();
             console.log(response)
-        }
-    })
-}
 
-function viewProperty(){
-    let id = JSON.parse(localStorage.getItem("id"));
-    $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/' + id,
-        type: 'GET',
-        success: function (response) {
-            console.log(response)
-            let html = `<div class="card-body">
-                                        <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted"> Name</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                <strong>${response.name}</strong>
-                                            </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted"> Type</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                <strong>${response.propertyType}</strong>
-                                            </dd>
-                                        </dl>
-                                        <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Compartments Number</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                <strong>${response.numberOfCompartments}</strong>
-                                            </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted"> Number Of Floors</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                <strong>${response.numberOfFloors}</strong>
-                                            </dd>
-                                        </dl>
-                                        <dl class="row mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Asset NBV</dt>
-                                            <dd class="col-sm-4 mb-3">${response.assetValue}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
-                                            <dd class="col-sm-4 mb-3">${response.propertyContactObject.email}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
-                                            <dd class="col-sm-4 mb-3"> ${response.propertyContactObject.phone}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
-                                            <dd class="col-sm-4 mb-3">${response.propertyContactObject.mobileNumber}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Created On</dt>
-                                            <dd class="col-sm-4 mb-3">${response.dateAdded}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
-                                            <dd class="col-sm-4 mb-3">${response.lastUpdate}</dd>
-                                            <dt class="col-sm-2 text-muted">Description</dt>
-                                            <dd class="col-sm-10"> ${response.description}</dd>
-                                            <dt class="col-sm-2 text-muted">Address</dt>
-                                            <dd class="col-sm-10"> ${response.addressObject.address} , ${response.addressObject.city} , ${response.addressObject.country}</dd>
-                                        </dl>
-                                        <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Property Owner Details</h5>
-                                        <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Name</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                ${response.ownerObject.name}
-                                            </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Surname</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                ${response.ownerObject.lastName}
-                                            </dd>
-                                        </dl>
-                                        <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                ${response.ownerObject.contactDetailsObject.phone}
-                                            </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                ${response.ownerObject.contactDetailsObject.mobileNumber}
-                                            </dd>
-                                        </dl>
-                                        <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
-                                            <dd class="col-sm-4 mb-3">${response.ownerObject.contactDetailsObject.email}</dd>
-                                            <!--<dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                <strong>Kelley Sonya</strong>
-                                            </dd>-->
-                                        </dl>
-                                    </div> <!-- .card-body -->`
-
-
-            let propertyDetails = document.getElementById("propertyDetails");
-            propertyDetails.innerHTML = html;
-
-            let propNameOne = document.getElementById("propNameOne");
-            let propNameTwo = document.getElementById("propNameTwo");
-
-            propNameOne.innerText = response.name;
-            propNameTwo.innerText = response.name;
         }
     })
 }
 
 function appendCompartments(){
     let id = JSON.parse(localStorage.getItem("id"));
-    alert(id + "compart")
         $.ajax({
             url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/'+id,
             type: 'GET',
@@ -203,8 +125,7 @@ function appendCompartments(){
                                                         </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a class="dropdown-item" href="#">Edit</a>
-                                                                <a class="dropdown-item" href="#">Remove</a>
-                                                                <a class="dropdown-item" href="#">Assign</a>
+                                                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('${response[i].id}')">View</a>
                                                             </div>
                                                         </td>`
                     let tr = document.createElement("tr");
@@ -215,6 +136,99 @@ function appendCompartments(){
             }
         });
 }
+
+function viewCompartment(){
+    let propertyName = JSON.parse(localStorage.getItem("nameProp"));
+    let id = JSON.parse(localStorage.getItem("idComp"));
+    $.ajax({
+        url: 'http://localhost:8090/api/compartment/get-compartment/'+id,
+        type: 'GET',
+        success: function (response) {
+            let html = `<div class="card-body">
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted"> Property Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${propertyName}</strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Compartment Square Area</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.floorArea}</strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Compartments ID</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.compartmentNumber}</strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Compartment Floor Number</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.floorNumber}</strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Rental Rate per ㎡ </dt>
+                                            <dd class="col-sm-4 mb-3">${response.rentalRate}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Rent payable</dt>
+                                            <dd class="col-sm-4 mb-3">${response.floorArea * response.rentalRate}</dd>
+                                            <!--<dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3"> +263 00 000</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">+263 00 000</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Created On</dt>
+                                            <dd class="col-sm-4 mb-3">2020-04-21 00:38:38</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
+                                            <dd class="col-sm-4 mb-3">2020-04-21 08:48:18</dd>-->
+                                            <dt class="col-sm-2 text-muted">Description</dt>
+                                            <dd class="col-sm-10"> Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                                                condimentum nibh, ut fermentum massa justo sit amet risus.
+                                            </dd>
+
+                                        </dl>
+                                        <hr class="my-4">
+                                        <h5 class="mb-2 mt-4">Tenant Details</h5>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                Brown Asher
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Surname</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                Kelley Sonya
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                Brown Asher
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                Kelley Sonya
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
+                                            <dd class="col-sm-4 mb-3">Brown Asher</dd>
+                                            <!--<dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>Kelley Sonya</strong>
+                                            </dd>-->
+                                        </dl>
+                                    </div> <!-- .card-body -->`
+
+            let propertyDetails = document.getElementById("compartmentDetails");
+            propertyDetails.innerHTML = html;
+
+            let propNameOne = document.getElementById("propNameOne");
+            let propNameTwo = document.getElementById("propNameTwo");
+
+            propNameOne.innerText = "Compartment " + response.compartmentNumber;
+            propNameTwo.innerText = "compartment " + response.compartmentNumber;
+        }
+    })
+}
+
+/************************************Property section******************************************************/
 
 function toggleView(id) {
     let active = document.getElementById(id);
@@ -261,7 +275,7 @@ function getProperties() {
                           </td>
                           <td>
                             <p class="mb-0 text-muted">${items[i].name}</p>
-                            <small class="mb-0 text-muted">Ap #331-7123 Lobortis Avenue</small>
+                            <small class="mb-0 text-muted">${items[i].addressObject.address}</small>
                           </td>
                           <td>
                             <p class="mb-0 text-muted"><a href="#" class="text-muted">${items[i].propertyContactObject.phone} ${items[i].propertyContactObject.mobileNumber}</a></p>
@@ -277,7 +291,7 @@ function getProperties() {
                           </button>
                             <div class="dropdown-menu dropdown-menu-right"  >
                               <a class="dropdown-item" href="edit_property.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('${items[i].id}')">View</a>
+                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('${items[i].id}','${items[i].name}')">View</a>
 <!--                              <a class="dropdown-item" href="#">Assign</a>-->
                             </div>
                           </td>`
@@ -379,16 +393,111 @@ function saveProperty() {
             // alert("success" + response)
             console.log(response)
             // getProperties();
-            let element = document.getElementById("toast");
+            let element = document.getElementById("successModal");
 
+            $('#successModal').modal('show')
             // Create toast instance
-            let myToast = new bootstrap.Toast(element);
-            myToast.show()
+            // let myToast = new bootstrap.Toast(element);
+            // myToast.show()
 
             document.getElementById("_form").reset();
         }
     })
 }
+
+function viewProperty(){
+    let id = JSON.parse(localStorage.getItem("id"));
+    $.ajax({
+        url: 'http://localhost:8090/api/property/get-property/' + id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+            let html = `<div class="card-body">
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted"> Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.name}</strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Type</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.propertyType}</strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Compartments Number</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.numberOfCompartments}</strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Number Of Floors</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>${response.numberOfFloors}</strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Asset NBV</dt>
+                                            <dd class="col-sm-4 mb-3">${response.assetValue}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
+                                            <dd class="col-sm-4 mb-3">${response.propertyContactObject.email}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3"> ${response.propertyContactObject.phone}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">${response.propertyContactObject.mobileNumber}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Created On</dt>
+                                            <dd class="col-sm-4 mb-3">${response.dateAdded}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
+                                            <dd class="col-sm-4 mb-3">${response.lastUpdate}</dd>
+                                            <dt class="col-sm-2 text-muted">Description</dt>
+                                            <dd class="col-sm-10"> ${response.description}</dd>
+                                            <dt class="col-sm-2 text-muted">Address</dt>
+                                            <dd class="col-sm-10"> ${response.addressObject.address} , ${response.addressObject.city} , ${response.addressObject.country}</dd>
+                                        </dl>
+                                        <hr class="my-4">
+                                        <h5 class="mb-2 mt-4">Property Owner Details</h5>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.name}
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Surname</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.lastName}
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.contactDetailsObject.phone}
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                ${response.ownerObject.contactDetailsObject.mobileNumber}
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
+                                            <dd class="col-sm-4 mb-3">${response.ownerObject.contactDetailsObject.email}</dd>
+                                            <!--<dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>Kelley Sonya</strong>
+                                            </dd>-->
+                                        </dl>
+                                    </div> <!-- .card-body -->`
+
+
+            let propertyDetails = document.getElementById("propertyDetails");
+            propertyDetails.innerHTML = html;
+
+            let propNameOne = document.getElementById("propNameOne");
+            let propNameTwo = document.getElementById("propNameTwo");
+
+            propNameOne.innerText = response.name;
+            propNameTwo.innerText = response.name;
+        }
+    })
+}
+
+/************************************Edit Property section******************************************************/
+
 
 //Property Details
 function editPropertyDetails(id) {
@@ -586,7 +695,7 @@ function editPropertyAddress(id) {
                             </div>
                             <div class="form-group col-md-2">
                               <label for="propertyZipCode">Zip</label>
-                              <input type="text" class="form-control" id="propertyZipCode" ${response.country}>
+                              <input type="text" class="form-control" id="propertyZipCode" ${response.zipCode}>
                             </div>
                           </div>
                           <hr class="my-4">
@@ -675,6 +784,64 @@ function updatePropertyAddress(id) {
         }
     })
 }*/
+
+//Property  Contact Details
+function editPropertyContactDetails(id) {
+    $.ajax({
+        url: 'http://localhost:8090/api/contact-details/get-contact-details/' + id,
+        type: 'GET',
+        success: function (response) {
+
+            let html = `<div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="ownerEmailAddress">Email</label>
+                                    <input type="email" class="form-control" id="propertyEmail" placeholder="${response.email}">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="ownerPhone">Phone</label>
+                                    <input type="text" class="form-control" id="propertyPhone" placeholder="${response.phone}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ownerCellNumber">Mobile Number</label>
+                                    <input type="text" class="form-control" id="propertyMobileNumber" placeholder="${response.mobileNumber}">
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <button type="button" class="btn mb-2 btn-outline-success" onclick="updatePropertyContactDetails('${id}')"><span class="fe fe-upload-cloud fe-16"> Update Contacts</span></button>
+`
+
+
+            let container = document.getElementById("propertyContactDetails");
+            container.innerHTML = html;
+        }
+    })
+}
+
+function updatePropertyContactDetails(id) {
+    let phone = document.getElementById("propertyPhone").value;
+    let mobileNumber = document.getElementById("propertyMobileNumber").value;
+    let email = document.getElementById("propertyEmail").value;
+
+    let data = {
+        phone,
+        mobileNumber,
+        email
+    }
+
+    $.ajax({
+        url: ' http://localhost:8090/api/contact-details/update-contact-details/' + id,
+        type: 'PUT',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            editPropertyContactDetails(id);
+        }
+    })
+}
 
 //Property Owner Details
 function editPropertyOwnerDetails(id) {
@@ -903,12 +1070,12 @@ function editPropertyOwnerContactDetails(id) {
 
 function updatePropertyOwnerContactDetails(id) {
     let phone = document.getElementById("ownerPhone").value;
-    let MobileNumber = document.getElementById("ownerCellNumber").value;
+    let mobileNumber = document.getElementById("ownerCellNumber").value;
     let email = document.getElementById("ownerEmailAddress").value;
 
     let data = {
         phone,
-        MobileNumber,
+        mobileNumber,
         email
     }
 
@@ -963,7 +1130,7 @@ function discardEditPropertyOwnerContactDetails(id) {
 function setPropertyDetails() {
     let id = JSON.parse(localStorage.getItem("id"))
 
-    let url = 'http://localhost:8090/api/property/get-property/' + id
+    let url = 'http://localhost:8090/api/property/get-property/' + id;
 
     $.ajax({
         url: url,
@@ -972,7 +1139,7 @@ function setPropertyDetails() {
             editPropertyDetails(id);
             editPropertyAddress(response.address);
             editPropertyOwnerDetails(response.owner);
-            alert("owner" + response.owner)
+            editPropertyContactDetails(response.propertyContactObject.id)
             editPropertyOwnerAddress(response.ownerObject.address);
             editPropertyOwnerContactDetails(response.ownerObject.contactDetailsObject.id);
         }
