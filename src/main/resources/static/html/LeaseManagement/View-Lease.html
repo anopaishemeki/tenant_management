@@ -387,8 +387,12 @@
                         <!-- Small table -->
                         <div class="col-md-12">
                             <div class="card shadow">
-                                <div class="card-body">
 
+                                <div class="card-body">
+                                    <div class="Customtopnav">
+
+                                        <input type="text" id="searchbox" name="search" placeholder="Search.." onkeypress="ChangeIconAndSearch()">
+                                    </div>
                                     <!-- table -->
                                     <table class="table datatables table-hover   table-borderless border-v" id="dataTable-1">
 
@@ -685,14 +689,13 @@
 <script src='../../js/jquery.stickOnScroll.js'></script>
 <script src="../../js/tinycolor-min.js"></script>
 <script src="../../js/config.js"></script>
-<script src='../../js/jquery.dataTables.min.js'></script>
+<!--<script src='../../js/jquery.dataTables.min.js'></script>-->
 <script src='../../js/dataTables.bootstrap4.min.js'></script>
 
 <script src="../../js/apps.js"></script>
 <script src="../../js/customlease.js"></script>
 <script src='../../js/bootstrap.bundle.min.js'></script>
-<script src='../../js/popper.min.js'></script>
-<script src='../../js/bootstrap.min.js'></script>
+
 
 <script>
     $('.select2').select2(
@@ -884,7 +887,7 @@
             ]
         });
 </script>
-<script src="../../js/apps.js"></script>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
@@ -900,199 +903,43 @@
 
 
 
-
-<script src='../../js/daterangepicker.js'></script>
-
-
-
 <script src='../../js/select2.min.js'></script>
 
 <script src='../../js/jquery.validate.min.js'></script>
 
 
+<style>
+    .Customtopnav {
+        overflow: hidden;
+        background-color: #e9e9e9;
 
-
-<script>
-    $('.select2').select2(
-        {
-            theme: 'bootstrap4',
-        });
-    $('.select2-multi').select2(
-        {
-            multiple: true,
-            theme: 'bootstrap4',
-        });
-    $('.drgpicker').daterangepicker(
-        {
-            singleDatePicker: true,
-            timePicker: false,
-            showDropdowns: true,
-            locale:
-                {
-                    format: 'MM/DD/YYYY'
-                }
-        });
-    $('.time-input').timepicker(
-        {
-            'scrollDefault': 'now',
-            'zindex': '9999' /* fix modal open */
-        });
-    /** date range picker */
-    if ($('.datetimes').length)
-    {
-        $('.datetimes').daterangepicker(
-            {
-                timePicker: true,
-                startDate: moment().startOf('hour'),
-                endDate: moment().startOf('hour').add(32, 'hour'),
-                locale:
-                    {
-                        format: 'M/DD hh:mm A'
-                    }
-            });
     }
-    var start = moment().subtract(29, 'days');
-    var end = moment();
+    .Customtopnav input[type=text] {
+        width: 130px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        background-color: white;
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
 
-    function cb(start, end)
-    {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
-    $('#reportrange').daterangepicker(
-        {
-            startDate: start,
-            endDate: end,
-            ranges:
-                {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                }
-        }, cb);
-    cb(start, end);
-    $('.input-placeholder').mask("00/00/0000",
-        {
-            placeholder: "__/__/____"
-        });
-    $('.input-zip').mask('00000-000',
-        {
-            placeholder: "____-___"
-        });
-    $('.input-money').mask("#.##0,00",
-        {
-            reverse: true
-        });
-    $('.input-phoneus').mask('(000) 000-0000');
-    $('.input-mixed').mask('AAA 000-S0S');
-    $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
-        {
-            translation:
-                {
-                    'Z':
-                        {
-                            pattern: /[0-9]/,
-                            optional: true
-                        }
-                },
-            placeholder: "___.___.___.___"
-        });
-    // editor
-    var editor = document.getElementById('editor');
-    if (editor)
-    {
-        var toolbarOptions = [
-            [
-                {
-                    'font': []
-                }],
-            [
-                {
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [
-                {
-                    'header': 1
-                },
-                {
-                    'header': 2
-                }],
-            [
-                {
-                    'list': 'ordered'
-                },
-                {
-                    'list': 'bullet'
-                }],
-            [
-                {
-                    'script': 'sub'
-                },
-                {
-                    'script': 'super'
-                }],
-            [
-                {
-                    'indent': '-1'
-                },
-                {
-                    'indent': '+1'
-                }], // outdent/indent
-            [
-                {
-                    'direction': 'rtl'
-                }], // text direction
-            [
-                {
-                    'color': []
-                },
-                {
-                    'background': []
-                }], // dropdown with defaults from theme
-            [
-                {
-                    'align': []
-                }],
-            ['clean'] // remove formatting button
-        ];
-        var quill = new Quill(editor,
-            {
-                modules:
-                    {
-                        toolbar: toolbarOptions
-                    },
-                theme: 'snow'
-            });
-    }
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function()
-    {
-        'use strict';
-        window.addEventListener('load', function()
-        {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form)
-            {
-                form.addEventListener('submit', function(event)
-                {
-                    if (form.checkValidity() === false)
-                    {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
 
+        float: right;
+        border: none;
+        margin-top: 8px;
+        margin-right: 20px;
+        margin-bottom: 8px;
+        font-size: 17px;
+    }
+
+   .Customtopnav input[type=text]:focus {
+        width: 180px;
+    }
+
+</style>
 
 </body>
 </html>
