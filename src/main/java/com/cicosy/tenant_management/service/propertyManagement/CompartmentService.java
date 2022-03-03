@@ -16,8 +16,9 @@ public class CompartmentService {
         this.compartmentRepository = compartmentRepository;
     }
 
-    public void save(Compartment compartment){
+    public Compartment save(Compartment compartment){
         compartmentRepository.save(compartment);
+        return compartmentRepository.findById(compartment.getId()).orElseThrow(() -> new  IllegalStateException ("Compartment with id: " + compartment.getId() +" does not exist"));
     }
 
     public Compartment getCompartment(Long id) {
