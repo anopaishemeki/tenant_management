@@ -323,18 +323,79 @@ function ChangeIconAndSearch(){
     var y=document.getElementById('searchbox');
     y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
 
-    /* var t_body = document.getElementById("t_body");
+     var t_body = document.getElementById("t_body");
 
 
     while (t_body.hasChildNodes()) {
         t_body.removeChild(t_body.firstChild);
-    }*/
+    }
 
-    var record = document.getElementById("searchbox").value.trim();
+    let items = JSON.parse(localStorage.getItem("lease"));
 
 
+    var field = document.getElementById("searchbox").value.trim();
+    for (let i = 0; i < items.length; i++) {
+        let string = JSON.stringify(items[i]);
 
-    if (record.length!=0) {
+        if (string.toLowerCase().includes(field.toLowerCase())){
+
+            let html = `<td class="sorting_1">  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].name}
+                        </td>
+                        <td>  ${items[i].rentalFee}
+                        </td>
+                        <td> ${items[i].buildingName}
+                        </td> 
+                        <td> ${items[i].buildingLocation}
+                        </td>
+                        <td > ${items[i].terms}
+                        </td>
+                        <td > ${items[i].status}
+                        </td>
+                        <td >${items[i].agreementDate}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                                data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" >
+                            <span class="text-muted sr-only">Action</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
+                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
+                        </div>
+                    </td>`
+
+
+            let tr = document.createElement("tr");
+            if (i % 2 == 0) {
+                tr.setAttribute("class", "even");
+            } else {
+                tr.setAttribute("class", "odd");
+            }
+            tr.setAttribute("role", "row");
+            tr.innerHTML = html;
+
+            // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+
+            // let htmlSpacer = "<td colspan=\"100\">"
+            // let spacer = document.createElement("tr");
+            // spacer.className = "spacer";
+            //
+            // spacer.innerHTML = htmlSpacer;
+
+            // t_body.appendChild(spacer);
+            t_body.appendChild(tr);
+
+        }
+    }
+    var y=document.getElementById('searchbox');
+    y.setAttribute("style","background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png'); background-position: 10px 10px");
+
+   /* if (record.length!=0) {
         $.ajax({
             url: 'http://localhost:8090/api/v1/lease/search/' + record,
             type: 'GET',
@@ -358,7 +419,7 @@ function ChangeIconAndSearch(){
                         <td>  ${items[i].rentalFee}
                         </td>
                         <td> ${items[i].buildingName}
-                        </td> 
+                        </td>
                         <td> ${items[i].buildingLocation}
                         </td>
                         <td > ${items[i].terms}
@@ -408,11 +469,10 @@ function ChangeIconAndSearch(){
 
             }
         });
-    }
-
+    }*/
 
 }
-//filter records on backspace or delete in search box
+/*//filter records on backspace or delete in search box
 document.addEventListener('keyup', (event) => {
     var name = event.key;
     if (name === 'Backspace' ||name === 'Delete') {
@@ -578,7 +638,7 @@ document.addEventListener('keyup', (event) => {
         }
     }
 
-}, false);
+}, false);*/
 // store notice data
 function setNotice(id, name, status, endDate,timeLeft) {
     localStorage.removeItem("id");
@@ -1287,7 +1347,7 @@ function getLeases() {
             let items = response
 
             console.log(response)
-
+            localStorage.setItem("lease", JSON.stringify(items));
 
             var t_body = document.getElementById("t_body");
 
