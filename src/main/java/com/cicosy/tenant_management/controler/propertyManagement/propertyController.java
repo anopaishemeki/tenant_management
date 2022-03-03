@@ -15,13 +15,15 @@ public class propertyController {
     private final AddressController addressController;
     private final OwnerController ownerController;
     private final ContactDetailsController contactDetailsController;
+    private final CompartmentController compartmentController;
 
     @Autowired
-    public propertyController(PropertyService propertyService, AddressController addressController, OwnerController ownerController, ContactDetailsController contactDetailsController) {
+    public propertyController(PropertyService propertyService, AddressController addressController, OwnerController ownerController, ContactDetailsController contactDetailsController, CompartmentController compartmentController) {
         this.propertyService = propertyService;
         this.addressController = addressController;
         this.ownerController = ownerController;
         this.contactDetailsController = contactDetailsController;
+        this.compartmentController = compartmentController;
     }
 
     @PostMapping("/save-property")
@@ -52,6 +54,7 @@ public class propertyController {
             properties.get(i).setAddressObject(addressController.getAddress( properties.get(i).getAddress()));
             properties.get(i).setOwnerObject(ownerController.getOwner( properties.get(i).getOwner()));
             properties.get(i).setPropertyContactObject(contactDetailsController.getContact(properties.get(i).getContact()));
+            properties.get(i).setNumberOfCompartments(compartmentController.getCompartmentsForSpecificProperty(properties.get(i).getId()).size());
         }
 
 
@@ -68,6 +71,8 @@ public class propertyController {
         property.setOwnerObject(ownerController.getOwner(property.getOwner()));
 
         property.setPropertyContactObject(contactDetailsController.getContact(property.getContact()));
+
+        property.setNumberOfCompartments(compartmentController.getCompartmentsForSpecificProperty(property.getId()).size());
 
         return property;
     }

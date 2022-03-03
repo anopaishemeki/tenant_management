@@ -3,7 +3,6 @@ package com.cicosy.tenant_management.model.propertyManagement;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -41,12 +40,12 @@ public class Property {
     @Transient
     private ContactDetails propertyContactObject;
     private Long contact;
-    private LocalDateTime dateAdded;
-    private LocalDateTime lastUpdate;
+    private String dateAdded;
+    private String dateRegistered;
     private int numberOfCompartments;
     private int numberOfFloors;
 
-    public Property(String name, Address addressObject, Long address, String tenant, Long insurance, String description, String propertyType, Owner ownerObject, Long owner, String status, double assetValue, ContactDetails propertyContactObject, Long contact) {
+    public Property(String name, Address addressObject, Long address, String tenant, Long insurance, String description, String propertyType, Owner ownerObject, Long owner, String status, double assetValue, ContactDetails propertyContactObject, Long contact, String dateAdded, String dateRegistered, int numberOfCompartments, int numberOfFloors) {
         this.name = name;
         this.addressObject = addressObject;
         this.address = address;
@@ -60,7 +59,10 @@ public class Property {
         this.assetValue = assetValue;
         this.propertyContactObject = propertyContactObject;
         this.contact = contact;
-        this.dateAdded = LocalDateTime.now();
+        this.dateAdded = dateAdded;
+        this.dateRegistered = dateRegistered;
+        this.numberOfCompartments = numberOfCompartments;
+        this.numberOfFloors = numberOfFloors;
     }
 
     public Property(Long id, String name) {

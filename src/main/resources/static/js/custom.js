@@ -381,6 +381,7 @@ function saveProperty() {
     let propertyType = document.getElementById("propertyType").value
     let owner = ""
     let assetValue = document.getElementById("assetValue").value;
+    let dateRegistered = document.getElementById("date-input").value;
 
     //property contact details
     let propertyEmail = document.getElementById("propertyEmail").value;
@@ -444,7 +445,9 @@ function saveProperty() {
             email: propertyEmail
         },
         owner,
-        assetValue
+        assetValue,
+        dateAdded : new Date().toISOString().slice(0, 10),
+        dateRegistered
     }
 
     $.ajax({
@@ -507,10 +510,10 @@ function viewProperty(){
                                             <dd class="col-sm-4 mb-3"> ${response.propertyContactObject.phone}</dd>
                                             <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
                                             <dd class="col-sm-4 mb-3">${response.propertyContactObject.mobileNumber}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Created On</dt>
+                                            <dt class="col-sm-2 mb-3 text-muted">Date registered</dt>
+                                            <dd class="col-sm-4 mb-3">${response.dateRegistered}</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Date Captured</dt>
                                             <dd class="col-sm-4 mb-3">${response.dateAdded}</dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
-                                            <dd class="col-sm-4 mb-3">${response.lastUpdate}</dd>
                                             <dt class="col-sm-2 text-muted">Description</dt>
                                             <dd class="col-sm-10"> ${response.description}</dd>
                                             <dt class="col-sm-2 text-muted">Address</dt>
