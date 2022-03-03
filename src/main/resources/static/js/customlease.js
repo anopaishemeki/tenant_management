@@ -323,7 +323,7 @@ function ChangeIconAndSearch(){
     var y=document.getElementById('searchbox');
     y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
 
-     var t_body = document.getElementById("t_body");
+    var t_body = document.getElementById("t_body");
 
 
     while (t_body.hasChildNodes()) {
@@ -395,81 +395,81 @@ function ChangeIconAndSearch(){
     var y=document.getElementById('searchbox');
     y.setAttribute("style","background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png'); background-position: 10px 10px");
 
-   /* if (record.length!=0) {
-        $.ajax({
-            url: 'http://localhost:8090/api/v1/lease/search/' + record,
-            type: 'GET',
-            success: function (response) {
-                let items = response;
+    /* if (record.length!=0) {
+         $.ajax({
+             url: 'http://localhost:8090/api/v1/lease/search/' + record,
+             type: 'GET',
+             success: function (response) {
+                 let items = response;
 
-                console.log(response);
+                 console.log(response);
 
-                var t_body = document.getElementById("t_body");
-
-
-                while (t_body.hasChildNodes()) {
-                    t_body.removeChild(t_body.firstChild);
-                }
-
-                for (let i = 0; i < items.length; i++) {
-                    let html = `<td class="sorting_1">  ${items[i].id}
-                        </td>
-                        <td>  ${items[i].name}
-                        </td>
-                        <td>  ${items[i].rentalFee}
-                        </td>
-                        <td> ${items[i].buildingName}
-                        </td>
-                        <td> ${items[i].buildingLocation}
-                        </td>
-                        <td > ${items[i].terms}
-                        </td>
-                        <td > ${items[i].status}
-                        </td>
-                        <td >${items[i].agreementDate}
-                    </td>
-                    <td>
-                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" >
-                            <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
-                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
-                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
-                        </div>
-                    </td>`
+                 var t_body = document.getElementById("t_body");
 
 
-                    let tr = document.createElement("tr");
-                    if (i % 2 == 0) {
-                        tr.setAttribute("class", "even");
-                    } else {
-                        tr.setAttribute("class", "odd");
-                    }
-                    tr.setAttribute("role", "row");
-                    tr.innerHTML = html;
+                 while (t_body.hasChildNodes()) {
+                     t_body.removeChild(t_body.firstChild);
+                 }
 
-                    // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+                 for (let i = 0; i < items.length; i++) {
+                     let html = `<td class="sorting_1">  ${items[i].id}
+                         </td>
+                         <td>  ${items[i].name}
+                         </td>
+                         <td>  ${items[i].rentalFee}
+                         </td>
+                         <td> ${items[i].buildingName}
+                         </td>
+                         <td> ${items[i].buildingLocation}
+                         </td>
+                         <td > ${items[i].terms}
+                         </td>
+                         <td > ${items[i].status}
+                         </td>
+                         <td >${items[i].agreementDate}
+                     </td>
+                     <td>
+                         <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                                 data-toggle="dropdown" aria-haspopup="true"
+                                 aria-expanded="false" >
+                             <span class="text-muted sr-only">Action</span>
+                         </button>
+                         <div class="dropdown-menu dropdown-menu-right">
+                             <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
+                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
+                             <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
+                         </div>
+                     </td>`
 
-                    // let htmlSpacer = "<td colspan=\"100\">"
-                    // let spacer = document.createElement("tr");
-                    // spacer.className = "spacer";
-                    //
-                    // spacer.innerHTML = htmlSpacer;
 
-                    // t_body.appendChild(spacer);
-                    t_body.appendChild(tr);
-                }
-                var y=document.getElementById('searchbox');
-                y.setAttribute("style","background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png'); background-position: 10px 10px");
+                     let tr = document.createElement("tr");
+                     if (i % 2 == 0) {
+                         tr.setAttribute("class", "even");
+                     } else {
+                         tr.setAttribute("class", "odd");
+                     }
+                     tr.setAttribute("role", "row");
+                     tr.innerHTML = html;
+
+                     // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
+
+                     // let htmlSpacer = "<td colspan=\"100\">"
+                     // let spacer = document.createElement("tr");
+                     // spacer.className = "spacer";
+                     //
+                     // spacer.innerHTML = htmlSpacer;
+
+                     // t_body.appendChild(spacer);
+                     t_body.appendChild(tr);
+                 }
+                 var y=document.getElementById('searchbox');
+                 y.setAttribute("style","background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png'); background-position: 10px 10px");
 
 
-            }
-        });
-    }*/
+             }
+         });
+     }*/
 
 }
 /*//filter records on backspace or delete in search box
@@ -509,7 +509,7 @@ document.addEventListener('keyup', (event) => {
                         <td>  ${items[i].rentalFee}
                         </td>
                         <td> ${items[i].buildingName}
-                        </td> 
+                        </td>
                         <td> ${items[i].buildingLocation}
                         </td>
                         <td > ${items[i].terms}
@@ -583,7 +583,7 @@ document.addEventListener('keyup', (event) => {
                         <td>  ${items[i].rentalFee}
                         </td>
                         <td> ${items[i].buildingName}
-                        </td> 
+                        </td>
                         <td> ${items[i].buildingLocation}
                         </td>
                         <td > ${items[i].terms}
@@ -710,7 +710,7 @@ Thank You, Have a good day`
 
     var subject=document.getElementById("subject");
     subject.value="Lease Expiry Notice"
-    
+
     $.ajax({
         type: "GET",
         url: "/api/v1/lease/getEmail/" + Name + "/" + surname,
@@ -746,8 +746,8 @@ Thank You, Have a good day`
 function call() {
     let phone = document.getElementById("phone");
     if (phone) {
-      window.location="tel:"+phone.value ;
-}
+        window.location="tel:"+phone.value ;
+    }
 }
 
 // Renewing Lease
@@ -1352,10 +1352,9 @@ function getLeases() {
             var t_body = document.getElementById("t_body");
 
 
-            // while (t_body.hasChildNodes()) {
-            //     t_body.removeChild(t_body.firstChild);
-            // }
-
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
             for (let i = 0; i < items.length; i++) {
                 let html = `<td class="sorting_1">  ${items[i].id}
                         </td>
@@ -1413,9 +1412,9 @@ function getLeases() {
     var body = document.getElementById("body");
     //
     //
-    let st = document.createElement("script");
-    st.setAttribute("src", "../../js/jquery.dataTables.min.js");
-    body.append(st);
+    // let st = document.createElement("script");
+    // st.setAttribute("src", "../../js/jquery.dataTables.min.js");
+    // body.append(st);
     //
     //  let a = document.createElement("script");
     //  a.setAttribute("src","../../js/jquery.min.js");
@@ -1517,11 +1516,8 @@ function getTenants() {
     })
 }
 
-var h = document.getElementById("Days");
-if (isChecked(h))
-
 // get Property details
-    function getProperty() {
+function getProperty() {
         $.ajax({
             url: '/api/property/get-all-properties',
             type: 'GET',
