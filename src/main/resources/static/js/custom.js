@@ -561,7 +561,7 @@ function viewProperty(){
     })
 }
 
-/************************************Edit Property section******************************************************/
+/*****************************************Edit Property section*************************************************/
 
 
 //Property Details
@@ -1190,7 +1190,6 @@ function discardEditPropertyOwnerContactDetails(id) {
         }
     })
 }
-
 
 function setPropertyDetails() {
     let id = JSON.parse(localStorage.getItem("id"))
