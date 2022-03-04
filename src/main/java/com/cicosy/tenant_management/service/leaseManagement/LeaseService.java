@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.service.leaseManagement;
 
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,60 @@ public class LeaseService {
     }
 
     public List<Lease> getLeases() {
+        List<Lease> list = leaseRepository.findAll();
+
+        for (int i = 0; i < leaseRepository.findAll().size(); i++) {
+            Long leaseID = list.get(i).getId();
+            Lease lease = leaseRepository.findById(leaseID)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "Record With ID " + leaseID + " Does Not Exist"
+                    ));
+
+            if ((lease.getEndDate().isBefore(LocalDate.now())) &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
+                lease.setStatus("Expired");
+                lease.setTimeLeft(0);
+            } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
+                lease.setStatus("Active");
+
+                int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+                if (Months < 0) {
+                    Months = Months * -1;
+                }
+                int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+                if (Days < 0) {
+                    Days = Days * -1;
+                }
+                int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+                if (Years < 0) {
+                    Years = Years * -1;
+                }
+                int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+                lease.setTimeLeft(tleft);
+            }
+            /*else if (Objects.equals(lease.getStatus(), "Active")) {
+                int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+                if (Months < 0) {
+                    Months = Months * -1;
+                }
+                int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+                if (Days < 0) {
+                    Days = Days * -1;
+                }
+                int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+                if (Years < 0) {
+                    Years = Years * -1;
+                }
+                int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+                lease.setTimeLeft(tleft);
+
+
+            }*/
+
+
+        }
+
 
         return leaseRepository.findAll();
     }
@@ -55,6 +110,9 @@ public class LeaseService {
         if ((lease.getTerms().isEmpty())) {
             lease.setTerms("Unspecified");
         }
+
+
+        lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
 //
 //        if ((lease.getBuildingLocation().isEmpty())) {
 //            throw new IllegalStateException("Building Location Is Required");
@@ -85,11 +143,29 @@ public class LeaseService {
 
         if (((lease.getStartDate().plusMonths(lease.getDuration())).isAfter(LocalDate.now()))) {
             lease.setStatus("Active");
+
+            int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+            if (Months < 0) {
+                Months = Months * -1;
+            }
+            int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+            if (Days < 0) {
+                Days = Days * -1;
+            }
+            int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+            if (Years < 0) {
+                Years = Years * -1;
+            }
+            int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+            lease.setTimeLeft(tleft);
+
+
         } else {
+            lease.setTimeLeft(0);
             lease.setStatus("Expired");
         }
-        lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
-        lease.setTimeLeft(Period.between(LocalDate.now(),lease.getEndDate()).getMonths());
+
+//        lease.setTimeLeft(Period.between(LocalDate.now(),lease.getEndDate()).getMonths());
 
         leaseRepository.save(lease);
 
@@ -167,6 +243,7 @@ public class LeaseService {
             if (!Objects.equals(update.getStatus().toString().trim(), (null)) &&
                     update.getStatus().trim().length() > 0) {
                 lease.setStatus("Terminated");
+                lease.setTimeLeft(0);
             }
         }
 
@@ -182,7 +259,7 @@ public class LeaseService {
                 .orElseThrow(() -> new IllegalStateException(
                         "Record With ID " + leaseId + " Does Not Exist"
                 ));
-        if((Objects.equals(lease.getStatus().toString() , "Terminated"))){
+        if ((Objects.equals(lease.getStatus().toString(), "Terminated"))) {
             throw new IllegalStateException("Sorry You cant Edit a Terminated Lease");
         }
 
@@ -191,6 +268,7 @@ public class LeaseService {
                 !Objects.equals(lease.getName(), update.getName())) {
             lease.setName(update.getName());
         }
+
 
         if (update.getBuildingName() != null &&
                 update.getBuildingName().length() > 0 &&
@@ -218,7 +296,20 @@ public class LeaseService {
                 !Objects.equals(lease.getTerms(), update.getTerms())) {
             lease.setTerms(update.getTerms());
         }
-
+        int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+        if (Months < 0) {
+            Months = Months * -1;
+        }
+        int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+        if (Days < 0) {
+            Days = Days * -1;
+        }
+        int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+        if (Years < 0) {
+            Years = Years * -1;
+        }
+        int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+        lease.setTimeLeft(tleft);
 
     }
 
@@ -265,25 +356,48 @@ public class LeaseService {
             lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
 
 
-            if ((lease.getEndDate().isBefore(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus() , "Expired"))) &&
-                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
-            {
+            if ((lease.getEndDate().isBefore(LocalDate.now()))
+            &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
                 lease.setStatus("Expired");
+                lease.setTimeLeft(0);
             } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus() , "Active"))) &&
-                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
-            {
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
                 lease.setStatus("Active");
+                int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+                if (Months < 0) {
+                    Months = Months * -1;
+                }
+                int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+                if (Days < 0) {
+                    Days = Days * -1;
+                }
+                int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+                if (Years < 0) {
+                    Years = Years * -1;
+                }
+                int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+                lease.setTimeLeft(tleft);
             }
-            if (Objects.equals(lease.getStatus(),"Expired")){
+            if (Objects.equals(lease.getStatus(), "Expired")) {
                 lease.setTimeLeft(0);
             }
-            if (Objects.equals(lease.getStatus(),"Terminated")){
-                lease.setTimeLeft(0);
-            }
-            if(Objects.equals(lease.getStatus(),"Active")){
-                lease.setTimeLeft(Period.between(LocalDate.now(),lease.getEndDate()).getMonths());
+
+            if (Objects.equals(lease.getStatus(), "Active")) {
+                int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+                if (Months < 0) {
+                    Months = Months * -1;
+                }
+                int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+                if (Days < 0) {
+                    Days = Days * -1;
+                }
+                int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+                if (Years < 0) {
+                    Years = Years * -1;
+                }
+                int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+                lease.setTimeLeft(tleft);
             }
 
 
@@ -308,15 +422,28 @@ public class LeaseService {
             lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
 
             if ((lease.getEndDate().isBefore(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus() , "Expired"))) &&
-                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
-            {
+                    (!(Objects.equals(lease.getStatus(), "Expired"))) &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
                 lease.setStatus("Expired");
+                lease.setTimeLeft(0);
             } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
-                    (!(Objects.equals(lease.getStatus() , "Active"))) &&
-                    (!(Objects.equals(lease.getStatus(),"Terminated"))))
-            {
+                    (!(Objects.equals(lease.getStatus(), "Active"))) &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
                 lease.setStatus("Active");
+                int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+                if (Months < 0) {
+                    Months = Months * -1;
+                }
+                int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+                if (Days < 0) {
+                    Days = Days * -1;
+                }
+                int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+                if (Years < 0) {
+                    Years = Years * -1;
+                }
+                int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+                lease.setTimeLeft(tleft);
             }
 
 
@@ -355,6 +482,21 @@ public class LeaseService {
             lease.setStartDate(LocalDate.now());
             lease.setDuration(renewal.getDuration());
             lease.setEndDate(LocalDate.now().plusMonths(renewal.getDuration()));
+            //lease.setTimeLeft((Period.between(lease.getEndDate(),LocalDate.now()).getYears())*12 + Period.between(lease.getEndDate(),LocalDate.now()).getMonths());
+            int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+            if (Months < 0) {
+                Months = Months * -1;
+            }
+            int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+            if (Days < 0) {
+                Days = Days * -1;
+            }
+            int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+            if (Years < 0) {
+                Years = Years * -1;
+            }
+            int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+            lease.setTimeLeft(tleft);
             lease.setStatus("Renewed");
         }
         if ((renewal.getStartDate() != null) &&
@@ -362,6 +504,22 @@ public class LeaseService {
             lease.setStartDate(renewal.getStartDate());
             lease.setDuration(renewal.getDuration());
             lease.setEndDate(renewal.getStartDate().plusMonths(renewal.getDuration()));
+
+            int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+            if (Months < 0) {
+                Months = Months * -1;
+            }
+            int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+            if (Days < 0) {
+                Days = Days * -1;
+            }
+            int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+            if (Years < 0) {
+                Years = Years * -1;
+            }
+            int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+            lease.setTimeLeft(tleft);
+            // lease.setTimeLeft((Period.between(lease.getEndDate(),LocalDate.now()).getYears())*12 + Period.between(lease.getEndDate(),LocalDate.now()).getMonths());
             lease.setStatus("Renewed");
         }
 
@@ -369,10 +527,57 @@ public class LeaseService {
     }
 
 
-    public  Lease findLeaseById(Long leaseId) {
+    public Lease findLeaseById(Long leaseId) {
         return leaseRepository.findById(leaseId)
                 .orElseThrow(() -> new IllegalStateException(
-                "Record With ID " + leaseId + " Does Not Exist"
-        ));
+                        "Record With ID " + leaseId + " Does Not Exist"
+                ));
+    }
+
+    public String findTenantEmail(String name, String surname) {
+
+        return leaseRepository.findByEmail(name, surname);
+    }
+
+    public List<Lease> getLeaseBySearch(String record) {
+        List<Lease> list = leaseRepository.findAll();
+
+        for (int i = 0; i < leaseRepository.findAll().size(); i++) {
+            Long leaseID = list.get(i).getId();
+            Lease lease = leaseRepository.findById(leaseID)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "Record With ID " + leaseID + " Does Not Exist"
+                    ));
+            lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
+
+            if ((lease.getEndDate().isBefore(LocalDate.now())) &&
+                    (!(Objects.equals(lease.getStatus(), "Expired"))) &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
+                lease.setStatus("Expired");
+                lease.setTimeLeft(0);
+            } else if ((lease.getEndDate().isAfter(LocalDate.now())) &&
+                    (!(Objects.equals(lease.getStatus(), "Active"))) &&
+                    (!(Objects.equals(lease.getStatus(), "Terminated")))) {
+                lease.setStatus("Active");
+                int Months = Period.between(LocalDate.now(), lease.getEndDate()).getMonths();
+                if (Months < 0) {
+                    Months = Months * -1;
+                }
+                int Days = Period.between(LocalDate.now(), lease.getEndDate()).getDays();
+                if (Days < 0) {
+                    Days = Days * -1;
+                }
+                int Years = Period.between(LocalDate.now(), lease.getEndDate()).getYears();
+                if (Years < 0) {
+                    Years = Years * -1;
+                }
+                int tleft = Math.addExact(Days, Math.addExact((Months * 30), (Years * 12 * 30)));
+                lease.setTimeLeft(tleft);
+            }
+
+
+        }
+
+        return leaseRepository.findLeaseBySearch(record);
     }
 }

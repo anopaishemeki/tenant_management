@@ -562,11 +562,25 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="assetValue">Property Value</label>
-                                            <input type="number" class="form-control" id="assetValue"
-                                                   placeholder="$0 000 000">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="date-input">Date of registration with NW</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control drgpicker" id="date-input"
+                                                           value="04/24/2020" aria-describedby="button-addon2">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text" id="button-addon-date"><span
+                                                                class="fe fe-calendar fe-16"></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="assetValue">Property Value</label>
+                                                <input type="number" class="form-control" id="assetValue"
+                                                       placeholder="$0 000 000">
+                                            </div>
                                         </div>
+
                                         <div class="form-row">
                                             <div class="col-md-12 mb-4">
                                                 <div class="card shadow">
@@ -752,7 +766,8 @@
         </button>-->
 
         <!-- Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -765,8 +780,8 @@
                         The property was successfully saved
                     </div>
                     <div class="modal-footer">
-<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                        <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                        <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import com.cicosy.tenant_management.controler.document_management.message.Respon
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,7 +46,10 @@ public class LeaseController {
     public List<Lease> getAboutToExpire(@PathVariable int time) {
         return leaseService.getAboutToExpire(time);
     }
-
+    @GetMapping(path = "search/{record}")
+    public List<Lease> getLeaseBySearch(@PathVariable String record) {
+        return leaseService.getLeaseBySearch(record);
+    }
     @GetMapping(path = "getleases")
     public List<Lease> getLeases() {
         return leaseService.getLeases();
@@ -96,6 +100,13 @@ public class LeaseController {
     @GetMapping(path = "getLease/{leaseId}")
     public Lease getLease(@PathVariable Long leaseId) {
         return leaseService.findLeaseById(leaseId);
+
+    }
+
+    @GetMapping(path = "getEmail/{name}/{surname}")
+    public String getEmail(@PathVariable String name,
+                          @PathVariable String surname) {
+        return leaseService.findTenantEmail(name,surname);
 
     }
 

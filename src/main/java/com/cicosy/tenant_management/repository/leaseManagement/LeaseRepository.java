@@ -2,10 +2,12 @@ package com.cicosy.tenant_management.repository.leaseManagement;
 
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -31,9 +33,17 @@ public interface LeaseRepository
 
 //    -------------------------------------------------------
 
-    @Query("select s from Lease s where s.timeLeft<=?1  order by s.timeLeft DESC ")
+    @Query("select s from Lease s where s.timeLeft<=?1 and s.status<>'Terminated' order by s.timeLeft asc ")
      List<Lease> findbyExpirery(int time);
 
+    @Query(value = "select p.email,p.phone from tenant p where p.name=?1 and p.surname=?2",nativeQuery = true)
+    String findByEmail(String name, String surname);
 
 
+//    @Query(value = "select s from Lease s where lower(s.name) like lower('%:record%') or lower(s.status) like lower('%:record%') or lower(s.buildingLocation) like lower('%:record%') or lower(s.buildingName) like lower('%:record%') order by s.id asc ")
+@Query("Select c from Lease c where lower(c.name) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingName) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingLocation) like lower(concat('%', concat(:record, '%'))) or lower(c.status) like lower(concat('%', concat(:record, '%'))) or lower(c.id) like lower(concat('%', concat(:record, '%'))) order by c.id asc")
+    List<Lease> findLeaseBySearch(@Param("record")String record);
+
+//    List<Lease>findLeasesByNameIsLikeOrBuildingLocationIsLikeOrBuildingNameIsLike(String record);
+    //    Lease findByEmail(String name, String surname);
 }

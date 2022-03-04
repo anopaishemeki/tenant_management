@@ -29,7 +29,11 @@ public class CompartmentController {
     }
 
     @GetMapping("/get-compartments-for-specific-property/{id}")
-    public List<Compartment> getCompartmentsForSpecificProperty(@PathVariable Long id){
+    public List<Compartment> getCompartmentsForSpecificPropertyApi(@PathVariable Long id){
+        return compartmentService.getCompartmentsForSpecificProperty(id);
+    }
+
+    public List<Compartment> getCompartmentsForSpecificProperty(Long id){
         return compartmentService.getCompartmentsForSpecificProperty(id);
     }
 
