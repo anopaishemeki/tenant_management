@@ -167,7 +167,25 @@ function setLocalLease(lease){
 
 //Send Email from notices page
 function SendMail(){
-    return;
+    var Message=document.getElementById("cont").value;
+    var Name = document.getElementById("tName").value;
+    var id = document.getElementById("tID").innerText;
+    var Subject=document.getElementById("subject").value;
+    var email =document.getElementById("T_email").value;
+ 
+var tempParams={
+    from_name:"New World",
+    to_email:email,
+    message:Message,
+    reply_to:'ninja.ld49@gmail.com',
+    to_name:Name
+
+};
+emailjs.send('gmail','template_rqpdjmc',tempParams)
+.then(function(res){
+    console.log("success",res.status); 
+})
+
 }
 
 // change icon on search box and fetch searched data
@@ -255,6 +273,20 @@ function setNotice(id, name, status, endDate,timeLeft) {
     localStorage.setItem("endDate", JSON.stringify(endDate));
 }
 
+
+//customising notice modal
+function showPhonefooter(){
+    var d =document.getElementById("phonefooter");
+    var e =document.getElementById("emailfooter");
+    d.setAttribute("style","display:all");
+    e.setAttribute("style","display:none");
+}
+function showEmailfooter(){
+    var d =document.getElementById("phonefooter");
+    var e =document.getElementById("emailfooter");
+    d.setAttribute("style","display:none");
+    e.setAttribute("style","display:all");
+}
 // fill send notice modal
 function loaddata() {
 
@@ -294,17 +326,13 @@ function loaddata() {
     var message="";
 
     if(status=="Active"){
-        message=`Dear `+name+`
-I hope i find you well. I am writing this letter from New World to inform you that your  Lease is about to expire ( `+tLeft+` Days Left ) Expiring on `+endDate+` ,Consider coming and renew it before it expires. 
-Yours Faithfully ....?
-Thank You, Have a good day`
+        message=` I am writing this letter from New World to inform you that your  Lease is about to expire ( `+tLeft+` Days Left ) Expiring on `+endDate+` ,Consider coming and renew it before it expires. `
+
     }
 
     if(status=="Expired"){
-        message=`Dear `+name+`
-I hope i find you well. I am writing this letter from New World to inform you that your  Lease has Expired on `+endDate+` ,Consider coming and renew it if you still want us to continue being at you service 
-Yours Faithfully ....?
-Thank You, Have a good day`
+        message=`I hope i find you well. I am writing this letter from New World to inform you that your  Lease has Expired on `+endDate+` ,Consider coming and renew it if you still want us to continue being at you service `
+
     }
 
     var MessageBox=document.getElementById("cont");
