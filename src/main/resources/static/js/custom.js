@@ -24,7 +24,7 @@ function searchFilter(){
 
     let field = document.getElementById("propertySearch").value;
 
-    var t_body = document.getElementById("t_body");
+    let t_body = document.getElementById("t_body");
 
     while (t_body.hasChildNodes()) {
         t_body.removeChild(t_body.firstChild);

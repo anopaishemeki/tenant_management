@@ -36,6 +36,8 @@ function getRequest() {
         success: function (response) {
             let items = response
 
+            localStorage.setItem("request", JSON.stringify(items));
+
             console.log(response)
 
             var t_body = document.getElementById("t_body");
@@ -434,6 +436,8 @@ function getAttended() {
         success: function (response) {
             let items = response
 
+            localStorage.setItem("attended", JSON.stringify(items));
+
             console.log(response)
 
             var t_body = document.getElementById("t_body");
@@ -477,4 +481,93 @@ function getAttended() {
             }
         }
     })
+}
+
+// Request Filter
+function searchFilterRequest(){
+    let items = JSON.parse(localStorage.getItem("request"));
+
+    let field = document.getElementById("requestSearch").value;
+
+    var t_body = document.getElementById("t_body");
+
+    while (t_body.hasChildNodes()) {
+        t_body.removeChild(t_body.firstChild);
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
+        let string = JSON.stringify(items[i])
+
+        if (string.toLowerCase().includes(field.toLowerCase())){
+            let new_html = `<td></td>
+                        <td>  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].request}
+                        </td>
+                        <td>  ${items[i].description}
+                        </td>
+                        <td> ${items[i].dateLogged}
+                        </td> 
+                        
+                        <td> ${scheduledDate}</td>
+                        <td> ${items[i].status}
+                        </td>                        
+                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="text-muted sr-only">Action</span>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal( ${items[i].id})">Schedule</a>
+                       
+                      </div>
+                    </td>`
+
+
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = new_html;
+
+            t_body.appendChild(tr);
+        }
+    }
+}
+
+// Attended Filter
+
+function searchFilterAttended(){
+    let items = JSON.parse(localStorage.getItem("attended"));
+
+    let field = document.getElementById("attendedSearch").value;
+
+    var t_body = document.getElementById("t_body");
+
+    while (t_body.hasChildNodes()) {
+        t_body.removeChild(t_body.firstChild);
+    }
+
+    for (let i = 0; i < items.length; i++) {
+
+        let string = JSON.stringify(items[i])
+
+        if (string.toLowerCase().includes(field.toLowerCase())){
+            let new_html = `<td></td>
+                        <td>  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].request}
+                        </td>
+                        <td>  ${items[i].description}
+                        </td>
+                        <td> ${items[i].dateLogged}
+                        </td> 
+                        <td> ${items[i].dateAttended}
+                        </td> `
+
+
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = new_html;
+
+            t_body.appendChild(tr);
+        }
+    }
 }
