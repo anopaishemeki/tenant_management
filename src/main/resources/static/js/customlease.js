@@ -183,12 +183,12 @@ var tempParams={
 };
 emailjs.send('gmail','template_rqpdjmc',tempParams)
 .then(function(res){
-    console.log("success",res.status); 
+    console.log("success",res);
 })
 
 }
 
-// change icon on search box and fetch searched data
+// change icon on search box and fetch searched data from view lease table
 
 function ChangeIconAndSearch(){
     var y=document.getElementById('searchbox');
@@ -259,6 +259,63 @@ function ChangeIconAndSearch(){
 
 }
 
+// change icon on search box and fetch searched data from view lease Notice table
+
+function ChangeIconAndSearch2(){
+    var y=document.getElementById('searchbox');
+    y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
+
+    var t_body = document.getElementById("t_body");
+
+
+    while (t_body.hasChildNodes()) {
+        t_body.removeChild(t_body.firstChild);
+    }
+
+    let items = JSON.parse(localStorage.getItem("lease"));
+
+
+    var field = document.getElementById("searchbox").value.trim();
+    for (let i = 0; i < items.length; i++) {
+        let string = JSON.stringify(items[i]);
+
+        if (string.toLowerCase().includes(field.toLowerCase())){
+
+            let html = `<td class="sorting_1">  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].name}
+                        </td>
+                        <td> ${items[i].buildingName} , ${items[i].buildingLocation}
+                        </td>
+                        <td > ${items[i].startDate}
+                        </td>
+                        <td > ${items[i].endDate}
+                        </td>
+                         <td > ${items[i].status}
+                        </td>
+                        <td >${items[i].timeLeft}
+                    </td>
+                    <td>
+                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success">Notify</span></a>
+
+                    </td>`
+
+
+            let tr = document.createElement("tr");
+            if (i % 2 == 0) {
+                tr.setAttribute("class", "even");
+            } else {
+                tr.setAttribute("class", "odd");
+            }
+            tr.setAttribute("role", "row");
+            tr.innerHTML = html;
+            t_body.appendChild(tr);
+        }
+    }
+    var y=document.getElementById('searchbox');
+    y.setAttribute("style","background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png'); background-position: 10px 10px");
+
+}
 // store notice data
 function setNotice(id, name, status, endDate,timeLeft) {
     localStorage.removeItem("id");
@@ -1052,7 +1109,7 @@ function getLeaseNotice() {
             let items = response;
 
             console.log(response);
-
+            localStorage.setItem("lease", JSON.stringify(items));
             var t_body = document.getElementById("t_body");
 
 
