@@ -19,8 +19,8 @@ public class CompartmentController {
     }
 
     @PostMapping("/save-compartment")
-    public void saveCompartment(@RequestBody Compartment compartment){
-        compartmentService.save(compartment);
+    public Compartment saveCompartment(@RequestBody Compartment compartment){
+        return compartmentService.save(compartment);
     }
 
     @GetMapping("/get-compartments")
@@ -29,7 +29,11 @@ public class CompartmentController {
     }
 
     @GetMapping("/get-compartments-for-specific-property/{id}")
-    public List<Compartment> getCompartmentsForSpecificProperty(@PathVariable Long id){
+    public List<Compartment> getCompartmentsForSpecificPropertyApi(@PathVariable Long id){
+        return compartmentService.getCompartmentsForSpecificProperty(id);
+    }
+
+    public List<Compartment> getCompartmentsForSpecificProperty(Long id){
         return compartmentService.getCompartmentsForSpecificProperty(id);
     }
 

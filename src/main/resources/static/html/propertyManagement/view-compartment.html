@@ -6,28 +6,35 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Tenant Management System</title>
+    <title>View Property</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="../../css/simplebar.css">
     <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="../../css/feather.css">
-    <!--<link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">-->
+    <link rel="stylesheet" href="../../css/select2.css">
+    <link rel="stylesheet" href="../../css/dropzone.css">
+    <link rel="stylesheet" href="../../css/uppy.min.css">
+    <link rel="stylesheet" href="../../css/jquery.steps.css">
+    <link rel="stylesheet" href="../../css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../../css/quill.snow.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " id="body" onload="getLeases()">
+<body class="vertical  light  " onload="viewCompartment()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
             <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
         <form class="form-inline mr-auto searchform text-muted">
-            <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Type something..." aria-label="Search">
+            <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
+                   placeholder="Type something..." aria-label="Search">
         </form>
         <ul class="nav">
             <li class="nav-item">
@@ -36,18 +43,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-shortcut">
+                <a class="nav-link text-muted my-2" href="../..#" data-toggle="modal" data-target=".modal-shortcut">
                     <span class="fe fe-grid fe-16"></span>
                 </a>
             </li>
             <li class="nav-item nav-notif">
-                <a class="nav-link text-muted my-2" href="../../tiny_dash/light#" data-toggle="modal" data-target=".modal-notif">
+                <a class="nav-link text-muted my-2" href="../..#" data-toggle="modal" data-target=".modal-notif">
                     <span class="fe fe-bell fe-16"></span>
                     <span class="dot dot-md bg-success"></span>
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
                 <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
               </span>
@@ -71,8 +79,8 @@
                     <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
-                  <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
-                  <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+                    <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+                    <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
                 </g>
               </svg>
                 </a>
@@ -109,22 +117,19 @@
                 <li class="nav-item dropdown">
                     <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-box fe-16"></i>
-                        <span class="ml-3 item-text">Property Management</span>
+                        <span class="ml-3 item-text">Property Portfolios</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Properties</span>
+                            <a class="nav-link pl-3" href="property-list.html"><span class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
+                            <a class="nav-link pl-3" href="add_property.html"><span class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
+                            <a class="nav-link pl-3" href="add_compartment.html"><span class="ml-1 item-text">Add Lettable space</span></a>
                         </li>
-                        <!--                <li class="nav-item">-->
-                        <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
-                        <!--                </li>-->
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>-->
                         <!--                </li>-->
@@ -211,7 +216,6 @@
                         <span class="ml-3 item-text">Maintenance</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
-
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../mantainanceManagement/request.html"><span class="ml-1 item-text">Request</span></a>
                         </li>
@@ -223,9 +227,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../mantainanceManagement/pendingRequest.html"><span class="ml-1 item-text">Pending</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link pl-3" href="../mantainanceManagement/attendedRequest.html"><span class="ml-1 item-text">Attended</span></a>
                         </li>
                     </ul>
                 </li>
@@ -381,304 +382,281 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="mb-2 page-title">Lease Table</h2>
-                    <p class="card-text">lease management</p>
+                    <div class="row align-items-center mb-4">
+                        <div class="col">
+                            <h2 class="h5 page-title" id="propNameOne"><small class="text-muted text-uppercase">Property</small><br/>#342
+                            </h2>
+                        </div>
+                        <div class="col-auto">
+<!--                            <button type="button" class="btn btn-secondary">Close</button>-->
+<!--                            <button type="button" class="btn btn-primary">Assign</button>-->
+                        </div>
+                    </div> <!-- .row -->
                     <div class="row my-4">
-                        <!-- Small table -->
                         <div class="col-md-12">
-                            <div class="card shadow">
-
-                                <div class="card-body">
-                                    <div class="Customtopnav">
-
-                                        <input type="text" id="searchbox" name="search" placeholder="Search.."  onkeyup="ChangeIconAndSearch()">
-                                    </div>
-                                    <!-- table -->
-                                    <table class="table datatables table-hover   table-borderless border-v" id="dataTable-1">
-
-                                        <thead class="thead-dark">
-                                        <tr role="row" >
-
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Rental Fee</th>
-                                            <th>Building Name</th>
-                                            <th>Bulding Location</th>
-                                            <th>Terms</th>
-                                            <th>Status</th>
-                                            <th>Agreement Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="t_body">
-                                        <tr style="display: none" >
-
-                                            <td>1</td>
-                                            <td>Imani Lara</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Active</td>
-                                            <td>Jun 8, 2019</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                                         data-bs-keyboard="false" >
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Termination
-                                                        Dialog</h5>
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </a>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="alert alert-info" role="alert" id="alerrt">
-                                                        <p id="alrt" style="visibility: visible">Are You Sure you want
-                                                            to Terminate This Lease</p>
-
-                                                        <div id="liveAlertPlaceholder">
-                                                            <button id="ldiD" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
-                                                                Terminating ...
-                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-
-
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal" id="Close"
-                                                                style="display: none">Close
-                                                        </button>
-                                                    </a>
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
-                                                    </button>
-                                                    <button type="button" id="liveAlertBtn" class="btn btn-primary"
-                                                            onclick="Terminate()">Yes
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade" id="renewal" tabindex="-1"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                                         data-bs-keyboard="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Renewal
-                                                        Dialog</h5>
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </a>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="alert alert-info" role="alert" id="alerrt">
-                                                        <div id="liveAlertPlaceholder2">
-                                                            <button id="ldID" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
-                                                                Renewing ...
-                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                            </button>
-                                                        </div>
-                                                        <div id="renewalInfo">
-                                                            <div class="form-group col-md-12">
-                                                                <label for="id2">ID = </label>
-                                                                <label id="id2"></label>
-                                                                <div class="valid-feedback"></div>
-
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="TenantName2">Tenant Name:</label>
-                                                                <input type="text" class="form-control" id="TenantName2"
-                                                                       disabled>
-                                                                <div class="valid-feedback"></div>
-
-                                                            </div>
-                                                            <div class="form-group col-md-12 mb-3">
-                                                                <label for="startDate2">Start Date</label>
-                                                                <input class="form-control" id="startDate2" type="date"
-                                                                       name="startDate"
-                                                                       required>
-                                                            </div>
-                                                            <div class="form-group col-md-12 mb-3">
-                                                                <label for="duration2">Duration :</label>
-                                                                <input class="form-control" id="duration2" type="number"
-                                                                       name="duration"
-                                                                       required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal" id="Close2"
-                                                                style="display: none">OK
-                                                        </button>
-                                                    </a>
-
-                                                    <button id="liveAlertBtn2" class="btn btn-primary"
-                                                            onclick="renewlease()">
-                                                        Submit Renewal
-                                                    </button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header">
+                                    <strong class="card-title">Details for <span id="propNameTwo"></span> </strong>
+<!--                                    <span class="float-right"><i class="fe fe-flag mr-2"></i><span-->
+<!--                                            class="badge badge-pill badge-success text-white">Payment</span></span>-->
                                 </div>
+                                <div id="compartmentDetails">
+                                    <div class="card-body">
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted"> Portfolio Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong></strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Compartment Square Area</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong></strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Compartments ID</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong></strong>
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Compartment Floor Number</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong></strong>
+                                            </dd>
+                                        </dl>
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Rental Rate per ㎡ </dt>
+                                            <dd class="col-sm-4 mb-3"></dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Rent payable</dt>
+                                            <dd class="col-sm-4 mb-3"></dd>
+                                            <!--<dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3"> +263 00 000</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">+263 00 000</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Created On</dt>
+                                            <dd class="col-sm-4 mb-3">2020-04-21 00:38:38</dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
+                                            <dd class="col-sm-4 mb-3">2020-04-21 08:48:18</dd>-->
+                                            <dt class="col-sm-2 text-muted">Description</dt>
+                                            <dd class="col-sm-10">
+                                            </dd>
+
+                                        </dl>
+                                        <hr class="my-4">
+                                        <h5 class="mb-2 mt-4">Tenant Details</h5>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Name</dt>
+                                            <dd class="col-sm-4 mb-3">
+
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Surname</dt>
+                                            <dd class="col-sm-4 mb-3">
+
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                            <dd class="col-sm-4 mb-3">
+
+                                            </dd>
+                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+
+                                            </dd>
+                                        </dl>
+                                        <dl class="row align-items-center mb-0">
+                                            <dt class="col-sm-2 mb-3 text-muted">Email</dt>
+                                            <dd class="col-sm-4 mb-3"></dd>
+                                            <!--<dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                            <dd class="col-sm-4 mb-3">
+                                                <strong>Kelley Sonya</strong>
+                                            </dd>-->
+                                        </dl>
+                                    </div> <!-- .card-body -->
+                                </div>
+                            </div> <!-- .card -->
+                        </div> <!-- .col-md -->
+                        <!-- compartments list-->
+                        <!--<div class="container-fluid">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div class="row align-items-center my-4">
+                                        <div class="col">
+                                            <h2 class="h3 mb-0 page-title">Compartments List</h2>
+                                        </div>
+                                        <div class="col-auto">
+&lt;!&ndash;                                            <button type="button" class="btn btn-secondary"><span class="fe fe-trash fe-12 mr-2"></span>Delete</button>&ndash;&gt;
+                                            <button type="button" class="btn btn-primary" ><span class="fe fe-filter fe-12 mr-2"></span>Create</button>
+                                        </div>
+                                    </div>
+                                    &lt;!&ndash; table &ndash;&gt;
+                                    <div class="card shadow">
+                                        <div class="card-body">
+                                            <table class="table table-borderless table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        &lt;!&ndash;                                                            <div class="custom-control custom-checkbox">&ndash;&gt;
+                                                        &lt;!&ndash;                                                                <input type="checkbox" class="custom-control-input" id="all2">&ndash;&gt;
+                                                        &lt;!&ndash;                                                                <label class="custom-control-label" for="all2"></label>&ndash;&gt;
+                                                        &lt;!&ndash;                                                            </div>&ndash;&gt;
+                                                    </th>
+                                                    <th></th>
+                                                    <th>ID</th>
+                                                    <th>Tenant</th>
+                                                    <th>Rental Status</th>
+                                                    <th>Floor Area</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="t_body">
+                                               
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <nav aria-label="Table Paging" class="my-3">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div> &lt;!&ndash; .col-12 &ndash;&gt;
+                            </div> &lt;!&ndash; .row &ndash;&gt;
+                        </div>--> <!-- .container-fluid -->
+                    </div> <!-- .col-md -->
+                </div>
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </main>
+</div> <!-- .container-fluid -->
+<div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group list-group-flush my-n3">
+                    <div class="list-group-item bg-transparent">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <span class="fe fe-box fe-24"></span>
                             </div>
-                        </div> <!-- simple table -->
-                    </div> <!-- end section -->
-                </div> <!-- .col-12 -->
-            </div> <!-- .row -->
-        </div> <!-- .container-fluid -->
-        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-             aria-hidden="true" >
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                            <div class="col">
+                                <small><strong>Package has uploaded successfull</strong></small>
+                                <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                                <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="list-group list-group-flush my-n3">
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-box fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                        <small><strong>Package has uploaded successfull</strong></small>
-                                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
-                                    </div>
-                                </div>
+                    <div class="list-group-item bg-transparent">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <span class="fe fe-download fe-24"></span>
                             </div>
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-download fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                        <small><strong>Widgets are updated successfull</strong></small>
-                                        <div class="my-0 text-muted small">Just create new layout Index, form, table
-                                        </div>
-                                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                                    </div>
-                                </div>
+                            <div class="col">
+                                <small><strong>Widgets are updated successfull</strong></small>
+                                <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                                <small class="badge badge-pill badge-light text-muted">2m ago</small>
                             </div>
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-inbox fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                        <small><strong>Notifications have been sent</strong></small>
-                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                                    </div>
-                                </div> <!-- / .row -->
-                            </div>
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-link fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                        <small><strong>Link was attached to menu</strong></small>
-                                        <div class="my-0 text-muted small">New layout has been attached to the menu
-                                        </div>
-                                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                                    </div>
-                                </div>
-                            </div> <!-- / .row -->
-                        </div> <!-- / .list-group -->
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
-                        </button>
+                    <div class="list-group-item bg-transparent">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <span class="fe fe-inbox fe-24"></span>
+                            </div>
+                            <div class="col">
+                                <small><strong>Notifications have been sent</strong></small>
+                                <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                                <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                            </div>
+                        </div> <!-- / .row -->
+                    </div>
+                    <div class="list-group-item bg-transparent">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <span class="fe fe-link fe-24"></span>
+                            </div>
+                            <div class="col">
+                                <small><strong>Link was attached to menu</strong></small>
+                                <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                                <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                            </div>
+                        </div>
+                    </div> <!-- / .row -->
+                </div> <!-- / .list-group -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-5">
+                <div class="row align-items-center">
+                    <div class="col-6 text-center">
+                        <div class="squircle bg-success justify-content-center">
+                            <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                        </div>
+                        <p>Control area</p>
+                    </div>
+                    <div class="col-6 text-center">
+                        <div class="squircle bg-primary justify-content-center">
+                            <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                        </div>
+                        <p>Activity</p>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-6 text-center">
+                        <div class="squircle bg-primary justify-content-center">
+                            <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                        </div>
+                        <p>Droplet</p>
+                    </div>
+                    <div class="col-6 text-center">
+                        <div class="squircle bg-primary justify-content-center">
+                            <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                        </div>
+                        <p>Upload</p>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-6 text-center">
+                        <div class="squircle bg-primary justify-content-center">
+                            <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                        </div>
+                        <p>Users</p>
+                    </div>
+                    <div class="col-6 text-center">
+                        <div class="squircle bg-primary justify-content-center">
+                            <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                        </div>
+                        <p>Settings</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-             aria-labelledby="defaultModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body px-5">
-                        <div class="row align-items-center">
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-success justify-content-center">
-                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Control area</p>
-                            </div>
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Activity</p>
-                            </div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Droplet</p>
-                            </div>
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Upload</p>
-                            </div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Users</p>
-                            </div>
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Settings</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main> <!-- main -->
+    </div>
+</div>
+</main> <!-- main -->
 </div> <!-- .wrapper -->
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/popper.min.js"></script>
@@ -689,14 +667,15 @@
 <script src='../../js/jquery.stickOnScroll.js'></script>
 <script src="../../js/tinycolor-min.js"></script>
 <script src="../../js/config.js"></script>
-<!--<script src='../../js/jquery.dataTables.min.js'></script>-->
-<script src='../../js/dataTables.bootstrap4.min.js'></script>
-
-<script src="../../js/apps.js"></script>
-<script src="../../js/customlease.js"></script>
-<script src='../../js/bootstrap.bundle.min.js'></script>
-
-
+<script src='../../js/jquery.mask.min.js'></script>
+<script src='../../js/select2.min.js'></script>
+<script src='../../js/jquery.steps.min.js'></script>
+<script src='../../js/jquery.validate.min.js'></script>
+<script src='../../js/jquery.timepicker.js'></script>
+<script src='../../js/dropzone.min.js'></script>
+<script src='../../js/uppy.min.js'></script>
+<script src='../../js/quill.min.js'></script>
+<script src='../../js/custom.js'></script>
 <script>
     $('.select2').select2(
         {
@@ -723,8 +702,7 @@
             'zindex': '9999' /* fix modal open */
         });
     /** date range picker */
-    if ($('.datetimes').length)
-    {
+    if ($('.datetimes').length) {
         $('.datetimes').daterangepicker(
             {
                 timePicker: true,
@@ -739,10 +717,10 @@
     var start = moment().subtract(29, 'days');
     var end = moment();
 
-    function cb(start, end)
-    {
+    function cb(start, end) {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     }
+
     $('#reportrange').daterangepicker(
         {
             startDate: start,
@@ -786,8 +764,7 @@
         });
     // editor
     var editor = document.getElementById('editor');
-    if (editor)
-    {
+    if (editor) {
         var toolbarOptions = [
             [
                 {
@@ -854,20 +831,15 @@
             });
     }
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function()
-    {
+    (function () {
         'use strict';
-        window.addEventListener('load', function()
-        {
+        window.addEventListener('load', function () {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form)
-            {
-                form.addEventListener('submit', function(event)
-                {
-                    if (form.checkValidity() === false)
-                    {
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
                     }
@@ -878,68 +850,38 @@
     })();
 </script>
 <script>
-    $('#dataTable-1').DataTable(
-        {
-            autoWidth: true,
-            "lengthMenu": [
-                [16, 32, 64, -1],
-                [16, 32, 64, "All"]
-            ]
+    var uptarg = document.getElementById('drag-drop-area');
+    if (uptarg) {
+        var uppy = Uppy.Core().use(Uppy.Dashboard,
+            {
+                inline: true,
+                target: uptarg,
+                proudlyDisplayPoweredByUppy: false,
+                theme: 'dark',
+                width: 770,
+                height: 210,
+                plugins: ['Webcam']
+            }).use(Uppy.Tus,
+            {
+                endpoint: 'https://master.tus.io/files/'
+            });
+        uppy.on('complete', (result) => {
+            console.log('Upload complete! We’ve uploaded these files:', result.successful)
         });
+    }
 </script>
-
+<script src="../../js/apps.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
 
-    function gtag()
-    {
+    function gtag() {
         dataLayer.push(arguments);
     }
+
     gtag('js', new Date());
     gtag('config', 'UA-56159088-1');
 </script>
-
-
-
-<script src='../../js/select2.min.js'></script>
-
-<script src='../../js/jquery.validate.min.js'></script>
-
-
-<style>
-    .Customtopnav {
-        overflow: hidden;
-        background-color: #e9e9e9;
-
-    }
-    .Customtopnav input[type=text] {
-        width: 130px;
-        box-sizing: border-box;
-        border-radius: 4px;
-        background-color: white;
-        background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png');
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        padding: 12px 20px 12px 40px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-
-
-        float: right;
-        border: none;
-        margin-top: 8px;
-        margin-right: 20px;
-        margin-bottom: 8px;
-        font-size: 17px;
-    }
-
-   .Customtopnav input[type=text]:focus {
-        width: 180px;
-    }
-
-</style>
-
 </body>
 </html>

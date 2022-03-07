@@ -116,20 +116,18 @@
                     <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle nav-link">
                         <i class="fe fe-box fe-16"></i>
-                        <span class="ml-3 item-text">Property Management</span>
+                        <span class="ml-3 item-text">Property Portfolios</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="property-list.html"><span
-                                    class="ml-1 item-text">Properties</span>
+                            <a class="nav-link pl-3" href="property-list.html"><span class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="add_property.html"><span
-                                    class="ml-1 item-text">Add Property</span></a>
+                            <a class="nav-link pl-3" href="add_property.html"><span class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
+                            <a class="nav-link pl-3" href="add_compartment.html"><span class="ml-1 item-text">Add Lettable space</span></a>
                         </li>
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>-->
@@ -562,11 +560,25 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="assetValue">Property Value</label>
-                                            <input type="number" class="form-control" id="assetValue"
-                                                   placeholder="$0 000 000">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="date-input">Date of registration with NW</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control drgpicker" id="date-input"
+                                                           value="04/24/2020" aria-describedby="button-addon2">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text" id="button-addon-date"><span
+                                                                class="fe fe-calendar fe-16"></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="assetValue">Property Value</label>
+                                                <input type="number" class="form-control" id="assetValue"
+                                                       placeholder="$0 000 000">
+                                            </div>
                                         </div>
+
                                         <div class="form-row">
                                             <div class="col-md-12 mb-4">
                                                 <div class="card shadow">
@@ -744,6 +756,35 @@
                 </div><!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+
+        <!--success modal-->
+        <!-- Button trigger modal -->
+        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#successModal">
+            Launch demo modal
+        </button>-->
+
+        <!-- Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        The property was successfully saved
+                    </div>
+                    <div class="modal-footer">
+                        <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                        <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">

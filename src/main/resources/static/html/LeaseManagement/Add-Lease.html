@@ -1281,7 +1281,21 @@
                                                        required>
                                             </div>
                                         </div>
+
+                                        <!--<div class="form-row">
+                                            <div class="form-group col-md-4 mb-3">
+                                                <label for="email">Email:</label>
+                                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp1" required>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                                <div class="form-group col-md-4 mb-3">
+                                                <label for="phone">Phone :</label>
+                                                <input class="form-control input-phoneus" id="phone" maxlength="16"
+                                                       placeholder="(263) xxx-xxx-xxx" name="phone" required>
+                                            </div>
+                                        </div>-->
                                         <br>
+
 
                                         <div class="col-md-12"
                                              style="padding-left:0px!important; padding-top: 20px!important;">
@@ -1357,7 +1371,7 @@
                         <div class="modal-body">
                             <div class="alert alert-info" role="alert" id="alerrt">
                                 <div id="liveAlertPlaceholder">
-                                    <button id="ldID" style="background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                    <button id="ldID" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
                                         Saving ...
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     </button>
@@ -1381,10 +1395,7 @@
                     </div>
                 </div>
             </div>
-            <div style="display: none">
-                <input type="text" name="phone" id="phone" style="display: none">
-                <input type="text" name="email" id="email" style="display: none">
-            </div>
+
 
             <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
                  aria-labelledby="defaultModalLabel" aria-hidden="true">
@@ -1615,7 +1626,7 @@
         {
             reverse: true
         });
-    $('.input-phoneus').mask('(000) 000-0000');
+    $('.input-phoneus').mask('(000) 000-000-000');
     $('.input-mixed').mask('AAA 000-S0S');
     $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
         {
@@ -1739,7 +1750,7 @@
         ;
     }
 </script>
-<script src="../../apps.js"></script>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>

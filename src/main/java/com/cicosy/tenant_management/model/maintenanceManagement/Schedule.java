@@ -27,22 +27,31 @@ public class Schedule {
     private Long Id;
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
 //    @JsonSerialize(using = LocalDateSerializer.class)
-    private String scheduleDate;
+    private LocalDate scheduleDate ;
 
 
     public Long getId() {
-        return Id;
+//        if (scheduleDate.isBefore(LocalDate.now())) {
+//            setId(null);
+//        }
+            return Id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.Id = id;
     }
 
-    public String getScheduleDate() {
+    public LocalDate getScheduleDate() {
+
+        if (scheduleDate.isBefore(LocalDate.now())) {
+            setScheduleDate(null);
+        }
         return scheduleDate;
     }
 
-    public void setScheduleDate(String scheduleDate) {
+    public void setScheduleDate(LocalDate scheduleDate) {
+
+
         this.scheduleDate = scheduleDate;
     }
 }
