@@ -30,4 +30,16 @@ public class Payment {
     private Long capturedBy;
     private double amount;
     private Long method;
+    private Long invoice;
+
+    public Payment(String paymentDate, Long tenant, Long type, String reference, Long capturedBy, double amount, Long method, Long invoice) {
+        this.paymentDate = paymentDate;
+        this.tenant = tenant;
+        this.type = type;
+        this.reference = reference;
+        this.capturedBy = capturedBy;
+        this.amount = amount;
+        this.method = method;
+        this.invoice = invoice;
+    }
 }

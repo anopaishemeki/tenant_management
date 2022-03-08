@@ -17,7 +17,8 @@ public class MethodService {
     }
 
     public Method save(Method method){
-        return methodRepository.save(method);
+        methodRepository.save(method);
+        return methodRepository.findById(method.getId()).orElseThrow(() -> new  IllegalStateException ("Saving Failed"));
     }
 
     public List<Method> getAll(){

@@ -11,17 +11,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table
-public class Type {
+public class Services {
     @Id
     @SequenceGenerator(
-            name = "type_sequence",
-            sequenceName = "type_sequence",
+            name = "invoice_sequence",
+            sequenceName = "invoice_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "type_sequence"
+            generator = "invoice_sequence"
     )
     private Long id;
-    private String type;
+    private String serviceName;
 }
