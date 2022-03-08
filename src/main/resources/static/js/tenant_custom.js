@@ -51,7 +51,6 @@ function getTenants(){
 
             }
 
-            profile_execute();
         }
     })
 }
@@ -403,35 +402,36 @@ function viewTenant(id) {
 }
 
 
-function getTenantsAssign(){
-        $.ajax({
-            url: 'http://localhost:8090/api/tenants/get-all-tenants',
-            type: 'GET',
-            success: function (response) {
-                let items = response
+function getTenantsAssign() {
+    $.ajax({
+        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        type: 'GET',
+        success: function (response) {
+            let items = response
 
-                console.log(response)
+            console.log(response)
 
-                var tenant_list = document.getElementById("tenant_list");
-                // while (tenant_list.hasChildNodes()) {
-                //     tenant_list.removeChild(tenant_list.firstChild);
-                // }
+            var tenant_list = document.getElementById("tenant_list");
+            // while (tenant_list.hasChildNodes()) {
+            //     tenant_list.removeChild(tenant_list.firstChild);
+            // }
 
-                for (let i = 0; i < items.length; i++) {
-                    let html =
-                        `<td>${items[i].name} ${items[i].name}</td>`
+            for (let i = 0; i < items.length; i++) {
+                let html =
+                    `<option>${items[i].name} ${items[i].surname}</option>`
 
-                    let tr = document.createElement("option");
+                let tr = document.createElement("option");
 
 
-                    tr.innerHTML = html;
+                tr.innerHTML = html;
 
-                    tenant_list.appendChild(tr);
-                }
+                tenant_list.appendChild(tr);
 
             }
 
-        })
+        }
+
+    })
 
     $.ajax({
         url: 'http://localhost:8090/api/property/get-all-properties',
@@ -442,13 +442,17 @@ function getTenantsAssign(){
             console.log(response)
 
             var buildings = document.getElementById("building_option");
+//             let btn = document.getElementById("btnSub")
+//             let html2 = `                              <button class="btn btn-primary" onclick="getCompartmentDetails()">ok</button>
+// `
+
             // while (tenant_list.hasChildNodes()) {
             //     tenant_list.removeChild(tenant_list.firstChild);
             // }
 
             for (let i = 0; i < items.length; i++) {
                 let html =
-                    `<option value="${items[i].id}" onclick="getCompartmentDetails('${items[i].id}')">${items[i].name}</option>`
+                    `<option value="${items[i].id}" >${items[i].name}</option>`
 
                 let tr = document.createElement("option");
 
@@ -458,52 +462,112 @@ function getTenantsAssign(){
                 buildings.appendChild(tr);
 
 
-
             }
 
+            // $("building_option").change(getCompartmentDetails($("building_option").value()));
+
         }
+
+
+    })
+}
+
+
+
+
+
+    function getCompartmentDetails(){
+
+        $.ajax({
+            url: 'http://localhost:8090/api/property/get-all-properties',
+            type: 'GET',
+            success: function (response) {
+                let buildings = response
+
+                console.log($("#building_option").val());
+
+                let prop = document.getElementById("building_option").value;
+
+
+                for (let i = 0; i < buildings.length; i++) {
+
+                    if(buildings[i].name === prop ){
+
+                        console.log(buildings[i].id);
+                        let id = buildings[i].id;
+
+                        $.ajax({
+                            url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/'+id,
+                            type: 'GET',
+                            data: {id},
+                            success: function (response) {
+                                let compartments = response
+
+                                console.log(response)
+
+
+
+                                let fl = document.getElementById("compartmentDropdown");
+                                // while (tenant_list.hasChildNodes()) {
+                                //     tenant_list.removeChild(tenant_list.firstChild);
+                                // }
+
+                                for (let i = 0; i < compartments.length; i++) {
+                                    // if (compartments[i].status){
+                                    let html =
+                                        `<option value="${compartments[i].id}">${compartments[i].compartmentNumber}</option>`
+
+                                    let tr = document.createElement("option");
+
+
+                                    tr.innerHTML = html;
+
+                                    fl.appendChild(tr);
+                                }
+
+                            }
+
+                        })
+
+
+                    }
+                }
+
+
+
+        }
+        
+
 
     })
 
     }
 
-    function getCompartmentDetails(id){
+    function assignTenantCompartment(){
 
         $.ajax({
-            url: 'http://localhost:8090/api/compartment/get-compartment/'+id,
+            url: 'http://localhost:8090/api/tenants/get-all-tenants',
             type: 'GET',
             success: function (response) {
-                let compartments = response
+                let items = response
 
                 console.log(response)
 
-
-
-                let fl = document.getElementById("compartmentDropdown");
+                let tenant = document.getElementById("tenant_list").value;
                 // while (tenant_list.hasChildNodes()) {
                 //     tenant_list.removeChild(tenant_list.firstChild);
                 // }
 
-                for (let i = 0; i < compartments.length; i++) {
-                   if (compartments[i].status){
-                       let html =
-                           `<option>${compartments[i].compartmentNumber}</option>`
-
-                       let tr = document.createElement("option");
+                for (let i = 0; i < items.length; i++) {
+                    if(tenant === items[i].name + items[i].surname){
 
 
-                       tr.innerHTML = html;
-
-                       fl.appendChild(tr);
-                   }
-
-
+                    }
                 }
 
             }
 
         })
-
 
     }
 
