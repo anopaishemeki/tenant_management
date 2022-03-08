@@ -24,4 +24,8 @@ public class TransactionType {
     )
     private Long id;
     private String type;
+
+    public TransactionType(String type) {
+        this.type = type;
+    }
 }

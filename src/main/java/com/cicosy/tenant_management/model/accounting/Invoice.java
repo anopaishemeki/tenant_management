@@ -25,10 +25,19 @@ public class Invoice {
     )
     private Long id;
     private Long tenant;
-    private Object services;
+//    private Object services;
     private String dateIssued;
     private String forTheMonthOf;
     private double amount;
     private String dueDate;
     private Long user;
+
+    public Invoice(Long tenant, String dateIssued, String forTheMonthOf, double amount, String dueDate, Long user) {
+        this.tenant = tenant;
+        this.dateIssued = dateIssued;
+        this.forTheMonthOf = forTheMonthOf;
+        this.amount = amount;
+        this.dueDate = dueDate;
+        this.user = user;
+    }
 }

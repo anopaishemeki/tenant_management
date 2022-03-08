@@ -24,4 +24,8 @@ public class Services {
     )
     private Long id;
     private String serviceName;
+
+    public Services(String serviceName) {
+        this.serviceName = serviceName;
+    }
 }

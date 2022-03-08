@@ -24,4 +24,8 @@ public class Method {
     )
     private Long id;
     private String method;
+
+    public Method(String method) {
+        this.method = method;
+    }
 }
