@@ -414,41 +414,23 @@
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
-                                    <div class="toolbar">
-                                        <form class="form">
-                                            <div class="form-row">
-                                                <div class="form-group col-auto mr-auto">
-                                                    <label class="my-1 mr-2 sr-only" for="inlineFormCustomSelectPref1">Show</label>
-                                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelectPref1">
-                                                        <option value="">...</option>
-                                                        <option value="1">12</option>
-                                                        <option value="2" selected>32</option>
-                                                        <option value="3">64</option>
-                                                        <option value="3">128</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-auto">
-                                                    <label for="requestSearch" class="sr-only">Search</label>
-                                                    <input type="text" class="form-control" onkeyup="searchFilterRequest()" id="requestSearch" value="" placeholder="Search">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+
                                     <!-- table -->
-                                    <table class="table datatables" id="dataTable-1">
+                                    <table class="table datatables " id="example">
                                         <thead class="thead-dark">
-                                        <tr>
-                                            <th></th>
+                                        <tr >
+
                                             <th>id</th>
                                             <th>Request</th>
                                             <th>Description</th>
+                                            <th>Urgency</th>
                                             <th>Date Logged</th>
                                             <th>Scheduled Date</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="t_body">
+                                      <!--  <tbody id="t_body">
                                         <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
@@ -476,7 +458,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        </tbody>
+                                        </tbody>-->
                                     </table>
                                 </div>
                             </div>

@@ -388,31 +388,12 @@
                 <div class="col-md-12">
                   <div class="card shadow">
                     <div class="card-body">
-                      <div class="toolbar">
-                        <form class="form">
-                          <div class="form-row">
-                            <div class="form-group col-auto mr-auto">
-                              <label class="my-1 mr-2 sr-only" for="inlineFormCustomSelectPref1">Show</label>
-                              <select class="custom-select mr-sm-2" id="inlineFormCustomSelectPref1">
-                                <option value="">...</option>
-                                <option value="1">12</option>
-                                <option value="2" selected>32</option>
-                                <option value="3">64</option>
-                                <option value="3">128</option>
-                              </select>
-                            </div>
-                            <div class="form-group col-auto">
-                              <label for="attendedSearch" class="sr-only">Search</label>
-                              <input type="text" class="form-control" onkeyup="searchFilterAttended()" id="attendedSearch" value="" placeholder="Search">
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+
                       <!-- table -->
-                      <table class="table datatables" >
+                      <table class="table datatables" id="example" >
                         <thead class="thead-dark">
                           <tr>
-                            <th></th>
+
                             <th>id</th>
                             <th>Request</th>
                             <th>Description</th>
@@ -421,31 +402,8 @@
                             <!-- <th>Action</th> -->
                           </tr>
                         </thead>
-                        <tbody id="t_body">
-                          <tr>
-                            <td>
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
-                                <label class="custom-control-label"></label>
-                              </div>
-                            </td>
-                            <td>368</td>
-                            <td>Imani Lara</td>
-                            <td >Asset Management</td>
-                            <td>10-12-2022</td>
-                            <td>19-12-2022</span></td>
-                            
-                            <!-- <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted sr-only">Action</span>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item"  href="#">Attended</a>
-                               
-                              </div>
-                            </td> -->
-                          </tr>
-                        </tbody>
-                      </table>
+
+                      </table>♦♦♦
                     </div>
                   </div>
                 </div> <!-- simple table -->

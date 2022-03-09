@@ -415,19 +415,21 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <!-- table -->
-                                    <table class="table datatables" >
+                                    <table class="table datatables" id="example">
                                         <thead class="thead-dark">
                                         <tr>
-                                            <th></th>
+
                                             <th>id</th>
                                             <th>Request</th>
                                             <th>Description</th>
+                                            <th>Status</th>
                                             <th>Date Logged</th>
                                             <th>Schedule Date</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="t_body">
+                                       <!-- <tbody id="t_body">
                                         <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
@@ -453,7 +455,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        </tbody>
+                                        </tbody>-->
                                     </table>
                                 </div>
                             </div>
@@ -496,7 +498,7 @@
                                         class="btn mb-2 btn-success" aria-label="Close">OK
                                 </button>
                             </a>
-                            <button type="button" class="btn mb-2 btn-primary" onclick="Attend()" id="2">Continue</button>
+                            <button type="button" class="btn mb-2 btn-primary" onclick="Attended()" id="2">Continue</button>
                         </div>
                     </div>
                 </div>
