@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Add Property</title>
+    <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="../../css/simplebar.css">
     <!-- Fonts CSS -->
@@ -14,13 +14,20 @@
           rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="../../css/feather.css">
+    <link rel="stylesheet" href="../../css/select2.css">
+    <link rel="stylesheet" href="../../css/dropzone.css">
+    <link rel="stylesheet" href="../../css/uppy.min.css">
+    <link rel="stylesheet" href="../../css/jquery.steps.css">
+    <link rel="stylesheet" href="../../css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../../css/quill.snow.css">
+
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  ">
+<body class="vertical  light  " onload="setAddPropertyDropDown(), setLettableSpaceDropdown(), getPayments()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -37,14 +44,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-muted my-2" href="../../../tiny_dash/light#" data-toggle="modal"
-                   data-target=".modal-shortcut">
+                <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-shortcut">
                     <span class="fe fe-grid fe-16"></span>
                 </a>
             </li>
             <li class="nav-item nav-notif">
-                <a class="nav-link text-muted my-2" href="../../../tiny_dash/light#" data-toggle="modal"
-                   data-target=".modal-notif">
+                <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
                     <span class="fe fe-bell fe-16"></span>
                     <span class="dot dot-md bg-success"></span>
                 </a>
@@ -120,14 +125,15 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="property-list.html"><span class="ml-1 item-text">Portfolio List</span>
+                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="add_property.html"><span class="ml-1 item-text">Add Portfolio</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span
+                                    class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="add_compartment.html"><span class="ml-1 item-text">Add Lettable space</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Lettable space</span></a>
                         </li>
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>-->
@@ -149,7 +155,7 @@
                 <li class="nav-item dropdown">
                     <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-credit-card fe-16"></i>
-                        <span class="ml-3 item-text">Tenants</span>
+                        <span class="ml-3 item-text">Tenant Management</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                         <li class="nav-item">
@@ -179,7 +185,7 @@
                 <li class="nav-item dropdown">
                     <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-grid fe-16"></i>
-                        <span class="ml-3 item-text">Leasing</span>
+                        <span class="ml-3 item-text">Lease Management</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                         <li class="nav-item">
@@ -262,7 +268,7 @@
                         <span class="ml-3 item-text">Accounts</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-                        <a class="nav-link pl-3" href="../accounting/payments.html"><span class="ml-1">Payments</span></a>
+                        <a class="nav-link pl-3" href="./payments.html"><span class="ml-1">Payments</span></a>
                         <a class="nav-link pl-3" href="#"><span class="ml-1">Invoicing</span></a>
                     </ul>
                 </li>
@@ -473,374 +479,104 @@
     <main role="main" class="main-content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <!--<div class="col-12 mb-4">
-                  <h2 class="h5 page-title">Typography</h2>
-                  <p class="text-muted">This primitive is meant to make it easy to display both user-centric or activity-centric actions in your app. Sometimes it makes sense to even blend both in a single timeline, which works perfectly.</p>
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <div class="card shadow">
-                        <div class="card-header">
-                          <strong class="card-title">Heading</strong>
-                        </div>
-                        <div class="card-body">
-                          <p class="h1 mb-4">h1. Bootstrap heading</p>
-                          <p class="h2 mb-3">h2. Bootstrap heading</p>
-                          <p class="h3 mb-3">h3. Bootstrap heading</p>
-                          <p class="h4 mb-3">h4. Bootstrap heading</p>
-                          <p class="h5 mb-3">h5. Bootstrap heading</p>
-                          <p class="h6 mb-3">h6. Bootstrap heading</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <div class="card shadow">
-                        <div class="card-header">
-                          <strong class="card-title">Inline text elements</strong>
-                        </div>
-                        <div class="card-body">
-                          <p>You can use the mark tag to <mark>highlight</mark> text.</p>
-                          <p><del>This line of text is meant to be treated as deleted text.</del></p>
-                          <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
-                          <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
-                          <p><u>This line of text will render as underlined</u></p>
-                          <p><small>This line of text is meant to be treated as fine print.</small></p>
-                          <p><strong>This line rendered as bold text.</strong></p>
-                          <p><em>This line rendered as italicized text.</em></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                      <div class="card shadow">
-                        <div class="card-header">
-                          <strong class="card-title">Paragraph</strong>
-                        </div>
-                        <div class="card-body">
-                          <p>Lorem ipsum dolor sit amet, te dolores sapientem eos, nonumy civibus volutpat an vis. Vis vide definitiones mediocritatem te. Ad erant aperiri sit, eu eum alii tempor, stet evertitur assentior ei est. Omnis fuisset antiopam eu eum.</p>
-                          <p>Ex tale mutat duo, nostro propriae ei cum, modo fabellas nominati in eos. Bonorum deleniti percipitur sit ad, in pri prima meliore euripidis. Ne ancillae apeirian eam. Tollit virtute conceptam in eos. Qui quaeque delectus maluisset no, id nulla partem erroribus sed.</p>
-                          <p>Sea ut stet maluisset, an denique adolescens eam, vim ancillae mediocrem ad. Te quot virtute sea, vero blandit usu no. Dico utinam vituperata nam ad, ne est autem similique dissentias. Eum ne natum tempor cetero. Sit vero vocent interesset ea.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div> &lt;!&ndash; end section &ndash;&gt;
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <div class="mb-3"><strong>Blockquote</strong></div>
-                      <blockquote class="blockquote">
-                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                      </blockquote>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <div class="mb-3"><strong>Lead text</strong></div>
-                      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    </div>
-                  </div> &lt;!&ndash; end section &ndash;&gt;
-                  <div class="row">
-                    <div class="col-md-4 mb-4">
-                      <div class="card shadow">
-                        <div class="card-header">
-                          <strong class="card-title">Unordered List</strong>
-                        </div>
-                        <div class="card-body">
-                          <ul>
-                            <li>Lorem ipsum dolor sit amet</li>
-                            <li>Consectetur adipiscing elit</li>
-                            <li>Integer molestie lorem at massa</li>
-                            <li>Facilisis in pretium nisl aliquet</li>
-                            <li>Nulla volutpat aliquam velit <ul>
-                                <li>Phasellus iaculis neque</li>
-                                <li>Purus sodales ultricies</li>
-                                <li>Vestibulum laoreet porttitor sem</li>
-                                <li>Ac tristique libero volutpat at</li>
-                              </ul>
-                            </li>
-                            <li>Faucibus porta lacus fringilla vel</li>
-                            <li>Aenean sit amet erat nunc</li>
-                            <li>Eget porttitor lorem</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                      <div class="card shadow">
-                        <div class="card-header">
-                          <strong class="card-title">Ordered List</strong>
-                        </div>
-                        <div class="card-body">
-                          <ol>
-                            <li>Lorem ipsum dolor sit amet</li>
-                            <li>Consectetur adipiscing elit</li>
-                            <li>Integer molestie lorem at massa</li>
-                            <li>Facilisis in pretium nisl aliquet</li>
-                            <li>Nulla volutpat aliquam velit <ol>
-                                <li>Phasellus iaculis neque</li>
-                                <li>Purus sodales ultricies</li>
-                                <li>Vestibulum laoreet porttitor sem</li>
-                                <li>Ac tristique libero volutpat at</li>
-                              </ol>
-                            </li>
-                            <li>Faucibus porta lacus fringilla vel</li>
-                            <li>Aenean sit amet erat nunc</li>
-                            <li>Eget porttitor lorem</li>
-                          </ol>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                      <div class="card shadow">
-                        <div class="card-header">
-                          <strong class="card-title">Unstyled Lists</strong>
-                        </div>
-                        <div class="card-body">
-                          <ul class="list-unstyled">
-                            <li>Lorem ipsum dolor sit amet</li>
-                            <li>Consectetur adipiscing elit</li>
-                            <li>Integer molestie lorem at massa</li>
-                            <li>Facilisis in pretium nisl aliquet</li>
-                            <li>Nulla volutpat aliquam velit <ul>
-                                <li>Phasellus iaculis neque</li>
-                                <li>Purus sodales ultricies</li>
-                                <li>Vestibulum laoreet porttitor sem</li>
-                                <li>Ac tristique libero volutpat at</li>
-                              </ul>
-                            </li>
-                            <li>Faucibus porta lacus fringilla vel</li>
-                            <li>Aenean sit amet erat nunc</li>
-                            <li>Eget porttitor lorem</li>
-                            <li>Eget porttitor lorem</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div> &lt;!&ndash; end section &ndash;&gt;
-                </div>-->
-                <div class="col-12 mb-4">
+                <div class="col-12">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header">
-                                    <strong class="card-title"> Portfolio Details</strong>
-                                </div>
+                        <div class="col-md-12 my-4">
+                            <div class="card shadow">
                                 <div class="card-body">
-                                    <form>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyName">Property Name</label>
-                                                <input type="text" class="form-control" id="propertyName">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyType">Property Type</label>
-                                                <select id="propertyType" class="form-control">
-                                                    <option value="Complex Building" selected>Complex Building</option>
-                                                    <option value="Multi Story Building">Multi Story Building</option>
-                                                    <option value="Shopping Mall">Shopping Mall</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="date-input">Date of registration with NW</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control drgpicker" id="date-input"
-                                                           value="04/24/2020" aria-describedby="button-addon2">
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text" id="button-addon-date"><span
-                                                                class="fe fe-calendar fe-16"></span></div>
+                                    <h5 class="card-title">Payments List</h5>
+                                    <p class="card-text">Add .table-sm to make tables more compact by cutting cell
+                                        padding in half.</p>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="simple-select3">Filter By Compartment</label>
+                                                    <select class="form-control select2" id="simple-select3">
+                                                        <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                            <option value="AK">Alaska</option>
+                                                            <option value="HI">Hawaii</option>
+                                                        </optgroup>
+                                                        <optgroup label="Pacific Time Zone">
+                                                            <option value="CA">California</option>
+                                                            <option value="NV" disabled="disabled">Nevada (disabled)
+                                                            </option>
+                                                            <option value="OR">Oregon</option>
+                                                            <option value="WA">Washington</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="simple-select4">Filter By Lettable Space</label>
+                                                    <select class="form-control select2" id="simple-select4">
+                                                        <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                            <option value="AK">Alaska</option>
+                                                            <option value="HI">Hawaii</option>
+                                                        </optgroup>
+                                                        <optgroup label="Pacific Time Zone">
+                                                            <option value="CA">California</option>
+                                                            <option value="NV" disabled="disabled">Nevada (disabled)
+                                                            </option>
+                                                            <option value="OR">Oregon</option>
+                                                            <option value="WA">Washington</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="date-input1">Payment Date</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control drgpicker"
+                                                               id="date-input1" value="04/24/2020"
+                                                               aria-describedby="button-addon2">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text" id="button-addon-date"><span
+                                                                    class="fe fe-calendar fe-16"></span></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="assetValue">Property Value</label>
-                                                <input type="number" class="form-control" id="assetValue"
-                                                       placeholder="$0 000 000">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-12 mb-4">
-                                                <div class="card shadow">
-                                                    <div class="card-body">
-                                                        <div class="form-group mb-3">
-                                                            <label for="description">Description</label>
-                                                            <textarea class="form-control" id="description"
-                                                                      rows="4"></textarea>
-                                                        </div>
-                                                    </div> <!-- /.card-body -->
-                                                </div> <!-- /.card -->
-                                            </div> <!-- /.col -->
-                                        </div>
-                                    </form>
-                                </div> <!-- /. card-body -->
-                            </div> <!-- /. card -->
-                        </div> <!-- /. col -->
-                    </div> <!-- /. end-section -->
-                    <!--Address-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header">
-                                    <strong class="card-title">Property Address</strong>
-                                </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="propertyAddress">Address</label>
-                                            <input type="text" class="form-control" id="propertyAddress"
-                                                   placeholder="1234 Main St">
-                                        </div>
-                                        <!--<div class="form-group">
-                                          <label for="inputAddress2">Address 2</label>
-                                          <input type="text" class="form-control" id="inputAddress6" placeholder="Apartment, studio, or floor">
-                                        </div>-->
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyCity">City</label>
-                                                <input type="text" class="form-control" id="propertyCity">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="propertyCountry">Country</label>
-                                                <select id="propertyCountry" class="form-control">
-                                                    <option value="Zimbabwe" selected>Zimbabwe</option>
-                                                    <option value="Zimbabwe">Zimbabwe</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <label for="propertyZipCode">Zip</label>
-                                                <input type="text" class="form-control" id="propertyZipCode">
-                                            </div>
-                                        </div>
-                                        <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Contact Details</h5>
-                                        <p class="mb-4">Input property owner contact details </p>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="propertyEmail">Email</label>
-                                                <input type="email" class="form-control" id="propertyEmail">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyPhone">Phone</label>
-                                                <input type="text" class="form-control" id="propertyPhone">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyMobileNumber">Mobile Number</label>
-                                                <input type="text" class="form-control" id="propertyMobileNumber">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> <!-- /. card-body -->
-                            </div> <!-- /. card -->
-                        </div> <!-- /. col -->
-                    </div> <!-- /. end-section -->
-
-                    <!--Property Owner Details-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header">
-                                    <strong class="card-title">Contact Person Details</strong>
-                                </div>
-                                <div class="card-body">
-                                    <form id="_form">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="ownerFirstName">Firstname</label>
-                                                <input type="text" id="ownerFirstName" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="ownerLastName">Lastname</label>
-                                                <input type="text" id="ownerLastName" class="form-control">
-                                            </div>
-                                        </div>
-                                        <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Address</h5>
-                                        <p class="mb-4">Input Property Owner Address</p>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <div class="form-group">
-                                                    <label for="ownerAddress">Address</label>
-                                                    <input type="text" class="form-control" id="ownerAddress">
+                                                <div class="form-group col-md-3">
+                                                    <label for="create-payment">&nbsp;</label>
+                                                    <!-- Button trigger modal -->
+                                                    <button id="create-payment" type="button"
+                                                            class="btn form-control btn-outline-success"
+                                                            data-toggle="modal" data-target="#verticalModal"> create a
+                                                        payment
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label for="ownerZipCode">Zip code</label>
-                                                <input class="form-control input-zip" id="ownerZipCode">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="ownerCountry">Country</label>
-                                                <select id="ownerCountry" class="form-control">
-                                                    <option value="Zimbabwe" selected>Zimbabwe</option>
-                                                    <option value="Zimbabwe">Zimbabwe</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="ownerCity">City</label>
-                                                <select id="ownerCity" class="form-control">
-                                                    <option selected="">Choose state...</option>
-                                                    <option>...</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover table-sm">
+                                                <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <!--                              <th>ID #</th>-->
+                                                    <th>Reference #</th>
+                                                    <th>Company/Tenant</th>
+                                                    <th>Payment Method</th>
+                                                    <th>Invoice #</th>
+                                                    <th>Amount</th>
+<!--                                                    <th>View</th>-->
+                                                    <!--                              <th>Status</th>-->
+                                                </tr>
+                                                </thead>
+                                                <tbody id="t_body">
+
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Contact Details</h5>
-                                        <p class="mb-4">Input property owner contact details </p>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="ownerEmailAddress">Email</label>
-                                                <input type="email" class="form-control" id="ownerEmailAddress">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="ownerPhone">Phone</label>
-                                                <input type="text" class="form-control" id="ownerPhone">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="ownerCellNumber">Mobile Number</label>
-                                                <input type="text" class="form-control" id="ownerCellNumber">
-                                            </div>
-                                        </div>
-                                        <hr class="my-4">
-                                        <div class="form-row">
-                                            <div class="form-group col-sm-3">
-                                                <button type="button" class="btn mb-2 btn-outline-success"
-                                                        onclick="saveProperty()"><span class="fe fe-upload-cloud fe-16">Add Property</span>
-                                                </button> &nbsp;
-                                            </div>
-                                            <div class="form-group col-sm-9">
-                                                <div id="toast"
-                                                     class="toast align-items-center text-white bg-success-light border-0"
-                                                     role="alert" aria-live="assertive" aria-atomic="true">
-                                                    <div class="d-flex">
-                                                        <div class="toast-body">
-                                                            Property was added successfully
-                                                        </div>
-                                                        <button type="button"
-                                                                class="btn-close btn-close-white me-2 m-auto"
-                                                                data-bs-dismiss="toast" aria-label="Close"></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> <!-- /. card-body -->
-                            </div> <!-- /. card -->
-                        </div> <!-- /. col -->
-                    </div> <!-- /. end-section -->
-                </div><!-- .col-12 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
 
-        <!--success modal-->
-        <!-- Button trigger modal -->
-        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#successModal">
-            Launch demo modal
-        </button>-->
-
-        <!-- Modal -->
+        <!--success Modal -->
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -862,128 +598,258 @@
             </div>
         </div>
         <!---->
-        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
+
+        <!-- Modal -->
+        <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" data-backdrop="static"
+             aria-labelledby="verticalModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                        <h5 class="modal-title" id="verticalModalTitle">Create Payment</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="list-group list-group-flush my-n3">
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-box fe-24"></span>
+                        <p class="card-text">Enter the required details to create a payment record</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="simple-select33">Select Property</label>
+                                        <select class="form-control select2" id="simple-select33" oninput="setLettableSpaceDropdown()">
+                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                <option value="-1">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                            </optgroup>
+                                            <optgroup label="Pacific Time Zone">
+                                                <option value="CA">California</option>
+                                                <option value="NV" disabled="disabled">Nevada (disabled)
+                                                </option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
+                                            </optgroup>
+                                        </select>
                                     </div>
-                                    <div class="col">
-                                        <small><strong>Package has uploaded successfull</strong></small>
-                                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                                    <div class="form-group col-md-4">
+                                        <label for="simple-select44">Select Lettable Space</label>
+                                        <select class="form-control select2" id="simple-select44" >
+                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                <option value="AK">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                            </optgroup>
+                                            <optgroup label="Pacific Time Zone">
+                                                <option value="CA">California</option>
+                                                <option value="NV" disabled="disabled">Nevada (disabled)
+                                                </option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="simple-select55">Select Invoice</label>
+                                        <select class="form-control select2" id="simple-select55">
+                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                <option value="100">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                            </optgroup>
+                                            <optgroup label="Pacific Time Zone">
+                                                <option value="CA">California</option>
+                                                <option value="NV" disabled="disabled">Nevada (disabled)
+                                                </option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
+                                            </optgroup>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-download fe-24"></span>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="payment-method">Payment Method </label>
+                                        <select class="form-control select2" id="payment-method">
+                                            <option value="4">Cash</option>
+                                            <option value="5">Bank Transfer</option>
+                                            <option value="7">Bank Deposit</option>
+                                        </select>
                                     </div>
-                                    <div class="col">
-                                        <small><strong>Widgets are updated successfull</strong></small>
-                                        <div class="my-0 text-muted small">Just create new layout Index, form, table
+                                    <div class="form-group col-md-4">
+                                        <label for="simple-select444">Select Lettable Space</label>
+                                        <select class="form-control select2" id="simple-select444">
+                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                <option value="-1">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                            </optgroup>
+                                            <optgroup label="Pacific Time Zone">
+                                                <option value="CA">California</option>
+                                                <option value="NV" disabled="disabled">Nevada (disabled)
+                                                </option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="WA">Washington</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="date-input2">Payment Date</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control drgpicker"
+                                                   id="date-input2" value="04/24/2020"
+                                                   aria-describedby="button-addon2">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text" id="button-addon-date2"><span
+                                                        class="fe fe-calendar fe-16"></span></div>
+                                            </div>
                                         </div>
-                                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="reference">Reference Number</label>
+                                        <input class="form-control input" id="reference" type="text" name="reference"
+                                               placeholder="RF00000">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="amount">Amount Paid</label>
+                                        <input class="form-control input-money" id="amount" type="text" name="money"
+                                               placeholder="1,000,000">
                                     </div>
                                 </div>
                             </div>
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-inbox fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                        <small><strong>Notifications have been sent</strong></small>
-                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                                    </div>
-                                </div> <!-- / .row -->
-                            </div>
-                            <div class="list-group-item bg-transparent">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="fe fe-link fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                        <small><strong>Link was attached to menu</strong></small>
-                                        <div class="my-0 text-muted small">New layout has been attached to the menu
-                                        </div>
-                                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                                    </div>
-                                </div>
-                            </div> <!-- / .row -->
-                        </div> <!-- / .list-group -->
+                        </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
-                        </button>
+                        <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn mb-2 btn-primary" onclick="savePayment()">Save payment</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-             aria-labelledby="defaultModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
+            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
+                 aria-labelledby="defaultModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="list-group list-group-flush my-n3">
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-box fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Package has uploaded successfull</strong></small>
+                                            <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                                            <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-download fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Widgets are updated successfull</strong></small>
+                                            <div class="my-0 text-muted small">Just create new layout Index, form, table
+                                            </div>
+                                            <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-inbox fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Notifications have been sent</strong></small>
+                                            <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo
+                                            </div>
+                                            <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                                        </div>
+                                    </div> <!-- / .row -->
+                                </div>
+                                <div class="list-group-item bg-transparent">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="fe fe-link fe-24"></span>
+                                        </div>
+                                        <div class="col">
+                                            <small><strong>Link was attached to menu</strong></small>
+                                            <div class="my-0 text-muted small">New layout has been attached to the menu
+                                            </div>
+                                            <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                                        </div>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div> <!-- / .list-group -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
+                            </button>
+                        </div>
                     </div>
-                    <div class="modal-body px-5">
-                        <div class="row align-items-center">
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-success justify-content-center">
-                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Control area</p>
-                            </div>
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                                </div>
-                                <p>Activity</p>
-                            </div>
+                </div>
+            </div>
+            <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
+                 aria-labelledby="defaultModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="row align-items-center">
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                        <div class="modal-body px-5">
+                            <div class="row align-items-center">
+                                <div class="col-6 text-center">
+                                    <div class="squircle bg-success justify-content-center">
+                                        <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                                    </div>
+                                    <p>Control area</p>
                                 </div>
-                                <p>Droplet</p>
+                                <div class="col-6 text-center">
+                                    <div class="squircle bg-primary justify-content-center">
+                                        <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                                    </div>
+                                    <p>Activity</p>
+                                </div>
                             </div>
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                            <div class="row align-items-center">
+                                <div class="col-6 text-center">
+                                    <div class="squircle bg-primary justify-content-center">
+                                        <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                                    </div>
+                                    <p>Droplet</p>
                                 </div>
-                                <p>Upload</p>
+                                <div class="col-6 text-center">
+                                    <div class="squircle bg-primary justify-content-center">
+                                        <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                                    </div>
+                                    <p>Upload</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                            <div class="row align-items-center">
+                                <div class="col-6 text-center">
+                                    <div class="squircle bg-primary justify-content-center">
+                                        <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                                    </div>
+                                    <p>Users</p>
                                 </div>
-                                <p>Users</p>
-                            </div>
-                            <div class="col-6 text-center">
-                                <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                                <div class="col-6 text-center">
+                                    <div class="squircle bg-primary justify-content-center">
+                                        <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                                    </div>
+                                    <p>Settings</p>
                                 </div>
-                                <p>Settings</p>
                             </div>
                         </div>
                     </div>
@@ -1001,8 +867,211 @@
 <script src='../../js/jquery.stickOnScroll.js'></script>
 <script src="../../js/tinycolor-min.js"></script>
 <script src="../../js/config.js"></script>
+<script src='../../js/jquery.mask.min.js'></script>
+<script src='../../js/select2.min.js'></script>
+<script src='../../js/jquery.steps.min.js'></script>
+<script src='../../js/jquery.validate.min.js'></script>
+<script src='../../js/jquery.timepicker.js'></script>
+<script src='../../js/dropzone.min.js'></script>
+<script src='../../js/uppy.min.js'></script>
+<script src='../../js/quill.min.js'></script>
+<script src='../../js/customPayment.js'></script>
+
+<script>
+    $('.select2').select2(
+        {
+            theme: 'bootstrap4',
+        });
+    $('.select2-multi').select2(
+        {
+            multiple: true,
+            theme: 'bootstrap4',
+        });
+    $('.drgpicker').daterangepicker(
+        {
+            singleDatePicker: true,
+            timePicker: false,
+            showDropdowns: true,
+            locale:
+                {
+                    format: 'MM/DD/YYYY'
+                }
+        });
+    $('.time-input').timepicker(
+        {
+            'scrollDefault': 'now',
+            'zindex': '9999' /* fix modal open */
+        });
+    /** date range picker */
+    if ($('.datetimes').length) {
+        $('.datetimes').daterangepicker(
+            {
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale:
+                    {
+                        format: 'M/DD hh:mm A'
+                    }
+            });
+    }
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker(
+        {
+            startDate: start,
+            endDate: end,
+            ranges:
+                {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+        }, cb);
+    cb(start, end);
+    $('.input-placeholder').mask("00/00/0000",
+        {
+            placeholder: "__/__/____"
+        });
+    $('.input-zip').mask('00000-000',
+        {
+            placeholder: "____-___"
+        });
+    $('.input-money').mask("#,##0.00",
+        {
+            reverse: true
+        });
+    $('.input-phoneus').mask('(000) 000-0000');
+    $('.input-mixed').mask('AAA 000-S0S');
+    $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+        {
+            translation:
+                {
+                    'Z':
+                        {
+                            pattern: /[0-9]/,
+                            optional: true
+                        }
+                },
+            placeholder: "___.___.___.___"
+        });
+    // editor
+    var editor = document.getElementById('editor');
+    if (editor) {
+        var toolbarOptions = [
+            [
+                {
+                    'font': []
+                }],
+            [
+                {
+                    'header': [1, 2, 3, 4, 5, 6, false]
+                }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [
+                {
+                    'header': 1
+                },
+                {
+                    'header': 2
+                }],
+            [
+                {
+                    'list': 'ordered'
+                },
+                {
+                    'list': 'bullet'
+                }],
+            [
+                {
+                    'script': 'sub'
+                },
+                {
+                    'script': 'super'
+                }],
+            [
+                {
+                    'indent': '-1'
+                },
+                {
+                    'indent': '+1'
+                }], // outdent/indent
+            [
+                {
+                    'direction': 'rtl'
+                }], // text direction
+            [
+                {
+                    'color': []
+                },
+                {
+                    'background': []
+                }], // dropdown with defaults from theme
+            [
+                {
+                    'align': []
+                }],
+            ['clean'] // remove formatting button
+        ];
+        var quill = new Quill(editor,
+            {
+                modules:
+                    {
+                        toolbar: toolbarOptions
+                    },
+                theme: 'snow'
+            });
+    }
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+<script>
+    var uptarg = document.getElementById('drag-drop-area');
+    if (uptarg) {
+        var uppy = Uppy.Core().use(Uppy.Dashboard,
+            {
+                inline: true,
+                target: uptarg,
+                proudlyDisplayPoweredByUppy: false,
+                theme: 'dark',
+                width: 770,
+                height: 210,
+                plugins: ['Webcam']
+            }).use(Uppy.Tus,
+            {
+                endpoint: 'https://master.tus.io/files/'
+            });
+        uppy.on('complete', (result) => {
+            console.log('Upload complete! We’ve uploaded these files:', result.successful)
+        });
+    }
+</script>
 <script src="../../js/apps.js"></script>
-<script src="../../js/custom.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
