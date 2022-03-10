@@ -119,6 +119,9 @@
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
+              </li>
                 <!--                <li class="nav-item">-->
                 <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
                 <!--                </li>-->
@@ -400,15 +403,19 @@
                             <td >12/10/2022</td>
                             <td><span class="badge badge-danger">Pending</span></td>
                             <td><a href="./view_tenantDocuments.html">View</a></td>
-                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted sr-only">Action</span>
+                            <td>
+                              <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                                      data-toggle="dropdown" aria-haspopup="true"
+                                      aria-expanded="false">
+                                  <span class="text-muted sr-only">Action</span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item"  href="#">Update</a>
-                                <a class="dropdown-item"  href="#">Delete</a>
-                               
+                                  <a class="dropdown-item" data-toggle="modal"
+                                     data-target="#varyModal" data-whatever="@mdo"
+                                     href="#">Genarate Acceptance Document</a>
+      
                               </div>
-                            </td>
+                          </td>
                           </tr>
                         </tbody>
                       </table>
@@ -419,7 +426,134 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+        <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="varyModalLabel">Genarate</h5>
+                   <a href="tenant_documents.html">
+                       <button type="button" class="btn-close" data-bs-dismiss="modal"
+                               aria-label="Close"></button>
+                   </a>
+               </div>
+               <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row ">
+                      <div class="col-12">
+                          <h2 class="page-title">Generate Document</h2>
+                                      <div class="card-body">
+                                        <form>
+                                          <div class="form-group">
+                                            <label for="companyName" class="col-form-label">Company Name:</label>
+                                            <input type="text" class="form-control" id="companyName">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="addressLine1" class="col-form-label">Address Line 1:</label>
+                                            <input type="text" class="form-control" id="addressLine1">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="addressLine2" class="col-form-label">Address Line 2:</label>
+                                            <input type="text" class="form-control" id="addressLine2">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="addressLine3" class="col-form-label">Address Line 3:</label>
+                                            <input type="text" class="form-control" id="addressLine3">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="shop_size" class="col-form-label">Shop Size:</label>
+                                            <input type="text" class="form-control" id="shop_size">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="rent" class="col-form-label">Rent:</label>
+                                            <input type="text" class="form-control" id="rent">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="deposit_fee" class="col-form-label">Deposit Fee:</label>
+                                            <input type="text" class="form-control" id="deposit_fee">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="operation_cost" class="col-form-label">Operation Cost:</label>
+                                            <input type="text" class="form-control" id="operation_cost">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="lease_term" class="col-form-label">Lease Term:</label>
+                                            <input type="text" class="form-control" id="lease_term">
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="fit_out_period" class="col-form-label">Fit Out Period:</label>
+                                            <input type="text" class="form-control" id="fit_out_period">
+                                          </div>
+                                   
+                                         
+                                        </form>
+                                          </div>
+                   </div>
+               </div>
+               <div class="modal-footer d-flex justify-content-center">
+                   <!--                            <a href="request.html" >-->
+                   <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                   <!--                            </a>-->
+                   <a href="tenant_documents.html">
+                       <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+                               class="btn mb-2 btn-success" aria-label="Close">OK
+                       </button>
+                   </a>
+                   <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                   </button>
+                   <button class="btn btn-primary " type="submit" onclick="saveReplyDetails()"
+                   data-bs-toggle="modal"
+                   data-bs-target="#exampleModal" id="btnSubmit">
+                   Save
+                  
+                 </button>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="modal fade" id="exampleModal" tabindex="-1"
+   aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+   data-bs-keyboard="false">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Save Record Dialog</h5>
+              <a href="lease_documents.html">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+              </a>
+          </div>
+          <div class="modal-body">
+              <div class="alert alert-info" role="alert" id="alerrt">
+                  <div id="liveAlertPlaceholder">
+                      <button id="ldID" style="background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                          Saving ...
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
 
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
+                      style="display: none">Edit & Retry
+              </button>
+              <a href="lease_documents.html">
+
+                  <button type="button" class="btn btn-success"
+                          data-bs-dismiss="modal" id="Close"
+                  >Ok
+                  </button>
+              </a>
+
+          </div>
+      </div>
+  </div>
+</div>
+<div style="display: none">
+  <input type="text" name="phone" id="phone" style="display: none">
+  <input type="text" name="email" id="email" style="display: none">
+</div>
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -550,7 +684,7 @@
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/simplebar.min.js"></script>
-    
+    <script src="../../js/customreply.js"></script>
     <script src='../../js/daterangepicker.js'></script>
     <script src='../../js/jquery.stickOnScroll.js'></script>
     <script src="../../js/tinycolor-min.js"></script>

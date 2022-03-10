@@ -4,23 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-
-
 import com.cicosy.tenant_management.controler.document_management.exception.FileNotFoundException;
-import com.cicosy.tenant_management.controler.document_management.exception.FileStorageException;
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
-
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import org.springframework.transaction.annotation.Transactional;
 
 

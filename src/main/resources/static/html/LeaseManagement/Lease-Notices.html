@@ -14,8 +14,11 @@
           rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="../../css/feather.css">
+    <link rel="stylesheet" href="../../css/customlease.css">
     <link rel="stylesheet" href="../../css/all.css">
+ <!--   <link rel="stylesheet" href="../../css/bootstrap.min.css">-->
     <!--<link rel="stylesheet" href="../../css/fontawesome.css">-->
+    <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
@@ -102,24 +105,20 @@
             </p>
             <ul class="navbar-nav flex-fill w-100 mb-2">
                 <li class="nav-item dropdown">
-                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
-                       class="dropdown-toggle nav-link">
+                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-box fe-16"></i>
-                        <span class="ml-3 item-text">Property Management</span>
+                        <span class="ml-3 item-text">Property Portfolio</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span
-                                    class="ml-1 item-text">Properties</span>
+                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span
-                                    class="ml-1 item-text">Add Property</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span
-                                    class="ml-1 item-text">Add Compartment</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Lettable Space</span></a>
                         </li>
 
                     </ul>
@@ -152,7 +151,7 @@
                 <li class="nav-item dropdown">
                     <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-grid fe-16"></i>
-                        <span class="ml-3 item-text">Lease Management</span>
+                        <span class="ml-3 item-text">Leasing</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                         <li class="nav-item">
@@ -233,39 +232,52 @@
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
-                                    <div class="container-fluid">
-                                        <div class="form-row d-flex justify-content-end">
-                                            <div class="form-group  " style="width: 120px;">
-                                                <div class="d-flex justify-content-center"><label
-                                                        style="font-weight:bold;" for="adjT">Adjust Time</label></div>
-                                                <div class="d-flex justify-content-center">
-                                                    <input class="form-control" style="width: 60%" id="adjT"
-                                                           oninput="getLeaseNotice()" type="number" name="number"
-                                                           value="30" min="0">
-                                                </div>
-                                            </div>
-                                            <div class="form-group  ">
-                                                <div style="padding-left: 10px">
+                                    <div>
+                                        <div class="form-row Customtopnav" style="margin-right: 0!important;margin-left:0!important;">
+
+                                            <div class="form-group d-flex justify-content-start">
+                                                <div class="form-group  " style="width: 120px;">
                                                     <div class="d-flex justify-content-center"><label
-                                                            style="font-weight: bold;" for="opt"> Unit :</label></div>
-                                                    <select class="form-control" oninput="getLeaseNotice()" id="opt">
+                                                            style="font-weight:bold;" for="adjT">Adjust Time</label>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <input class="form-control" style="width: 60%" id="adjT"
+                                                               oninput="getLeaseNotice()" type="number" name="number"
+                                                               value="30" min="0">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group  ">
+                                                    <div style="padding-left: 10px">
+                                                        <div class="d-flex justify-content-center"><label
+                                                                style="font-weight: bold;" for="opt"> Unit :</label>
+                                                        </div>
+                                                        <select class="form-control" oninput="getLeaseNotice()"
+                                                                id="opt">
 
-                                                        <option value="day" selected>Days</option>
-                                                        <option value="month">Months</option>
-                                                        <option value="year">Years</option>
-                                                    </select>
+                                                            <option value="day" selected>Days</option>
+                                                            <option value="month">Months</option>
+                                                            <option value="year">Years</option>
+                                                        </select>
+
+                                                    </div>
 
                                                 </div>
 
+                                            </div>
+                                            <div class="form-group" style="margin-left: auto!important;">
+                                                <div>
+                                                    <input type="text" id="searchbox" name="search"
+                                                           placeholder="Search.." onkeyup="ChangeIconAndSearch2()">
+                                                </div>
                                             </div>
                                         </div>
 
                                     </div>
 
                                     <!-- table -->
-                                    <table class="table datatables table-hover border-v" id="dataTable-1">
+                                    <table class="table dataTables table-hover" id="dataTable" style="width:100%!important;">
                                         <thead class="thead-dark">
-                                        <tr role="row">
+                                        <tr>
 
                                             <th>ID</th>
                                             <th>Name</th>
@@ -273,46 +285,19 @@
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Status</th>
-                                            <th>Time Left</th>
+                                            <th>Days Left</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody id="t_body">
-                                        <tr >
-
-                                            <td>1</td>
-                                            <td>Imani Lara</td>
-                                            <td>Joina City, Harare</td>
-                                            <td>Jun 8, 2019</td>
-                                            <td>Jun 8, 2020</td>
-                                            <td>Active</td>
-                                            <td>
-                                                <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                         style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                                <br>
-                                                <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar bg-danger" role="progressbar"
-                                                         style="width: 20%" aria-valuenow="100" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                                <br>
-                                                <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar bg-info" role="progressbar"
-                                                         style="width: 40%" aria-valuenow="100" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#"><span data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                                  class="badge badge-pill badge-success">Notify</span></a>
-                                            </td>
-                                        </tr>
 
                                         </tbody>
+
                                     </table>
+
+
+
+                                    <!-- table -->
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                          aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -343,7 +328,8 @@
                                                                            aria-controls="pills-home2"
                                                                            aria-selected="true"><span
                                                                                 class="fe fe-16 fe-mail"
-                                                                                style="font-size: 25px;color: darkred" onclick="showEmailfooter()"></span></a>
+                                                                                style="font-size: 25px;color: darkred"
+                                                                                onclick="showEmailfooter()"></span></a>
                                                                     </li>
                                                                     <li class="nav-item">
                                                                         <a class="nav-link px-3" id="pills-profile-tab2"
@@ -351,7 +337,8 @@
                                                                            role="tab" aria-controls="pills-profile2"
                                                                            aria-selected="false"><span
                                                                                 class="fe fe-16 fe-phone"
-                                                                                style="font-size: 25px;color: darkgreen" onclick="showPhonefooter()"></span></a>
+                                                                                style="font-size: 25px;color: darkgreen"
+                                                                                onclick="showPhonefooter()"></span></a>
                                                                     </li>
                                                                     <li class="nav-item" style="display: none">
                                                                         <a class="nav-link px-3" id="pills-contact-tab2"
@@ -372,14 +359,43 @@
                                                                             <div class="card-body"
                                                                                  style="padding-top: 10px;padding-bottom: 10px;">
                                                                                 <div id="liveAlertPlaceholderEmail"></div>
-                                                                                <div style="width: 100%">
+                                                                                <div id="mailSentToast" class="mt-3" style="display: none">
+                                                                                    <div class="toast-body alert alert-success" >
+                                                                                        Mail Sent Sucessfully<span class="fe fe-12 fe-check ml-3" ></span>
+                                                                                    </div>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="./Lease-Notices.html">
+                                                                                            <button type="button" class="btn btn-success"
+                                                                                                    data-bs-dismiss="modal" id="Close2">
+                                                                                                Ok
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="mailNotSentToast" class="mt-3" style="display: none">
+
+                                                                                    <div class="toast-body alert alert-danger" id="mailunsent" >
+                                                                                       Failed ,  Mail Sending Failed, Close & Try Again <span class="fe fe-12 fe-alert-triangle ml-3" ></span>
+                                                                                    </div>
+                                                                                    <!--<div class="d-flex justify-content-center">
+                                                                                        <a href="./Lease-Notices.html">
+                                                                                            <button type="button" class="btn btn-success"
+                                                                                                    data-bs-dismiss="modal" id="Close4">
+                                                                                                Ok
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>-->
+                                                                                </div>
+                                                                                <div style="width: 100%" id="mailform">
                                                                                     <div class="d-flex justify-content-center">
 
-                                                                                           <h5><label>ID = <span id="tID"> 23</span></label></h5>
+                                                                                        <h5><label>ID = <span id="tID"> 23</span></label>
+                                                                                        </h5>
                                                                                     </div>
                                                                                     <div class="row mb-3">
                                                                                         <div class="col-md-4 col-sm-6">
-                                                                                            <label for="tName"><h5>Name</h5></label>
+                                                                                            <label for="tName"><h5>
+                                                                                                Name</h5></label>
                                                                                         </div>
                                                                                         <div class="col-md-6 col-sm-6 one">
                                                                                             <input type="text"
@@ -389,7 +405,8 @@
                                                                                     </div>
                                                                                     <div class="row mb-3">
                                                                                         <div class="col-md-4 col-sm-6 ">
-                                                                                            <label for="T_email"><h5>Email</h5></label>
+                                                                                            <label for="T_email"><h5>
+                                                                                                Email</h5></label>
                                                                                         </div>
                                                                                         <div class="col-md-6 col-sm-6 one">
                                                                                             <input type="email"
@@ -399,7 +416,8 @@
                                                                                     </div>
                                                                                     <div class="row mb-3">
                                                                                         <div class="col-md-4 col-sm-6">
-                                                                                            <label for="subject"><h5>Subject</h5></label>
+                                                                                            <label for="subject"><h5>
+                                                                                                Subject</h5></label>
                                                                                         </div>
                                                                                         <div class="col-md-6 col-sm-6 one">
                                                                                             <input type="text"
@@ -433,6 +451,7 @@ nulla assumenda shoreditch et.
                                                                                         </textarea>
                                                                                     </div>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -440,44 +459,59 @@ nulla assumenda shoreditch et.
                                                                          role="tabpanel"
                                                                          aria-labelledby="pills-profile-tab2">
                                                                         <div class="card">
-                                                                        <div style="width: 100%" class="card-body">
-                                                                            <div class="d-flex justify-content-center">
-                                                                               <h5> <label>ID =<span id="tID2"> 23</span></label></h5>
-                                                                            </div>
-                                                                            <div class="row mb-3">
-                                                                                <div class="col-md-4 col-sm-6">
-                                                                                    <label for="tName2"><h5>Name</h5></label>
+                                                                            <div style="width: 100%" class="card-body">
+                                                                                <div class="d-flex justify-content-center">
+                                                                                    <h5><label>ID =<span
+                                                                                            id="tID2"> 23</span></label>
+                                                                                    </h5>
                                                                                 </div>
-                                                                                <div class="col-md-6 col-sm-6 one">
-                                                                                    <input type="text"
-                                                                                           style="width: 100%;"
-                                                                                           id="tName2" disabled>
+                                                                                <div class="row mb-3">
+                                                                                    <div class="col-md-4 col-sm-6">
+                                                                                        <label for="tName2"><h5>
+                                                                                            Name</h5></label>
+                                                                                    </div>
+                                                                                    <div class="col-md-6 col-sm-6 one">
+                                                                                        <input type="text"
+                                                                                               style="width: 100%;"
+                                                                                               id="tName2" disabled>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="row mb-3">
-                                                                                <div class="col-md-4 col-sm-6 ">
-                                                                                    <label for="phone"><h5>Phone</h5></label>
+                                                                                <div class="row mb-3">
+                                                                                    <div class="col-md-4 col-sm-6 ">
+                                                                                        <label for="phone"><h5>
+                                                                                            Phone</h5></label>
+                                                                                    </div>
+                                                                                    <div class="col-md-6 col-sm-6 one">
+                                                                                        <input type="phone"
+                                                                                               style="width: 100%;"
+                                                                                               id="phone">
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="col-md-6 col-sm-6 one">
-                                                                                    <input type="phone"
-                                                                                           style="width: 100%;"
-                                                                                           id="phone">
-                                                                                </div>
-                                                                            </div>
 
-                                                                            <div style="width:100%;"
-                                                                                 class="  d-flex justify-content-center">
-                                                                                <div style="padding-top: 20px">
-                                                                                    <div class="p-3"><a href="#" onclick="call()"><i style="font-size:50px" class="fe fe-24 fe-phone-call"></i></a></div>
+                                                                                <div style="width:100%;"
+                                                                                     class="  d-flex justify-content-center">
+                                                                                    <div style="padding-top: 20px">
+                                                                                        <div class="p-3"><a href="#"
+                                                                                                            onclick="call()"><i
+                                                                                                style="font-size:50px"
+                                                                                                class="fe fe-24 fe-phone-call"></i></a>
+                                                                                        </div>
 
-                                                                                   <h6> <span class="small text-muted"><span class="mls"> Click  To <span class="circle" style="background: none;border: none"> <i class="fe fe-24 fe-chevrons-up"></i> </span>  Make the Call Using PC</span></span></h6>
-                                                                                    <span class="pulse" style="display: none"></span>
-                                                                                    <!--<span class="fe fe-24 fe-chevrons-up"></span>-->
+                                                                                        <h6><span
+                                                                                                class="small text-muted"><span
+                                                                                                class="mls"> Click  To <span
+                                                                                                class="circle"
+                                                                                                style="background: none;border: none"> <i
+                                                                                                class="fe fe-24 fe-chevrons-up"></i> </span>  Make the Call Using PC</span></span>
+                                                                                        </h6>
+                                                                                        <span class="pulse"
+                                                                                              style="display: none"></span>
+                                                                                        <!--<span class="fe fe-24 fe-chevrons-up"></span>-->
 
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
                                                                     </div>
                                                                     <div class="tab-pane fade" id="pills-contact2"
                                                                          role="tabpanel"
@@ -497,95 +531,30 @@ nulla assumenda shoreditch et.
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer d-flex justify-content-center">
-<div id="phonefooter" style="display: none">
-    <a href="Lease-Notices.html">
-        <button type="button" class="btn btn-success"
-                data-bs-dismiss="modal" id="Close">
-            Done
-        </button>
-    </a>
-</div>
-<div id="emailfooter">
-                                                    <a href="Lease-Notices.html">
-                                                        <button type="button" class="btn btn-success"
-                                                                data-bs-dismiss="modal" id="Close"
-                                                                style="display: none">Ok
+                                                    <div id="phonefooter" style="display: none">
+                                                        <a href="Lease-Notices.html">
+                                                            <button type="button" class="btn btn-success"
+                                                                    data-bs-dismiss="modal" id="Close">
+                                                                Done
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div id="emailfooter">
+                                                        <a href="Lease-Notices.html">
+                                                            <button type="button" class="btn btn-success"
+                                                                    data-bs-dismiss="modal" id="Close3"
+                                                                    style="display: none">Ok
+                                                            </button>
+                                                        </a>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
                                                         </button>
-                                                    </a>
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
-                                                    </button>
-                                                    <button type="button" id="liveAlertBtn" class="btn btn-primary"
-                                                            onclick="SendMail()">Send <i class="fe fe-20 fe-navigation"></i>
-                                                    </button>
-</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade" id="renewal" tabindex="-1"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true"
-                                         data-bs-backdrop="static"
-                                         data-bs-keyboard="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Renewal
-                                                        Dialog</h5>
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </a>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="alert alert-info" role="alert" id="alerrt">
-                                                        <div id="liveAlertPlaceholder2"></div>
-                                                        <div id="renewalInfo">
-                                                            <div class="form-group col-md-12">
-                                                                <label for="id2">ID = </label>
-                                                                <label id="id2"></label>
-                                                                <div class="valid-feedback"></div>
-
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="TenantName2">Tenant Name:</label>
-                                                                <input type="text" class="form-control" id="TenantName2"
-                                                                       disabled>
-                                                                <div class="valid-feedback"></div>
-
-                                                            </div>
-                                                            <div class="form-group col-md-12 mb-3">
-                                                                <label for="startDate2">Start Date</label>
-                                                                <input class="form-control" id="startDate2" type="date"
-                                                                       name="startDate"
-                                                                       required>
-                                                            </div>
-                                                            <div class="form-group col-md-12 mb-3">
-                                                                <label for="duration2">Duration :</label>
-                                                                <input class="form-control" id="duration2" type="number"
-                                                                       name="duration"
-                                                                       required>
-                                                            </div>
-                                                        </div>
+                                                        <button type="button" id="liveAlertBtn" class="btn btn-primary"
+                                                                onclick="SendMail()">Send <i
+                                                                class="fe fe-20 fe-navigation"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal" id="Close2"
-                                                                style="display: none">OK
-                                                        </button>
-                                                    </a>
-
-                                                    <button id="liveAlertBtn2" class="btn btn-primary"
-                                                            onclick="renewlease()">
-                                                        Submit Renewal
-                                                    </button>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -748,14 +717,17 @@ nulla assumenda shoreditch et.
     * {
         box-sizing: border-box;
     }
-.p-3 a,.p-3 a:hover {
-    text-decoration: none;
-}
-.p-3 a:hover {
-color : darkgreen;
-}
+
+    .p-3 a, .p-3 a:hover {
+        text-decoration: none;
+    }
+
+    .p-3 a:hover {
+        color: darkgreen;
+    }
+
     .circle {
-        background-color:#fff;
+        background-color: #fff;
         height: 40px;
         width: 30px;
         display: block;
@@ -764,21 +736,22 @@ color : darkgreen;
         position: absolute;
         bottom: 0;
         z-index: 1;
-        animation-name:circle;
-        animation-duration:1s;
-        animation-timing-function:linear;
-        animation-delay:0s;
-        animation-iteration-count:infinite;
-        animation-direction:normal;
-        animation-play-state:running;
-        -webkit-animation-name:circle;
-        -webkit-animation-duration:1s;
-        -webkit-animation-timing-function:linear;
-        -webkit-animation-delay:0s;
-        -webkit-animation-iteration-count:infinite;
-        -webkit-animation-direction:normal;
-        -webkit-animation-play-state:running;
+        animation-name: circle;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-play-state: running;
+        -webkit-animation-name: circle;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-delay: 0s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        -webkit-animation-play-state: running;
     }
+
     .circle .fe {
         font-size: 30px;
         color: #00baff;
@@ -786,21 +759,22 @@ color : darkgreen;
         position: absolute;
         left: 50%;
         /*margin-left: -18px;*/
-        animation-name:arrow;
-        animation-duration:1s;
-        animation-timing-function:linear;
-        animation-delay:0s;
-        animation-iteration-count:infinite;
-        animation-direction:normal;
-        animation-play-state:running;
-        -webkit-animation-name:arrow;
-        -webkit-animation-duration:1s;
-        -webkit-animation-timing-function:linear;
-        -webkit-animation-delay:0s;
-        -webkit-animation-iteration-count:infinite;
-        -webkit-animation-direction:normal;
-        -webkit-animation-play-state:running;
+        animation-name: arrow;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-play-state: running;
+        -webkit-animation-name: arrow;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-delay: 0s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        -webkit-animation-play-state: running;
     }
+
     .pulse {
         margin: 0 auto;
         border-radius: 100px;
@@ -823,49 +797,117 @@ color : darkgreen;
         -moz-animation: pulse 1s linear infinite 0.3s;
         border-image: initial;
     }
-    @keyframes arrow
-    {
-        0%   {bottom:0;}
-        75% {bottom:30px;}
-        100% {bottom:0;}
+
+    @keyframes arrow {
+        0% {
+            bottom: 0;
+        }
+        75% {
+            bottom: 30px;
+        }
+        100% {
+            bottom: 0;
+        }
     }
-    @-webkit-keyframes arrow
-    {
-        0%   {bottom:0;}
-        75% {bottom:30px;}
-        100% {bottom:0;}
+
+    @-webkit-keyframes arrow {
+        0% {
+            bottom: 0;
+        }
+        75% {
+            bottom: 30px;
+        }
+        100% {
+            bottom: 0;
+        }
     }
-    @keyframes circle
-    {
-        0%   {height:10px;}
-        10% {height: 10px;}
-        50% {height: 20px;}
-        75% {height: 30px;}
-        90% {height: 35px;}
-        100% {height: 30px;}
+
+    @keyframes circle {
+        0% {
+            height: 10px;
+        }
+        10% {
+            height: 10px;
+        }
+        50% {
+            height: 20px;
+        }
+        75% {
+            height: 30px;
+        }
+        90% {
+            height: 35px;
+        }
+        100% {
+            height: 30px;
+        }
     }
-    @-webkit-keyframes circle
-    {
-        0%   {height:10px;}
-        10% {height: 10px;}
-        50% {height: 20px;}
-        75% {height: 30px;}
-        90% {height: 35px;}
-        100% {height: 30px;}
+
+    @-webkit-keyframes circle {
+        0% {
+            height: 10px;
+        }
+        10% {
+            height: 10px;
+        }
+        50% {
+            height: 20px;
+        }
+        75% {
+            height: 30px;
+        }
+        90% {
+            height: 35px;
+        }
+        100% {
+            height: 30px;
+        }
     }
+
     @-webkit-keyframes pulse {
-        0% {-webkit-transform: scale(0); opacity: 0;}
-        8% {-webkit-transform: scale(0); opacity: 0;}
-        15% {-webkit-transform: scale(0.1); opacity: 1;}
-        30% {-webkit-transform: scale(0.5); opacity: 1;}
-        100% {opacity: 0; -webkit-transform: scale(1.5);}
+        0% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        8% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        15% {
+            -webkit-transform: scale(0.1);
+            opacity: 1;
+        }
+        30% {
+            -webkit-transform: scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: scale(1.5);
+        }
     }
+
     @-moz-keyframes pulse {
-        0% {-webkit-transform: scale(0); opacity: 0;}
-        8% {-webkit-transform: scale(0); opacity: 0;}
-        15% {-webkit-transform: scale(0.1); opacity: 1;}
-        30% {-webkit-transform: scale(0.5); opacity: 1;}
-        100% {opacity: 0; -webkit-transform: scale(1.5);}
+        0% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        8% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        15% {
+            -webkit-transform: scale(0.1);
+            opacity: 1;
+        }
+        30% {
+            -webkit-transform: scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: scale(1.5);
+        }
     }
 </style>
 <script src="../../js/jquery.min.js"></script>
@@ -881,13 +923,25 @@ color : darkgreen;
 <script src="../../js/custom.js"></script>
 <script src="../../js/customlease.js"></script>
 <script src='../../js/bootstrap.bundle.min.js'></script>
-<script src="../../js/dataTables.bootstrap4.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>-->
+<!--<script src="../../js/dataTables.bootstrap4.min.js"></script>
+<script src='../../js/jquery.dataTables.min.js'></script>-->
 <script src="../../js/email.min.js"></script>
 <script type="text/javascript">
-(function() {
-emailjs.init("D-bkYkdt8KPF0Wdop");
-})();
+    (function () {
+        emailjs.init("D-bkYkdt8KPF0Wdop");
+    })();
 </script>
+<!--<script>
+    $('#dataTable').DataTable(
+        {
+            autoWidth: true,
+            "lengthMenu": [
+                [16, 32, 64, -1],
+                [16, 32, 64, "All"]
+            ]
+        });
+</script>-->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
@@ -902,3 +956,8 @@ emailjs.init("D-bkYkdt8KPF0Wdop");
 </script>
 </body>
 </html>
+
+
+
+
+
