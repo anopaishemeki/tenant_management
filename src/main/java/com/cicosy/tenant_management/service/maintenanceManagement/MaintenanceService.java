@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.service.maintenanceManagement;
 
 import com.cicosy.tenant_management.model.maintenanceManagement.AttendedRequest;
 import com.cicosy.tenant_management.model.maintenanceManagement.MaintenanceRequests;
+import com.cicosy.tenant_management.model.maintenanceManagement.Schedule;
 import com.cicosy.tenant_management.repository.maintenaceManagement.AttendedRequestRepo;
 import com.cicosy.tenant_management.repository.maintenaceManagement.MaintenanceRepo;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,9 @@ public class MaintenanceService {
             } else {
                 maintenanceRequests.setStatus("Pending");
             }
+
+
+
         }
 
     }
@@ -58,6 +62,8 @@ public class MaintenanceService {
         setStatus();
         return maintenanceRepo.findByScheduleNotNull();
     }
+
+
 
 
     public MaintenanceRequests getMaintenanceRequestsById(long Id) throws Exception {

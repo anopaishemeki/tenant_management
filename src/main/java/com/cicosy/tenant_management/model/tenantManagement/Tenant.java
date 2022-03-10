@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Tenant {
     @Id
 

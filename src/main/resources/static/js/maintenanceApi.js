@@ -30,66 +30,55 @@ function toggleView(id) {
 
 //Get All Request
 function getRequest() {
-    $.ajax({
-        url: 'http://localhost:8090/api/maintenance/getAll',
-        type: 'GET',
-        success: function (response) {
-            let items = response
 
-            console.log(response)
+    var baseurl = "http://localhost:8090/api/maintenance/getAll";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
 
-            var t_body = document.getElementById("t_body");
-
-            while (t_body.hasChildNodes()) {
-                t_body.removeChild(t_body.firstChild);
-            }
-
-            for (let i = 0; i < items.length; i++) {
-
-                let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
-
-                let html = `
-                        <td></td>
-                        <td>  ${items[i].id}
-                        </td>
-                        <td>  ${items[i].request}
-                        </td>
-                        <td>  ${items[i].description}
-                        </td>
-                        <td> ${items[i].dateLogged}
-                        </td> 
-                        
-                        <td> ${scheduledDate}</td>
-                        <td> ${items[i].status}
-                        </td>                        
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            console.log(data)
+            $("#example").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":"request"},
+                    {"data":"description"},
+                    {"data":"levelOfUrgency"},
+                    {"data":"dateLogged"},
+                    {"data":"schedule.scheduleDate",
+                    "render":function (schedule){
+                        if(!schedule){
+                            return'unscheduled';
+                        }else {
+                            return schedule;
+                        }
+                    }},
+                    {"data":"status",
+                    "render":function (status){
+                        if(status==="Pending"){
+                            return'<span class="badge badge-primary"> ' +status+'</span>';
+                        }else{
+                            return '<span class="badge badge-danger">' +status+'</span>';
+                        }
+                    }},
+                    {"data":"id",
+                    "render": function (data){
+                        return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal( ${items[i].id})">Schedule</a>
-                       
-                      </div>
-                    </td>`
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(`+ data+`)">Schedule</a>
 
+                      </div>`
+                    }},
 
-                let tr = document.createElement("tr");
-                // tr.className = "row"
-
-                tr.innerHTML = html;
-
-                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
-
-                // let htmlSpacer = "<td colspan=\"100\">"
-                // let spacer = document.createElement("tr");
-                // spacer.className = "spacer";
-                //
-                // spacer.innerHTML = htmlSpacer;
-
-                // t_body.appendChild(spacer);
-                t_body.appendChild(tr);
-            }
+                ]
+            });
         }
-    })
+    };
+    xmlhttp.send();
 }
 
 var alertplaceholder = document.getElementById("liveAlertPlaceholder");
@@ -108,122 +97,94 @@ function alert(message,type){
 }
 //Get Overdue Request
 function getOverdue() {
-    $.ajax({
-        url: 'http://localhost:8090/api/maintenance/status/overdue',
-        type: 'GET',
-        success: function (response) {
-            let items = response
+    var baseurl = "http://localhost:8090/api/maintenance/status/overdue";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
 
-            console.log(response)
+            console.log(data)
+            $("#example").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":"request"},
+                    {"data":"description"},
+                    {"data":"levelOfUrgency"},
+                    {"data":"dateLogged"},
+                    {"data":"schedule.scheduleDate",
+                        "render":function (schedule){
+                            if(!schedule){
+                                return'unscheduled';
+                            }else {
+                                return schedule;
+                            }
+                        }},
 
-            var t_body = document.getElementById("t_body");
-
-            while (t_body.hasChildNodes()) {
-                t_body.removeChild(t_body.firstChild);
-            }
-
-            for (let i = 0; i < items.length; i++) {
-                let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
-                let html = `
-                        <td></td>
-                        <td>  ${items[i].id}
-                        </td>
-                        <td>  ${items[i].request}
-                        </td>
-                        <td>  ${items[i].description}
-                        </td>
-                        <td> ${items[i].dateLogged}
-                        </td> 
-                        <td>${scheduledDate}</td>
-                                              
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {"data":"id",
+                        "render": function (data){
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">Schedule</a>
-                       
-                      </div>
-                    </td>`
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(`+ data+`)">Schedule</a>
 
+                      </div>`
+                        }},
 
-                let tr = document.createElement("tr");
-                // tr.className = "row"
-
-                tr.innerHTML = html;
-
-                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
-
-                // let htmlSpacer = "<td colspan=\"100\">"
-                // let spacer = document.createElement("tr");
-                // spacer.className = "spacer";
-                //
-                // spacer.innerHTML = htmlSpacer;
-
-                // t_body.appendChild(spacer);
-                t_body.appendChild(tr);
-            }
+                ]
+            });
         }
-    })
+    };
+    xmlhttp.send();
 }
 
 //Get Pending Request
 function getPending() {
-    $.ajax({
-        url: 'http://localhost:8090/api/maintenance/status/pending',
-        type: 'GET',
-        success: function (response) {
-            let items = response
 
-            console.log(response)
 
-            var t_body = document.getElementById("t_body");
+    var baseurl = "http://localhost:8090/api/maintenance/status/pending";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
 
-            while (t_body.hasChildNodes()) {
-                t_body.removeChild(t_body.firstChild);
-            }
+            console.log(data)
+            $("#example").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":"request"},
+                    {"data":"description"},
+                    {"data":"levelOfUrgency"},
+                    {"data":"dateLogged"},
+                    {"data":"schedule.scheduleDate",
+                        "render":function (schedule){
+                            if(!schedule){
+                                return'unscheduled';
+                            }else {
+                                return schedule;
+                            }
+                        }},
 
-            for (let i = 0; i < items.length; i++) {
-                let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
-                let html = `
-                        <td></td>
-                        <td>  ${items[i].id}
-                        </td>
-                        <td>  ${items[i].request}
-                        </td>
-                        <td>  ${items[i].description}
-                        </td>
-                        <td> ${items[i].dateLogged}
-                        </td> 
-                        <th>${scheduledDate}</th>
-                                              
-                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {"data":"id",
+                        "render": function (data){
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal( ${items[i].id})">Schedule</a>
-                       
-                      </div>
-                    </td>`
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(`+ data+`)">Schedule</a>
 
+                      </div>`
+                        }},
 
-                let tr = document.createElement("tr");
-                // tr.className = "row"
-
-                tr.innerHTML = html;
-
-                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
-
-                // let htmlSpacer = "<td colspan=\"100\">"
-                // let spacer = document.createElement("tr");
-                // spacer.className = "spacer";
-                //
-                // spacer.innerHTML = htmlSpacer;
-
-                // t_body.appendChild(spacer);
-                t_body.appendChild(tr);
-            }
+                ]
+            });
         }
-    })
+    };
+    xmlhttp.send();
 }
 
 // add schedule
@@ -269,7 +230,7 @@ $.ajax({
 
 //Get Scheduled
 function getScheduled() {
-    $.ajax({
+    /*$.ajax({
         url: 'http://localhost:8090/api/maintenance/getAllScheduled',
         type: 'GET',
         success: function (response) {
@@ -295,6 +256,7 @@ function getScheduled() {
                         </td>
                         <td>  ${items[i].description}
                         </td>
+                         <td> ${items[i].levelOfUrgency}</td> 
                         <td> ${items[i].dateLogged}
                         </td> 
                         <td> ${items[i].schedule.scheduleDate}
@@ -333,106 +295,167 @@ function getScheduled() {
 
 
 
-    })
-}
-function Attend(){
-    var id = JSON.parse(localStorage.getItem("id"));
-    var request = JSON.parse(localStorage.getItem("request"));
-    var description = JSON.parse(localStorage.getItem("description"));
-    var dateLogged = JSON.parse(localStorage.getItem("dateLogged"));
+    })*/
+    var baseurl = "http://localhost:8090/api/maintenance/getAllScheduled";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
 
-    var data = {
-        "dateLogged": dateLogged,
-        "request": request,
-        "description":description
-    }
+            console.log(data)
+            $("#example").DataTable({
+                data:data,
+
+
+                columns:[
+
+                    {"data": "id"},
+                    {"data": "request"},
+                    {"data": "description"},
+                    {"data": "levelOfUrgency"},
+                    {"data": "dateLogged"},
+                    {
+                        "data": "schedule.scheduleDate",
+                        "render": function (schedule) {
+
+
+                            if (!schedule) {
+                                return 'unscheduled';
+                            } else {
+                                return schedule;
+                            }
+                        }
+                    },
+                    {
+                        "data": "status",
+                        "render": function (status) {
+                            if (status === "Pending") {
+                                return '<span class="badge badge-primary"> ' + status + '</span>';
+                            } else {
+                                return '<span class="badge badge-danger">' + status + '</span>';
+                            }
+                        }
+                    },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="text-muted sr-only">Action</span>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" 
+                        data-whatever="@mdo" href="#" onclick="SetLocal( `+data+`)">
+                        Attended</a>
+                       
+                      </div>`
+                        }
+                    },
+
+                ]
+
+            });
+        }
+    };
+    xmlhttp.send();
+}
+
+//Mark attended
+function Attended(){
+    var id = JSON.parse(localStorage.getItem("id"));
     var f=document.getElementById("2");
     f.setAttribute("disabled","true");
     $.ajax({
-        dataType:"json",
-        crossDomain:"true",
-        contentType:"application/json; charset=utf-8",
-        data:JSON.stringify(data),
-        type:"POST",
-        url:"http://localhost:8090/api/maintenance/attended",
+
+        type:"GET",
+        url:"http://localhost:8090/api/maintenance/"+id,
         success: function (response){
             console.log(response);
+            $.ajax({
+                dataType:"json",
+                crossDomain:"true",
+                contentType:"application/json; charset=utf-8",
+                data:JSON.stringify(response),
+                type:"POST",
+                url:"http://localhost:8090/api/maintenance/attended",
+                success: function (response){
+                    console.log(response);
+                    console.log("Posted");
+
+
+                },error:function (e){
+
+                    console.log("ERROR",e);
+                }
+
+            })
 
         },error:function (e){
-            // if(e.status.toString()=="200"){
-            //     var r=document.getElementById("0");
-            //     r.setAttribute("style","display:all")
-            //     var s=document.getElementById("1");
-            //     s.setAttribute("style","display:none")
-            //     var t=document.getElementById("2");
-            //     t.setAttribute("style","display:none")
-            //
-            //     alert("Schedule Added Successfully" ,"success")
-            //
-            //     var g = document.getElementById("cont");
-            //     g.setAttribute("style","display:none");
-            // }
+
             console.log("ERROR",e);
         }
 
     })
+
     $.ajax({
-        dataType:"json",
-        crossDomain:"true",
-        contentType:"application/json; charset=utf-8",
-        type:"DELETE",
-        url:"http://localhost:8090/api/maintenance/"+id+"/attended",
-        success: function (response){
-            var r=document.getElementById("1");
-            r.setAttribute("style","display:all")
-            var s=document.getElementById("2");
-            s.setAttribute("style","display:none")
-            // var t=document.getElementById("2");
-            // t.setAttribute("style","display:none")
-
-            alert("Request attended Successfully" ,"success")
+                        dataType:"json",
+                        crossDomain:"true",
+                        contentType:"application/json; charset=utf-8",
+                        type:"DELETE",
+                        url:"http://localhost:8090/api/maintenance/attended/"+id,
+                        success: function (response){
+                            console.log("Delete")
+                            var r=document.getElementById("1");
+                            r.setAttribute("style","display:all")
+                            var s=document.getElementById("2");
+                            s.setAttribute("style","display:none")
 
 
-            var g = document.getElementById("cont");
-            g.setAttribute("style","display:none");
-            console.log(response);
-
-        },error:function (e){
-            if(e.status.toString()=="200"){
-                var r=document.getElementById("1");
-                r.setAttribute("style","display:all")
-                var s=document.getElementById("2");
-                s.setAttribute("style","display:none")
-                // var t=document.getElementById("2");
-                // t.setAttribute("style","display:none")
-
-                alert("Request attended Successfully" ,"success")
+                            alert("Request attended Successfully" ,"success")
 
 
-                 var g = document.getElementById("cont");
-                 g.setAttribute("style","display:none");
-                console.log("ERROR",e);
-            }else{
-                alert("Request attended unSuccessfully" ,"danger")
-                console.log("ERROR",e);
-            }
+                            var g = document.getElementById("cont");
+                            g.setAttribute("style","display:none");
+                            console.log(response);
+
+                        },error:function (e){
+                            if(e.status.toString()=="200"){
+                                var r=document.getElementById("1");
+                                r.setAttribute("style","display:all")
+                                var s=document.getElementById("2");
+                                s.setAttribute("style","display:none")
+                                // var t=document.getElementById("2");
+                                // t.setAttribute("style","display:none")
+
+                                alert("Request attended Successfully" ,"success")
+
+
+                                var g = document.getElementById("cont");
+                                g.setAttribute("style","display:none");
+                                console.log("ERROR",e);
+                            }else{
+                                alert("Request attended unSuccessfully" ,"danger")
+                                console.log("ERROR",e);
+                            }
 
 
 
-        }
+                        }
 
-    })
-
-
+                    })
 
 }
-//Get Overdue Request
+
+
+//Get Attended
 function getAttended() {
-    $.ajax({
+    /*$.ajax({
         url: 'http://localhost:8090/api/maintenance/getAllAttended',
         type: 'GET',
         success: function (response) {
             let items = response
+
+            localStorage.setItem("attended", JSON.stringify(items));
 
             console.log(response)
 
@@ -476,5 +499,121 @@ function getAttended() {
                 t_body.appendChild(tr);
             }
         }
-    })
+    })*/
+    var baseurl = "http://localhost:8090/api/maintenance/getAllAttended";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data)
+            $("#example").DataTable({
+                data:data,
+
+
+                columns:[
+
+                    {"data": "id"},
+                    {"data": "request"},
+                    {"data": "description"},
+                    {"data": "dateLogged"},
+                    {"data": "dateAttended"}
+                ]
+
+            });
+        }
+    };
+    xmlhttp.send();
+}
+
+// Request Filter
+function searchFilterRequest(){
+    let items = JSON.parse(localStorage.getItem("request"));
+
+    let field = document.getElementById("requestSearch").value;
+
+    var t_body = document.getElementById("t_body");
+
+    while (t_body.hasChildNodes()) {
+        t_body.removeChild(t_body.firstChild);
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        let scheduledDate = (items[i].schedule === null) ? "unscheduled" : (items[i].schedule.scheduleDate)
+        let color = (items[i].status === "Pending") ? "badge badge-primary" : "badge badge-danger"
+        let string = JSON.stringify(items[i])
+
+        if (string.toLowerCase().includes(field.toLowerCase())){
+            let new_html = `<td></td>
+                        <td>  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].request}
+                        </td>
+                        <td>  ${items[i].description}
+                        </td>
+                        <td>${items[i].levelOfUrgency}</td>
+                        <td> ${items[i].dateLogged}
+                        </td> 
+                        
+                        <td> ${scheduledDate}</td>
+                        <td><span class="${color}">${items[i].status}</span>
+                        </td>                        
+                        <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="text-muted sr-only">Action</span>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal( ${items[i].id})">Schedule</a>
+                       
+                      </div>
+                    </td>`
+
+
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = new_html;
+
+            t_body.appendChild(tr);
+        }
+    }
+}
+
+// Attended Filter
+
+function searchFilterAttended(){
+    let items = JSON.parse(localStorage.getItem("attended"));
+
+    let field = document.getElementById("attendedSearch").value;
+
+    var t_body = document.getElementById("t_body");
+
+    while (t_body.hasChildNodes()) {
+        t_body.removeChild(t_body.firstChild);
+    }
+
+    for (let i = 0; i < items.length; i++) {
+
+        let string = JSON.stringify(items[i])
+
+        if (string.toLowerCase().includes(field.toLowerCase())){
+            let new_html = `<td></td>
+                        <td>  ${items[i].id}
+                        </td>
+                        <td>  ${items[i].request}
+                        </td>
+                        <td>  ${items[i].description}
+                        </td>
+                        <td> ${items[i].dateLogged}
+                        </td> 
+                        <td> ${items[i].dateAttended}
+                        </td> `
+
+
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = new_html;
+
+            t_body.appendChild(tr);
+        }
+    }
 }

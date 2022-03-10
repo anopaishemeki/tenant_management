@@ -92,6 +92,8 @@ public class Lease {
 
     }
 
+
+
     public Lease(Long id,
                  String name,
                  LocalDate agreementDate,

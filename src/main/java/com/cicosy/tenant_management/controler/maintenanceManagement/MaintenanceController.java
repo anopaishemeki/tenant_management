@@ -16,6 +16,7 @@ public class MaintenanceController {
     @Autowired
     private MaintenanceService maintenanceService;
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @RequestMapping("getAll")
     public List<MaintenanceRequests> getAllMaintenanceRequests() {
         return maintenanceService.getAllMaintenanceRequests();
@@ -23,7 +24,7 @@ public class MaintenanceController {
     }
     @RequestMapping("getAllScheduled")
     public List<MaintenanceRequests> getAllScheduled() {
-        return maintenanceService.getAllMaintenanceRequests();
+        return maintenanceService.getScheduled();
 
     }
 
@@ -54,7 +55,7 @@ public class MaintenanceController {
         maintenanceService.addSchedule(id, scheduleDetails);
     }
 
-    @DeleteMapping("/{id}/attended")
+    @DeleteMapping("/attended/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteRequest(@PathVariable Long id , AttendedRequest attendedRequestDetails){
         return maintenanceService.deleteRequest(id,attendedRequestDetails);
     }
