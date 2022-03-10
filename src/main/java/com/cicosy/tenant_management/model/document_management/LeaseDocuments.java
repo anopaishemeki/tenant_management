@@ -7,8 +7,7 @@ package com.cicosy.tenant_management.model.document_management;
 
 
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -7,13 +7,10 @@
 package com.cicosy.tenant_management.controler.document_management;
 
 
-import com.cicosy.tenant_management.controler.document_management.message.Response;
-import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
+
 import com.cicosy.tenant_management.model.document_management.TenantDocuments;
 
 import com.cicosy.tenant_management.service.document_management.TenantDocumentsService;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.http.MediaType;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,11 +20,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.ui.Model;
-import java.io.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +32,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import org.springframework.util.*;
 import com.cicosy.tenant_management.repository.document_management.TenantsDocumentRepo;
 import org.slf4j.Logger;
@@ -54,6 +49,8 @@ public class TenantDocController {
   @Autowired
   private TenantDocumentsService tenantdocumentsService;
   private static Logger log = LoggerFactory.getLogger(TenantDocController.class);
+ 
+
   @Autowired
   private TenantsDocumentRepo tenantRepo;
 
@@ -117,7 +114,7 @@ public class TenantDocController {
     documents.setArticle(article_associ);
 
     TenantDocuments docs = tenantRepo.save(documents);
-    String uploadDir = "tenantDocuments/" + docs.getId();
+    String uploadDir = System.getProperty("user.dir") + "/uploads/tenantDocuments" + docs.getId();
   
     
 

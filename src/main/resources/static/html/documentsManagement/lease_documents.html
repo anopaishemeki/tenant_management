@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,8 +19,26 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
+    <link rel="stylesheet" href="../../css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="../../css/feather.css">
+    <link rel="stylesheet" href="../../css/select2.css">
+    <link rel="stylesheet" href="../../css/dropzone.css">
+    <link rel="stylesheet" href="../../css/uppy.min.css">
+    <!--<link rel="stylesheet" href="../../css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="../../css/jquery.steps.css">
+    <link rel="stylesheet" href="../../css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../../css/quill.snow.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="../../css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light  ">
+  <body onload="getLeases()" class="vertical  light  ">
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -391,26 +409,19 @@
               
                             <th>id</th>
                             <th>Tenant Name</th>
-                            <th>Document Name</th>
-                            
-                            <th>Action</th>
+                            <th>Rent Fee</th>         
                             <th>Status</th>
+                            <th>Date</th>
+                            <th>Display Document</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
-                        <tbody>
-                  
-                            <tr>
-                              <td> 368</td>
-                              <td>Takudzwa</td>
-                              <td> TakudzaLease </td>
-                                   
-                      <td> 
-                      <a href="#">Download</a>
-                      </td>
-                      <td><span class="badge badge-danger">Terminated</span></td>
-                            </tr>
-                       
-                      </tbody>
+                        <tbody class=t_body>
+
+                        </tbody>
+                               
+                        
+                   
                          
                       </table>
                     </div>
@@ -420,6 +431,160 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
+
+
+        <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="varyModalLabel">Genarate</h5>
+                   <a href="lease_documents.html">
+                       <button type="button" class="btn-close" data-bs-dismiss="modal"
+                               aria-label="Close"></button>
+                   </a>
+               </div>
+               <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row ">
+                      <div class="col-12">
+                          <h2 class="page-title">Generate Document</h2>
+                                      <div class="card-body">
+                                        <form>
+                                          <div class="form-group">
+                                            <label for="id">Tenant ID:</label>
+                                            <select class="form-control select2" id="exampleModalLabel" name="id"
+                                                    required onchange="getDetails()">
+                                                <optgroup label="tenant_id" id="id">
+                                                    <option value="1" selected="true">Tenant ID</option>
+                                                </optgroup>
+                                          </select>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="companyName" class="col-form-label">Company Name:</label>
+                                            <input type="text" class="form-control" id="companyName" required>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="addressLine1" class="col-form-label">Address Line 1:</label>
+                                            <input type="text" class="form-control" id="addressLine1" required>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="addressLine2" class="col-form-label">Address Line 2:</label>
+                                            <input type="text" class="form-control" id="addressLine2" required>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="addressLine3" class="col-form-label">Address Line 3:</label>
+                                            <input type="text" class="form-control" id="addressLine3" required>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="debit" class="col-form-label">Debit:</label>
+                                            <input type="text" class="form-control" id="debit" required>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="signature" class="col-form-label">Signature:</label>
+                                            <input type="text" class="form-control" id="signature">
+                                          </div>
+                                          <div class="form">
+                                            <label for="expiryDate">Lease Expiry Date</label>
+                                            <input class="form-control" id="expiryDate" type="date" name="expiryDate"
+                                                   required>
+                                          </div>
+                                        <div class="form">
+                                            <label for="dueDate">Lease Due Date</label>
+                                            <input class="form-control" id="dueDate" type="date"
+                                                   name="dueDate"
+                                                   required>
+                                        </div>
+                                     
+                                        </form>
+                                          </div>
+                   </div>
+               </div>
+               <div class="modal-footer d-flex justify-content-center">
+                   <!--                            <a href="request.html" >-->
+                   <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                   <!--                            </a>-->
+                   <a href="lease_documents.html">
+                       <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+                               class="btn mb-2 btn-success" aria-label="Close">OK
+                       </button>
+                   </a>
+                   <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                   </button>
+                   <button class="btn btn-primary " type="submit" onclick="saveDetails()"
+                   data-bs-toggle="modal"
+                   data-bs-target="#exampleModal" id="btnSubmit">
+                   Save
+                  
+                 </button>
+                 <a href ="./expiredleasedocuments.html">
+                 <button class="btn btn-primary " type="submit" id="btnSubmit">
+                   
+                  Generate
+                  
+                </button>
+              </a>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+   
+   <div class="modal fade" id="exampleModal" tabindex="-1"
+   aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+   data-bs-keyboard="false">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Save Record Dialog</h5>
+              <div class="form-group">
+                <label for="id">Tenant ID:</label>
+                <select class="form-control select2" id="exampleModalLabel" name="id"
+                        required onchange="employeeSelect()">
+                    <optgroup label="tenant_id" id="id">
+                        <option value="1" selected="true">Tenant ID</option>
+                    </optgroup>
+              </select>
+              </div>
+              <a href="lease_documents.html">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+
+              </a>
+          </div>
+          <div class="modal-body">
+              <div class="alert alert-info" role="alert" id="alerrt">
+                  <div id="liveAlertPlaceholder">
+                      <button id="ldID" style="background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                          Saving ...
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
+                      style="display: none">Edit & Retry
+              </button>
+              <a href="lease_documents.html">
+
+                  <button type="button" class="btn btn-success"
+                          data-bs-dismiss="modal" id="Close"
+                  >Ok
+                  </button>
+              </a>
+
+          </div>
+      </div>
+  </div>
+</div>
+<div style="display: none">
+  <input type="text" name="phone" id="phone" style="display: none">
+  <input type="text" name="email" id="email" style="display: none">
+</div>
+
 
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-sm" role="document">
@@ -551,7 +716,7 @@
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/simplebar.min.js"></script>
-    
+    <script src="../../js/customdocuments.js"></script>
     <script src='../../js/daterangepicker.js'></script>
     <script src='../../js/jquery.stickOnScroll.js'></script>
     <script src="../../js/tinycolor-min.js"></script>
