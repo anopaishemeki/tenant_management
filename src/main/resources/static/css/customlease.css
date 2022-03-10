@@ -24,6 +24,21 @@
     font-size: 17px;
     height:40px;
 }
+.entry{
+    margin-left: 0px;
+    float: left;
+    padding-top:15px;
+    padding-bottom: 15px;
+}
+.Customtopnav .row .cols .row .col{
+    padding-right:0px!important
+}
+.Customtopnav .row .cols .row  .colm{
+    padding-left:0px!important;
+}
+ .Customtopnav .row  .col-sm-6,.Customtopnav .row .col-md-8{
+    width: 50%!important;
+ }
 
 .Customtopnav input[type=text]:focus {
     width: 180px;

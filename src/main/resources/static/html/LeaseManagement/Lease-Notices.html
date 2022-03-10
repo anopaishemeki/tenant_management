@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="../../css/feather.css">
     <link rel="stylesheet" href="../../css/customlease.css">
     <link rel="stylesheet" href="../../css/all.css">
+ <!--   <link rel="stylesheet" href="../../css/bootstrap.min.css">-->
     <!--<link rel="stylesheet" href="../../css/fontawesome.css">-->
+    <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
@@ -103,24 +105,20 @@
             </p>
             <ul class="navbar-nav flex-fill w-100 mb-2">
                 <li class="nav-item dropdown">
-                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
-                       class="dropdown-toggle nav-link">
+                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-box fe-16"></i>
-                        <span class="ml-3 item-text">Property Management</span>
+                        <span class="ml-3 item-text">Property Portfolio</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span
-                                    class="ml-1 item-text">Properties</span>
+                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span
-                                    class="ml-1 item-text">Add Property</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span
-                                    class="ml-1 item-text">Add Compartment</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Lettable Space</span></a>
                         </li>
 
                     </ul>
@@ -153,7 +151,7 @@
                 <li class="nav-item dropdown">
                     <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-grid fe-16"></i>
-                        <span class="ml-3 item-text">Lease Management</span>
+                        <span class="ml-3 item-text">Leasing</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                         <li class="nav-item">
@@ -277,9 +275,9 @@
                                     </div>
 
                                     <!-- table -->
-                                    <table class="table datatables table-hover border-v" id="dataTable-1">
+                                    <table class="table dataTables table-hover" id="dataTable" style="width:100%!important;">
                                         <thead class="thead-dark">
-                                        <tr role="row">
+                                        <tr>
 
                                             <th>ID</th>
                                             <th>Name</th>
@@ -292,41 +290,14 @@
                                         </tr>
                                         </thead>
                                         <tbody id="t_body">
-                                        <tr>
-
-                                            <td>1</td>
-                                            <td>Imani Lara</td>
-                                            <td>Joina City, Harare</td>
-                                            <td>Jun 8, 2019</td>
-                                            <td>Jun 8, 2020</td>
-                                            <td>Active</td>
-                                            <td>
-                                                <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                         style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                                <br>
-                                                <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar bg-danger" role="progressbar"
-                                                         style="width: 20%" aria-valuenow="100" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                                <br>
-                                                <div class="progress progress-sm" style="height:3px">
-                                                    <div class="progress-bar bg-info" role="progressbar"
-                                                         style="width: 40%" aria-valuenow="100" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#"><span data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                                  class="badge badge-pill badge-success">Notify</span></a>
-                                            </td>
-                                        </tr>
 
                                         </tbody>
+
                                     </table>
+
+
+
+                                    <!-- table -->
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                          aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -388,7 +359,34 @@
                                                                             <div class="card-body"
                                                                                  style="padding-top: 10px;padding-bottom: 10px;">
                                                                                 <div id="liveAlertPlaceholderEmail"></div>
-                                                                                <div style="width: 100%">
+                                                                                <div id="mailSentToast" class="mt-3" style="display: none">
+                                                                                    <div class="toast-body alert alert-success" >
+                                                                                        Mail Sent Sucessfully<span class="fe fe-12 fe-check ml-3" ></span>
+                                                                                    </div>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="./Lease-Notices.html">
+                                                                                            <button type="button" class="btn btn-success"
+                                                                                                    data-bs-dismiss="modal" id="Close2">
+                                                                                                Ok
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="mailNotSentToast" class="mt-3" style="display: none">
+
+                                                                                    <div class="toast-body alert alert-danger" id="mailunsent" >
+                                                                                       Failed ,  Mail Sending Failed, Close & Try Again <span class="fe fe-12 fe-alert-triangle ml-3" ></span>
+                                                                                    </div>
+                                                                                    <!--<div class="d-flex justify-content-center">
+                                                                                        <a href="./Lease-Notices.html">
+                                                                                            <button type="button" class="btn btn-success"
+                                                                                                    data-bs-dismiss="modal" id="Close4">
+                                                                                                Ok
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>-->
+                                                                                </div>
+                                                                                <div style="width: 100%" id="mailform">
                                                                                     <div class="d-flex justify-content-center">
 
                                                                                         <h5><label>ID = <span id="tID"> 23</span></label>
@@ -453,6 +451,7 @@ nulla assumenda shoreditch et.
                                                                                         </textarea>
                                                                                     </div>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -543,7 +542,7 @@ nulla assumenda shoreditch et.
                                                     <div id="emailfooter">
                                                         <a href="Lease-Notices.html">
                                                             <button type="button" class="btn btn-success"
-                                                                    data-bs-dismiss="modal" id="Close"
+                                                                    data-bs-dismiss="modal" id="Close3"
                                                                     style="display: none">Ok
                                                             </button>
                                                         </a>
@@ -556,72 +555,6 @@ nulla assumenda shoreditch et.
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade" id="renewal" tabindex="-1"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true"
-                                         data-bs-backdrop="static"
-                                         data-bs-keyboard="false">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Renewal
-                                                        Dialog</h5>
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </a>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="alert alert-info" role="alert" id="alerrt">
-                                                        <div id="liveAlertPlaceholder2"></div>
-                                                        <div id="renewalInfo">
-                                                            <div class="form-group col-md-12">
-                                                                <label for="id2">ID = </label>
-                                                                <label id="id2"></label>
-                                                                <div class="valid-feedback"></div>
-
-                                                            </div>
-                                                            <div class="form-group col-md-12">
-                                                                <label for="TenantName2">Tenant Name:</label>
-                                                                <input type="text" class="form-control" id="TenantName2"
-                                                                       disabled>
-                                                                <div class="valid-feedback"></div>
-
-                                                            </div>
-                                                            <div class="form-group col-md-12 mb-3">
-                                                                <label for="startDate2">Start Date</label>
-                                                                <input class="form-control" id="startDate2" type="date"
-                                                                       name="startDate"
-                                                                       required>
-                                                            </div>
-                                                            <div class="form-group col-md-12 mb-3">
-                                                                <label for="duration2">Duration :</label>
-                                                                <input class="form-control" id="duration2" type="number"
-                                                                       name="duration"
-                                                                       required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer d-flex justify-content-center">
-
-                                                    <a href="View-Lease.html">
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal" id="Close2"
-                                                                style="display: none">OK
-                                                        </button>
-                                                    </a>
-
-                                                    <button id="liveAlertBtn2" class="btn btn-primary"
-                                                            onclick="renewlease()">
-                                                        Submit Renewal
-                                                    </button>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -990,13 +923,25 @@ nulla assumenda shoreditch et.
 <script src="../../js/custom.js"></script>
 <script src="../../js/customlease.js"></script>
 <script src='../../js/bootstrap.bundle.min.js'></script>
-<script src="../../js/dataTables.bootstrap4.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>-->
+<!--<script src="../../js/dataTables.bootstrap4.min.js"></script>
+<script src='../../js/jquery.dataTables.min.js'></script>-->
 <script src="../../js/email.min.js"></script>
 <script type="text/javascript">
     (function () {
         emailjs.init("D-bkYkdt8KPF0Wdop");
     })();
 </script>
+<!--<script>
+    $('#dataTable').DataTable(
+        {
+            autoWidth: true,
+            "lengthMenu": [
+                [16, 32, 64, -1],
+                [16, 32, 64, "All"]
+            ]
+        });
+</script>-->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
@@ -1011,3 +956,8 @@ nulla assumenda shoreditch et.
 </script>
 </body>
 </html>
+
+
+
+
+
