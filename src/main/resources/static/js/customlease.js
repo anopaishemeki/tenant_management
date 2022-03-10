@@ -944,7 +944,7 @@ function T_Records() {
                         }},
                     {"data":"buildingLocation",
                         render:function(data){
-                            return "<i class='fe fe-compass'></i> <strong>"+data+"</strong>"
+                            return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
                         }},
                     {"data":"status",
                         "searchable":false,
@@ -1066,7 +1066,7 @@ function getLeases() {
                         }},
                     {"data":"buildingLocation",
                         render:function(data){
-                            return "<i class='fe fe-compass'></i> <strong>"+data+"</strong>"
+                            return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
                         }},
                     {"data":"status",
                     render:function(data){
@@ -1362,7 +1362,7 @@ function getLeaseNotice() {
                         <td >${items[i].timeLeft}
                     </td>
                     <td>
-                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success">Notify</span></a>
+                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success "> <i class="fe fe-bell" style="margin-right: 10px;color: white;"></i>Notify</span></a>
 
                     </td>`
 
