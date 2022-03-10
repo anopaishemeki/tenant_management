@@ -220,6 +220,15 @@ function setLocalLease(lease){
 
 //Send Email from notices page
 function SendMail(){
+
+    var m1 = document.getElementById("mailSentToast");
+    var m2 = document.getElementById("mailNotSentToast");
+
+
+    m1.setAttribute("style", "display:none");
+    m2.setAttribute("style", "display:none");
+
+
     var Message=document.getElementById("cont").value;
     var Name = document.getElementById("tName").value;
     var id = document.getElementById("tID").innerText;
@@ -250,20 +259,35 @@ emailjs.send('gmail','template_rqpdjmc',tempParams)
 })
     .catch(function(error){
     console.error("Error  : ",error);
-
-    var message=document.getElementById("mailunsent");
-    if(message){
-        message.innerHTML="Failed ," +error.text + " <span class='fe fe-12 fe-alert-triangle ml-3' ></span>";
-    }
-      //  var cont=document.getElementById("mailform");
-       // var foot=document.getElementById("emailfooter");
-        var m1=document.getElementById("mailSentToast");
+    if(error.status==412){
+        var message=document.getElementById("mailunsent");
+        if(message){
+            message.innerHTML="Failed , Your Email is Invalid"+" <span class='fe fe-12 fe-alert-triangle ml-3' ></span>";
+        }
+        //  var cont=document.getElementById("mailform");
+        // var foot=document.getElementById("emailfooter");
+       // var m1=document.getElementById("mailSentToast");
         var m2=document.getElementById("mailNotSentToast");
 
-       // cont.setAttribute("style","display:none");
-      //  foot.setAttribute("style","display:none");
+        // cont.setAttribute("style","display:none");
+        //  foot.setAttribute("style","display:none");
         m2.setAttribute("style","display:all");
-        })
+    }else {
+
+        var message = document.getElementById("mailunsent");
+        if (message) {
+            message.innerHTML = "Failed ," + error.text + " <span class='fe fe-12 fe-alert-triangle ml-3' ></span>";
+        }
+        //  var cont=document.getElementById("mailform");
+        // var foot=document.getElementById("emailfooter");
+       // var m1 = document.getElementById("mailSentToast");
+        var m2 = document.getElementById("mailNotSentToast");
+
+        // cont.setAttribute("style","display:none");
+        //  foot.setAttribute("style","display:none");
+        m2.setAttribute("style", "display:all");
+    }
+    })
 
 }
 
