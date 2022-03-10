@@ -45,4 +45,9 @@ public class CompartmentController {
     public Compartment getCompartment(Long id){
         return compartmentService.getCompartment(id);
     }
+
+    @PutMapping("/update-compartment/{id}")
+    public Compartment updateCompartment(@PathVariable Long id, @RequestBody Compartment compartment){
+        return compartmentService.update(id, compartment);
+    }
 }
