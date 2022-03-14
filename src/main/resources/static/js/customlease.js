@@ -151,11 +151,64 @@ function setLocal(id) {
 
 }
 
-function SetLocal(id, name) {
+function SetLocal(id) {
     localStorage.removeItem("id");
-    localStorage.removeItem("name");
+
     localStorage.setItem("id", JSON.stringify(id));
-    localStorage.setItem("name", JSON.stringify(name));
+
+
+}
+function setDuration(value){
+    localStorage.removeItem("value");
+    localStorage.setItem("value", JSON.stringify(value));
+
+}
+// Page Notices reload
+function reload() {
+    var duration = document.getElementById("adjT").value;
+    var unit = document.getElementById("opt");
+    if (unit) {
+
+        if (unit.value.toString() == "day") {
+            duration = duration;
+
+        } else if (unit.value.toString() == "month") {
+            duration = duration * 30;
+
+        } else if (unit.value.toString() == "year") {
+            duration = duration * 12 * 30;
+        }
+    }
+    setDuration(duration);
+
+    window.location="./Lease-Notices.html";
+}
+
+
+function getValueAndType() {
+    var duration = JSON.parse(localStorage.getItem("value"));
+    console.log("Duration = ",duration)
+    if (duration==null){
+        var duration = document.getElementById("adjT").value;
+        var unit = document.getElementById("opt");
+        if (unit) {
+
+            if (unit.value.toString() == "day") {
+                duration = duration;
+
+            } else if (unit.value.toString() == "month") {
+                duration = duration * 30;
+
+            } else if (unit.value.toString() == "year") {
+                duration = duration * 12 * 30;
+            }
+        }
+        setDuration(duration);
+
+    }
+
+
+
 
 }
 
@@ -167,6 +220,15 @@ function setLocalLease(lease){
 
 //Send Email from notices page
 function SendMail(){
+
+    var m1 = document.getElementById("mailSentToast");
+    var m2 = document.getElementById("mailNotSentToast");
+
+
+    m1.setAttribute("style", "display:none");
+    m2.setAttribute("style", "display:none");
+
+
     var Message=document.getElementById("cont").value;
     var Name = document.getElementById("tName").value;
     var id = document.getElementById("tID").innerText;
@@ -183,14 +245,57 @@ var tempParams={
 };
 emailjs.send('gmail','template_rqpdjmc',tempParams)
 .then(function(res){
-    console.log("success",res.status); 
+    console.log("success",res);
+    var cont=document.getElementById("mailform");
+    var foot=document.getElementById("emailfooter");
+    var m1=document.getElementById("mailSentToast");
+    var m2=document.getElementById("mailNotSentToast");
+
+    if(res.status.toString()=="200"){
+        cont.setAttribute("style","display:none");
+        foot.setAttribute("style","display:none");
+        m1.setAttribute("style","display:all");
+    }
 })
+    .catch(function(error){
+    console.error("Error  : ",error);
+    if(error.status==412){
+        var message=document.getElementById("mailunsent");
+        if(message){
+            message.innerHTML="Failed , Your Email is Invalid"+" <span class='fe fe-12 fe-alert-triangle ml-3' ></span>";
+        }
+        //  var cont=document.getElementById("mailform");
+        // var foot=document.getElementById("emailfooter");
+       // var m1=document.getElementById("mailSentToast");
+        var m2=document.getElementById("mailNotSentToast");
+
+        // cont.setAttribute("style","display:none");
+        //  foot.setAttribute("style","display:none");
+        m2.setAttribute("style","display:all");
+    }else {
+
+        var message = document.getElementById("mailunsent");
+        if (message) {
+            message.innerHTML = "Failed ," + error.text + " <span class='fe fe-12 fe-alert-triangle ml-3' ></span>";
+        }
+        //  var cont=document.getElementById("mailform");
+        // var foot=document.getElementById("emailfooter");
+       // var m1 = document.getElementById("mailSentToast");
+        var m2 = document.getElementById("mailNotSentToast");
+
+        // cont.setAttribute("style","display:none");
+        //  foot.setAttribute("style","display:none");
+        m2.setAttribute("style", "display:all");
+    }
+    })
 
 }
 
-// change icon on search box and fetch searched data
 
-function ChangeIconAndSearch(){
+
+// change icon on search box and fetch searched data from view lease Notice table
+
+function ChangeIconAndSearch2(){
     var y=document.getElementById('searchbox');
     y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
 
@@ -214,30 +319,19 @@ function ChangeIconAndSearch(){
                         </td>
                         <td>  ${items[i].name}
                         </td>
-                        <td>  ${items[i].rentalFee}
+                        <td> ${items[i].buildingName} , ${items[i].buildingLocation}
                         </td>
-                        <td> ${items[i].buildingName}
-                        </td> 
-                        <td> ${items[i].buildingLocation}
+                        <td > ${items[i].startDate}
                         </td>
-                        <td > ${items[i].terms}
+                        <td > ${items[i].endDate}
                         </td>
-                        <td > ${items[i].status}
+                         <td > ${items[i].status}
                         </td>
-                        <td >${items[i].agreementDate}
+                        <td >${items[i].timeLeft}
                     </td>
                     <td>
-                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" >
-                            <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
-                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
-                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
-                        </div>
+                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success">Notify</span></a>
+
                     </td>`
 
 
@@ -249,16 +343,13 @@ function ChangeIconAndSearch(){
             }
             tr.setAttribute("role", "row");
             tr.innerHTML = html;
-
             t_body.appendChild(tr);
-
         }
     }
     var y=document.getElementById('searchbox');
     y.setAttribute("style","background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/16px-Search_Icon.svg.png'); background-position: 10px 10px");
 
 }
-
 // store notice data
 function setNotice(id, name, status, endDate,timeLeft) {
     localStorage.removeItem("id");
@@ -272,8 +363,6 @@ function setNotice(id, name, status, endDate,timeLeft) {
     localStorage.setItem("status", JSON.stringify(status));
     localStorage.setItem("endDate", JSON.stringify(endDate));
 }
-
-
 //customising notice modal
 function showPhonefooter(){
     var d =document.getElementById("phonefooter");
@@ -291,16 +380,19 @@ function showEmailfooter(){
 function loaddata() {
 
     var id = JSON.parse(localStorage.getItem("id"));
-    var name = JSON.parse(localStorage.getItem("name").trim());
-    var tLeft=JSON.parse(localStorage.getItem("tLeft"));
-    var status = JSON.parse(localStorage.getItem("status"));
+    var name = JSON.parse(localStorage.getItem("name"));
+    var tLeft = JSON.parse(localStorage.getItem("tLeft"));
     var endDate = JSON.parse(localStorage.getItem("endDate"));
+    var status = JSON.parse(localStorage.getItem("status"));
 
 
-    let nametag = document.getElementById("tName");
-    let idtag = document.getElementById("tID");
-    let nametag2 = document.getElementById("tName2");
-    let idtag2 = document.getElementById("tID2");
+    var nametag = document.getElementById("tName");
+    var idtag = document.getElementById("tID");
+    var nametag2 = document.getElementById("tName2");
+    var idtag2 = document.getElementById("tID2");
+
+
+
 
     if (nametag) {
         nametag.value = name;
@@ -312,16 +404,18 @@ function loaddata() {
     }
 
 
-    var Name = name.split(" ")[0];
-    var surname = "";
+    let Name = name.split(" ")[0];
+    let surname = "";
     if ((name.split(" ").length)>2) {
         surname = name.split(" ")[2];
     } else {
         surname = name.split(" ")[1];
     }
-    let phone = document.getElementById("phone");
+    var phone = document.getElementById("phone");
     var email =document.getElementById("T_email");
 
+    console.log("Name :",Name);
+    console.log("Surame :",surname);
 
     var message="";
 
@@ -331,7 +425,7 @@ function loaddata() {
     }
 
     if(status=="Expired"){
-        message=`I hope i find you well. I am writing this letter from New World to inform you that your  Lease has Expired on `+endDate+` ,Consider coming and renew it if you still want us to continue being at you service `
+        message=` I am writing this letter from New World to inform you that your  Lease has Expired on `+endDate+` ,Consider coming and renew it if you still want us to continue being at you service `
 
     }
 
@@ -343,11 +437,9 @@ function loaddata() {
 
     $.ajax({
         type: "GET",
-        url: "/api/v1/lease/getEmail/" + Name + "/" + surname,
-
-
+        url: "http://localhost:8090/api/v1/lease/getEmail/" + Name + "/" + surname,
         success: function (response) {
-            console.log(response);
+            console.log("Email: ",response);
             email.value=response.split(",")[0];
             if (phone) {
                 phone.value = response.split(",")[1];;
@@ -372,6 +464,7 @@ function loaddata() {
 
 }
 
+
 // function Call
 function call() {
     let phone = document.getElementById("phone");
@@ -383,15 +476,28 @@ function call() {
 // Renewing Lease
 function loadData() {
     var id = JSON.parse(localStorage.getItem("id"));
-    var name = JSON.parse(localStorage.getItem("name"));
 
 
-    let nametag = document.getElementById("TenantName2");
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getLease/' + id,
+        type: 'GET',
+        success: function (response) {
+            let items = response;
+
+            console.log(response);
+            let nametag = document.getElementById("TenantName2");
+            if (nametag) {
+                nametag.placeholder = response.name;
+            }
+
+        }
+    });
+
+
     let id2 = document.getElementById("id2");
 
-    if (nametag) {
-        nametag.placeholder = name;
-    }
+
+
     if (id2) {
         id2.innerText = id;
     }
@@ -813,7 +919,71 @@ function fetchRecord() {
 // Load Terminate Table
 
 function T_Records() {
-    $.ajax({
+    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
+            console.log(xmlhttp.responseText);
+            $("#dataTable").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":"name",
+                        render:function(data){
+                            return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"rentalFee",
+                        render:function(data){
+                            return "<i class='fe fe-dollar-sign'></i>  "+data;
+                        }},
+                    {"data":"buildingName",
+                        render:function(data){
+                            return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"buildingLocation",
+                        render:function(data){
+                            return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                        "searchable":false,
+                        render:function(data){
+                            if(data==="Active"){
+                                return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                            } else if(data==="Expired"){
+                                return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                            }else{
+                                return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                            }
+                        }},
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"id",
+                        "sortable":false,
+                        "searchable":false,
+                        render:function (data) {
+                            return ` <a href="#"> <span class="badge badge-pill badge-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</span></a>`
+
+                        }}
+                    ],
+                autoWidth: true,
+                "scrollY":500,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+
+
+   /* $.ajax({
         url: 'http://localhost:8090/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
@@ -863,14 +1033,81 @@ function T_Records() {
                 t_body.appendChild(tr);
             }
         }
-    })
+    })*/
 
 }
 
 
 //Get Leases
 function getLeases() {
-    $.ajax({
+
+    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
+            console.log(xmlhttp.responseText);
+            $("#dataTable").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":"name",
+                    render:function(data){
+                        return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                    }},
+                    {"data":"rentalFee",
+                    render:function(data){
+                        return "<i class='fe fe-dollar-sign'></i>  "+data;
+                    }},
+                    {"data":"buildingName",
+                        render:function(data){
+                            return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"buildingLocation",
+                        render:function(data){
+                            return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                    render:function(data){
+                        if(data==="Active"){
+                            return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                        } else if(data==="Expired"){
+                            return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                        }else{
+                            return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                        }
+                    }},
+                    {"data":"agreementDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"id",
+                        "sortable":false,
+                        "searchable":false,
+                        render:function (data) {
+                        return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <span class="text-muted sr-only">Action</span></button>'+`
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('`+data+`')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('`+data+`'),loadData() " href="#">Renew</a>
+                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('`+data+`')">View More Details</a>
+                        </div>`
+
+                    }}
+                ],
+                autoWidth: true,
+                "scrollY":500,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+   /* $.ajax({
         url: 'http://localhost:8090/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
@@ -879,13 +1116,16 @@ function getLeases() {
             console.log(response)
             localStorage.setItem("lease", JSON.stringify(items));
 
-            var t_body = document.getElementById("t_body");
 
 
+           /!* var t_body = document.getElementById("t_body");
+
+            var numRecords =document.getElementById("recordsNumber").value;
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
             for (let i = 0; i < items.length; i++) {
+                if(i<numRecords){
                 let html = `<td class="sorting_1">  ${items[i].id}
                         </td>
                         <td>  ${items[i].name}
@@ -928,12 +1168,55 @@ function getLeases() {
 
 
                 t_body.appendChild(tr);
+                }
             }
+            var prev_item = document.getElementById("prev");
+            var page1_item = document.getElementById("page1");
+            var page2_item = document.getElementById("page2");
+            var page3_item = document.getElementById("page3");
+            var next_item = document.getElementById("next");
+            prev_item.disabled=true;
+            if(items.length<=numRecords){
+                prev_item.disabled=true;
+                page1_item.disabled=true;
+                page2_item.disabled=true;
+                page3_item.disabled=true;
+                next_item.disabled=true;
+            }*!/
+           /!* hover()*!/
         }
-    })
+    })*/
 
 }
+function hover() {
+    var prev_item = document.getElementById("prev");
+    var page1_item = document.getElementById("page1");
+    var page2_item = document.getElementById("page2");
+    var page3_item = document.getElementById("page3");
+    var next_item = document.getElementById("next");
 
+    if(prev_item.disabled){
+        prev_item.setAttribute("onMouseOver","this.style.background-color='#0F0'");
+        
+    }
+    if(page1_item.disabled){
+        page1_item.setAttribute("onMouseOver","this.style.background-color=none");
+
+    }
+    if(page2_item.disabled){
+        page2_item.setAttribute("onMouseOver","this.style.background-color=none");
+
+    }
+    if(page3_item.disabled){
+        page3_item.setAttribute("onMouseOver","this.style.background-color=none");
+
+    }
+    if(next_item.disabled){
+        next_item.setAttribute("onMouseOver","this.style.background-color=none");
+
+    }
+    
+}
 // Get Tenant Names
 function getTenants() {
     $.ajax({
@@ -1030,7 +1313,9 @@ function getProperty() {
 
 //Get Lease Notices
 function getLeaseNotice() {
-    var duration = document.getElementById("adjT").value;
+    // var duration = JSON.parse(localStorage.getItem("value"));
+
+   var duration = document.getElementById("adjT").value;
     var unit = document.getElementById("opt");
     if (unit) {
 
@@ -1045,6 +1330,7 @@ function getLeaseNotice() {
         }
     }
 
+
     $.ajax({
         url: 'http://localhost:8090/api/v1/lease/notice/' + duration,
         type: 'GET',
@@ -1052,7 +1338,7 @@ function getLeaseNotice() {
             let items = response;
 
             console.log(response);
-
+            localStorage.setItem("lease", JSON.stringify(items));
             var t_body = document.getElementById("t_body");
 
 
@@ -1076,7 +1362,7 @@ function getLeaseNotice() {
                         <td >${items[i].timeLeft}
                     </td>
                     <td>
-                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success">Notify</span></a>
+                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success "> <i class="fe fe-bell" style="margin-right: 10px;color: white;"></i>Notify</span></a>
 
                     </td>`
 

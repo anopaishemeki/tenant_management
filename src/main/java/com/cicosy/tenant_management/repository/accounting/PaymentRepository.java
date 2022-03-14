@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-    @Query("select p from Payment p where p.tenant = ?1")
+    @Query("select p from Payment p where p.compartment = ?1")
     List<Payment> getByTenant(Long id);
 }

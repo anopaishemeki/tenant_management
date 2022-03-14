@@ -119,6 +119,9 @@
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
+              </li>
                 <!--                <li class="nav-item">-->
                 <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
                 <!--                </li>-->
@@ -387,10 +390,10 @@
                           <tr>
                           
                             <th>id</th>
-                            <th>Document Name</th>
-                            <th>Document Size</th>
-                            <th>Type</th>
+                            <th>Tenant Name</th>
+                            <th>Tenant Email</th>
                             <th>Period</th>
+                            <th>Display Notice</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -398,12 +401,23 @@
                               <tr>
                                 <td> 1</td>
                                 <td> TakudzwaNotice</td>
-                                <td> PDF </td>
-                                <td> 20KB</td>
-                                <td>3</td>
+                                <td> s@gmail.com </td>
+                                <td> 4</td>
                                
                         <td> 
-                        <a href="#">Download</a>
+                          <a href="${pageContext.request.contextPath}/file-upload/downloadFile/${noticedocuments.id}">View</a>
+                        </td>
+                        <td>
+                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                      <span class="text-muted sr-only">Action</span>
+                      </button>
+                       <div class="dropdown-menu dropdown-menu-right">
+                       <a class="dropdown-item" data-toggle="modal"
+                       data-target="#varyModal" data-whatever="@mdo"
+                       href="#">Genarate Notice Document</a>
+                      </div>
                         </td>
                               </tr>
                         </tbody>
@@ -415,7 +429,99 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-        
+        <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="varyModalLabel">Genarate</h5>
+                   <a href="notice_documents.html">
+                       <button type="button" class="btn-close" data-bs-dismiss="modal"
+                               aria-label="Close"></button>
+                   </a>
+               </div>
+               <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row ">
+                      <div class="col-12">
+                          <h2 class="page-title">Submit Notice Documents</h2>
+                                      <div class="card-body">
+                                        <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                                          <div class="form-group">
+                                            <label for="file">Attach Notice Document Here:</label><br><br>
+                                            <input type="file" id="file" class="form-control-file"
+                                                 name="file" required>
+                                          </div> 
+                                        </form>
+                                          </div>
+                   </div>
+               </div>
+               <div class="modal-footer d-flex justify-content-center">
+                   <!--                            <a href="request.html" >-->
+                   <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                   <!--                            </a>-->
+                   <a href="notice_documents.html">
+                       <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+                               class="btn mb-2 btn-success" aria-label="Close">OK
+                       </button>
+                   </a>
+                   <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                   </button>
+                   <button class="btn btn-primary " type="submit" onclick="saveNoticeDocuments()"
+                   data-bs-toggle="modal"
+                   data-bs-target="#exampleModal" id="btnSubmit">
+                   Submit
+                  
+                 </button>
+               </div>
+           </div>
+       </div>
+   </div>
+   
+   <div class="modal fade" id="exampleModal" tabindex="-1"
+   aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+   data-bs-keyboard="false">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Save Record Dialog</h5>
+              <a href="notice_documents.html">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+              </a>
+          </div>
+          <div class="modal-body">
+              <div class="alert alert-info" role="alert" id="alerrt">
+                  <div id="liveAlertPlaceholder">
+                      <button id="ldID" style="background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                          Saving ...
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
+                      style="display: none">Edit & Retry
+              </button>
+              <a href="notice_documents.html">
+
+                  <button type="button" class="btn btn-success"
+                          data-bs-dismiss="modal" id="Close"
+                  >Ok
+                  </button>
+              </a>
+
+          </div>
+      </div>
+  </div>
+</div>
+<div style="display: none">
+  <input type="text" name="phone" id="phone" style="display: none">
+  <input type="text" name="email" id="email" style="display: none">
+</div>
+ 
         
             
         
@@ -556,6 +662,8 @@
     <script src="../../js/config.js"></script>
     <script src='../../js/jquery.dataTables.min.js'></script>
     <script src='../../js/dataTables.bootstrap4.min.js'></script>
+    
+  <script src="../../js/savenoticedoc.js"></script>
     <script>
       $('.select2').select2(
       {

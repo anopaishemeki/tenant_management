@@ -7,15 +7,12 @@
 package com.cicosy.tenant_management.controler.document_management;
 
 
-import com.cicosy.tenant_management.controler.document_management.message.Response;
-import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
+
 import com.cicosy.tenant_management.model.document_management.NoticeDocuments;
-import com.cicosy.tenant_management.model.document_management.TenantDocuments;
+
 import com.cicosy.tenant_management.service.document_management.NoticeDocumentsService;
 
-import com.cicosy.tenant_management.service.document_management.TenantDocumentsService;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 
@@ -57,7 +54,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping("/file-upload")
+@RequestMapping("/api/v1")
 public class NoticeDocController {
 
 	private static Logger log = LoggerFactory.getLogger(NoticeDocController.class);
@@ -112,10 +109,10 @@ public class NoticeDocController {
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping("/downloadNoticeFile/{fileName}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+	@GetMapping("/downloadNoticeFile/{id}/{fileName}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable Long id,@PathVariable String fileName, HttpServletRequest request) {
 		// Load file as Resource
-		Resource resource = noticeDocumentsService.loadFileAsResource(fileName);
+		Resource resource = noticeDocumentsService.loadFileAsResource(fileName,id);
 		log.info("resource: " + resource);
 		// Try to determine file's content type
 		String contentType = null;
