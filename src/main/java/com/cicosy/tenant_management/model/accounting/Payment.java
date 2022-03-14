@@ -1,5 +1,8 @@
 package com.cicosy.tenant_management.model.accounting;
 
+import com.cicosy.tenant_management.model.propertyManagement.Compartment;
+import com.cicosy.tenant_management.model.propertyManagement.Property;
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,22 +27,33 @@ public class Payment {
     )
     private Long id;
     private String paymentDate;
-    private Long tenant;
+    private Long compartment;
+    private Long property;
     private Long type;
     private String reference;
     private Long capturedBy;
     private double amount;
     private Long method;
     private Long invoice;
+    @Transient
+    private Property propertyObject;
+    @Transient
+    private Compartment compartmentObject;
+    @Transient
+    private Tenant tenantObject;
 
-    public Payment(String paymentDate, Long tenant, Long type, String reference, Long capturedBy, double amount, Long method, Long invoice) {
+    public Payment(String paymentDate, Long compartment, Long property, Long type, String reference, Long capturedBy, double amount, Long method, Long invoice, Property propertyObject, Compartment compartmentObject, Tenant tenantObject) {
         this.paymentDate = paymentDate;
-        this.tenant = tenant;
+        this.compartment = compartment;
+        this.property = property;
         this.type = type;
         this.reference = reference;
         this.capturedBy = capturedBy;
         this.amount = amount;
         this.method = method;
         this.invoice = invoice;
+        this.propertyObject = propertyObject;
+        this.compartmentObject = compartmentObject;
+        this.tenantObject = tenantObject;
     }
 }

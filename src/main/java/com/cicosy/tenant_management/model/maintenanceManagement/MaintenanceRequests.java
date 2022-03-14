@@ -36,9 +36,6 @@ public class MaintenanceRequests {
     private String status ;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_id" )
-
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
     private Schedule schedule;
     public Long getId() {
         return id;

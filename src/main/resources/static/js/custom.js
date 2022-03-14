@@ -6,7 +6,7 @@ function setLocal(id, name) {
     localStorage.setItem("nameProp", JSON.stringify(name));
 }
 
-function setLocalCompartment(id, name){
+function setLocalCompartment(id, name) {
     localStorage.removeItem("idComp");
     localStorage.setItem("idComp", JSON.stringify(id));
 
@@ -14,12 +14,12 @@ function setLocalCompartment(id, name){
     localStorage.setItem("nameComp", JSON.stringify(name));
 }
 
-function setDropDownLocal(){
+function setDropDownLocal() {
     localStorage.removeItem("drop_id");
-    localStorage.setItem("drop_id",JSON.stringify(id));
+    localStorage.setItem("drop_id", JSON.stringify(id));
 }
 
-function searchFilter(){
+function searchFilter() {
     let items = JSON.parse(localStorage.getItem("properties"));
 
     let field = document.getElementById("propertySearch").value;
@@ -33,7 +33,7 @@ function searchFilter(){
     for (let i = 0; i < items.length; i++) {
         let string = JSON.stringify(items[i])
 
-        if (string.toLowerCase().includes(field.toLowerCase())){
+        if (string.toLowerCase().includes(field.toLowerCase())) {
             let new_html = `<td>
                             <div class="custom-control custom-checkbox">
                               <input type="checkbox" class="custom-control-input" id="2474">
@@ -96,7 +96,7 @@ function setAddPropertyDropDown() {
                 dropDown.removeChild(dropDown.firstChild);
             }
 
-            for (let i = 0; i < response.length; i++){
+            for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
 
                 option.text = response[i].name;
@@ -108,7 +108,7 @@ function setAddPropertyDropDown() {
     })
 }
 
-function saveCompartment(){
+function saveCompartment() {
     let property = document.getElementById("property").value;
     let floorNumber = document.getElementById("propertyFloor").value;
     let floorArea = document.getElementById("floorArea").value;
@@ -147,19 +147,19 @@ function saveCompartment(){
     })
 }
 
-function appendCompartments(){
+function appendCompartments() {
     let id = JSON.parse(localStorage.getItem("id"));
-        $.ajax({
-            url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/'+id,
-            type: 'GET',
-            success: function (response) {
-                let t_body = document.getElementById("t_body");
-                while (t_body.hasChildNodes()) {
-                    t_body.removeChild(t_body.firstChild);
-                }
+    $.ajax({
+        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id,
+        type: 'GET',
+        success: function (response) {
+            let t_body = document.getElementById("t_body");
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
 
-                for (let i = 0; i < response.length; i++){
-                    let html = `<td>
+            for (let i = 0; i < response.length; i++) {
+                let html = `<td>
 <!--                                                            <div class="custom-control custom-checkbox">-->
 <!--                                                                <input type="checkbox" class="custom-control-input" id="2474">-->
 <!--                                                                <label class="custom-control-label" for="2474"></label>-->
@@ -191,20 +191,20 @@ function appendCompartments(){
                                                                 <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('${response[i].id}')">View</a>
                                                             </div>
                                                         </td>`
-                    let tr = document.createElement("tr");
-                    tr.innerHTML = html;
+                let tr = document.createElement("tr");
+                tr.innerHTML = html;
 
-                    t_body.appendChild(tr);
-                }
+                t_body.appendChild(tr);
             }
-        });
+        }
+    });
 }
 
-function viewCompartment(){
+function viewCompartment() {
     let propertyName = JSON.parse(localStorage.getItem("nameProp"));
     let id = JSON.parse(localStorage.getItem("idComp"));
     $.ajax({
-        url: 'http://localhost:8090/api/compartment/get-compartment/'+id,
+        url: 'http://localhost:8090/api/compartment/get-compartment/' + id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="card-body">
@@ -285,8 +285,8 @@ function viewCompartment(){
             let propNameOne = document.getElementById("propNameOne");
             let propNameTwo = document.getElementById("propNameTwo");
 
-            propNameOne.innerText = "Compartment " + response.compartmentNumber;
-            propNameTwo.innerText = "compartment " + response.compartmentNumber;
+            propNameOne.innerText = "Lettable Space " + response.compartmentNumber;
+            propNameTwo.innerText = "Lettable Space " + response.compartmentNumber;
         }
     })
 }
@@ -446,7 +446,7 @@ function saveProperty() {
         },
         owner,
         assetValue,
-        dateAdded : new Date().toISOString().slice(0, 10),
+        dateAdded: new Date().toISOString().slice(0, 10),
         dateRegistered
     }
 
@@ -473,7 +473,7 @@ function saveProperty() {
     })
 }
 
-function viewProperty(){
+function viewProperty() {
     let id = JSON.parse(localStorage.getItem("id"));
     $.ajax({
         url: 'http://localhost:8090/api/property/get-property/' + id,
@@ -520,7 +520,7 @@ function viewProperty(){
                                             <dd class="col-sm-10"> ${response.addressObject.address} , ${response.addressObject.city} , ${response.addressObject.country}</dd>
                                         </dl>
                                         <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Property Owner Details</h5>
+                                        <h5 class="mb-2 mt-4">Property Contact Person Details</h5>
                                         <dl class="row align-items-center mb-0">
                                             <dt class="col-sm-2 mb-3 text-muted">Name</dt>
                                             <dd class="col-sm-4 mb-3">
@@ -997,7 +997,7 @@ function editPropertyOwnerAddress(id) {
         success: function (response) {
             let html = `                          <hr class="my-4">
                           <h5 class="mb-2 mt-4">Address</h5>
-                          <p class="mb-4">Input Property Owner Address</p>
+                          <p class="mb-4">Input Property Contact Person Address</p>
                           <div class="form-row">
                             <div class="form-group col-md-12">
                               <div class="form-group">
@@ -1060,6 +1060,7 @@ function updatePropertyOwnerAddress(id) {
     })
 }
 
+/*
 function discardEditPropertyOwnerAddress(id) {
     $.ajax({
         url: 'http://localhost:8090/api/address/get-address/' + id,
@@ -1101,6 +1102,7 @@ function discardEditPropertyOwnerAddress(id) {
         }
     })
 }
+*/
 
 //Property Owner Contact Details
 function editPropertyOwnerContactDetails(id) {
@@ -1160,6 +1162,7 @@ function updatePropertyOwnerContactDetails(id) {
     })
 }
 
+/*
 function discardEditPropertyOwnerContactDetails(id) {
     $.ajax({
         url: 'http://localhost:8090/api/contact-details/get-contact-details/' + id,
@@ -1193,6 +1196,7 @@ function discardEditPropertyOwnerContactDetails(id) {
         }
     })
 }
+*/
 
 function setPropertyDetails() {
     let id = JSON.parse(localStorage.getItem("id"))
