@@ -550,22 +550,68 @@ function getTenantsAssign() {
             type: 'GET',
             success: function (response) {
                 let items = response
-
+                console.log("All tenants");
                 console.log(response)
 
                 let tenant = document.getElementById("tenant_list").value;
                 // while (tenant_list.hasChildNodes()) {
                 //     tenant_list.removeChild(tenant_list.firstChild);
-                // }
-
-                for (let i = 0; i < items.length; i++) {
-                    if(tenant === items[i].name + items[i].surname){
+                let compart = document.getElementById("compartmentDropdown").value.toString();
 
 
+                $.ajax({
+                    url: 'http://localhost:8090/api/compartment/get-compartments',
+                    type: 'GET',
+                    success: function (response) {
+
+                        console.log("Compartments")
+                        console.log(response);
+
+                        let comps = response;
+                        for (let i = 0; i < comps.length; i++) {
+                            if (compart === comps[i].compartmentNumber) {
+
+
+                                for (let i = 0; i < items.length; i++) {
+                                    if (tenant === items[i].name + " " + items[i].surname) {
+
+                                        console.log("proceed")
+
+                                        $.ajax({
+                                            url: 'http://localhost:8090/api/compartment/update-compartment/'+comps[i].id,
+                                            type: 'PUT',
+                                            success: function (response) {
+
+                                                console.log("lastly")
+
+                                                console.log(response);
+                                                console.log("Sent!");
+
+                                                {
+                                                    tenant: items[i].id;
+                                                }
+
+
+                                            }
+
+                                        })
+
+                                    }
+                                }
+
+                            }
+                        }
                     }
-                }
+                })
 
-            }
+                        
+                    }
+
+
+
+
+
+
 
         })
 
