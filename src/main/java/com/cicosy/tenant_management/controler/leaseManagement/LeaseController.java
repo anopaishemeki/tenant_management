@@ -138,6 +138,11 @@ public class LeaseController {
 
     }
 
+    @GetMapping(path = "renewed")
+    public List<LeaseHistory> getExpired(LeaseHistory leaseHistory) {
+        return leaseService.getRenewed();
+    }
+
 
     @PutMapping(path = "renewlease/{leaseId}")
     public void renewlease(@PathVariable Long leaseId, @RequestBody Lease renewal, LeaseHistory leaseHistory, String status) {

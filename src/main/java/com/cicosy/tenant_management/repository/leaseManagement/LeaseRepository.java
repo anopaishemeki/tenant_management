@@ -36,6 +36,8 @@ public interface LeaseRepository
     @Query("select s from Lease s where s.timeLeft<=?1 and s.status<>'Terminated' order by s.timeLeft asc ")
      List<Lease> findbyExpirery(int time);
 
+
+
     @Query(value = "select p.email,p.phone from tenant p where p.name=?1 and p.surname=?2",nativeQuery = true)
     String findByEmail(String name, String surname);
 

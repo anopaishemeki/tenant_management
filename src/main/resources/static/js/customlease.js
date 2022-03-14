@@ -48,25 +48,8 @@ function saveLease() {
 
         return
     }
-    var yp = document.getElementById("rentalFee");
 
-    if (yp.value.toString().length == 0) {
-        alert("Rental Fee is Required", "danger");
-        var r = document.getElementById("retry");
-        r.setAttribute("style", "display:all");
 
-        return
-
-    }
-    var ys = document.getElementById("agreementDate");
-
-    if (ys.value.toString().length == 0) {
-        alert("Lease Agreement Date is Required!!", "danger");
-        var r = document.getElementById("retry");
-        r.setAttribute("style", "display:all");
-
-        return
-    }
     var qs = document.getElementById("file");
 
     if (qs.value.toString().length == 0) {
@@ -82,11 +65,8 @@ function saveLease() {
         "name": $("#leaseName").val(),
         "buildingName": $("#buildingName").val(),
         "buildingLocation": $("#buildingLocation").val(),
-        "rentalFee": $("#rentalFee").val(),
         "startDate": $("#startDate").val(),
-        "floorNumber": $("#floorNumber").val(),
         "duration": $("#duration").val(),
-        "agreementDate": $("#agreementDate").val(),
         "terms": $("#terms").val()
     };
     data.append("jsondata", JSON.stringify(jsonDataObj));
@@ -934,17 +914,18 @@ function T_Records() {
                         render:function(data){
                             return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
                         }},
-                    {"data":"rentalFee",
-                        render:function(data){
-                            return "<i class='fe fe-dollar-sign'></i>  "+data;
-                        }},
                     {"data":"buildingName",
                         render:function(data){
                             return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
                         }},
-                    {"data":"buildingLocation",
+
+                    {"data":"startDate",
                         render:function(data){
-                            return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
                         }},
                     {"data":"status",
                         "searchable":false,
@@ -958,10 +939,6 @@ function T_Records() {
 
                             }
                         }},
-                    {"data":"endDate",
-                        render:function(data){
-                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
-                        }},
                     {"data":"id",
                         "sortable":false,
                         "searchable":false,
@@ -971,7 +948,6 @@ function T_Records() {
                         }}
                     ],
                 autoWidth: true,
-                "scrollY":500,
                 "lengthMenu": [
                     [10, 25,50, 100, -1],
                     [10, 25,50, 100, "All"]
@@ -1056,10 +1032,6 @@ function getLeases() {
                     render:function(data){
                         return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
                     }},
-                    {"data":"rentalFee",
-                    render:function(data){
-                        return "<i class='fe fe-dollar-sign'></i>  "+data;
-                    }},
                     {"data":"buildingName",
                         render:function(data){
                             return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
@@ -1067,6 +1039,16 @@ function getLeases() {
                     {"data":"buildingLocation",
                         render:function(data){
                             return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
+                        }},
+
+                    {"data":"startDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i>  "+data;
+                        }},
+
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
                         }},
                     {"data":"status",
                     render:function(data){
@@ -1079,10 +1061,6 @@ function getLeases() {
 
                         }
                     }},
-                    {"data":"agreementDate",
-                        render:function(data){
-                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
-                        }},
                     {"data":"id",
                         "sortable":false,
                         "searchable":false,
@@ -1098,7 +1076,6 @@ function getLeases() {
                     }}
                 ],
                 autoWidth: true,
-                "scrollY":500,
                 "lengthMenu": [
                     [10, 25,50, 100, -1],
                     [10, 25,50, 100, "All"]
@@ -1188,6 +1165,150 @@ function getLeases() {
     })*/
 
 }
+
+//Get rened leases
+function getRenewedLeases() {
+
+    var baseurl = "http://localhost:8090/api/v1/lease/renewed";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
+            console.log(xmlhttp.responseText);
+            $("#dataTable").DataTable({
+                data:data,
+                columns:[
+                    {"data":"tenant_id"},
+                    {"data":"name",
+                        render:function(data){
+                            return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"buildingName",
+                        render:function(data){
+                            return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
+                        }},
+
+                    {"data":"startDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i>  "+data;
+                        }},
+
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"action",
+                        render:function(data){
+                            if(data==="Renewed"){
+                                return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                            } else if(data==="Expired"){
+                                return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                            }else{
+                                return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                            }
+                        }},
+                    {"data":"actionDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data.substr(0,10)+"</strong>"
+                        }},
+                    {"data":"actionDate",
+                        render:function(data){
+                            return "<i class='fe fe-clock'></i> <strong>"+data.substr(11,5)+"</strong>"
+                        }}
+                ],
+                autoWidth: true,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+    /* $.ajax({
+         url: 'http://localhost:8090/api/v1/lease/getleases',
+         type: 'GET',
+         success: function (response) {
+             let items = response
+
+             console.log(response)
+             localStorage.setItem("lease", JSON.stringify(items));
+
+
+
+            /!* var t_body = document.getElementById("t_body");
+
+             var numRecords =document.getElementById("recordsNumber").value;
+             while (t_body.hasChildNodes()) {
+                 t_body.removeChild(t_body.firstChild);
+             }
+             for (let i = 0; i < items.length; i++) {
+                 if(i<numRecords){
+                 let html = `<td class="sorting_1">  ${items[i].id}
+                         </td>
+                         <td>  ${items[i].name}
+                         </td>
+                         <td>  ${items[i].rentalFee}
+                         </td>
+                         <td> ${items[i].buildingName}
+                         </td>
+                         <td> ${items[i].buildingLocation}
+                         </td>
+                         <td > ${items[i].terms}
+                         </td>
+                         <td > ${items[i].status}
+                         </td>
+                         <td >${items[i].agreementDate}
+                     </td>
+                     <td>
+                         <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
+                                 data-toggle="dropdown" aria-haspopup="true"
+                                 aria-expanded="false" >
+                             <span class="text-muted sr-only">Action</span>
+                         </button>
+                         <div class="dropdown-menu dropdown-menu-right">
+                             <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
+                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
+                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
+                             <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
+                         </div>
+                     </td>`
+
+
+                 let tr = document.createElement("tr");
+                 if (i % 2 == 0) {
+                     tr.setAttribute("class", "even");
+                 } else {
+                     tr.setAttribute("class", "odd");
+                 }
+                 tr.setAttribute("role", "row");
+                 tr.innerHTML = html;
+
+
+                 t_body.appendChild(tr);
+                 }
+             }
+             var prev_item = document.getElementById("prev");
+             var page1_item = document.getElementById("page1");
+             var page2_item = document.getElementById("page2");
+             var page3_item = document.getElementById("page3");
+             var next_item = document.getElementById("next");
+             prev_item.disabled=true;
+             if(items.length<=numRecords){
+                 prev_item.disabled=true;
+                 page1_item.disabled=true;
+                 page2_item.disabled=true;
+                 page3_item.disabled=true;
+                 next_item.disabled=true;
+             }*!/
+            /!* hover()*!/
+         }
+     })*/
+
+}
+
 function hover() {
     var prev_item = document.getElementById("prev");
     var page1_item = document.getElementById("page1");
@@ -1228,11 +1349,23 @@ function getTenants() {
 
             console.log(response);
 
-            var t_body = document.getElementById("t_body");
+            var t_body = document.getElementById("leaseName");
 
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
+
+
+            let r = document.createElement("option");
+
+            var t = "Select Tenant Name";
+
+            r.setAttribute("disabled", "true");
+            r.setAttribute("value", "-1");
+
+            r.innerHTML = t;
+
+            t_body.appendChild(r);
 
 
             for (let i = 0; i < items.length; i++) {

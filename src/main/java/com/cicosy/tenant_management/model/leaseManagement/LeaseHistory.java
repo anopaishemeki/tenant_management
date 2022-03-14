@@ -39,15 +39,9 @@ public class LeaseHistory {
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDate agreementDate;
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
     private String buildingName;
     private String buildingLocation;
-    private int rentalFee;
-    private int floorNumber;
     private String terms;
     @Transient
     private int duration;
@@ -68,10 +62,6 @@ public class LeaseHistory {
         this.name = name;
     }
 
-    public void setAgreementDate(LocalDate agreementDate) {
-        this.agreementDate = agreementDate;
-    }
-
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
@@ -88,13 +78,7 @@ public class LeaseHistory {
         this.buildingLocation = buildingLocation;
     }
 
-    public void setRentalFee(int rentalFee) {
-        this.rentalFee = rentalFee;
-    }
 
-    public void setFloorNumber(int floorNumber) {
-        this.floorNumber = floorNumber;
-    }
 
     public void setTerms(String terms) {
         this.terms = terms;
@@ -121,9 +105,7 @@ public class LeaseHistory {
         return name;
     }
 
-    public LocalDate getAgreementDate() {
-        return agreementDate;
-    }
+
 
     public LocalDate getStartDate() {
         return startDate;
@@ -137,13 +119,6 @@ public class LeaseHistory {
         return buildingLocation;
     }
 
-    public int getRentalFee() {
-        return rentalFee;
-    }
-
-    public int getFloorNumber() {
-        return floorNumber;
-    }
 
     public String getTerms() {
         return terms;
