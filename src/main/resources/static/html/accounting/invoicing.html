@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Payments  | Tenant Management System</title>
+    <title>Invoicing | Tenant Management System</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="../../css/simplebar.css">
     <!-- Fonts CSS -->
@@ -125,7 +125,8 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Portfolio List</span>
+                            <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span
+                                    class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -133,7 +134,8 @@
                                     class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Lettable space</span></a>
+                            <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span
+                                    class="ml-1 item-text">Add Lettable space</span></a>
                         </li>
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>-->
@@ -484,8 +486,9 @@
                         <div class="col-md-12 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
-                                    <h5 class="card-title">Payments List</h5>
-                                    <p class="card-text">Below is a list of all payments, you can use the available filters to view required records</p>
+                                    <h5 class="card-title">Invoice List</h5>
+                                    <p class="card-text">Below is a list of all invoices, you can use the available
+                                        filters to view required records</p>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-row">
@@ -551,14 +554,12 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Date</th>
-                                                    <!--                              <th>ID #</th>-->
-                                                    <th>Reference #</th>
-                                                    <th>Company/Tenant</th>
-                                                    <th>Payment Method</th>
-                                                    <th>Invoice #</th>
-                                                    <th>Amount</th>
-<!--                                                    <th>View</th>-->
-                                                    <!--                              <th>Status</th>-->
+                                                    <th>ID #</th>
+                                                    <th>Compartment</th>
+                                                    <th>Due Date</th>
+                                                    <th>Invoice Total</th>
+                                                    <th>Status</th>
+                                                    <th>View</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody id="t_body">
@@ -604,7 +605,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="verticalModalTitle">Create Payment</h5>
+                        <h5 class="modal-title" id="verticalModalTitle">Create Invoice</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -616,7 +617,8 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="simple-select33">Select Property</label>
-                                        <select class="form-control select2" id="simple-select33" oninput="setLettableSpaceDropdown()">
+                                        <select class="form-control select2" id="simple-select33"
+                                                oninput="setLettableSpaceDropdown()">
                                             <optgroup label="Alaskan/Hawaiian Time Zone">
                                                 <option value="-1">Alaska</option>
                                                 <option value="HI">Hawaii</option>
@@ -632,7 +634,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="simple-select44">Select Lettable Space</label>
-                                        <select class="form-control select2" id="simple-select44" >
+                                        <select class="form-control select2" id="simple-select44" oninput="appendLettableSpace()">
                                             <optgroup label="Alaskan/Hawaiian Time Zone">
                                                 <option value="AK">Alaska</option>
                                                 <option value="HI">Hawaii</option>
@@ -647,20 +649,94 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="simple-select55">Select Invoice</label>
-                                        <select class="form-control select2" id="simple-select55">
-                                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                <option value="100">Alaska</option>
-                                                <option value="HI">Hawaii</option>
-                                            </optgroup>
-                                            <optgroup label="Pacific Time Zone">
-                                                <option value="CA">California</option>
-                                                <option value="NV" disabled="disabled">Nevada (disabled)
-                                                </option>
-                                                <option value="OR">Oregon</option>
-                                                <option value="WA">Washington</option>
-                                            </optgroup>
-                                        </select>
+                                        <label for="date-input2">Due Date</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control drgpicker"
+                                                   id="date-input2" value="04/24/2020"
+                                                   aria-describedby="button-addon2">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text" id="button-addon-date2"><span
+                                                        class="fe fe-calendar fe-16"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mb-3 bg-light w-100">
+                                    <div class="form-row no-gutters align-items-center">
+                                        <!--<div class="col-md-2 text-center">
+                                            <img src="./assets/products/p1.jpg" alt="..." class="img-fluid rounded m-1">
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="card-body py-0">
+                                                <p class="card-title mb-0">New screenshot-12.png</p>
+                                                <div class="card-text my-0 text-muted small"><span class="mr-2">1.2M</span><span class="mr-2">SVG</span></div>
+                                            </div>
+                                        </div>-->
+
+                                        <div class="form-group col-md-12">
+                                            <label for="multi-select2">Select services</label>
+                                            <select class="form-control select2-multi"
+                                                    id="multi-select2" oninput="appendServices()">
+                                                <optgroup label="Select offense">
+                                                    <option value="-1"></option>
+                                                    <option value="Reckless Driving">Reckless Driving</option>
+                                                    <option value="Late Departures">Late Departures</option>
+                                                    <option value="Poor Customer Service">Poor Customer Service</option>
+                                                    <option value="Overcharging">Overcharging</option>
+                                                    <option value="Operators Consuming Alcohol">Operators Consuming Alcohol</option>
+                                                    <option value="Driving on oncoming traffic lane">Driving on oncoming traffic lane </option>
+                                                    <option value="Accident">Accident</option>
+                                                    <option value="Hit and run">Hit and run</option>
+                                                    <option value="Corruption / Bribery">Corruption / Bribery</option>
+                                                </optgroup>
+                                            </select>
+                                        </div> <!-- form-group -->
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Lettable space</th>
+                                                <th>Square Area</th>
+                                                <th>Rate</th>
+                                                <th>Total</th>
+                                                <!--<th>Status</th>
+                                                <th>View</th>-->
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr id="t_body-2">
+
+                                                </tr>
+                                                <tr>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-hover table-sm">
+                                                                <thead>
+                                                                <label><strong>Selected services</strong></label>
+                                                                <tr>
+                                                                    <th>Service Name</th>
+                                                                    <th>Amount</th>
+                                                                    <!--<th>Bill To</th>
+                                                                    <th>Due Date</th>
+                                                                    <th>Invoice Total</th>
+                                                                    <th>Status</th>
+                                                                    <th>View</th>-->
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody id="t_body-3">
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -874,7 +950,7 @@
 <script src='../../js/dropzone.min.js'></script>
 <script src='../../js/uppy.min.js'></script>
 <script src='../../js/quill.min.js'></script>
-<script src='../../js/customPayment.js'></script>
+<script src='../../js/CustomInvoice.js'></script>
 
 <script>
     $('.select2').select2(

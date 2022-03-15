@@ -170,15 +170,12 @@ public class LeaseService {
         leaseRepository.save(lease);
 
         lease_history.setTenant_id(lease.getId().intValue());
-        lease_history.setAgreementDate(lease.getAgreementDate());
         lease_history.setBuildingLocation(lease.getBuildingLocation());
         lease_history.setBuildingName(lease.getBuildingName());
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setFloorNumber(lease.getFloorNumber());
         lease_history.setName(lease.getName());
-        lease_history.setRentalFee(lease.getRentalFee());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction("Added");
@@ -281,16 +278,6 @@ public class LeaseService {
             lease.setBuildingName(update.getBuildingName());
         }
 
-
-        if (update.getRentalFee() > 0 &&
-                !Objects.equals(lease.getRentalFee(), update.getRentalFee())) {
-            lease.setRentalFee(update.getRentalFee());
-        }
-        if (update.getFloorNumber() > 0 &&
-                !Objects.equals(lease.getFloorNumber(), update.getFloorNumber())) {
-            lease.setFloorNumber(update.getFloorNumber());
-        }
-
         if (update.getTerms() != null &&
                 update.getTerms().length() > 0 &&
                 !Objects.equals(lease.getTerms(), update.getTerms())) {
@@ -324,15 +311,12 @@ public class LeaseService {
 
 
         lease_history.setTenant_id(lease.getId().intValue());
-        lease_history.setAgreementDate(lease.getAgreementDate());
         lease_history.setBuildingLocation(lease.getBuildingLocation());
         lease_history.setBuildingName(lease.getBuildingName());
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setFloorNumber(lease.getFloorNumber());
         lease_history.setName(lease.getName());
-        lease_history.setRentalFee(lease.getRentalFee());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction(status);
@@ -407,6 +391,10 @@ public class LeaseService {
 
     }
 
+   @Transactional
+   public List<LeaseHistory> getRenewed(){
+        return leaseHistoryRepository.getRenewed();
+   }
 
     @Transactional
     public List<Lease> getExpiredLeases(String status) {

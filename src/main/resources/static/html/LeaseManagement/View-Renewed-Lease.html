@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="../../css/feather.css">
+    <link rel="stylesheet" href="../../css/all.css">
+    <link rel="stylesheet" href="../../css/customlease.css">
     <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
@@ -20,7 +22,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="T_Records()" id="body">
+<body class="vertical  light  " id="body" onload="getRenewedLeases()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -207,44 +209,148 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="mb-2 page-title">Lease Termnination Table</h2>
+                    <h2 class="mb-2 page-title">Renewed Leases Table</h2>
                     <p class="card-text">lease management</p>
                     <div class="row my-4">
                         <!-- Small table -->
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
-
                                     <!-- table -->
+                                   <!-- <table class="table dataTables table-hover  table-borderless border-v" id="dataTable" style="width: 100%!important;">-->
                                     <table class="table dataTables  table-hover" id="dataTable" style="width:100%!important;">
                                         <thead class="thead-dark">
-                                        <tr>
+                                        <tr role="row" >
 
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Building Name</th>
                                             <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th>Expiry Date</th>
                                             <th>Status</th>
-                                            <th>Terminate</th>
+                                            <th>Action Date</th>
+                                            <th>Action Time</th>
                                         </tr>
                                         </thead>
-                                        <!--<tbody id="t_body">
-                                        <tr>
-
-                                            <td>368</td>
-                                            <td>Imani Lara</td>
-                                            <td>$300</td>
-                                            <td>Joina City</td>
-                                            <td>Harare</td>
-
-                                            <td>Active</td>
-                                            <td>Jun 8, 2019</td>
-                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
-                                        </tr>
-
-                                        </tbody>-->
+                                      <!--  <tbody id="t_body"></tbody>-->
                                     </table>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                                         data-bs-keyboard="false" >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Termination
+                                                        Dialog</h5>
+                                                    <a href="View-Lease.html">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="alert alert-info" role="alert" id="alerrt">
+                                                        <p id="alrt" style="visibility: visible">Are You Sure you want
+                                                            to Terminate This Lease</p>
+
+                                                        <div id="liveAlertPlaceholder">
+                                                            <button id="ldiD" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                                Terminating ...
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
+
+
+                                                    <a href="View-Lease.html">
+                                                        <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal" id="Close"
+                                                                style="display: none">Close
+                                                        </button>
+                                                    </a>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
+                                                    </button>
+                                                    <button type="button" id="liveAlertBtn" class="btn btn-primary"
+                                                            onclick="Terminate()">Yes
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="renewal" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                                         data-bs-keyboard="false">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Renewal
+                                                        Dialog</h5>
+                                                    <a href="View-Lease.html">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </a>
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <div class="alert alert-info" role="alert" id="alerrt">
+                                                        <div id="liveAlertPlaceholder2">
+                                                            <button id="ldID" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                                Renewing ...
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
+                                                        <div id="renewalInfo">
+                                                            <div class="form-group col-md-12">
+                                                                <label for="id2">ID = </label>
+                                                                <label id="id2"></label>
+                                                                <div class="valid-feedback"></div>
+
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <label for="TenantName2">Tenant Name:</label>
+                                                                <input type="text" class="form-control" id="TenantName2"
+                                                                       disabled>
+                                                                <div class="valid-feedback"></div>
+
+                                                            </div>
+                                                            <div class="form-group col-md-12 mb-3">
+                                                                <label for="startDate2">Start Date</label>
+                                                                <input class="form-control" id="startDate2" type="date"
+                                                                       name="startDate"
+                                                                       required>
+                                                            </div>
+                                                            <div class="form-group col-md-12 mb-3">
+                                                                <label for="duration2">Duration :</label>
+                                                                <input class="form-control" id="duration2" type="number"
+                                                                       name="duration"
+                                                                       required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
+
+                                                    <a href="View-Lease.html">
+                                                        <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal" id="Close2"
+                                                                style="display: none">OK
+                                                        </button>
+                                                    </a>
+
+                                                    <button id="liveAlertBtn2" class="btn btn-primary"
+                                                            onclick="renewlease()">
+                                                        Submit Renewal
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div> <!-- simple table -->
@@ -252,54 +358,8 @@
                 </div> <!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-
-        <div class="modal fade" id="exampleModal" tabindex="-1"
-             aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
-             data-bs-keyboard="false" >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Lease Termination
-                            Dialog</h5>
-                        <a href="View-Lease.html">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </a>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-info" role="alert" id="alerrt">
-                            <p id="alrt" style="visibility: visible">Are You Sure you want
-                                to Terminate This Lease</p>
-
-                            <div id="liveAlertPlaceholder">
-                                <button id="ldID" style="background: none;display:none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
-                                    Terminating ...
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-
-
-                        <a href="Terminate-Lease.html">
-                            <button type="button" class="btn btn-danger"
-                                    data-bs-dismiss="modal" id="Close"
-                                    style="display: none">Close
-                            </button>
-                        </a>
-                        <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
-                        </button>
-                        <button type="button" id="liveAlertBtn" class="btn btn-primary"
-                                onclick="Terminate()">Yes
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-             aria-hidden="true">
+             aria-hidden="true" >
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -428,11 +488,9 @@
         </div>
     </main> <!-- main -->
 </div> <!-- .wrapper -->
-
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/popper.min.js"></script>
 <script src="../../js/moment.min.js"></script>
-<script src="../../js/select2.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/simplebar.min.js"></script>
 <script src='../../js/daterangepicker.js'></script>
@@ -441,10 +499,11 @@
 <script src="../../js/config.js"></script>
 <script src='../../js/jquery.dataTables.min.js'></script>
 <script src='../../js/dataTables.bootstrap4.min.js'></script>
+
 <script src="../../js/apps.js"></script>
 <script src="../../js/customlease.js"></script>
 <script src='../../js/bootstrap.bundle.min.js'></script>
-
+<script src="../../js/select2.min.js"></script>
 
 <script>
     $('.select2').select2(
@@ -453,6 +512,7 @@
         });
     $('.select2-multi').select2(
         {
+
             multiple: true,
             theme: 'bootstrap4',
         });
@@ -631,12 +691,13 @@
         {
             autoWidth: true,
             "lengthMenu": [
-                [16, 32, 64, -1],
-                [16, 32, 64, "All"]
+                [10, 25,50, 100, -1],
+                [10, 25,50, 100, "All"]
             ]
         });
 </script>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -649,7 +710,14 @@
     gtag('config', 'UA-56159088-1');
 </script>
 
+
+
 <script src='../../js/select2.min.js'></script>
+
+<script src='../../js/jquery.validate.min.js'></script>
+
+
+
 
 </body>
 </html>
