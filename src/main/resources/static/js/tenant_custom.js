@@ -683,7 +683,6 @@ function setAddCompartmentDropDown(id) {
                 dropDown.appendChild(option);
             }
 
-//fgjhk
 
         }
     })
