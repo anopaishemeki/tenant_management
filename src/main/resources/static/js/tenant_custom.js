@@ -530,6 +530,10 @@ function getCompartmentDetails(){
 
 }
 
+function setDropDownLocal() {
+    localStorage.removeItem("drop_id");
+    localStorage.setItem("drop_id", JSON.stringify(id));
+}
 
 function searchFilter() {
     let items = JSON.parse(localStorage.getItem("properties"));
@@ -644,35 +648,6 @@ function setAddTenantDropDown() {
     })
 }
 
-
-function tenantAssignLocalTenant(tenant_id) {
-    localStorage.removeItem("tenant_id");
-    localStorage.setItem("tenant_id", JSON.stringify(tenant_id));
-
-
-}
-
-function tenantAssignLocalCompartment(compartment_id){
-    localStorage.removeItem("compartment_id");
-    localStorage.setItem("compartment_id", JSON.stringify(compartment_id));
-}
-function onSetTenants() {
-
-    // console.log("tenant_id");
-    var select = document.getElementById("tenant_list");
-
-    var selected = select.options[select.selectedIndex];
-
-
-    // setDropDownLocal(id);
-    var tenant_id = selected.value;
-    console.log(tenant_id);
-
-    tenantAssignLocalTenant(tenant_id)
-
-
-}
-
 function onSetProperty() {
     var select = document.getElementById("property-dropdown");
 
@@ -680,18 +655,17 @@ function onSetProperty() {
 
 
     // setDropDownLocal(id);
-    var compartment_id = selected.value;
+    var id = selected.value;
 
 
-    setAddCompartmentDropDown(compartment_id);
-    tenantAssignLocalCompartment(compartment_id)
+    setAddCompartmentDropDown(id);
 }
 
-function setAddCompartmentDropDown(compartment_id) {
+function setAddCompartmentDropDown(id) {
 
     $.ajax({
 
-        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + compartment_id,
+        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -710,39 +684,9 @@ function setAddCompartmentDropDown(compartment_id) {
             }
 
 
-
         }
     })
 }
-
- function setTenantOnCompartment(){
-    let id = JSON.parse(localStorage.getItem("compartment_id"));
-
-    let tenant_id = JSON.parse(localStorage.getItem("tenant_id"));
-    console.log(id);
-    console.log(tenant_id)
-     var data= {
-        "tenant": tenant_id
-     }
-     $.ajax({
-
-         url: 'http://localhost:8090/api/compartment/update-compartment/'+ id,
-         type: 'PUT',
-         dataType:"json",
-         crossDomain:"true",
-         contentType:"application/json; charset=utf-8",
-         data:JSON.stringify(data),
-         success: function () {
-
-            console.log(" Done!"
-            );
-
-//fgjhk
-
-         }
-     })
-
- }
 
 
 
