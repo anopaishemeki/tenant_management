@@ -160,3 +160,8 @@ function appendLettableSpace(){
     }
 
 }
+
+function appendServices(){
+    let space = document.getElementById('multi-select2').value;
+
+}

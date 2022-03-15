@@ -676,8 +676,9 @@
                                         <div class="form-group col-md-12">
                                             <label for="multi-select2">Select services</label>
                                             <select class="form-control select2-multi"
-                                                    id="multi-select2" >
+                                                    id="multi-select2" oninput="appendServices()">
                                                 <optgroup label="Select offense">
+                                                    <option value="-1"></option>
                                                     <option value="Reckless Driving">Reckless Driving</option>
                                                     <option value="Late Departures">Late Departures</option>
                                                     <option value="Poor Customer Service">Poor Customer Service</option>
