@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light" onload="getTenantsAssign()">
+<body class="vertical  light" onload="getTenantsAssign();setAddTenantDropDown();setAddCompartmentDropDown();setAddPropertyDropDown()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -419,10 +419,11 @@
                                 <select id="tenant_list" class="form-control">
                                     <option>Choose...</option>
                                 </select>
+<!--                                //fghvvgvgvhgvgvhvhg-->
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="building_option">Building</label>
-                                <select id="building_option" class="form-control" onchange="getCompartmentDetails()">
+                                <label for="property-dropdown">Building</label>
+                                <select id="property-dropdown" class="form-control" onchange="onSetProperty()">
                                     <option selected>Choose...</option>
 
                                 </select>

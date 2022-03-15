@@ -36,58 +36,39 @@ public class Lease {
     private Long id;
     private String name;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDate agreementDate;
-
    // @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
    @JsonDeserialize(using = LocalDateDeserializer.class)
    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
     private String buildingName;
     private String buildingLocation;
-    private int rentalFee;
-    private int floorNumber;
     private String terms;
-    private String email;
-    private String phone;
     private int duration;
     private LocalDate endDate;
     private int timeLeft;
-
     private String status;
 
 
     public Lease(String name,
-                 LocalDate agreementDate, LocalDate startDate,
+                 LocalDate startDate,
                  LocalDate endDate,
                  String buildingName,
                  String buildingLocation,
-                 int floorNumber,
-                 int rentalFee,
                  String status,
-                 String email,
-                 String phone,
                  int duration,
                  int timeLeft,
                  String terms
 
     ) {
         this.name = name;
-        this.agreementDate = agreementDate;
+
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;
         this.timeLeft=timeLeft;
         this.status = status;
-        this.email=email;
-        this.phone=phone;
-        this.floorNumber = floorNumber;
         this.buildingName = buildingName;
         this.buildingLocation = buildingLocation;
-        this.rentalFee = rentalFee;
-
         this.terms = terms;
 
     }
@@ -96,36 +77,26 @@ public class Lease {
 
     public Lease(Long id,
                  String name,
-                 LocalDate agreementDate,
+
                  LocalDate startDate,
                  LocalDate endDate,
                  String buildingName,
                  int timeLeft,
                  String buildingLocation,
                  String status,
-                 String email,
-                 String phone,
-                 int floorNumber,
                  int duration,
-                 int rentalFee,
                  String terms
 
     ) {
         this.id = id;
-        this.agreementDate = agreementDate;
         this.duration = duration;
         this.timeLeft=timeLeft;
         this.name = name;
-        this.email=email;
-        this.phone=phone;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.floorNumber = floorNumber;
         this.buildingName = buildingName;
         this.buildingLocation = buildingLocation;
-        this.rentalFee = rentalFee;
-
         this.terms = terms;
 
     }
@@ -151,9 +122,7 @@ public class Lease {
         return id;
     }
 
-    public LocalDate getAgreementDate() {
-        return agreementDate;
-    }
+
 
     public String getName() {
         return name;
@@ -171,19 +140,9 @@ public class Lease {
         return buildingLocation;
     }
 
-    public int getRentalFee() {
-        return rentalFee;
-    }
-
     public int getTimeLeft() {
         return timeLeft;
     }
-
-    public int getFloorNumber() {
-        return floorNumber;
-    }
-
-
     public String getTerms() {
         return terms;
     }
@@ -208,14 +167,6 @@ public class Lease {
         this.buildingLocation = buildingLocation;
     }
 
-    public void setRentalFee(int rentalFee) {
-        this.rentalFee = rentalFee;
-    }
-
-    public void setFloorNumber(int floorNumber) {
-        this.floorNumber = floorNumber;
-    }
-
     public void setTerms(String terms) {
         this.terms = terms;
     }
@@ -230,7 +181,6 @@ public class Lease {
     }
 
     public void setTimeLeft(int timeLeft) {
-//        timeLeft=Period.between(LocalDate.now(),this.endDate).getDays();
         this.timeLeft = timeLeft;
     }
 
