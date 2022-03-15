@@ -709,7 +709,7 @@ function setAddCompartmentDropDown(compartment_id) {
                 dropDown.appendChild(option);
             }
 
-//fgjhk
+
 
         }
     })
