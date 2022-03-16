@@ -26,7 +26,7 @@ public class InvoiceService {
     }
 
     public List<Invoice> getByTenant(Long id){
-        return invoiceRepository.findByTenant(id);
+        return invoiceRepository.findByCompartment(id);
     }
 
     public Invoice getById(Long id){

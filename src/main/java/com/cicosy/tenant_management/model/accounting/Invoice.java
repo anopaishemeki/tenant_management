@@ -3,7 +3,6 @@ package com.cicosy.tenant_management.model.accounting;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -24,20 +23,22 @@ public class Invoice {
             generator = "invoice_sequence"
     )
     private Long id;
-    private Long tenant;
+    private Long compartment;
 //    private Object services;
     private String dateIssued;
     private String forTheMonthOf;
     private double amount;
     private String dueDate;
+    private String status;
     private Long user;
 
-    public Invoice(Long tenant, String dateIssued, String forTheMonthOf, double amount, String dueDate, Long user) {
-        this.tenant = tenant;
+    public Invoice(Long compartment, String dateIssued, String forTheMonthOf, double amount, String dueDate, String status, Long user) {
+        this.compartment = compartment;
         this.dateIssued = dateIssued;
         this.forTheMonthOf = forTheMonthOf;
         this.amount = amount;
         this.dueDate = dueDate;
+        this.status = status;
         this.user = user;
     }
 }
