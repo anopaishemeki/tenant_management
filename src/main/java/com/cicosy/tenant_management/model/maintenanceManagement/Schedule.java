@@ -28,7 +28,15 @@ public class Schedule {
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
 //    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate scheduleDate ;
+    private String team;
 
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
 
     public Long getId() {
 //        if (scheduleDate.isBefore(LocalDate.now())) {

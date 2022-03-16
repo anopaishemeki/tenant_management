@@ -192,7 +192,8 @@ function schedule(){
     var id = JSON.parse(localStorage.getItem("id"));
     var jsonDataObj = {
         "schedule":{
-            "scheduleDate":$("#date-input1").val()
+            "scheduleDate":$("#date-input1").val(),
+            "team":$("#teamInput").val()
         }
 
 
@@ -322,6 +323,18 @@ function getScheduled() {
 
                             if (!schedule) {
                                 return 'unscheduled';
+                            } else {
+                                return schedule;
+                            }
+                        }
+                    },
+                    {
+                        "data": "schedule.team",
+                        "render": function (schedule) {
+
+
+                            if (!schedule) {
+                                return 'unassigned';
                             } else {
                                 return schedule;
                             }
@@ -616,4 +629,49 @@ function searchFilterAttended(){
             t_body.appendChild(tr);
         }
     }
+}
+
+function saveRequest() {
+    let request = document.getElementById("request").value
+    let levelOfUrgency = document.getElementById("levelOfUrgency").value
+    let description = document.getElementById("description").value
+
+    let data = {
+        request,
+        levelOfUrgency,
+        description
+    }
+    console.log("data",data)
+
+    $.ajax({
+        url: 'http://localhost:8090/api/maintenance',
+        type: 'POST',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            // alert("success" + response)
+            console.log("response",response)
+            // getProperties();
+            // let element = document.getElementById("successModal");
+            $('#toast').modal('show')
+
+            document.getElementById("_form").reset();
+        },
+        error:function (error){
+
+            if(error.status.toString()==="200"){
+                let element = document.getElementById("toast");
+
+                $('#successModal').modal('show')
+
+
+                document.getElementById("_form").reset();
+
+            }else{
+                console.log("error",error)
+            }
+        }
+    })
 }
