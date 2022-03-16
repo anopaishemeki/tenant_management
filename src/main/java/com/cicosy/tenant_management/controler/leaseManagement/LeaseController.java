@@ -2,25 +2,26 @@ package com.cicosy.tenant_management.controler.leaseManagement;
 
 
 import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
-import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
-import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.List;
+
 
 @RestController
 @RequestMapping(path = "api/v1/lease")
@@ -61,6 +62,39 @@ public class LeaseController {
     }
 
 
+    @GetMapping(path = "getform/{ID}")
+    public String getFormName(@PathVariable String ID) {
+        return leaseService.getFormName(ID);
+
+    }
+
+
+    @GetMapping("/download/{fileName}")
+    ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
+
+        Resource resource = leaseService.downloadFile(fileName);
+
+        MediaType contentType = MediaType.APPLICATION_PDF;
+
+        String mimeType;
+
+        try {
+            mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException e) {
+            mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        }
+        mimeType = mimeType == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE : mimeType;
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(mimeType))
+//                .contentType(contentType)
+               .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName="+resource.getFilename())
+                //.header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
+                .body(resource);
+    }
+
+
+
     ObjectMapper objectmapper = new ObjectMapper();
 
     @RequestMapping(path = "addlease", method = RequestMethod.POST,
@@ -74,12 +108,16 @@ public class LeaseController {
         Lease lease = objectmapper.readValue(jsondata, Lease.class);
 
         leaseService.addNewLease(lease, leaseHistory);
+        String ID=lease.getId().toString();
 
 
         String message = "";
+
+
         try {
 
-            leaseDocumentService.store(file);
+            leaseDocumentService.store(file,ID);
+
 
             message = "Record Saved with Agreement file successfully : " + file.getOriginalFilename();
 
@@ -136,6 +174,11 @@ public class LeaseController {
         leaseService.SaveToHistory(leaseId, leaseHistory, Status);
 
 
+    }
+
+    @GetMapping(path = "renewed")
+    public List<LeaseHistory> getExpired(LeaseHistory leaseHistory) {
+        return leaseService.getRenewed();
     }
 
 

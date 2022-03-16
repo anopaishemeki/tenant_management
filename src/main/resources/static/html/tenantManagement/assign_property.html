@@ -416,10 +416,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="tenant_list">Tenant</label>
-                                <select id="tenant_list" class="form-control">
+                                <select id="tenant_list" class="form-control" onchange="onSetTenants()">
                                     <option>Choose...</option>
                                 </select>
-<!--                                //fghvvgvgvhgvgvhvhg-->
+<!--                                //fggvhgvgvhvhg-->
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="property-dropdown">Building</label>
@@ -451,7 +451,7 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-primary" type="button">Add Tenant</button>
+                        <button class="btn btn-primary" type="button" onclick="setTenantOnCompartment()">Add Tenant</button>
 <!--                    </form>-->
 
                 </div>

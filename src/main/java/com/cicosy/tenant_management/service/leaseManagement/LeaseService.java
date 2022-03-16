@@ -2,20 +2,25 @@ package com.cicosy.tenant_management.service.leaseManagement;
 
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
-import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class LeaseService {
@@ -170,15 +175,12 @@ public class LeaseService {
         leaseRepository.save(lease);
 
         lease_history.setTenant_id(lease.getId().intValue());
-        lease_history.setAgreementDate(lease.getAgreementDate());
         lease_history.setBuildingLocation(lease.getBuildingLocation());
         lease_history.setBuildingName(lease.getBuildingName());
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setFloorNumber(lease.getFloorNumber());
         lease_history.setName(lease.getName());
-        lease_history.setRentalFee(lease.getRentalFee());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction("Added");
@@ -281,16 +283,6 @@ public class LeaseService {
             lease.setBuildingName(update.getBuildingName());
         }
 
-
-        if (update.getRentalFee() > 0 &&
-                !Objects.equals(lease.getRentalFee(), update.getRentalFee())) {
-            lease.setRentalFee(update.getRentalFee());
-        }
-        if (update.getFloorNumber() > 0 &&
-                !Objects.equals(lease.getFloorNumber(), update.getFloorNumber())) {
-            lease.setFloorNumber(update.getFloorNumber());
-        }
-
         if (update.getTerms() != null &&
                 update.getTerms().length() > 0 &&
                 !Objects.equals(lease.getTerms(), update.getTerms())) {
@@ -324,15 +316,12 @@ public class LeaseService {
 
 
         lease_history.setTenant_id(lease.getId().intValue());
-        lease_history.setAgreementDate(lease.getAgreementDate());
         lease_history.setBuildingLocation(lease.getBuildingLocation());
         lease_history.setBuildingName(lease.getBuildingName());
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setFloorNumber(lease.getFloorNumber());
         lease_history.setName(lease.getName());
-        lease_history.setRentalFee(lease.getRentalFee());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction(status);
@@ -407,6 +396,10 @@ public class LeaseService {
 
     }
 
+   @Transactional
+   public List<LeaseHistory> getRenewed(){
+        return leaseHistoryRepository.getRenewed();
+   }
 
     @Transactional
     public List<Lease> getExpiredLeases(String status) {
@@ -537,6 +530,36 @@ public class LeaseService {
     public String findTenantEmail(String name, String surname) {
 
         return leaseRepository.findByEmail(name, surname);
+    }
+    public String getFormName( String ID) {
+        return leaseRepository.findTenantForm(ID);
+    }
+    public Resource downloadFile(String fileName) {
+
+        String DocumentPath="src/main/resources/static/assets/uploads";
+//        File pathAsFile = new File(DocumentPath);
+
+
+
+//        byte[]  data =file.getBytes();
+//        Path path = Paths.get(DocumentPath+file.getOriginalFilename());
+
+
+        Path path = Paths.get(DocumentPath).toAbsolutePath().resolve(fileName);
+
+        Resource resource;
+        try {
+            resource = new UrlResource(path.toUri());
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Issue in reading the file", e);
+        }
+
+        if(resource.exists() && resource.isReadable()){
+            return resource;
+        }else{
+            throw new RuntimeException("the file doesn't exist or not readable");
+        }
     }
 
     public List<Lease> getLeaseBySearch(String record) {

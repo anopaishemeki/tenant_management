@@ -30,6 +30,7 @@ public class Payment {
     private Long compartment;
     private Long property;
     private Long type;
+    @Column(unique=true)
     private String reference;
     private Long capturedBy;
     private double amount;

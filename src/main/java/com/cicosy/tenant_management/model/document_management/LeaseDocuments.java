@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 
@@ -37,6 +38,9 @@ public class LeaseDocuments {
 	
 	@Column(name = "file_size")
 	private String fileSize;
+
+    @Column(name = "tenant_id" )
+    private String tenant_id;
 	
 
 	public LeaseDocuments() {
@@ -53,11 +57,12 @@ public class LeaseDocuments {
 		
 	}
 
-	public LeaseDocuments(String fileName, String filePath, String fileType, String fileSize) {
+	public LeaseDocuments(String fileName, String filePath,  String fileSize,String fileType,String tenant_id) {
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileType = fileType;
 		this.fileSize = fileSize;
+		this.tenant_id=tenant_id;
 	}
 
 	public Long getId() {
@@ -101,12 +106,24 @@ public class LeaseDocuments {
 		this.fileSize = fileSize;
 	}
 
+    public String getTenant_id() {
+        return tenant_id;
+    }
+
+    public void setTenant_id(String tenant_id) {
+	    if(tenant_id.isEmpty()){
+	        tenant_id="null";
+        }else{
+            this.tenant_id = tenant_id;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "LeaseDocuments [id=" + id +  ", fileName=" + fileName
+                + ", filePath=" + filePath + ", fileType=" + fileType +", tenant_id=" + tenant_id + ", fileSize=" + fileSize +"]";
+    }
 
 
-	@Override
-	public String toString() {
-		return "LeaseDocuments [id=" + id +  ", fileName=" + fileName
-				+ ", filePath=" + filePath + ", fileType=" + fileType + ", fileSize=" + fileSize +"]";
-	}
-	
 }
