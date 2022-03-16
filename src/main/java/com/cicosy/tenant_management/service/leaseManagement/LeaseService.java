@@ -2,20 +2,25 @@ package com.cicosy.tenant_management.service.leaseManagement;
 
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
-import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class LeaseService {
@@ -525,6 +530,36 @@ public class LeaseService {
     public String findTenantEmail(String name, String surname) {
 
         return leaseRepository.findByEmail(name, surname);
+    }
+    public String getFormName( String ID) {
+        return leaseRepository.findTenantForm(ID);
+    }
+    public Resource downloadFile(String fileName) {
+
+        String DocumentPath="src/main/resources/static/assets/uploads";
+//        File pathAsFile = new File(DocumentPath);
+
+
+
+//        byte[]  data =file.getBytes();
+//        Path path = Paths.get(DocumentPath+file.getOriginalFilename());
+
+
+        Path path = Paths.get(DocumentPath).toAbsolutePath().resolve(fileName);
+
+        Resource resource;
+        try {
+            resource = new UrlResource(path.toUri());
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Issue in reading the file", e);
+        }
+
+        if(resource.exists() && resource.isReadable()){
+            return resource;
+        }else{
+            throw new RuntimeException("the file doesn't exist or not readable");
+        }
     }
 
     public List<Lease> getLeaseBySearch(String record) {

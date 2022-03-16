@@ -43,8 +43,11 @@ public interface LeaseRepository
 
 
 //    @Query(value = "select s from Lease s where lower(s.name) like lower('%:record%') or lower(s.status) like lower('%:record%') or lower(s.buildingLocation) like lower('%:record%') or lower(s.buildingName) like lower('%:record%') order by s.id asc ")
-@Query("Select c from Lease c where lower(c.name) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingName) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingLocation) like lower(concat('%', concat(:record, '%'))) or lower(c.status) like lower(concat('%', concat(:record, '%'))) or lower(c.id) like lower(concat('%', concat(:record, '%'))) order by c.id asc")
+    @Query("Select c from Lease c where lower(c.name) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingName) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingLocation) like lower(concat('%', concat(:record, '%'))) or lower(c.status) like lower(concat('%', concat(:record, '%'))) or lower(c.id) like lower(concat('%', concat(:record, '%'))) order by c.id asc")
     List<Lease> findLeaseBySearch(@Param("record")String record);
+
+    @Query(value = "select file_name from lease_documents  where tenant_id=?1 ",nativeQuery = true)
+    String findTenantForm(String id);
 
 //    List<Lease>findLeasesByNameIsLikeOrBuildingLocationIsLikeOrBuildingNameIsLike(String record);
     //    Lease findByEmail(String name, String surname);

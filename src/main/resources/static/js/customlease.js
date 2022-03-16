@@ -252,7 +252,20 @@ emailjs.send('gmail','template_rqpdjmc',tempParams)
         // cont.setAttribute("style","display:none");
         //  foot.setAttribute("style","display:none");
         m2.setAttribute("style","display:all");
-    }else {
+    }else if(error.status==0){
+        var message=document.getElementById("mailunsent");
+        if(message){
+            message.innerHTML="Failed , There was a network Error"+" <span class='fe fe-12 fe-alert-triangle ml-3' ></span>";
+        }
+        //  var cont=document.getElementById("mailform");
+        // var foot=document.getElementById("emailfooter");
+        // var m1=document.getElementById("mailSentToast");
+        var m2=document.getElementById("mailNotSentToast");
+
+        // cont.setAttribute("style","display:none");
+        //  foot.setAttribute("style","display:none");
+        m2.setAttribute("style","display:all");
+    }else{
 
         var message = document.getElementById("mailunsent");
         if (message) {
@@ -655,11 +668,8 @@ function saveUpdate() {
         "name": $("#TenantName").val(),
         "buildingName": $("#buildingName").val(),
         "buildingLocation": $("#buildingLocation").val(),
-        "floorNumber": $("#floorNumber").val(),
-        "rentalFee": $("#rentalFee").val(),
         "startDate": $("#startDate").val(),
         "duration": $("#duration").val(),
-        "agreementDate": $("#agreementDate").val(),
         "terms": $("#terms").val()
     };
 
@@ -788,13 +798,13 @@ function FetchRecord() {
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
-            let rentalFee = document.getElementById("rentalFee");
+            // let rentalFee = document.getElementById("rentalFee");
             let duration = document.getElementById("duration");
             let startDate = document.getElementById("startDate");
-            let agreementDate = document.getElementById("agreementDate");
+            // let agreementDate = document.getElementById("agreementDate");
             let status = document.getElementById("status");
             let endDate = document.getElementById("endDate");
-            let floorNumber = document.getElementById("floorNumber");
+            // let floorNumber = document.getElementById("floorNumber");
             let timeLeft = document.getElementById("timeLeft");
             let terms = document.getElementById("terms");
 
@@ -803,13 +813,13 @@ function FetchRecord() {
             tenantName.placeholder = `${response.name}`;
             buildingName.placeholder = `${response.buildingName}`;
             buildingLocation.placeholder = `${response.buildingLocation}`;
-            rentalFee.placeholder = `${response.rentalFee}`;
+            // rentalFee.placeholder = `${response.rentalFee}`;
             duration.placeholder = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            agreementDate.value = `${response.agreementDate}`;
+            // agreementDate.value = `${response.agreementDate}`;
             status.placeholder = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            floorNumber.placeholder = `${response.floorNumber}`;
+            // floorNumber.placeholder = `${response.floorNumber}`;
             timeLeft.placeholder = `${response.timeLeft}`;
             terms.placeholder = `${response.terms}`;
 
@@ -817,14 +827,23 @@ function FetchRecord() {
             tenantName.setAttribute("disabled", true);
             buildingName.setAttribute("disabled", true);
             buildingLocation.setAttribute("disabled", true);
-            rentalFee.setAttribute("disabled", true);
+            // rentalFee.setAttribute("disabled", true);
             duration.setAttribute("disabled", true);
             startDate.setAttribute("disabled", true);
-            agreementDate.setAttribute("disabled", true);
-            floorNumber.setAttribute("disabled", true);
+            // agreementDate.setAttribute("disabled", true);
+            // floorNumber.setAttribute("disabled", true);
             terms.setAttribute("disabled", true);
 
 
+        }
+    });
+    $.ajax({
+        url: ' http://localhost:8090/api/v1/lease/getform/' + id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+            var r=document.getElementById("formName");
+            r.innerText=response;
         }
     })
 
@@ -845,13 +864,10 @@ function fetchRecord() {
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
-            let rentalFee = document.getElementById("rentalFee");
             let duration = document.getElementById("duration");
             let startDate = document.getElementById("startDate");
-            let agreementDate = document.getElementById("agreementDate");
             let status = document.getElementById("status");
             let endDate = document.getElementById("endDate");
-            let floorNumber = document.getElementById("floorNumber");
             let timeLeft = document.getElementById("timeLeft");
             let terms = document.getElementById("terms");
             let btnSubmit = document.getElementById("btnSaveUpdate");
@@ -862,13 +878,10 @@ function fetchRecord() {
             tenantName.placeholder = `${response.name}`;
             buildingName.placeholder = `${response.buildingName}`;
             buildingLocation.placeholder = `${response.buildingLocation}`;
-            rentalFee.placeholder = `${response.rentalFee}`;
             duration.placeholder = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            agreementDate.value = `${response.agreementDate}`;
             status.placeholder = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            floorNumber.placeholder = `${response.floorNumber}`;
             timeLeft.placeholder = `${response.timeLeft}`;
             terms.placeholder = `${response.terms}`;
 
@@ -878,11 +891,8 @@ function fetchRecord() {
                 tenantName.setAttribute("disabled", true);
                 buildingName.setAttribute("disabled", true);
                 buildingLocation.setAttribute("disabled", true);
-                rentalFee.setAttribute("disabled", true);
                 duration.setAttribute("disabled", true);
                 startDate.setAttribute("disabled", true);
-                agreementDate.setAttribute("disabled", true);
-                floorNumber.setAttribute("disabled", true);
                 terms.setAttribute("disabled", true);
                 btnSubmit.setAttribute("disabled", true);
                 tlError.style.visibility = "visible";
@@ -893,6 +903,8 @@ function fetchRecord() {
 
         }
     })
+
+
 }
 
 
@@ -1166,7 +1178,7 @@ function getLeases() {
 
 }
 
-//Get rened leases
+//Get renewed leases
 function getRenewedLeases() {
 
     var baseurl = "http://localhost:8090/api/v1/lease/renewed";
@@ -1309,6 +1321,21 @@ function getRenewedLeases() {
 
 }
 
+
+// Open Lease agreement form
+function DownloadLeaseAgreementForm(){
+    var filename=document.getElementById("formName").innerText;
+
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/download/' + filename,
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+            window.open('localhost:8090/assets/uploads/'+response, '_blank');
+        }
+    })
+}
+
 function hover() {
     var prev_item = document.getElementById("prev");
     var page1_item = document.getElementById("page1");
@@ -1394,15 +1421,36 @@ function getProperty() {
             url: '/api/property/get-all-properties',
             type: 'GET',
             success: function (response) {
-                let items = response
+                let items = response;
 
-                console.log(response)
+                console.log(response);
 
-                var t_body = document.getElementById("BN_body");
+                // var t_body = document.getElementById("BN_body");
+                //
+                // while (t_body.hasChildNodes()) {
+                //     t_body.removeChild(t_body.firstChild);
+                // }
+
+                var t_body = document.getElementById("buildingName");
 
                 while (t_body.hasChildNodes()) {
                     t_body.removeChild(t_body.firstChild);
                 }
+
+
+                let r = document.createElement("option");
+
+                var t = "Select Building Name";
+
+                r.setAttribute("disabled", "true");
+                r.setAttribute("value", "-1");
+
+                r.innerHTML = t;
+
+                t_body.appendChild(r);
+
+
+
 
                 for (let i = 0; i < items.length; i++) {
                     let html = `${items[i].name}`
@@ -1419,11 +1467,31 @@ function getProperty() {
                 }
 
 
-                var tl_body = document.getElementById("BL_body");
+                // var tl_body = document.getElementById("BL_body");
+                //
+                // while (tl_body.hasChildNodes()) {
+                //     tl_body.removeChild(tl_body.firstChild);
+                // }
 
-                while (tl_body.hasChildNodes()) {
-                    tl_body.removeChild(tl_body.firstChild);
+                var t_body1 = document.getElementById("buildingLocation");
+
+                while (t_body1.hasChildNodes()) {
+                    t_body1.removeChild(t_body1.firstChild);
                 }
+
+
+                let ru = document.createElement("option");
+
+                var tn = "Select Building Name";
+
+                ru.setAttribute("disabled", "true");
+                ru.setAttribute("value", "-1");
+
+                ru.innerHTML = tn;
+
+                t_body1.appendChild(ru);
+
+
 
                 for (let i = 0; i < items.length; i++) {
                     let html = `${items[i].addressObject.city}`
@@ -1436,7 +1504,7 @@ function getProperty() {
 
                     tr.innerHTML = html;
 
-                    tl_body.appendChild(tr);
+                    t_body1.appendChild(tr);
                 }
 
 
