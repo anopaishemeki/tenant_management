@@ -715,34 +715,34 @@ function setAddCompartmentDropDown(compartment_id) {
     })
 }
 
- function setTenantOnCompartment(){
+function setTenantOnCompartment(){
     let id = JSON.parse(localStorage.getItem("compartment_id"));
 
     let tenant_id = JSON.parse(localStorage.getItem("tenant_id"));
     console.log(id);
     console.log(tenant_id)
-     var data= {
+    var data= {
         "tenant": tenant_id
-     }
-     $.ajax({
+    }
+    $.ajax({
 
-         url: 'http://localhost:8090/api/compartment/update-compartment/'+ id,
-         type: 'PUT',
-         dataType:"json",
-         crossDomain:"true",
-         contentType:"application/json; charset=utf-8",
-         data:JSON.stringify(data),
-         success: function () {
+        url: 'http://localhost:8090/api/compartment/update-compartment/'+ id,
+        type: 'PUT',
+        dataType:"json",
+        crossDomain:"true",
+        contentType:"application/json; charset=utf-8",
+        data:JSON.stringify(data),
+        success: function () {
 
             console.log(" Done!"
             );
 
 //fgjhk
 
-         }
-     })
+        }
+    })
 
- }
+}
 
 
 
