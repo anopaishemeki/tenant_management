@@ -130,6 +130,11 @@ function setLocal(id) {
     localStorage.setItem("id", JSON.stringify(id));
 
 }
+function setLocalfile(){
+    var file=document.getElementById("formName2").innerText;
+    localStorage.removeItem("file");
+    localStorage.setItem("file", JSON.stringify(file));
+}
 
 function SetLocal(id) {
     localStorage.removeItem("id");
@@ -844,7 +849,7 @@ function FetchRecord() {
             console.log(response);
             var r=document.getElementById("formName");
             var t=document.getElementById("formName2");
-             r.innerHTML='<i class="fe fe-file-text" style="font-size:35px;margin-left:30px"></i>'
+             r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
            /* r.innerText="File Name here"*/
              t.innerText=response;
         }
