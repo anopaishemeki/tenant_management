@@ -17,27 +17,15 @@
 
 
 	  var file = JSON.parse(localStorage.getItem("file"));
-	  console.log("file :",file);
+    var filename2=file.split("'")[1];
+	  console.log("file :",filename2);
 
 	if(PDFObject.supportsPDFs){
-		PDFObject.embed("http://localhost:8090/assets/uploads/"+file,"#form");
+		PDFObject.embed("http://localhost:8090/assets/uploads/"+filename2,"#form");
 	}else{
 		window.alert("This Browser Doest support  PDF of this format");
 	}
-  /*  localStorage.setItem("load", JSON.stringify("0"));*/
 
-	/*function checkStorage(){
-        var file = JSON.parse(localStorage.getItem("load"));
-        if (file=="0"){
-            localStorage.setItem("load", JSON.stringify("1"));
-            document.location.reload();
-		}
-
-	}*/
-
-   /* window.onbeforeunload = function () {
-        localStorage.removeItem('firstLoad');
-    };*/
 </script>
 <script type='text/javascript'>
 

@@ -130,11 +130,12 @@ function setLocal(id) {
     localStorage.setItem("id", JSON.stringify(id));
 
 }
-function setLocalfile(){
-    var file=document.getElementById("formName2").innerText;
+function setLocalfile(file){
+    // var file=document.getElementById("formName2").innerText;
     localStorage.removeItem("file");
     localStorage.setItem("file", JSON.stringify(file));
 }
+
 
 function SetLocal(id) {
     localStorage.removeItem("id");
@@ -289,10 +290,7 @@ emailjs.send('gmail','template_rqpdjmc',tempParams)
 
 }
 
-
-
 // change icon on search box and fetch searched data from view lease Notice table
-
 function ChangeIconAndSearch2(){
     var y=document.getElementById('searchbox');
     y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
@@ -803,13 +801,10 @@ function FetchRecord() {
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
-            // let rentalFee = document.getElementById("rentalFee");
             let duration = document.getElementById("duration");
             let startDate = document.getElementById("startDate");
-            // let agreementDate = document.getElementById("agreementDate");
             let status = document.getElementById("status");
             let endDate = document.getElementById("endDate");
-            // let floorNumber = document.getElementById("floorNumber");
             let timeLeft = document.getElementById("timeLeft");
             let terms = document.getElementById("terms");
 
@@ -818,13 +813,10 @@ function FetchRecord() {
             tenantName.placeholder = `${response.name}`;
             buildingName.placeholder = `${response.buildingName}`;
             buildingLocation.placeholder = `${response.buildingLocation}`;
-            // rentalFee.placeholder = `${response.rentalFee}`;
             duration.placeholder = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            // agreementDate.value = `${response.agreementDate}`;
             status.placeholder = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            // floorNumber.placeholder = `${response.floorNumber}`;
             timeLeft.placeholder = `${response.timeLeft}`;
             terms.placeholder = `${response.terms}`;
 
@@ -832,11 +824,8 @@ function FetchRecord() {
             tenantName.setAttribute("disabled", true);
             buildingName.setAttribute("disabled", true);
             buildingLocation.setAttribute("disabled", true);
-            // rentalFee.setAttribute("disabled", true);
             duration.setAttribute("disabled", true);
             startDate.setAttribute("disabled", true);
-            // agreementDate.setAttribute("disabled", true);
-            // floorNumber.setAttribute("disabled", true);
             terms.setAttribute("disabled", true);
 
 
@@ -848,10 +837,8 @@ function FetchRecord() {
         success: function (response) {
             console.log(response);
             var r=document.getElementById("formName");
-            var t=document.getElementById("formName2");
+            setLocalfile("'"+response+"'");
              r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
-           /* r.innerText="File Name here"*/
-             t.innerText=response;
         }
     })
 
@@ -1104,85 +1091,7 @@ function getLeases() {
         }
     };
     xmlhttp.send();
-   /* $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getleases',
-        type: 'GET',
-        success: function (response) {
-            let items = response
 
-            console.log(response)
-            localStorage.setItem("lease", JSON.stringify(items));
-
-
-
-           /!* var t_body = document.getElementById("t_body");
-
-            var numRecords =document.getElementById("recordsNumber").value;
-            while (t_body.hasChildNodes()) {
-                t_body.removeChild(t_body.firstChild);
-            }
-            for (let i = 0; i < items.length; i++) {
-                if(i<numRecords){
-                let html = `<td class="sorting_1">  ${items[i].id}
-                        </td>
-                        <td>  ${items[i].name}
-                        </td>
-                        <td>  ${items[i].rentalFee}
-                        </td>
-                        <td> ${items[i].buildingName}
-                        </td> 
-                        <td> ${items[i].buildingLocation}
-                        </td>
-                        <td > ${items[i].terms}
-                        </td>
-                        <td > ${items[i].status}
-                        </td>
-                        <td >${items[i].agreementDate}
-                    </td>
-                    <td>
-                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" >
-                            <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
-                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
-                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
-                        </div>
-                    </td>`
-
-
-                let tr = document.createElement("tr");
-                if (i % 2 == 0) {
-                    tr.setAttribute("class", "even");
-                } else {
-                    tr.setAttribute("class", "odd");
-                }
-                tr.setAttribute("role", "row");
-                tr.innerHTML = html;
-
-
-                t_body.appendChild(tr);
-                }
-            }
-            var prev_item = document.getElementById("prev");
-            var page1_item = document.getElementById("page1");
-            var page2_item = document.getElementById("page2");
-            var page3_item = document.getElementById("page3");
-            var next_item = document.getElementById("next");
-            prev_item.disabled=true;
-            if(items.length<=numRecords){
-                prev_item.disabled=true;
-                page1_item.disabled=true;
-                page2_item.disabled=true;
-                page3_item.disabled=true;
-                next_item.disabled=true;
-            }*!/
-           /!* hover()*!/
-        }
-    })*/
 
 }
 
@@ -1247,95 +1156,19 @@ function getRenewedLeases() {
         }
     };
     xmlhttp.send();
-    /* $.ajax({
-         url: 'http://localhost:8090/api/v1/lease/getleases',
-         type: 'GET',
-         success: function (response) {
-             let items = response
 
-             console.log(response)
-             localStorage.setItem("lease", JSON.stringify(items));
-
-
-
-            /!* var t_body = document.getElementById("t_body");
-
-             var numRecords =document.getElementById("recordsNumber").value;
-             while (t_body.hasChildNodes()) {
-                 t_body.removeChild(t_body.firstChild);
-             }
-             for (let i = 0; i < items.length; i++) {
-                 if(i<numRecords){
-                 let html = `<td class="sorting_1">  ${items[i].id}
-                         </td>
-                         <td>  ${items[i].name}
-                         </td>
-                         <td>  ${items[i].rentalFee}
-                         </td>
-                         <td> ${items[i].buildingName}
-                         </td>
-                         <td> ${items[i].buildingLocation}
-                         </td>
-                         <td > ${items[i].terms}
-                         </td>
-                         <td > ${items[i].status}
-                         </td>
-                         <td >${items[i].agreementDate}
-                     </td>
-                     <td>
-                         <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
-                                 data-toggle="dropdown" aria-haspopup="true"
-                                 aria-expanded="false" >
-                             <span class="text-muted sr-only">Action</span>
-                         </button>
-                         <div class="dropdown-menu dropdown-menu-right">
-                             <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('${items[i].id}','${items[i].name}'),loadData() " href="#">Renew</a>
-                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('${items[i].id}')" href="#">Terminate</a>
-                             <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('${items[i].id}')">View More Details</a>
-                         </div>
-                     </td>`
-
-
-                 let tr = document.createElement("tr");
-                 if (i % 2 == 0) {
-                     tr.setAttribute("class", "even");
-                 } else {
-                     tr.setAttribute("class", "odd");
-                 }
-                 tr.setAttribute("role", "row");
-                 tr.innerHTML = html;
-
-
-                 t_body.appendChild(tr);
-                 }
-             }
-             var prev_item = document.getElementById("prev");
-             var page1_item = document.getElementById("page1");
-             var page2_item = document.getElementById("page2");
-             var page3_item = document.getElementById("page3");
-             var next_item = document.getElementById("next");
-             prev_item.disabled=true;
-             if(items.length<=numRecords){
-                 prev_item.disabled=true;
-                 page1_item.disabled=true;
-                 page2_item.disabled=true;
-                 page3_item.disabled=true;
-                 next_item.disabled=true;
-             }*!/
-            /!* hover()*!/
-         }
-     })*/
 
 }
 
 
 // Open Lease agreement form
 function DownloadLeaseAgreementForm(){
-    var filename=document.getElementById("formName2").innerText;
+    var filename = JSON.parse(localStorage.getItem("file"));
+    var filename2=filename.split("'")[1];
+    console.log(filename2);
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/download/' + filename,
+        url: 'http://localhost:8090/api/v1/lease/download/' + filename2,
         type: 'GET',
         success: function (response) {
 
@@ -1344,7 +1177,7 @@ function DownloadLeaseAgreementForm(){
             console.log(response);
 
             if(h=="jpg"|| h=="png"||h=="jpeg"){
-                window.open('http://localhost:8090/assets/uploads/'+filename,"_blank");
+                window.open('http://localhost:8090/assets/uploads/'+filename2,"_blank");
             }
 
         }
@@ -1387,7 +1220,7 @@ function getTenants() {
         type: 'GET',
         success: function (response) {
             let items = response;
-            // const today = new Date();
+
 
             console.log(response);
 
@@ -1440,11 +1273,7 @@ function getProperty() {
 
                 console.log(response);
 
-                // var t_body = document.getElementById("BN_body");
-                //
-                // while (t_body.hasChildNodes()) {
-                //     t_body.removeChild(t_body.firstChild);
-                // }
+
 
                 var t_body = document.getElementById("buildingName");
 
@@ -1482,11 +1311,7 @@ function getProperty() {
                 }
 
 
-                // var tl_body = document.getElementById("BL_body");
-                //
-                // while (tl_body.hasChildNodes()) {
-                //     tl_body.removeChild(tl_body.firstChild);
-                // }
+
 
                 var t_body1 = document.getElementById("buildingLocation");
 
