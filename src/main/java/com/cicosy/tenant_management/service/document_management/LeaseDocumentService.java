@@ -1,19 +1,22 @@
 package com.cicosy.tenant_management.service.document_management;
 
+import com.cicosy.tenant_management.controler.document_management.exception.FileNotFoundException;
+import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
+import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import com.cicosy.tenant_management.controler.document_management.exception.FileNotFoundException;
-import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
-import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -52,16 +55,32 @@ public class LeaseDocumentService  {
 	}
 
 
-	public LeaseDocuments store(MultipartFile file) throws IOException {
-		 String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
+	public LeaseDocuments store(MultipartFile file,String ID) throws IOException {
+//		  String uploadDirectory = System.getProperty("user.dir") + "src/main/resources/static/assets/uploads/leaseDocuments";
 
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
 		String size = String.valueOf(file.getSize());
 		String filePath = Paths.get(uploadDirectory, file.getOriginalFilename()).toString();
 
+
+
+//		List<String> filesPath=new ArrayList<>();
+		String DocumentPath="src/main/resources/static/assets/uploads/";
+        File pathAsFile = new File(DocumentPath);
+
+        if (!Files.exists(Paths.get(DocumentPath))) {
+            pathAsFile.mkdir();
+        }
+
+		byte[]  data =file.getBytes();
+		Path path = Paths.get(DocumentPath+file.getOriginalFilename());
+		Files.write(path,data);
+//		filesPath.add(path.toString());
+
+
 		LeaseDocuments leaseDocuments = new LeaseDocuments(
-				fileName,filePath,size,  file.getContentType());
+				fileName,filePath,size,file.getContentType(),ID);
 		if(fileName.contains(".."))
 		{
 			System.out.println("not a a valid file");
