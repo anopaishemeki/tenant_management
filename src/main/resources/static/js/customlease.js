@@ -843,7 +843,10 @@ function FetchRecord() {
         success: function (response) {
             console.log(response);
             var r=document.getElementById("formName");
-            r.innerText=response;
+            var t=document.getElementById("formName2");
+             r.innerHTML='<i class="fe fe-file-text" style="font-size:35px;margin-left:30px"></i>'
+           /* r.innerText="File Name here"*/
+             t.innerText=response;
         }
     })
 
@@ -1324,14 +1327,21 @@ function getRenewedLeases() {
 
 // Open Lease agreement form
 function DownloadLeaseAgreementForm(){
-    var filename=document.getElementById("formName").innerText;
+    var filename=document.getElementById("formName2").innerText;
 
     $.ajax({
         url: 'http://localhost:8090/api/v1/lease/download/' + filename,
         type: 'GET',
         success: function (response) {
+
+            var h=filename.split(".").pop();
+            console.log("Extension: = ",h);
             console.log(response);
-            window.open('localhost:8090/assets/uploads/'+response, '_blank');
+
+            if(h=="jpg"|| h=="png"||h=="jpeg"){
+                window.open('http://localhost:8090/assets/uploads/'+filename,"_blank");
+            }
+
         }
     })
 }
