@@ -122,25 +122,22 @@
                     <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle nav-link">
                         <i class="fe fe-box fe-16"></i>
-                        <span class="ml-3 item-text">Property Management</span>
+                        <span class="ml-3 item-text">Property Portfolios</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span
-                                    class="ml-1 item-text">Properties</span>
+                                    class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span
-                                    class="ml-1 item-text">Add Property</span></a>
+                                    class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span
-                                    class="ml-1 item-text">Add Compartment</span></a>
+                                    class="ml-1 item-text">Add Lettable space</span></a>
                         </li>
-                        <!--                <li class="nav-item">-->
-                        <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
-                        <!--                </li>-->
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>-->
                         <!--                </li>-->
@@ -161,12 +158,12 @@
                 <li class="nav-item dropdown">
                     <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-credit-card fe-16"></i>
-                        <span class="ml-3 item-text">Tenant Management</span>
+                        <span class="ml-3 item-text">Tenants</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="./tenant_list.html"><span
-                                    class="ml-1 item-text">Tenant List</span></a>
+                                    class="ml-1 item-text">Tenants List</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="./add_tenant.html"><span
@@ -190,7 +187,7 @@
                 <li class="nav-item dropdown">
                     <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-grid fe-16"></i>
-                        <span class="ml-3 item-text">Lease Management</span>
+                        <span class="ml-3 item-text">Leasing</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                         <li class="nav-item">
@@ -412,47 +409,47 @@
                     <p class="text-muted">Assign Property to an existing teant</p>
 
 
-<!--                    <form>-->
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="tenant_list">Tenant</label>
-                                <select id="tenant_list" class="form-control" onchange="onSetTenants()">
-                                    <option>Choose...</option>
-                                </select>
-<!--                                //fggvhgvgvhvhg-->
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="property-dropdown">Building</label>
-                                <select id="property-dropdown" class="form-control" onchange="onSetProperty()">
-                                    <option selected>Choose...</option>
-
-                                </select>
-                            </div>
-<!--                            <div class="form-group col-md-2">-->
-<!--                                <label for="gtC"></label>-->
-<!--                                <button class="form-control btn btn-primary" id="gtC" onclick="getCompartmentDetails()">ok</button>-->
-<!--                            </div><-->
+                    <!--                    <form>-->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="tenant_list">Tenant</label>
+                            <select id="tenant_list" class="form-control" onchange="onSetTenants()">
+                                <option>Choose...</option>
+                            </select>
+                            <!--                                //fggvhgvgvhvhg-->
                         </div>
-                        <!--                        </div> &lt;!&ndash; /.form-row &ndash;&gt;-->
-                        <div class="form-row">
-<!--                            <div class="form-group col-md-6 ">-->
-<!--                                <label for="floor_option">Floor</label>-->
-<!--                                <select id="floor_option" class="form-control">-->
-<!--                                    <option selected>Choose...</option>-->
+                        <div class="form-group col-md-6">
+                            <label for="property-dropdown">Portfolio</label>
+                            <select id="property-dropdown" class="form-control" onchange="onSetProperty()">
+                                <option selected>Choose...</option>
 
-<!--                                </select>-->
-
-<!--                            </div>-->
-                            <div class="form-group col-md-6">
-                                <label for="compartmentDropdown">Compartment</label>
-                                <select id="compartmentDropdown" class="form-control">
-                                    <option selected>Choose...</option>
-                                </select>
-                            </div>
-
+                            </select>
                         </div>
-                        <button class="btn btn-primary" type="button" onclick="setTenantOnCompartment()">Add Tenant</button>
-<!--                    </form>-->
+                        <!--                            <div class="form-group col-md-2">-->
+                        <!--                                <label for="gtC"></label>-->
+                        <!--                                <button class="form-control btn btn-primary" id="gtC" onclick="getCompartmentDetails()">ok</button>-->
+                        <!--                            </div><-->
+                    </div>
+                    <!--                        </div> &lt;!&ndash; /.form-row &ndash;&gt;-->
+                    <div class="form-row">
+                        <!--                            <div class="form-group col-md-6 ">-->
+                        <!--                                <label for="floor_option">Floor</label>-->
+                        <!--                                <select id="floor_option" class="form-control">-->
+                        <!--                                    <option selected>Choose...</option>-->
+
+                        <!--                                </select>-->
+
+                        <!--                            </div>-->
+                        <div class="form-group col-md-6">
+                            <label for="compartmentDropdown">Lettable Space</label>
+                            <select id="compartmentDropdown" class="form-control">
+                                <option selected>Choose...</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <button class="btn btn-primary" type="button" onclick="setTenantOnCompartment()">Add Tenant</button>
+                    <!--                    </form>-->
 
                 </div>
             </div>
