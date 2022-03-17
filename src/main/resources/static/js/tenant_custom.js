@@ -700,6 +700,9 @@ function setAddCompartmentDropDown(compartment_id) {
             while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
             }
+
+
+
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
 
