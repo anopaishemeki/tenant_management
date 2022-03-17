@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="setAddPropertyDropDown(), setLettableSpaceDropdown(), getPayments()">
+<body class="vertical  light  " onload="setAddPropertyDropDown(), setLettableSpaceDropdown(), setServiceDropDown()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -634,7 +634,8 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="simple-select44">Select Lettable Space</label>
-                                        <select class="form-control select2" id="simple-select44" oninput="appendLettableSpace()">
+                                        <select class="form-control select2" id="simple-select44"
+                                                oninput="appendLettableSpace()">
                                             <optgroup label="Alaskan/Hawaiian Time Zone">
                                                 <option value="AK">Alaska</option>
                                                 <option value="HI">Hawaii</option>
@@ -673,7 +674,7 @@
                                             </div>
                                         </div>-->
 
-                                        <div class="form-group col-md-12">
+                                        <!--<div class="form-group col-md-12">
                                             <label for="multi-select2">Select services</label>
                                             <select class="form-control select2-multi"
                                                     id="multi-select2" oninput="appendServices()">
@@ -683,14 +684,27 @@
                                                     <option value="Late Departures">Late Departures</option>
                                                     <option value="Poor Customer Service">Poor Customer Service</option>
                                                     <option value="Overcharging">Overcharging</option>
-                                                    <option value="Operators Consuming Alcohol">Operators Consuming Alcohol</option>
-                                                    <option value="Driving on oncoming traffic lane">Driving on oncoming traffic lane </option>
+                                                    <option value="Operators Consuming Alcohol">Operators Consuming
+                                                        Alcohol
+                                                    </option>
+                                                    <option value="Driving on oncoming traffic lane">Driving on oncoming
+                                                        traffic lane
+                                                    </option>
                                                     <option value="Accident">Accident</option>
                                                     <option value="Hit and run">Hit and run</option>
                                                     <option value="Corruption / Bribery">Corruption / Bribery</option>
                                                 </optgroup>
                                             </select>
-                                        </div> <!-- form-group -->
+                                        </div>--> <!-- form-group -->
+
+                                        <div class="form-group col-md-12">
+                                            <label for="service-drop-down">Select Service</label>
+                                            <select class="form-control select2" id="service-drop-down" oninput="appendServices()">
+                                                <option value="4">Elevators</option>
+                                                <option value="5">Escalators</option>
+                                                <option value="7">Refuse Collection</option>
+                                            </select>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -709,45 +723,41 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="t_body-2">
+                                            <tr id="t_body-2">
 
-                                                </tr>
-                                                <tr>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <table class="table table-hover table-sm">
-                                                                <thead>
-                                                                <label><strong>Selected services</strong></label>
-                                                                <tr>
-                                                                    <th>Service Name</th>
-                                                                    <th>Amount</th>
-                                                                    <!--<th>Bill To</th>
-                                                                    <th>Due Date</th>
-                                                                    <th>Invoice Total</th>
-                                                                    <th>Status</th>
-                                                                    <th>View</th>-->
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody id="t_body-3">
-
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                            </tr>
+                                            <tr>
+                                                <div class="row ">
+                                                    <div class="col-md-6">
+                                                        <table class="table table-responsive table-hover table-sm">
+                                                            <thead>
+                                                            <label><strong>Selected services</strong></label>
+                                                            <tr>
+                                                                <th>Service Name</th>
+                                                                <th>Amount</th>
+                                                                <th colspan="2">Remove</th>
+                                                                <!--<th>Due Date</th>
+                                                                <th>Invoice Total</th>
+                                                                <th>Status</th>
+                                                                <th>View</th>-->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="t_body-3">
+                                                               
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                </tr>
+                                                </div>
+                                            </tr>
+                                            <tr>
+                                                <td>total</td>
+                                                <td>$ 100 000</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="payment-method">Payment Method </label>
-                                        <select class="form-control select2" id="payment-method">
-                                            <option value="4">Cash</option>
-                                            <option value="5">Bank Transfer</option>
-                                            <option value="7">Bank Deposit</option>
-                                        </select>
-                                    </div>
                                     <div class="form-group col-md-4">
                                         <label for="simple-select444">Select Lettable Space</label>
                                         <select class="form-control select2" id="simple-select444">
@@ -831,7 +841,7 @@
                                             <span class="fe fe-download fe-24"></span>
                                         </div>
                                         <div class="col">
-                                            <small><strong>Widgets are updated successfull</strong></small>
+                                            <small><strong>Widgets are updated successful</strong></small>
                                             <div class="my-0 text-muted small">Just create new layout Index, form, table
                                             </div>
                                             <small class="badge badge-pill badge-light text-muted">2m ago</small>
