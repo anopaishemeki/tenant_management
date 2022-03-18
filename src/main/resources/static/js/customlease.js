@@ -838,7 +838,10 @@ function FetchRecord() {
             console.log(response);
             var r=document.getElementById("formName");
             setLocalfile("'"+response+"'");
-             r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
+             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px"/>';
+             var attr=document.getElementById("fileAttr");
+             attr.setAttribute("style","margin-left: 10px;padding-left: 10px;display: all")
+             // r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
         }
     })
 
