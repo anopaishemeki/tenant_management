@@ -29,6 +29,7 @@ public class MaintenanceRequests {
     private String request;
     private String description;
     private String levelOfUrgency;
+    private String tenantId;
 
     private LocalDate dateLogged = LocalDate.now();
     private LocalDate overdueDate = LocalDate.now().plusDays(7);
@@ -101,5 +102,12 @@ public class MaintenanceRequests {
         this.schedule = schedule;
     }
 
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
 

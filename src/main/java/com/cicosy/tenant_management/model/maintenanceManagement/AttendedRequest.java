@@ -19,6 +19,7 @@ public class AttendedRequest {
     private String request;
     private String description;
     private LocalDate dateLogged;
+    private String tenantId;
     private LocalDate dateAttended = LocalDate.now();
 
     public Long getId() {
@@ -59,5 +60,13 @@ public class AttendedRequest {
 
     public void setDatAttended(LocalDate datAttended) {
         this.dateAttended = datAttended;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }
