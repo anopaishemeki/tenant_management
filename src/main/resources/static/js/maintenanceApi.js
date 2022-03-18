@@ -42,7 +42,8 @@ function getRequest() {
             $("#example").DataTable({
                 data:data,
                 columns:[
-                    {"data":"id"},
+
+                    {"data":"tenantId"},
                     {"data":"request"},
                     {"data":"description"},
                     {"data":"levelOfUrgency"},
@@ -108,7 +109,7 @@ function getOverdue() {
             $("#example").DataTable({
                 data:data,
                 columns:[
-                    {"data":"id"},
+                    {"data":"tenantId"},
                     {"data":"request"},
                     {"data":"description"},
                     {"data":"levelOfUrgency"},
@@ -155,7 +156,7 @@ function getPending() {
             $("#example").DataTable({
                 data:data,
                 columns:[
-                    {"data":"id"},
+                    {"data":"tenantId"},
                     {"data":"request"},
                     {"data":"description"},
                     {"data":"levelOfUrgency"},
@@ -311,7 +312,7 @@ function getScheduled() {
 
                 columns:[
 
-                    {"data": "id"},
+                    {"data":"tenantId"},
                     {"data": "request"},
                     {"data": "description"},
                     {"data": "levelOfUrgency"},
@@ -527,7 +528,7 @@ function getAttended() {
 
                 columns:[
 
-                    {"data": "id"},
+                    {"data": "tenantId"},
                     {"data": "request"},
                     {"data": "description"},
                     {"data": "dateLogged"},
@@ -635,11 +636,14 @@ function saveRequest() {
     let request = document.getElementById("request").value
     let levelOfUrgency = document.getElementById("levelOfUrgency").value
     let description = document.getElementById("description").value
+    let tenantId = JSON.parse(localStorage.getItem("tenantId"));
+    console.log(tenantId)
 
     let data = {
         request,
         levelOfUrgency,
-        description
+        description,
+        tenantId
     }
     console.log("data",data)
 
@@ -674,4 +678,52 @@ function saveRequest() {
             }
         }
     })
+}
+
+function setAddTenantDropDown() {
+    $.ajax({
+        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+            let dropDown = document.getElementById("tenant_list");
+
+            /*while (dropDown.hasChildNodes()) {
+                dropDown.removeChild(dropDown.firstChild);
+            }*/
+
+            for (let i = 0; i < response.length; i++) {
+                let option = document.createElement("option");
+
+                option.text = response[i].name;
+                option.setAttribute("value", `${response[i].id}`)
+
+                dropDown.appendChild(option);
+            }
+        }
+    })
+}
+
+function onSetTenants() {
+
+    console.log("tenantId");
+    var select = document.getElementById("tenant_list");
+
+    var selected = select.options[select.selectedIndex];
+
+
+    // setDropDownLocal(id);
+    var tenantId = selected.value;
+    console.log(tenantId);
+
+    tenantAssignLocalTenant(tenantId)
+
+
+}
+function tenantAssignLocalTenant(tenantId) {
+    localStorage.removeItem("tenantId");
+    localStorage.setItem("tenantId", JSON.stringify(tenantId));
+    console.log(tenantId);
+
+
 }

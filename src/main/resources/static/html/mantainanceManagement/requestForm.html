@@ -14,13 +14,14 @@
           rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="../../css/feather.css">
+    <link rel="stylesheet" href="../../css/select2.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  ">
+<body class="vertical  light  " onload="setAddTenantDropDown()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -277,9 +278,24 @@
                                     <form id="_form">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
+                                                <label for="tenant_list">Tenant Name :</label>
+                                                <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
+                                                        required>
+                                                    <optgroup id="Available Tenants" label="Available Tenants" >
+                                                        <option value="">Select Tenant Name</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
                                                 <label for="request">Request Type</label>
                                                 <input type="text" class="form-control" id="request">
-                                            </div>
+                                            </div><!-- form-group -->
+                                            <div class="col-md-2"></div>
+
+                                            <!-- form-group -->
+                                        </div>
+
+                                        <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="levelOfUrgency">Level of Urgency</label>
                                                 <select id="levelOfUrgency" class="form-control">
@@ -288,9 +304,17 @@
                                                     <option value="Low">Low</option>
                                                 </select>
                                             </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="description">Description</label>
+                                                            <textarea class="form-control" id="description"
+                                                                      rows="4"></textarea>
+                                                        </div>
+                                                     <!-- /.card -->
+
                                         </div>
                                         <div class="form-row">
-                                        <div class="col-md-12 mb-4">
+                                       <!-- <div class="col-md-12 mb-4">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="form-group mb-3">
@@ -298,9 +322,9 @@
                                                         <textarea class="form-control" id="description"
                                                                   rows="4"></textarea>
                                                     </div>
-                                                </div> <!-- /.card-body -->
-                                            </div> <!-- /.card -->
-                                        </div> <!-- /.col -->
+                                                </div> &lt;!&ndash; /.card-body &ndash;&gt;
+                                            </div> &lt;!&ndash; /.card &ndash;&gt;
+                                        </div>--> <!-- /.col -->
                                     </div>
 
                                         <div class="form-row">
@@ -309,6 +333,8 @@
                                                         onclick="saveRequest()"><span class="fe fe-upload-cloud fe-16">Add Request</span>
                                                 </button> &nbsp;
                                             </div>
+
+
                                             <div class="form-group col-sm-9">
                                                 <div id="toast"
                                                      class="toast align-items-center text-white bg-success-light border-0"
@@ -505,6 +531,7 @@
 <script src="../../js/simplebar.min.js"></script>
 <script src='../../js/daterangepicker.js'></script>
 <script src='../../js/jquery.stickOnScroll.js'></script>
+<script src='../../js/select2.min.js'></script>
 <script src="../../js/tinycolor-min.js"></script>
 <script src="../../js/config.js"></script>
 <script src="../../js/apps.js"></script>
@@ -521,6 +548,179 @@
 
     gtag('js', new Date());
     gtag('config', 'UA-56159088-1');
+</script>
+<script>
+    $('.select2').select2(
+        {
+            theme: 'bootstrap4',
+        });
+    $('.select2-multi').select2(
+        {
+            multiple: true,
+            theme: 'bootstrap4',
+        });
+    $('.drgpicker').daterangepicker(
+        {
+            singleDatePicker: true,
+            timePicker: false,
+            showDropdowns: true,
+            locale:
+                {
+                    format: 'MM/DD/YYYY'
+                }
+        });
+    $('.time-input').timepicker(
+        {
+            'scrollDefault': 'now',
+            'zindex': '9999' /* fix modal open */
+        });
+    /** date range picker */
+    if ($('.datetimes').length) {
+        $('.datetimes').daterangepicker(
+            {
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale:
+                    {
+                        format: 'M/DD hh:mm A'
+                    }
+            });
+    }
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker(
+        {
+            startDate: start,
+            endDate: end,
+            ranges:
+                {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+        }, cb);
+    cb(start, end);
+    $('.input-placeholder').mask("00/00/0000",
+        {
+            placeholder: "__/__/____"
+        });
+    $('.input-zip').mask('00000-000',
+        {
+            placeholder: "____-___"
+        });
+    $('.input-money').mask("#,##0.00",
+        {
+            reverse: true
+        });
+    $('.input-phoneus').mask('(000) 000-0000');
+    $('.input-mixed').mask('AAA 000-S0S');
+    $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+        {
+            translation:
+                {
+                    'Z':
+                        {
+                            pattern: /[0-9]/,
+                            optional: true
+                        }
+                },
+            placeholder: "___.___.___.___"
+        });
+    // editor
+    var editor = document.getElementById('editor');
+    if (editor) {
+        var toolbarOptions = [
+            [
+                {
+                    'font': []
+                }],
+            [
+                {
+                    'header': [1, 2, 3, 4, 5, 6, false]
+                }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [
+                {
+                    'header': 1
+                },
+                {
+                    'header': 2
+                }],
+            [
+                {
+                    'list': 'ordered'
+                },
+                {
+                    'list': 'bullet'
+                }],
+            [
+                {
+                    'script': 'sub'
+                },
+                {
+                    'script': 'super'
+                }],
+            [
+                {
+                    'indent': '-1'
+                },
+                {
+                    'indent': '+1'
+                }], // outdent/indent
+            [
+                {
+                    'direction': 'rtl'
+                }], // text direction
+            [
+                {
+                    'color': []
+                },
+                {
+                    'background': []
+                }], // dropdown with defaults from theme
+            [
+                {
+                    'align': []
+                }],
+            ['clean'] // remove formatting button
+        ];
+        var quill = new Quill(editor,
+            {
+                modules:
+                    {
+                        toolbar: toolbarOptions
+                    },
+                theme: 'snow'
+            });
+    }
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>
 </body>
 </html>
