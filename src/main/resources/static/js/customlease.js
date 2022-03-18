@@ -810,15 +810,15 @@ function FetchRecord() {
 
 
             id.innerText = `${response.id}`;
-            tenantName.placeholder = `${response.name}`;
-            buildingName.placeholder = `${response.buildingName}`;
-            buildingLocation.placeholder = `${response.buildingLocation}`;
-            duration.placeholder = `${response.duration}`;
+            tenantName.value = `${response.name}`;
+            buildingName.value = `${response.buildingName}`;
+            buildingLocation.value = `${response.buildingLocation}`;
+            duration.value = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            status.placeholder = `${response.status}`;
+            status.value = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            timeLeft.placeholder = `${response.timeLeft}`;
-            terms.placeholder = `${response.terms}`;
+            timeLeft.value = `${response.timeLeft}`;
+            terms.value = `${response.terms}`;
 
 
             tenantName.setAttribute("disabled", true);
@@ -873,15 +873,15 @@ function fetchRecord() {
 
 
             id.innerText = `${response.id}`;
-            tenantName.placeholder = `${response.name}`;
-            buildingName.placeholder = `${response.buildingName}`;
-            buildingLocation.placeholder = `${response.buildingLocation}`;
-            duration.placeholder = `${response.duration}`;
+            tenantName.value = `${response.name}`;
+            buildingName.value = `${response.buildingName}`;
+            buildingLocation.value = `${response.buildingLocation}`;
+            duration.value = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            status.placeholder = `${response.status}`;
+            status.value = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            timeLeft.placeholder = `${response.timeLeft}`;
-            terms.placeholder = `${response.terms}`;
+            timeLeft.value = `${response.timeLeft}`;
+            terms.value = `${response.terms}`;
 
             let terminate = "Terminated";
             let Cstatus = `${response.status}`;
