@@ -838,9 +838,9 @@ function FetchRecord() {
             console.log(response);
             var r=document.getElementById("formName");
             setLocalfile("'"+response+"'");
-             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px"/>';
+             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
              var attr=document.getElementById("fileAttr");
-             attr.setAttribute("style","margin-left: 10px;padding-left: 10px;display: all")
+             attr.setAttribute("style","margin-left: 10px;padding-left: 10px;padding-right:10px;display: all;background-color: white!important ;border-radius: 8%")
              // r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
         }
     })
