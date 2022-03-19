@@ -435,26 +435,109 @@ function FetchDetails() {
 
 function SaveTenantDocuments(){
 
-    var file = $('#fileUploadForm')[0];
+    var application = $('#application')[0];
+    var cr14 = $('#application')[1];
+    var cr6 = $('#application')[2];
+    var  bank= $('#application')[3];
+    var director = $('#application')[4];
+    var certificate = $('#application')[5];
+    var vat = $('#application')[6];
+    var tax = $('#application')[7];
+    var article = $('#application')[8];
 
-
-
-    var data= new FormData(file)
     
-    var y=document.getElementById("file");
+    // var y=document.getElementById("application_letter");
 
-    if(y.value.toString().length==0){
-        alert("Notice File Not Uploaded!!","danger");
-        var r=document.getElementById("retry");
-        r.setAttribute("style","display:all");
+    // if(y.value.toString().length==0){
+    //     alert("App File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
 
-        return
-    }
+    //     return
+    // }
+    // var x=document.getElementById("cr6_form");
+
+    // if(x.value.toString().length==0){
+    //     alert("Cr6 File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+    // var m=document.getElementById("director_id");
+
+    // if(m.value.toString().length==0){
+    //     alert("d File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+    // var z=document.getElementById("cr14_form");
+
+    // if(z.value.toString().length==0){
+    //     alert("cr File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+    
+    // var u=document.getElementById("vat_reg");
+
+    // if(u.value.toString().length==0){
+    //     alert("var File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+    // var l=document.getElementById("tax_clearance");
+
+    // if(l.value.toString().length==0){
+    //     alert("tax File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+    // var a=document.getElementById("article_associ");
+
+    // if(a.value.toString().length==0){
+    //     alert("art File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+    // var cert=document.getElementById("certificate_of_inco");
+
+    // if(cert.value.toString().length==0){
+    //     alert("cert File Not Uploaded!!","danger");
+    //     var r=document.getElementById("retry");
+    //     r.setAttribute("style","display:all");
+
+    //     return
+    // }
+
+    
+    var data= new FormData(application);
+    data.append(cr6,cr6_form.files[0])
+    data.append(cr14,cr14_form.files[0]);
+    data.append(bank,bank_statement.files[0]);
+    data.append(director,director_id.files[0]);
+    data.append(certificate,certificate_of_inco.files[0]);
+    data.append(vat,vat_reg.files[0]);
+    data.append(article,article_associ.files[0]);
+    data.append(tax,tax_clearance.files[0]);
+
+    console.log(data)
+
     $("#btnSubmit").prop("disabled", true);
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "/file-upload/uploadNotice",
+            url: "/api/tenant/uploadtenantDocument",
             data: data,
             processData: false,
             contentType: false,
@@ -476,7 +559,7 @@ function SaveTenantDocuments(){
 
                     var r=document.getElementById("retry");
                     r.setAttribute("style","display:none");
-                    alert("Lease  Saved Successfully ", 'success');
+                    alert("Documents  Saved Successfully ", 'success');
                     console.log("ERROR : ", e);
 
                 }else if(e.status.toString()=="500"){
@@ -502,62 +585,4 @@ function SaveTenantDocuments(){
         });
 
 }
-
-function employeeSelect() {
-    //display the spinner
-    $('#ajaxLoader').show();
-  
-    //first, let's get rid of the default "SELECT" option if it exists
-    var defaultOption = $("#employeeIdSelect option[value='1']");
-    if (defaultOption) defaultOption.remove();
-  
-    //get the selected id
-    var id = $('#employeeIdSelect').val();
-  
-    //get the url for the ajax call
-    var url = "/api/v1/getExpiredoc/" + id;
-  
-    //do the ajax call
-    $.get(url, populateInfo);
- }
- 
-function populateInfo(data) {
-    var status = data.responseStatus;
-  
-    //check the response to make sure it's ok
-    if (status == "Ok") {
-       var response = data.response;
-  
-       //get the JSON data
-       var companyName = response.companyName;
-       var id = response.id;
-       var addressLine1 = response.addressLine1;
-       var addressLine2 = response.addressLine2;
-       var addressLine3 = response.addressLine3;
-       var debit = response.debit;
-       var expiryDate= response.expiryDate;
-       var dueDate=response.dueDate;
-  
-       //set the input field values
-       $('#id').val(id);
-       $('#companyName').val(companyName);
-       $('#addressLine1').val(addressLine1);
-       $('#addressLine2').val(addressLine2);
-       $('#addressLine3').val(addressLine3);
-       $('#debit').val(debit);
-       $('#dueDate').val(dueDate);
-       $('#expiryDate').val(expiryDate);
-
-
-  
-       //show the hidden elements
-       $('#profileRow').css('visibility','visible');
-    }
-  
-    //hide the spinner again
-    $('#ajaxLoader').hide();
- }
- 
- 
-  
 
