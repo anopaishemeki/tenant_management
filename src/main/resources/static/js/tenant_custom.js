@@ -604,9 +604,9 @@ function setAddPropertyDropDown() {
             console.log(response)
             let dropDown = document.getElementById("property-dropdown");
 
-            while (dropDown.hasChildNodes()) {
+           /* while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
-            }
+            }*/
 
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
@@ -628,9 +628,9 @@ function setAddTenantDropDown() {
             console.log(response)
             let dropDown = document.getElementById("tenant_list");
 
-            while (dropDown.hasChildNodes()) {
+           /* while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
-            }
+            }*/
 
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
@@ -700,7 +700,10 @@ function setAddCompartmentDropDown(compartment_id) {
             while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
             }
+            let option = document.createElement("option");
 
+            option.text = "Select Compartment";
+            dropDown.appendChild(option);
 
 
             for (let i = 0; i < response.length; i++) {
