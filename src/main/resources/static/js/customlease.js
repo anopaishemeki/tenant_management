@@ -810,15 +810,15 @@ function FetchRecord() {
 
 
             id.innerText = `${response.id}`;
-            tenantName.placeholder = `${response.name}`;
-            buildingName.placeholder = `${response.buildingName}`;
-            buildingLocation.placeholder = `${response.buildingLocation}`;
-            duration.placeholder = `${response.duration}`;
+            tenantName.value = `${response.name}`;
+            buildingName.value = `${response.buildingName}`;
+            buildingLocation.value = `${response.buildingLocation}`;
+            duration.value = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            status.placeholder = `${response.status}`;
+            status.value = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            timeLeft.placeholder = `${response.timeLeft}`;
-            terms.placeholder = `${response.terms}`;
+            timeLeft.value = `${response.timeLeft}`;
+            terms.value = `${response.terms}`;
 
 
             tenantName.setAttribute("disabled", true);
@@ -838,9 +838,9 @@ function FetchRecord() {
             console.log(response);
             var r=document.getElementById("formName");
             setLocalfile("'"+response+"'");
-             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px"/>';
+             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
              var attr=document.getElementById("fileAttr");
-             attr.setAttribute("style","margin-left: 10px;padding-left: 10px;display: all")
+             attr.setAttribute("style","margin-left: 10px;padding-left: 10px;padding-right:10px;display: all;background-color: white!important ;border-radius: 8%")
              // r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
         }
     })
@@ -873,15 +873,15 @@ function fetchRecord() {
 
 
             id.innerText = `${response.id}`;
-            tenantName.placeholder = `${response.name}`;
-            buildingName.placeholder = `${response.buildingName}`;
-            buildingLocation.placeholder = `${response.buildingLocation}`;
-            duration.placeholder = `${response.duration}`;
+            tenantName.value = `${response.name}`;
+            buildingName.value = `${response.buildingName}`;
+            buildingLocation.value = `${response.buildingLocation}`;
+            duration.value = `${response.duration}`;
             startDate.value = `${response.startDate}`;
-            status.placeholder = `${response.status}`;
+            status.value = `${response.status}`;
             endDate.value = `${response.endDate}`;
-            timeLeft.placeholder = `${response.timeLeft}`;
-            terms.placeholder = `${response.terms}`;
+            timeLeft.value = `${response.timeLeft}`;
+            terms.value = `${response.terms}`;
 
             let terminate = "Terminated";
             let Cstatus = `${response.status}`;

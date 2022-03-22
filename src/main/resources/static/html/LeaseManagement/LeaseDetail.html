@@ -247,7 +247,7 @@
                                 <span style="padding: 20px;padding-bottom: 10px;font-size: 14px"> </span>
                                 <div class="card-body">
 
-                                    <div class="d-flex justify-content-center rounded-pill" style="background-color: lightgrey; ">
+                                    <div class="d-flex justify-content-center rounded-pill" style="border:1px solid lightgrey">
                                     <h4 class="mb-2" style="padding: 10px"><strong> ID = <span id="id"></span></strong></h4>
                                     </div>
                                     <div class="form-row" style="margin-top: 20px">
@@ -317,14 +317,15 @@
                                                         <div id="formName"></div>
 
                                                     </div>
-                                          <div style="margin-left: 10px;padding-left: 10px;display: none;" id="fileAttr" >
+                                          <div style="margin-left: 10px;padding-left: 10px;background-color: white!important ;border-radius: 8%;display: none" id="fileAttr" >
                                                 <div >
-                                                    <a  href="./LeaseForm.html"  target="_blank"  > <button class="btn btn-success" >Open File</button></a>
+                                                    <a  href="./LeaseForm.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
 
                                                 </div>
                                                 <div style="margin-top:8px">
-                                                    <button type="button" style="background: none!important;border:none!important ; margin-left: 10px;margin-bottom: -10px" id="file" onclick="DownloadLeaseAgreementForm()"><i class="fe fe-download" style="margin-left: 8px;font-size:18px"></i> </button><br>
-                                                    <button type="button" style="background: none!important;border:none!important ;color:blue" id="file4" onclick="DownloadLeaseAgreementForm()">Download</button>
+                                                    <!--<button type="button" style="background: none!important;border:none!important ; margin-left: 10px;margin-bottom: -10px" id="file" onclick="DownloadLeaseAgreementForm()"><i class="fe fe-download " style="margin-left: 8px;font-size:18px;color:darkgray" id="download"></i> </button><br>-->
+                                                    <!--<button type="button" style="background: none!important;border:none!important ;color:blue" id="file4" onclick="DownloadLeaseAgreementForm()">Download</button>-->
+                                                     <img id="file" onclick="DownloadLeaseAgreementForm()" src="https://tambua.africa/wp-content/uploads/2019/11/animated-download-button-gif.gif" height="60px" width="90px" style="border-bottom-right-radius: 8%">
                                                 </div>
                                           </div>
                                             </div>
@@ -496,6 +497,11 @@
             </div>
     </main> <!-- main -->
 </div> <!-- .wrapper -->
+<style>
+    #file:hover{
+        cursor: pointer;
+    }
+</style>
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/popper.min.js"></script>
 <script src="../../js/moment.min.js"></script>

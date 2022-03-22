@@ -412,7 +412,7 @@
                               <div class="dropdown-menu dropdown-menu-right">
                                   <a class="dropdown-item" data-toggle="modal"
                                      data-target="#varyModal" data-whatever="@mdo"
-                                     href="#">Genarate Acceptance Document</a>
+                                     href="#">Upload Tenant Documents</a>
       
                               </div>
                           </td>
@@ -441,51 +441,65 @@
                 <div class="container-fluid">
                   <div class="row ">
                       <div class="col-12">
-                          <h2 class="page-title">Generate Document</h2>
+                          <h2 class="page-title">Upload Tenant Documents</h2>
                                       <div class="card-body">
-                                        <form>
+                                        <form method="POST" enctype="multipart/form-data" id="application">
                                           <div class="form-group">
-                                            <label for="companyName" class="col-form-label">Company Name:</label>
-                                            <input type="text" class="form-control" id="companyName">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" id="application_letter" name="application_letter">
+                                              <label class="custom-file-label" for="application_letter">Application Letter</label>
+                                            </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="addressLine1" class="col-form-label">Address Line 1:</label>
-                                            <input type="text" class="form-control" id="addressLine1">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="cr14_form" id="cr14_form">
+                                              <label class="custom-file-label" for="cr14_form">CR14</label>
+                                            </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="addressLine2" class="col-form-label">Address Line 2:</label>
-                                            <input type="text" class="form-control" id="addressLine2">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="cr6_form" id="cr6_form">
+                                              <label class="custom-file-label" for="cr6_form">CR6</label>
+                                            </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="addressLine3" class="col-form-label">Address Line 3:</label>
-                                            <input type="text" class="form-control" id="addressLine3">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" id="director_id" name="director_id">
+                                              <label class="custom-file-label" for="director_id">Director's ID</label>
+                                            </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="shop_size" class="col-form-label">Shop Size:</label>
-                                            <input type="text" class="form-control" id="shop_size">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="bank_statement" id="bank_statement">
+                                              <label class="custom-file-label" for="bank_statement">Bank Statement</label>
+                                            </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="rent" class="col-form-label">Rent:</label>
-                                            <input type="text" class="form-control" id="rent">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="certificate_of_inco" id="certificate_of_inco">
+                                              <label class="custom-file-label" for="certificate_of_inco">Certificate of Incorporation</label>
+                                            </div>
                                           </div>
                                           <div class="form-group">
-                                            <label for="deposit_fee" class="col-form-label">Deposit Fee:</label>
-                                            <input type="text" class="form-control" id="deposit_fee">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="tax_clearance" id="tax_clearance">
+                                              <label class="custom-file-label" for="tax_clearance">Tax Clearance</label>
+                                            </div>
                                           </div>
-                                          <div class="form-group">
-                                            <label for="operation_cost" class="col-form-label">Operation Cost:</label>
-                                            <input type="text" class="form-control" id="operation_cost">
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="lease_term" class="col-form-label">Lease Term:</label>
-                                            <input type="text" class="form-control" id="lease_term">
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="fit_out_period" class="col-form-label">Fit Out Period:</label>
-                                            <input type="text" class="form-control" id="fit_out_period">
-                                          </div>
-                                   
                                          
+                                          <div class="form-group">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="vat_reg" id="vat_reg">
+                                              <label class="custom-file-label" for="vat_reg">Vat Registration</label>
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <div class="custom-file">
+                                              <input type="file" class="custom-file-input" name="article_associ" id="article_associ">
+                                              <label class="custom-file-label" for="article_associ">Article of Association</label>
+                                            </div>
+                                          </div>
+                                        
                                         </form>
                                           </div>
                    </div>
@@ -501,10 +515,10 @@
                    </a>
                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
                    </button>
-                   <button class="btn btn-primary " type="submit" onclick="saveReplyDetails()"
+                   <button class="btn btn-primary " type="submit" onclick="SaveTenantDocuments()"
                    data-bs-toggle="modal"
                    data-bs-target="#exampleModal" id="btnSubmit">
-                   Save
+                    Upload
                   
                  </button>
                </div>
@@ -684,7 +698,7 @@
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/simplebar.min.js"></script>
-    <script src="../../js/customreply.js"></script>
+    <script src="../../js/customdocuments.js"></script>
     <script src='../../js/daterangepicker.js'></script>
     <script src='../../js/jquery.stickOnScroll.js'></script>
     <script src="../../js/tinycolor-min.js"></script>
