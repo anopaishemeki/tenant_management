@@ -628,14 +628,18 @@ function setAddTenantDropDown() {
             console.log(response)
             let dropDown = document.getElementById("tenant_list");
 
-           /* while (dropDown.hasChildNodes()) {
+            while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
-            }*/
+            }
+            let option = document.createElement("option");
+
+            option.text = "Available Business";
+            dropDown.appendChild(option);
 
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
 
-                option.text = response[i].name;
+                option.text = response[i].business_name;
                 option.setAttribute("value", `${response[i].id}`)
 
                 dropDown.appendChild(option);
