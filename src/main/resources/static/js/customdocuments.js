@@ -433,19 +433,9 @@ function FetchDetails() {
     })
 }
 
-<<<<<<< Updated upstream
-function SaveTenantDocuments(){
 
-    var application = $('#application')[0];
-    var cr14 = $('#application')[1];
-    var cr6 = $('#application')[2];
-    var  bank= $('#application')[3];
-    var director = $('#application')[4];
-    var certificate = $('#application')[5];
-    var vat = $('#application')[6];
-    var tax = $('#application')[7];
-    var article = $('#application')[8];
-=======
+
+
 function saveTenantDocuments(){
 
     var application = $('#fileUploadForm')[0];
@@ -467,7 +457,7 @@ function saveTenantDocuments(){
     ajaxData.append(tax,tax_clearance.files[0])
     ajaxData.append(article,article_associ.files[0])
     ajaxData.append(certificate_of,certificate_of_inco.files[0])
->>>>>>> Stashed changes
+
 
     
     // var y=document.getElementById("application_letter");
@@ -514,7 +504,7 @@ function saveTenantDocuments(){
     //     var r=document.getElementById("retry");
     //     r.setAttribute("style","display:all");
 
-<<<<<<< Updated upstream
+
     //     return
     // }
     // var l=document.getElementById("tax_clearance");
@@ -558,7 +548,6 @@ function saveTenantDocuments(){
 
     console.log(data)
 
-=======
     // var data= new FormData(file)
     
     // var y=document.getElementById("file");
@@ -570,17 +559,16 @@ function saveTenantDocuments(){
 
     //     return
     // }
->>>>>>> Stashed changes
+
     $("#btnSubmit").prop("disabled", true);
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
             url: "/api/tenant/uploadtenantDocument",
-<<<<<<< Updated upstream
+
             data: data,
-=======
+
             data: ajaxData,
->>>>>>> Stashed changes
             processData: false,
             contentType: false,
             cache: false,
@@ -675,8 +663,7 @@ function getTenant() {
     })
 }
 
-<<<<<<< Updated upstream
-=======
+
 // function employeeSelect() {
 //     //display the spinner
 //     $('#ajaxLoader').show();
@@ -735,4 +722,4 @@ function getTenant() {
  
   
 
->>>>>>> Stashed changes
+
