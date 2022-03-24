@@ -525,7 +525,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-3">
-                                                    <label for="date-input1">Payment Date</label>
+                                                    <label for="date-input1">Issue Date</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control drgpicker"
                                                                id="date-input1" value="04/24/2020"
@@ -541,8 +541,7 @@
                                                     <!-- Button trigger modal -->
                                                     <button id="create-payment" type="button"
                                                             class="btn form-control btn-outline-success"
-                                                            data-toggle="modal" data-target="#verticalModal"> create a
-                                                        payment
+                                                            data-toggle="modal" data-target="#verticalModal"> create an Invoice
                                                     </button>
                                                 </div>
                                             </div>
@@ -653,7 +652,7 @@
                                         <label for="date-input2">Due Date</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control drgpicker"
-                                                   id="date-input2" value="04/24/2020"
+                                                   id="date-input2" value="03/24/2022"
                                                    aria-describedby="button-addon2">
                                             <div class="input-group-append">
                                                 <div class="input-group-text" id="button-addon-date2"><span
@@ -757,7 +756,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <!--<div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="simple-select444">Select Lettable Space</label>
                                         <select class="form-control select2" id="simple-select444">
@@ -786,29 +785,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
+                                </div>-->
+s                                <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label for="reference">Reference Number</label>
-                                        <input class="form-control input" id="reference" type="text" name="reference"
-                                               placeholder="RF00000">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="amount">Amount Paid</label>
-                                        <input class="form-control input-money" id="amount" type="text" name="money"
-                                               placeholder="1,000,000">
+                                        <button type="button" class="btn mb-2 btn-secondary " data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn mb-2 btn-primary" onclick="saveInvoice()">Save invoice</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn mb-2 btn-primary" onclick="savePayment()">Save payment</button>
+
                     </div>
                 </div>
             </div>
+        </div>
 
             <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
                  aria-labelledby="defaultModalLabel"

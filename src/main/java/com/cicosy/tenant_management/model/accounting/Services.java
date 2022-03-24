@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table
+@Embeddable
 public class Services {
     @Id
     @SequenceGenerator(
