@@ -8,6 +8,7 @@ package com.cicosy.tenant_management.service.document_management;
 
 
 import com.cicosy.tenant_management.model.document_management.TenantDocuments;
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.repository.document_management.TenantsDocumentRepo;
 import java.io.IOException;
 import java.util.List;
@@ -50,7 +51,7 @@ public class TenantDocumentsService {
   @Autowired
 	TenantsDocumentRepo tenantsDocumentRepo;
 	
-	public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/leaseDocuments";
+	public static String uploadDirectory = System.getProperty("user.dir")+"/assets/uploads/tenantDocuments";
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
 			.toAbsolutePath().normalize();
 	
@@ -62,24 +63,34 @@ public class TenantDocumentsService {
   
 
 
-  public void store(Long id,String uploadDir,String fileName, MultipartFile multipartFile) throws IOException {
-  Path uploadPath = fileStorageLocation;
-
-  if (!Files.exists(uploadPath)) {
-  Files.createDirectories(uploadPath);
+  public void store(String tenantId,Long id,String uploadDir,String fileName, MultipartFile multipartFile) throws IOException {
+ // Path uploadPath = fileStorageLocation;
+      int id1 = Integer.parseInt(tenantId);
+      String uploadPath="src/main/resources/static/assets/uploads/Tenant"+id1+"/";
+      File pathAsFile = new File(uploadPath);
+  if (!Files.exists(Paths.get(uploadPath))) {
+  Files.createDirectories(Paths.get(uploadPath));
   }
+      byte[]  data =multipartFile.getBytes();
+      Path path = Paths.get(uploadPath+multipartFile.getOriginalFilename());
+      Files.write(path,data);
 
-  try (InputStream inputStream = multipartFile.getInputStream()) {
+
+/*  try (InputStream inputStream = multipartFile.getInputStream()) {
   Path filePath = uploadPath.resolve(fileName);
   Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
   } catch (IOException ioe) {       
   throw new IOException("Could not save file: " + fileName, ioe);
-  }     
+  }   */
 }
 
 public Resource loadFileAsResource(Long id,String fileName) {
-  try {
-          Path filePath = Paths.get(uploadDirectory).resolve(fileName).normalize();
+  /*try {
+
+
+      String uploadPath="src/main/resources/static/assets/uploads/Tenant"+id;
+
+          Path filePath = Paths.get(uploadPath).toAbsolutePath().resolve(fileName).normalize();
           Resource resource = new UrlResource(filePath.toUri());
           System.out.println(filePath+" "+resource);
           if(resource.exists()) {
@@ -89,8 +100,35 @@ public Resource loadFileAsResource(Long id,String fileName) {
           }
       } catch (MalformedURLException ex) {
           throw new FileStorageException("File not found " + fileName, ex);
-      }
+      }*/
+    String DocumentPath="src/main/resources/static/assets/uploads/Tenant"+id;
+//        File pathAsFile = new File(DocumentPath);
+
+
+
+//        byte[]  data =file.getBytes();
+//        Path path = Paths.get(DocumentPath+file.getOriginalFilename());
+
+
+    Path path = Paths.get(DocumentPath).toAbsolutePath().resolve(fileName);
+
+    Resource resource;
+    try {
+        resource = new UrlResource(path.toUri());
+
+    } catch (MalformedURLException e) {
+        throw new RuntimeException("Issue in reading the file", e);
+    }
+
+    if(resource.exists() && resource.isReadable()){
+        return resource;
+    }else{
+        throw new RuntimeException("the file doesn't exist or not readable");
+    }
 }
+        public List<TenantDocuments> findDoc(String id) {
+        return tenantsDocumentRepo.findLeaseBySearch(id);
+    }
 
 /** 
 public TenantDocuments store1(MultipartFile file) throws IOException {

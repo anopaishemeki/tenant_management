@@ -447,7 +447,7 @@ function saveTenantDocuments(){
     var tax = $('#fileUploadForm')[6];
     var article = $('#fileUploadForm')[7];
     var certificate_of = $('#fileUploadForm')[8];
-    
+
     var ajaxData = new FormData(application)
     ajaxData.append(cr14,cr14_form.files[0])
     ajaxData.append(cr6,cr6_form.files[0])
@@ -459,7 +459,7 @@ function saveTenantDocuments(){
     ajaxData.append(certificate_of,certificate_of_inco.files[0])
 
 
-    
+
     // var y=document.getElementById("application_letter");
 
     // if(y.value.toString().length==0){
@@ -635,9 +635,11 @@ function getTenant() {
                             <td>${items[i].id}</td>
                             <td>${items[i].name} ${items[i].surname}</td>     
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rent_status}</small></td>
-                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" >
-                            <a class="dropdown-item" href="view_tenantDocuments" onclick="generateDocuments()">Display Documents</a>
-                             </button>
+                            <td><a class="" href="./view_tenantDocuments.html" onclick="setLocalfile('${items[i].id}'),SetLocal('${items[i].application_letter}')">Display Documents
+                            <button class="btn btn-sm" type="button" >
+                            </button>
+                            </a>
+
                              </td>
                             <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span> 
@@ -718,8 +720,41 @@ function getTenant() {
 //     //hide the spinner again
 //     $('#ajaxLoader').hide();
 //  }
- 
- 
+ function setLocalfile(application_letter){
+     // var file=document.getElementById("formName2").innerText;
+     localStorage.removeItem("application_letter");
+     localStorage.setItem("application_letter", JSON.stringify(application_letter));
+ }
+
+
+ function SetLocal(id) {
+     localStorage.removeItem("id");
+
+     localStorage.setItem("id", JSON.stringify(id));
+
+
+ }
+function DownloadFile(){
+    var filename = JSON.parse(localStorage.getItem("application_letter"));
+    var filename2=filename.split("'")[1];
+    console.log(filename2);
+
+    $.ajax({
+        url: 'http://localhost:8090/api/tenant/downloadFile' + id + fileName2,
+        type: 'GET',
+        success: function (response) {
+
+            var h=filename.split(".").pop();
+            console.log("Extension: = ",h);
+            console.log(response);
+
+            if(h=="jpg"|| h=="png"||h=="jpeg"||h="pdf"||h="txt"){
+                window.open('http://localhost:8090/assets/uploads/'+ id + filename2,"_blank");
+            }
+
+        }
+    })
+}
   
 
 

@@ -39,7 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-
+import java.util.List;
 
 
 @RestController
@@ -54,13 +54,21 @@ public class TenantDocController {
   @Autowired
   private TenantsDocumentRepo tenantRepo;
 
-  @GetMapping("/downloadFile/{id}/{fileName}")
+
+    @GetMapping("fetchfile/{id}")
+    List<TenantDocuments> fetchfile(@PathVariable String id, HttpServletRequest request) {
+        return tenantdocumentsService.findDoc(id);
+    }
+
+
+
+    @GetMapping("/downloadFile/{id}/{fileName}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable Long id,@PathVariable String fileName,HttpServletRequest request) {
 		// Load file as Resource
 		Resource resource = tenantdocumentsService.loadFileAsResource(id,fileName);
 		log.info("resource: " + resource);
 		// Try to determine file's content type
-		String contentType = null;
+		/*String contentType = null;
 		try {
 			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 			log.info("contentType: " + contentType);
@@ -75,7 +83,22 @@ public class TenantDocController {
 
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
+				.body(resource);*/
+      String mimeType;
+
+      try {
+        mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+      } catch (IOException e) {
+        mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+      }
+      mimeType = mimeType == null ? MediaType.APPLICATION_OCTET_STREAM_VALUE : mimeType;
+
+      return ResponseEntity.ok()
+              .contentType(MediaType.parseMediaType(mimeType))
+//                .contentType(contentType)
+              .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName="+resource.getFilename())
+              //.header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
+              .body(resource);
 	}
 
   @PostMapping("/uploadtenantDocument")
@@ -88,7 +111,10 @@ public class TenantDocController {
   @RequestParam("bank_statement") MultipartFile file5,
   @RequestParam("vat_reg") MultipartFile file6,
   @RequestParam("tax_clearance") MultipartFile file7,
-  @RequestParam("article_associ") MultipartFile file8,Long id) throws IOException{ 
+  @RequestParam("article_associ") MultipartFile file8,
+  @RequestParam("tenantID")  String tenantId,Long id) throws IOException{
+
+
 
   
     String application_letter = StringUtils.cleanPath(file0.getOriginalFilename());
@@ -100,10 +126,12 @@ public class TenantDocController {
     String bank_statement = StringUtils.cleanPath(file6.getOriginalFilename());
     String tax_clearance = StringUtils.cleanPath(file7.getOriginalFilename());
     String article_associ = StringUtils.cleanPath(file8.getOriginalFilename());
+
    
-   
-    TenantDocuments documents= new TenantDocuments(application_letter);
-    
+    TenantDocuments documents= new TenantDocuments(tenantId);
+
+
+    documents.setApplication_letter(application_letter);
     documents.setCr14(cr14_form);
     documents.setCr6(cr6_form);
     documents.setDirector(director_id);
@@ -114,20 +142,17 @@ public class TenantDocController {
     documents.setArticle(article_associ);
 
     TenantDocuments docs = tenantRepo.save(documents);
-    String uploadDir = System.getProperty("user.dir") + "/uploads/tenantDocuments" + docs.getId();
-  
-    
+    String uploadDir = System.getProperty("user.dir") + "assets/uploads/tenantDocuments" + docs.getId();
 
-      
-      tenantdocumentsService.store(id,uploadDir, application_letter, file0);
-      tenantdocumentsService.store(id,uploadDir, cr14_form, file1);
-      tenantdocumentsService.store(id,uploadDir, cr6_form, file2);
-      tenantdocumentsService.store(id,uploadDir, director_id, file3);
-      tenantdocumentsService.store(id,uploadDir, certificate_of_incorporation,file4);
-      tenantdocumentsService.store(id,uploadDir, vat_reg, file5);
-      tenantdocumentsService.store(id,uploadDir, bank_statement, file6);
-      tenantdocumentsService.store(id,uploadDir, tax_clearance, file7);
-      tenantdocumentsService.store(id,uploadDir, article_associ, file8);
+      tenantdocumentsService.store(tenantId,id,uploadDir, application_letter, file0);
+      tenantdocumentsService.store(tenantId,id,uploadDir, cr14_form, file1);
+      tenantdocumentsService.store(tenantId,id,uploadDir, cr6_form, file2);
+      tenantdocumentsService.store(tenantId,id,uploadDir, director_id, file3);
+      tenantdocumentsService.store(tenantId,id,uploadDir, certificate_of_incorporation,file4);
+      tenantdocumentsService.store(tenantId,id,uploadDir, vat_reg, file5);
+      tenantdocumentsService.store(tenantId,id,uploadDir, bank_statement, file6);
+      tenantdocumentsService.store(tenantId,id,uploadDir, tax_clearance, file7);
+      tenantdocumentsService.store(tenantId,id,uploadDir, article_associ, file8);
       
 	
    

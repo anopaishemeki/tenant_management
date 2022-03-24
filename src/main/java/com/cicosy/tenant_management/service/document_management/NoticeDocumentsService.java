@@ -50,7 +50,7 @@ public class NoticeDocumentsService  {
 	@Autowired
 	NoticeDocumentRepo noticeDocumentRepo;
 	
-	public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/noticeDocuments";
+	public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/assets/uploads/noticeDocuments";
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
 			.toAbsolutePath().normalize();
 	

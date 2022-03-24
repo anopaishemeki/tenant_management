@@ -33,7 +33,7 @@ public class TenantDocuments  {
             generator = "leaseDocuments_sequence"
     )
     private Long id;
-
+    private String tenantId;
     private String application_letter;
     private String  cr14_form;
     private String cr6_form;
@@ -47,7 +47,7 @@ public class TenantDocuments  {
   
 
 
-    public TenantDocuments(String application_letter, String cr14_form,String cr6_form,
+    public TenantDocuments(String tenantId,String application_letter, String cr14_form,String cr6_form,
     String certificate_of_incorporation,String director_id,String bank_statement,String vat_reg,String tax_clearance,String article_of_association) {
         this.application_letter=application_letter;
         this.cr14_form=cr14_form;
@@ -58,14 +58,15 @@ public class TenantDocuments  {
         this.tax_clearance=tax_clearance;
         this.article_of_association=article_of_association;
         this.bank_statement=bank_statement;
+        this.tenantId=tenantId;
 
     }
 
     public TenantDocuments(){
         
     }
-    public TenantDocuments(String application_letter){
-        this.application_letter=application_letter;
+    public TenantDocuments(String tenantId){
+        this.tenantId=tenantId;
     }
     public void setCr14(String cr14_form){
         this.cr14_form=cr14_form;
@@ -122,6 +123,9 @@ public class TenantDocuments  {
      public Long getId(){
          return this.id;
      }
+     public String getTenantId(){
+        return this.tenantId;
+    }
 
 
    
