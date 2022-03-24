@@ -36,4 +36,9 @@ public class InvoiceController {
     public Invoice getSpecificInvoice(Long id){
         return invoiceService.getById(id);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteInvoice(@PathVariable Long id){
+        invoiceService.delete(id);
+    }
 }

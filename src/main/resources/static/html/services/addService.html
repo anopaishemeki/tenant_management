@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light" >
+<body class="vertical  light  " onload="setAddTenantDropDown()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -259,6 +259,37 @@
                     </ul>
                 </li>
             </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Finance</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <!--              <li class="nav-item w-100">-->
+                <!--                <a class="nav-link" href="calendar.html">-->
+                <!--                  <i class="fe fe-calendar fe-16"></i>-->
+                <!--                  <span class="ml-3 item-text">Calendar</span>-->
+                <!--                </a>-->
+                <!--              </li>-->
+                <li class="nav-item dropdown">
+                    <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Accounts</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                        <a class="nav-link pl-3" href="../accounting/payments.html"><span class="ml-1">Payments</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Invoicing</span></a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Services</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                        <a class="nav-link pl-3" href="../services/serviceList.html"><span class="ml-1">Service List</span></a>
+                        <a class="nav-link pl-3" href="../services/addService.html"><span class="ml-1">Add Services</span></a>
+                    </ul>
+                </li>
+            </ul>
 
 
         </nav>
@@ -272,7 +303,7 @@
                         <div class="col-md-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header">
-                                    <strong class="card-title"> Services Form</strong>
+                                    <strong class="card-title"> Request Form</strong>
                                 </div>
                                 <div class="card-body">
                                     <form id="_form">
@@ -290,59 +321,27 @@
                                             form-group -->
                                         </div>
 
-                                       <!-- <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="levelOfUrgency">Level of Urgency</label>
-                                                <select id="levelOfUrgency" class="form-control">
-                                                    <option value="High" selected>High</option>
-                                                    <option value="Moderate">Moderate</option>
-                                                    <option value="Low">Low</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group col-md-6">
-                                                <label for="description">Description</label>
-                                                <textarea class="form-control" id="description"
-                                                          rows="4"></textarea>
-                                            </div>
-                                            &lt;!&ndash; /.card &ndash;&gt;
-
-                                        </div>
-                                        <div class="form-row">-->
-                                            <!-- <div class="col-md-12 mb-4">
-                                                 <div class="card shadow">
-                                                     <div class="card-body">
-                                                         <div class="form-group mb-3">
-                                                             <label for="description">Description</label>
-                                                             <textarea class="form-control" id="description"
-                                                                       rows="4"></textarea>
-                                                         </div>
-                                                     </div> &lt;!&ndash; /.card-body &ndash;&gt;
-                                                 </div> &lt;!&ndash; /.card &ndash;&gt;
-                                             </div>--> <!-- /.col -->
-                                      <!--  </div>-->
-
                                         <div class="form-row">
                                             <div class="form-group col-sm-3 ">
                                                 <button type="button" class="btn mb-2 btn-outline-success"
-                                                        onclick="saveService()"><span class="fe fe-upload-cloud fe-16">Add Service</span>
-                                                </button> &nbsp;
+                                                        onclick="saveService()"><span class="fe fe-upload-cloud fe-16">Add Request</span>
+                                                </button>
                                             </div>
 
 
                                             <div class="form-group col-sm-9">
-                                                <div id="toast"
+                                                <!--div id="toast"
                                                      class="toast align-items-center text-white bg-success-light border-0"
                                                      role="alert" aria-live="assertive" aria-atomic="true">
                                                     <div class="d-flex">
                                                         <div class="toast-body">
-                                                            Service was added successfully
+                                                            <h1>Request was added successfully</h1>
                                                         </div>
                                                         <button type="button"
                                                                 class="btn-close btn-close-white me-2 m-auto"
                                                                 data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
 
@@ -368,7 +367,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="toast" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -383,7 +382,7 @@
             </div>
             <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div>
     </div>
