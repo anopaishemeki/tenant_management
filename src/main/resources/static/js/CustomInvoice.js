@@ -353,7 +353,7 @@ function saveInvoice(){
     let compartment = JSON.parse(localStorage.getItem('selectedLettable'));
     let amount = 0;
     let  dueDate = document.getElementById('date-input2').value;
-    let services = [];
+    let servicesList = [];
 
     let response = JSON.parse(localStorage.getItem('i_services'))
 
@@ -363,6 +363,8 @@ function saveInvoice(){
         for (let j = 0; j < selectedServicesList.length; j++) {
             if (response[i].id == selectedServicesList[j]) {
                 amount = amount + Number.parse(response[i].amount)
+
+                servicesList.push(response[i])
             }
             console.log(response[i]);
         }
@@ -371,6 +373,19 @@ function saveInvoice(){
     let data = {
         compartment,
         amount,
-        dueDate
+        dueDate,
+        servicesList
     }
+
+    $.ajax({
+        url: 'http://localhost:8090/api/invoice/save-invoice',
+        type: 'POST',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response)
+        }
+    })
 }
