@@ -32,4 +32,8 @@ public class InvoiceService {
     public Invoice getById(Long id){
         return invoiceRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Invoice with "+id+" does not exist"));
     }
+
+    public void delete(Long id) {
+        invoiceRepository.deleteById(id);
+    }
 }

@@ -28,4 +28,8 @@ public class ServiceService {
     public Services getService(Long id){
         return serviceRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Service with "+id+" not found"));
     }
+
+    public void delete(Long id) {
+        serviceRepository.deleteById(id);
+    }
 }

@@ -362,7 +362,7 @@ function saveInvoice(){
     for (let i = 0; i < response.length; i++) {
         for (let j = 0; j < selectedServicesList.length; j++) {
             if (response[i].id == selectedServicesList[j]) {
-                amount = amount + Number.parse(response[i].amount)
+                amount = amount + Number.parseFloat(response[i].amount)
 
                 servicesList.push(response[i])
             }

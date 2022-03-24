@@ -31,4 +31,9 @@ public class ServiceController {
     public Services getService(@PathVariable Long id){
         return serviceService.getService(id);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteService(@PathVariable Long id){
+        serviceService.delete(id);
+    }
 }
