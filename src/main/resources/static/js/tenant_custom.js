@@ -604,9 +604,9 @@ function setAddPropertyDropDown() {
             console.log(response)
             let dropDown = document.getElementById("property-dropdown");
 
-            while (dropDown.hasChildNodes()) {
+           /* while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
-            }
+            }*/
 
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
@@ -631,11 +631,15 @@ function setAddTenantDropDown() {
             while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
             }
+            let option = document.createElement("option");
+
+            option.text = "Available Business";
+            dropDown.appendChild(option);
 
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
 
-                option.text = response[i].name;
+                option.text = response[i].business_name;
                 option.setAttribute("value", `${response[i].id}`)
 
                 dropDown.appendChild(option);
@@ -700,6 +704,12 @@ function setAddCompartmentDropDown(compartment_id) {
             while (dropDown.hasChildNodes()) {
                 dropDown.removeChild(dropDown.firstChild);
             }
+            let option = document.createElement("option");
+
+            option.text = "Select Compartment";
+            dropDown.appendChild(option);
+
+
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
 

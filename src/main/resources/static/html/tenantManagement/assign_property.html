@@ -412,16 +412,20 @@
                     <!--                    <form>-->
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="tenant_list">Tenant</label>
-                            <select id="tenant_list" class="form-control" onchange="onSetTenants()">
-                                <option>Choose...</option>
+                            <label for="tenant_list">Business Name</label>
+                            <select id="tenant_list" class="form-control select2" onchange="onSetTenants()">
+                                <optgroup id="Available Tenants" label="Available Tenants" >
+                                    <option value="">Select Business Name</option>
+                                </optgroup>
                             </select>
                             <!--                                //fggvhgvgvhvhg-->
                         </div>
                         <div class="form-group col-md-6">
                             <label for="property-dropdown">Portfolio</label>
-                            <select id="property-dropdown" class="form-control" onchange="onSetProperty()">
-                                <option selected>Choose...</option>
+                            <select id="property-dropdown" class="form-control select2" onchange="onSetProperty()">
+                                <optgroup id="Available Portfolio" label="Available Portfolio" >
+                                    <option value="">Select Portfolio</option>
+                                </optgroup>
 
                             </select>
                         </div>
@@ -442,8 +446,10 @@
                         <!--                            </div>-->
                         <div class="form-group col-md-6">
                             <label for="compartmentDropdown">Lettable Space</label>
-                            <select id="compartmentDropdown" class="form-control">
-                                <option selected>Choose...</option>
+                            <select id="compartmentDropdown" class="form-control select2">
+                                <optgroup id="Available Compartment" label="Available Compartment" >
+                                    <option value="">Select Compartment</option>
+                                </optgroup>
                             </select>
                         </div>
 
