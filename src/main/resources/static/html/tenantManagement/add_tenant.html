@@ -124,21 +124,21 @@
                     <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
                        class="dropdown-toggle nav-link">
                         <i class="fe fe-box fe-16"></i>
-                        <span class="ml-3 item-text">Property Management</span>
+                        <span class="ml-3 item-text">Property Portfolios</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span
-                                    class="ml-1 item-text">Properties</span>
+                                    class="ml-1 item-text">Portfolio List</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span
-                                    class="ml-1 item-text">Add Property</span></a>
+                                    class="ml-1 item-text">Add Portfolio</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span
-                                    class="ml-1 item-text">Add Compartment</span></a>
+                                    class="ml-1 item-text">Add Lettable Space</span></a>
                         </li>
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
@@ -163,7 +163,7 @@
                 <li class="nav-item dropdown">
                     <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-credit-card fe-16"></i>
-                        <span class="ml-3 item-text">Tenant Management</span>
+                        <span class="ml-3 item-text">Tenants</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                         <li class="nav-item">
@@ -177,10 +177,7 @@
                         <li class="nav-item">
                             <a class="nav-link pl-3" href="./assign_property.html"><span class="ml-1 item-text">Assign Property</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link pl-3" href="./tenant_leasing.html"><span
-                                    class="ml-1 item-text">Leasing</span></a>
-                        </li>
+
                         <!--                <li class="nav-item">-->
                         <!--                  <a class="nav-link pl-3" href="./form_layouts.html"><span class="ml-1 item-text">Layouts</span></a>-->
                         <!--                </li>-->
@@ -192,7 +189,7 @@
                 <li class="nav-item dropdown">
                     <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                         <i class="fe fe-grid fe-16"></i>
-                        <span class="ml-3 item-text">Lease Management</span>
+                        <span class="ml-3 item-text">Leasing</span>
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                         <li class="nav-item">
@@ -259,6 +256,36 @@
                     </ul>
                 </li>
             </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Finance</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <!--              <li class="nav-item w-100">-->
+                <!--                <a class="nav-link" href="calendar.html">-->
+                <!--                  <i class="fe fe-calendar fe-16"></i>-->
+                <!--                  <span class="ml-3 item-text">Calendar</span>-->
+                <!--                </a>-->
+                <!--              </li>-->
+                <li class="nav-item dropdown">
+                    <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Accounts</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                        <a class="nav-link pl-3" href="../accounting/payments.html"><span class="ml-1">Payments</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Invoicing</span></a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Services</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                        <a class="nav-link pl-3" href="../services/serviceList.html"><span class="ml-1">Service List</span></a>
+                        <a class="nav-link pl-3" href="../services/addService.html"><span class="ml-1">Add Services</span></a>
+                    </ul>
+                </li>
             <!--<p class="text-muted nav-heading mt-4 mb-1">
               <span>Apps</span>
             </p>
@@ -418,7 +445,7 @@
                             <strong class="card-title">Tenant Details</strong>
                         </div>-->
                         <div class="card-body">
-                            <form>
+                            <form id="tenant_form">
                                 <div class="mb-2">
                                     <strong class="card-title">Business Details</strong>
                                 </div>
@@ -556,10 +583,34 @@
                                 </div>-->
 
 
+
+
                                 <button type="button" id="btnSubmit" class="btn btn-primary" onclick="saveTenant()">
                                     Submit
                                 </button>
                             </form>
+                        </div>
+                    </div>
+
+<!--                    Modals..........-->
+
+                    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    The Tenant was successfully saved
+                                </div>
+                                <div class="modal-footer">
+                                    <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                                    <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                                </div>
+                            </div>
                         </div>
                     </div>
 
