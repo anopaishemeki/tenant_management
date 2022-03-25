@@ -68,7 +68,7 @@ var id = JSON.parse(localStorage.getItem("tenantId"));
 function downloadFile(type){
 
     var application_letter = JSON.parse(localStorage.getItem("application_letter"));
-    var article_of_association= JSON.parse(localStorage.getItem("cr6_form"));
+    var article_of_association= JSON.parse(localStorage.getItem("article"));
     var bank_statement = JSON.parse(localStorage.getItem("bank_statement"));
     var cr6_form= JSON.parse(localStorage.getItem("cr6_form"));
      var cr14_form = JSON.parse(localStorage.getItem("cr14_form"));
@@ -95,7 +95,7 @@ function downloadFile(type){
               }
           })
       }
- if(type=="article_of_association"){
+       if(type=="article_of_association"){
        $.ajax({
               url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + article_of_association,
               type: 'GET',
@@ -110,5 +110,110 @@ function downloadFile(type){
               }
           })
       }
+          if(type=="cr14_form"){
+             $.ajax({
+                    url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + cr14_form,
+                    type: 'GET',
+                    success: function (response) {
+                   var h=cr14_form.split(".").pop();
+                  console.log("Extension: = ",h);
+                  console.log(response);
+
+                  if(h=="jpg"|| h=="png"||h=="jpeg"){
+                      window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ cr14_form,"_blank");
+                  }
+                    }
+                })
+            }
+             if(type=="cr6_form"){
+             $.ajax({
+                    url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + cr6_form,
+                    type: 'GET',
+                    success: function (response) {
+                   var h=cr6_form.split(".").pop();
+                  console.log("Extension: = ",h);
+                  console.!log(response);
+
+                  if(h=="jpg"|| h=="png"||h=="jpeg"){
+                      window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ cr6_form,"_blank");
+                  }
+                    }
+                })
+            }
+                if(type=="bank"){
+                   $.ajax({
+                          url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + bank_statement,
+                          type: 'GET',
+                          success: function (response) {
+                         var h=bank_statement.split(".").pop();
+                        console.log("Extension: = ",h);
+                        console.log(response);
+
+                        if(h=="jpg"|| h=="png"||h=="jpeg"){
+                            window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ bank_statement,"_blank");
+                        }
+                          }
+                      })
+                  }
+                   if(type=="director"){
+                   $.ajax({
+                          url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + director_id,
+                          type: 'GET',
+                          success: function (response) {
+                         var h=director_id.split(".").pop();
+                        console.log("Extension: = ",h);
+                        console.!log(response);
+
+                        if(h=="jpg"|| h=="png"||h=="jpeg"){
+                            window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ director_id,"_blank");
+                        }
+                          }
+                      })
+                  }
+                      if(type=="certificate"){
+                         $.ajax({
+                                url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + certificate_of_incorporation,
+                                type: 'GET',
+                                success: function (response) {
+                               var h=certificate_of_incorporation.split(".").pop();
+                              console.log("Extension: = ",h);
+                              console.log(response);
+
+                              if(h=="jpg"|| h=="png"||h=="jpeg"){
+                                  window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ certificate_of_incorporation,"_blank");
+                              }
+                                }
+                            })
+                        }
+                         if(type=="tax_clear"){
+                         $.ajax({
+                                url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + tax_clearance,
+                                type: 'GET',
+                                success: function (response) {
+                               var h=tax_clearance.split(".").pop();
+                              console.log("Extension: = ",h);
+                              console.!log(response);
+
+                              if(h=="jpg"|| h=="png"||h=="jpeg"){
+                                  window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ tax_clearance,"_blank");
+                              }
+                                }
+                            })
+                        }
+                        if(type=="vat_reg"){
+                          $.ajax({
+                                url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + vat_reg,
+                                type: 'GET',
+                                success: function (response) {
+                                var h=vat_reg.split(".").pop();
+                                console.log("Extension: = ",h);
+                                console.!log(response);
+
+                                if(h=="jpg"|| h=="png"||h=="jpeg"){
+                                   window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ vat_reg,"_blank");
+                                    }
+                                }
+                          })
+                        }
 }
 
