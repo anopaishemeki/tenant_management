@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light  ">
+  <body class="vertical  light " onload='loadfile()' >
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -413,7 +413,40 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <strong>Application Letter</strong>
+                          <button class="btn" onclick="downloadFile('application_letter')">
+                            <strong>Application Letter</strong>
+                          </button>
+                        </div> <!-- .card-footer -->
+                       </a>
+                      </div> <!-- .card -->
+
+                    </div> <!-- .col -->
+                    <div class="col-md-3">
+                      <div class="card shadow text-center mb-4">
+                        <div class="card-body file">
+                          <div class="file-action">
+                            <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="text-muted sr-only">Action</span>
+                            </button>
+                            <div class="dropdown-menu m-2">
+                              <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
+                              <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
+                              <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
+                              <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
+                              <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
+                              <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
+                            </div>
+                          </div>
+                          <div class="circle circle-lg bg-light my-4">
+                            <span class="fe fe-file fe-24 text-success"></span>
+                          </div>
+                          <div class="file-info">
+                            <span class="badge badge-light text-muted mr-2">1.2M</span>
+                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                          </div>
+                        </div> <!-- .card-body -->
+                        <div class="card-footer bg-transparent border-0 fname">
+                         <button class="btn" onclick="downloadFile('cr14_form')"><strong>CR14 Form</strong></button>
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -442,36 +475,9 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <strong>CR14 Form</strong>
-                        </div> <!-- .card-footer -->
-                      </div> <!-- .card -->
-                    </div> <!-- .col -->
-                    <div class="col-md-3">
-                      <div class="card shadow text-center mb-4">
-                        <div class="card-body file">
-                          <div class="file-action">
-                            <button type="button" class="btn btn-link dropdown-toggle more-vertical p-0 text-muted mx-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span class="text-muted sr-only">Action</span>
-                            </button>
-                            <div class="dropdown-menu m-2">
-                              <a class="dropdown-item" href="#"><i class="fe fe-chevrons-right fe-12 mr-4"></i>Move</a>
-                              <a class="dropdown-item" href="#"><i class="fe fe-copy fe-12 mr-4"></i>Copy</a>
-                              <a class="dropdown-item" href="#"><i class="fe fe-edit-3 fe-12 mr-4"></i>Rename</a>
-                              <a class="dropdown-item" href="#"><i class="fe fe-delete fe-12 mr-4"></i>Delete</a>
-                              <a class="dropdown-item" href="#"><i class="fe fe-share fe-12 mr-4"></i>Share</a>
-                              <a class="dropdown-item" href="#"><i class="fe fe-download fe-12 mr-4"></i>Download</a>
-                            </div>
-                          </div>
-                          <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
-                          </div>
-                          <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
-                          </div>
-                        </div> <!-- .card-body -->
-                        <div class="card-footer bg-transparent border-0 fname">
+                          <button class="btn" onclick="downloadFile('cr6_form')">
                           <strong>cr6 Form</strong>
+                          </button>
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -500,7 +506,9 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
+                          <button class="btn" onclick="downloadFile('certificate')">
                           <strong>Certificate Of Incorporation</strong>
+                          </button>
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -529,7 +537,9 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
+                          <button class="btn" onclick="downloadFile('director')">
                           <strong>Director's ID</strong>
+                          </button>
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -558,7 +568,9 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
+                          <button class="btn" onclick="downloadFile('bank')">
                           <strong>Bank Statement</strong>
+                          </button>
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -587,7 +599,9 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
+                          <button class="btn" onclick="downloadFile('vat_reg')">
                           <strong>Vat Registration Certificate</strong>
+                          </button>
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -616,7 +630,9 @@
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
+                          <button class="btn" onclick="downloadFile('tax_clear')">
                           <strong>Tax Clearance Certificate</strong>
+                          </button>
                   
                   </div> <!-- .card-body -->
                 </div> <!-- .card -->
@@ -646,28 +662,31 @@
                     </div>
                   </div> <!-- .card-body -->
                   <div class="card-footer bg-transparent border-0 fname">
+                    <button class="btn" onclick="downloadFile('article')">
                     <strong>Article of Association</strong>
+                    </button>
                   </div> <!-- .card-footer -->
                   </div> <!-- .row -->
                 </div> <!-- .file-panel -->
+                  </div>
+            </div>
+          </div>
+        </div>
                 
       </main> <!-- main -->
     </div> <!-- .wrapper -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/simplebar.min.js"></script>
-    <script src='js/daterangepicker.js'></script>
-    <script src='js/jquery.stickOnScroll.js'></script>
-    <script src="js/tinycolor-min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/d3.min.js"></script>
-    <script src="js/topojson.min.js"></script>
-    <script src="js/datamaps.all.min.js"></script>
-    <script src="js/datamaps-zoomto.js"></script>
-    <script src="js/datamaps.custom.js"></script>
-    <script src="js/Chart.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/popper.min.js"></script>
+    <script src="../../js/moment.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/simplebar.min.js"></script>
+    <script src="../../js/downloadfile.js"></script>
+    <script src='../../js/daterangepicker.js'></script>
+    <script src='../../js/jquery.stickOnScroll.js'></script>
+    <script src="../../js/tinycolor-min.js"></script>
+    <script src="../../js/config.js"></script>
+    <script src='../../js/jquery.dataTables.min.js'></script>
+    <script src='../../js/dataTables.bootstrap4.min.js'></script>
     <script>
       /* defind global options */
       Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -690,19 +709,11 @@
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
     </script>
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/popper.min.js"></script>
-    <script src="../../js/moment.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/simplebar.min.js"></script>
-    
-    <script src='../../js/daterangepicker.js'></script>
-    <script src='../../js/jquery.stickOnScroll.js'></script>
-    <script src="../../js/tinycolor-min.js"></script>
-    <script src="../../js/config.js"></script>
-    <script src='../../js/jquery.dataTables.min.js'></script>
-    <script src='../../js/dataTables.bootstrap4.min.js'></script>
+
+
     <script>
+
+
       $('.select2').select2(
       {
         theme: 'bootstrap4',
@@ -1100,6 +1111,43 @@
         }, false);
       })();
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.3/pdfobject.min.js" integrity="sha512-bHO4iqeyo1tN+C4qnbroCQ5Hxi3aJcEszT0iOt2nkuXZXQf369U3PUsnoN/ebnKQ5V2iS326OIv9pgXxL+F/kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/javascript">
+
+	let height = window.innerHeight;
+	var y=document.getElementById('form');
+	y.setAttribute("style","height:"+height+"px");
+
+
+	  var file = JSON.parse(localStorage.getItem("file"));
+    var filename2=file.split("'")[1];
+	  console.log("file :",filename2);
+
+	if(PDFObject.supportsPDFs){
+		PDFObject.embed("http://localhost:8090/assets/uploads/"+filename2,"#form");
+	}else{
+		window.alert("This Browser Doest support  PDF of this format");
+	}
+
+</script>
+    <script type='text/javascript'>
+
+    (function()
+    {
+        if( window.localStorage )
+        {
+            if( !localStorage.getItem('firstLoad') )
+            {
+                localStorage['firstLoad'] = true;
+                window.location.reload();
+            }
+            else
+                localStorage.removeItem('firstLoad');
+        }
+    })();
+
+</script>
    
 
   </body>

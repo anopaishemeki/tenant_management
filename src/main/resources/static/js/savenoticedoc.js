@@ -65,3 +65,57 @@ function saveNoticeDocuments(){
     });
 
 }
+function getLease() {
+
+    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",baseurl,true);
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+            var data = JSON.parse(xmlhttp.responseText);
+            console.log(xmlhttp.responseText);
+            $("#dataTable").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":"name",
+                    render:function(data){
+                        return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                    }},
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                    render:function(data){
+                        if(data==="Active"){
+                            return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                        } else if(data==="Expired"){
+                            return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                        }else{
+                            return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                        }
+                    }},
+                    {"data":"id",
+                        "sortable":false,
+                        "searchable":false,
+                        render:function (data) {
+                        return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="setLocal('`+data+`')"> <span class="text-muted sr-only">Action</span></button>'+`
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item"   onclick="setLocal('`+data+`')" href="#">Terminate</a>
+                            <a class="dropdown-item"  onclick="DownloadLeaseAgreementForm()">View More Details</a>
+                        </div>`
+
+                    }}
+                ],
+                autoWidth: true,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ]
+            });
+        }
+    };
+}
+
