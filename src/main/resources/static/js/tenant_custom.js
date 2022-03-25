@@ -110,14 +110,17 @@ function saveTenant() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: function (response) {
-            alert("success" + response)
+            $('#successModal').modal('show');
             console.log(response)
 
         },
         error: function (e) {
             console.log(e);
         }
+
     })
+
+    $("#tenant_form")[0].reset();
 }
 
 
@@ -743,14 +746,15 @@ function setTenantOnCompartment(){
         contentType:"application/json; charset=utf-8",
         data:JSON.stringify(data),
         success: function () {
+            $('#assignedModal').modal('show')
 
-            console.log(" Done!"
-            );
 
 //fgjhk
 
         }
     })
+
+    $("assign_form")[0].reset();
 
 }
 
