@@ -109,19 +109,19 @@
             <li class="nav-item dropdown">
               <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-box fe-16"></i>
-                <span class="ml-3 item-text">Property Management</span>
+                <span class="ml-3 item-text">Property Portfolios</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Properties</span>
+                  <a class="nav-link pl-3" href="../propertyManagement/property-list.html"><span class="ml-1 item-text">Portfolios List</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Property</span></a>
+                  <a class="nav-link pl-3" href="../propertyManagement/add_property.html"><span class="ml-1 item-text">Add Portfolios</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Compartment</span></a>
-              </li>
+                  <a class="nav-link pl-3" href="../propertyManagement/add_compartment.html"><span class="ml-1 item-text">Add Lettable space</span></a>
+                </li>
                 <!--                <li class="nav-item">-->
                 <!--                  <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>-->
                 <!--                </li>-->
@@ -236,46 +236,13 @@
           <div class="row justify-content-center">
             <div class="col-12">
               <h2 class="mb-2 page-title">Tenant Documents</h2>
-<<<<<<< Updated upstream
-              
+
               <div class="row my-4">
                 <!-- Small table -->
                 <div class="col-md-12">
                   <div class="card shadow">
                     <div class="card-body">
-                      <!-- table -->
-                      <table class="table datatables" id="dataTable-1">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th>id</th>
-                            <th>TenantName</th>
-                            <th>Date Uploaded</th>
-                            <th>Status</th>
-                            <th>View Documents</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>368</td>
-                            <td>Takudzwa</td>
-                            <td >12/10/2022</td>
-                            <td><span class="badge badge-danger">Pending</span></td>
-                            <td><a href="./view_tenantDocuments.html">View</a></td>
-                            <td>
-                              <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
-                                      data-toggle="dropdown" aria-haspopup="true"
-                                      aria-expanded="false">
-                                  <span class="text-muted sr-only">Action</span>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                  <a class="dropdown-item" data-toggle="modal"
-                                     data-target="#varyModal" data-whatever="@mdo"
-                                     href="#">Upload Tenant Documents</a>
-      
-                              </div>
-=======
-              <div class="card-body">
+                    
                 <!-- table -->
                 <table class="table table-hover table-borderless border-v" id="tenant_table">
                   <thead class="thead-dark">
@@ -294,12 +261,10 @@
                 <div class="container-fluid d-none" id="view_Tenant">
 
                             </div>
->>>>>>> Stashed changes
                           </td>
+                      </tbody>
                         </tr>
-                        </tbody>
                       </table>
-<<<<<<< Updated upstream
                     </div>
                   </div>
                 </div> <!-- simple table -->
@@ -367,7 +332,7 @@
                                               <label class="custom-file-label" for="tax_clearance">Tax Clearance</label>
                                             </div>
                                           </div>
-                                         
+
                                           <div class="form-group">
                                             <div class="custom-file">
                                               <input type="file" class="custom-file-input" name="vat_reg" id="vat_reg">
@@ -380,7 +345,7 @@
                                               <label class="custom-file-label" for="article_associ">Article of Association</label>
                                             </div>
                                           </div>
-                                        
+
                                         </form>
                                           </div>
                    </div>
@@ -400,7 +365,7 @@
                    data-bs-toggle="modal"
                    data-bs-target="#exampleModal" id="btnSubmit">
                     Upload
-                  
+
                  </button>
                </div>
            </div>
@@ -572,27 +537,27 @@
             </div>
           </div>
         </div>
-=======
                     </div> <!-- /.col-12 -->
                   </div> <!-- .row -->
                 </div> <!-- .container-fluid -->
-              
-        
->>>>>>> Stashed changes
+
+
       </main> <!-- main -->
-    </div> <!-- .wrapper -->   
+    </div> <!-- .wrapper -->
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/popper.min.js"></script>
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/simplebar.min.js"></script>
-    <script src="../../js/customdocuments.js"></script>
+    <script src="../../js/downloadfile.js"></script>
     <script src='../../js/daterangepicker.js'></script>
     <script src='../../js/jquery.stickOnScroll.js'></script>
     <script src="../../js/tinycolor-min.js"></script>
     <script src="../../js/config.js"></script>
     <script src='../../js/jquery.dataTables.min.js'></script>
     <script src='../../js/dataTables.bootstrap4.min.js'></script>
+    <script src="../../js/maintenanceApi.js"></script>
+    <script src="../../js/doc.js"></script>
     <script>
       $('.select2').select2(
       {
@@ -992,7 +957,7 @@
       })();
     </script>
    
-    
+
   </body>
 </html>
 

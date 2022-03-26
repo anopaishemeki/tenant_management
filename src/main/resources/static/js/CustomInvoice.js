@@ -159,6 +159,9 @@ function appendLettableSpace() {
             tr.innerHTML = html;
 
             t_body.innerHTML = html;
+
+            localStorage.removeItem('selectedLettable')
+            localStorage.setItem('selectedLettable', JSON.stringify(space))
         }
     }
 
@@ -200,20 +203,20 @@ function setServiceDropDown() {
 function appendServices() {
     let response = JSON.parse(localStorage.getItem('i_services'))
 
-    let selectedServicesList  = JSON.parse(localStorage.getItem('selectedCategories'))
+    let selectedServicesList = JSON.parse(localStorage.getItem('selectedCategories'))
     let service = document.getElementById('service-drop-down').value;
 
     var verify = false
 
-    for (let i = 0 ; i <selectedServicesList.length; i++){
-        if (selectedServicesList[i] == service){
+    for (let i = 0; i < selectedServicesList.length; i++) {
+        if (selectedServicesList[i] == service) {
             verify = true
         }
     }
 
-    if (verify){
+    if (verify) {
         console.log(true)
-    }else {
+    } else {
         selectedServicesList.push(service)
     }
     console.log(selectedServicesList)
@@ -225,14 +228,15 @@ function appendServices() {
         t_body.removeChild(t_body.firstChild);
     }
 
+    let total = 0;
 
     for (let i = 0; i < response.length; i++) {
-        for (let j = 0; j < selectedServicesList.length; j++){
+        for (let j = 0; j < selectedServicesList.length; j++) {
             if (response[i].id == selectedServicesList[j]) {
                 let html = `
                                  <td>${response[i].serviceName}</td>
                                  <td>
-                                    <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" value="${response[i].amount}">
+                                    <input class="form-control form-control-sm" type="number" id="_${response[i].id}" onfocusout="updateAmount('${response[i].id}')" placeholder=".form-control-sm" value="${response[i].amount}">
                                   </td>
                                   <td><button type="button" onclick="removeService('${response[i].id}')" class="btn btn-danger btn-secondary btn-sm"><i class="bi bi-trash-fill"></i>remove </button></td>
                                                     `
@@ -241,15 +245,36 @@ function appendServices() {
                 tr.innerHTML = html;
 
                 t_body.appendChild(tr)
+
+                total = total + Number.parseFloat(response[i].amount)
             }
         }
     }
+
+
+/*    for (let i = 0; i < response.length; i++) {
+        for (let j = 0; j < selectedServicesList.length; j++) {
+            total =
+        }
+    }*/
+
+    let html = `
+                                 <td><strong>TOTAL</strong></td>
+                                 <td>
+                                    &nbsp;&nbsp;$ ${total}
+                                  </td>
+                                                    `
+
+    let tr = document.createElement('tr');
+    tr.innerHTML = html;
+
+    t_body.appendChild(tr)
 }
 
-function refreshServices(){
+function refreshServices() {
     let response = JSON.parse(localStorage.getItem('i_services'))
 
-    let selectedServicesList  = JSON.parse(localStorage.getItem('selectedCategories'))
+    let selectedServicesList = JSON.parse(localStorage.getItem('selectedCategories'))
 
 
     let t_body = document.getElementById("t_body-3");
@@ -258,14 +283,15 @@ function refreshServices(){
         t_body.removeChild(t_body.firstChild);
     }
 
+    let total = 0;
 
     for (let i = 0; i < response.length; i++) {
-        for (let j = 0; j < selectedServicesList.length; j++){
+        for (let j = 0; j < selectedServicesList.length; j++) {
             if (response[i].id == selectedServicesList[j]) {
                 let html = `
                                  <td>${response[i].serviceName}</td>
                                  <td>
-                                    <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" value="${response[i].amount}">
+                                    <input class="form-control form-control-sm" type="number" id="_${response[i].id}" onfocusout="updateAmount('${response[i].id}')" placeholder=".form-control-sm" value="${response[i].amount}">
                                   </td>
                                   <td><button type="button" onclick="removeService('${response[i].id}')" class="btn btn-danger btn-secondary btn-sm">remove </button></td>
                                                     `
@@ -274,16 +300,29 @@ function refreshServices(){
                 tr.innerHTML = html;
 
                 t_body.appendChild(tr)
+
+                total = total + Number.parseFloat(response[i].amount)
             }
         }
     }
+    let html = `
+                                 <td><strong>TOTAL</strong></td>
+                                 <td>
+                                    &nbsp;&nbsp;$ ${total}
+                                  </td>
+                                                    `
+
+    let tr = document.createElement('tr');
+    tr.innerHTML = html;
+
+    t_body.appendChild(tr)
 }
 
-function removeService(id){
-    let selectedServicesList  = JSON.parse(localStorage.getItem('selectedCategories'))
+function removeService(id) {
+    let selectedServicesList = JSON.parse(localStorage.getItem('selectedCategories'))
     console.log(selectedServicesList)
 
-    for (let i = 0; i < selectedServicesList.length; i++){
+    for (let i = 0; i < selectedServicesList.length; i++) {
         console.log(selectedServicesList[i])
         if (id == selectedServicesList[i]) {
             selectedServicesList.splice(i, 1)
@@ -293,4 +332,60 @@ function removeService(id){
             refreshServices()
         }
     }
+}
+
+function updateAmount(id){
+    let response = JSON.parse(localStorage.getItem('i_services'))
+
+    for (let i = 0; i < response.length; i++) {
+        if (id == response[i].id){
+            response[i].amount = document.getElementById('_'+id).value;
+
+        }
+    }
+
+    localStorage.removeItem('i_services');
+    localStorage.setItem('i_services', JSON.stringify(response));
+    appendServices();
+}
+
+function saveInvoice(){
+    let compartment = JSON.parse(localStorage.getItem('selectedLettable'));
+    let amount = 0;
+    let  dueDate = document.getElementById('date-input2').value;
+    let servicesList = [];
+
+    let response = JSON.parse(localStorage.getItem('i_services'))
+
+    let selectedServicesList = JSON.parse(localStorage.getItem('selectedCategories'))
+
+    for (let i = 0; i < response.length; i++) {
+        for (let j = 0; j < selectedServicesList.length; j++) {
+            if (response[i].id == selectedServicesList[j]) {
+                amount = amount + Number.parseFloat(response[i].amount)
+
+                servicesList.push(response[i])
+            }
+            console.log(response[i]);
+        }
+    }
+
+    let data = {
+        compartment,
+        amount,
+        dueDate,
+        servicesList
+    }
+
+    $.ajax({
+        url: 'http://localhost:8090/api/invoice/save-invoice',
+        type: 'POST',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response)
+        }
+    })
 }
