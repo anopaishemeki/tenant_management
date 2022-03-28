@@ -735,7 +735,8 @@ function setTenantOnCompartment(){
     console.log(id);
     console.log(tenant_id)
     var data= {
-        "tenant": tenant_id
+        "tenant": tenant_id,
+        "status":"1"
     }
     $.ajax({
 
