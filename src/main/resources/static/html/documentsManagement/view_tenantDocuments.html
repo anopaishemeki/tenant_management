@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light " onload='loadfile()' >
+  <body class="vertical  light " onload="loadfile()" >
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -408,14 +408,13 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>Application Letter</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('application_letter')">
-                            <strong>Application Letter</strong>
-                          </button>
+                          <a onclick="setType('appl')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
                         </div> <!-- .card-footer -->
                        </a>
                       </div> <!-- .card -->
@@ -441,12 +440,14 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>CR14 Form</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                         <button class="btn" onclick="downloadFile('cr14_form')"><strong>CR14 Form</strong></button>
+                          <a onclick="setType('cr14')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
+
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -470,14 +471,14 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>cr6 Form</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('cr6_form')">
-                          <strong>cr6 Form</strong>
-                          </button>
+                          <a onclick="setType('cr6')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
+
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -501,14 +502,14 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>Certificate Of Incorporation</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('certificate')">
-                          <strong>Certificate Of Incorporation</strong>
-                          </button>
+                          <a onclick="setType('cert')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
+
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -532,14 +533,14 @@
                             <span class="fe fe-image fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">28M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>Director's ID</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('director')">
-                          <strong>Director's ID</strong>
-                          </button>
+                          <a onclick="setType('director')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
+
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -563,14 +564,14 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">288K</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>Bank Statement</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('bank')">
-                          <strong>Bank Statement</strong>
-                          </button>
+                          <a onclick="setType('bank')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
+
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -594,14 +595,13 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>Vat Registration Certificate</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('vat_reg')">
-                          <strong>Vat Registration Certificate</strong>
-                          </button>
+                          <a onclick="setType('vat')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
                         </div> <!-- .card-footer -->
                       </div> <!-- .card -->
                     </div> <!-- .col -->
@@ -625,14 +625,14 @@
                             <span class="fe fe-file fe-24 text-success"></span>
                           </div>
                           <div class="file-info">
-                            <span class="badge badge-light text-muted mr-2">1.2M</span>
-                            <span class="badge badge-pill badge-light text-muted">PDF</span>
+                            <strong>Tax Clearance Certificate</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <button class="btn" onclick="downloadFile('tax_clear')">
-                          <strong>Tax Clearance Certificate</strong>
-                          </button>
+                          </button><a onclick="setType('tax')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
+
                   
                   </div> <!-- .card-body -->
                 </div> <!-- .card -->
@@ -657,14 +657,13 @@
                       <span class="fe fe-file fe-24 text-success"></span>
                     </div>
                     <div class="file-info">
-                      <span class="badge badge-light text-muted mr-2">1.2M</span>
-                      <span class="badge badge-pill badge-light text-muted">PDF</span>
+                      <strong>Article of Association</strong>
                     </div>
                   </div> <!-- .card-body -->
                   <div class="card-footer bg-transparent border-0 fname">
-                    <button class="btn" onclick="downloadFile('article')">
-                    <strong>Article of Association</strong>
-                    </button>
+                    </button><a onclick="setType('article')" href="./viewFile.html"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+
+
                   </div> <!-- .card-footer -->
                   </div> <!-- .row -->
                 </div> <!-- .file-panel -->
@@ -698,7 +697,7 @@
     <script src="js/apexcharts.custom.js"></script>
     <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -708,7 +707,7 @@
       }
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
-    </script>
+    </script>-->
 
 
     <script>
@@ -1113,24 +1112,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.3/pdfobject.min.js" integrity="sha512-bHO4iqeyo1tN+C4qnbroCQ5Hxi3aJcEszT0iOt2nkuXZXQf369U3PUsnoN/ebnKQ5V2iS326OIv9pgXxL+F/kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script type="text/javascript">
 
-	let height = window.innerHeight;
-	var y=document.getElementById('form');
-	y.setAttribute("style","height:"+height+"px");
-
-
-	  var file = JSON.parse(localStorage.getItem("file"));
-    var filename2=file.split("'")[1];
-	  console.log("file :",filename2);
-
-	if(PDFObject.supportsPDFs){
-		PDFObject.embed("http://localhost:8090/assets/uploads/"+filename2,"#form");
-	}else{
-		window.alert("This Browser Doest support  PDF of this format");
-	}
-
-</script>
     <script type='text/javascript'>
 
     (function()

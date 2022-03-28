@@ -13,11 +13,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
+import com.cicosy.tenant_management.model.document_management.TenantDocuments;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 
 import org.slf4j.Logger;
@@ -41,7 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping("/file-upload")
+@RequestMapping("/api/v1")
 public class LeaseDocumentContoller {
 
 	private static Logger log = LoggerFactory.getLogger(LeaseDocumentContoller.class);
@@ -118,6 +120,10 @@ public class LeaseDocumentContoller {
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
+	}
+	@GetMapping("fetchleasefile/{id}")
+	List<LeaseDocuments> fetchfile(@PathVariable String id, HttpServletRequest request) {
+		return leaseDocumentService.findfile(id);
 	}
 
 

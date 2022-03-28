@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.service.document_management;
 
 import com.cicosy.tenant_management.controler.document_management.exception.FileNotFoundException;
 import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
+import com.cicosy.tenant_management.model.document_management.TenantDocuments;
 import com.cicosy.tenant_management.repository.document_management.LeaseDocumentsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,6 +18,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 
 @Service
@@ -89,6 +91,9 @@ public class LeaseDocumentService  {
 
 
 		return leaseDocumentsRepo.save(leaseDocuments);
+	}
+	public List<LeaseDocuments> findfile(String id) {
+		return leaseDocumentsRepo.findLeaseDocBySearch(id);
 	}
 	
 }
