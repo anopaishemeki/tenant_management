@@ -207,6 +207,24 @@ function viewCompartment() {
         url: 'http://localhost:8090/api/compartment/get-compartment/' + id,
         type: 'GET',
         success: function (response) {
+            let business_name;
+            let business_type;
+            let email;
+            let phone;
+
+            if (response.tenantObject != null){
+                business_name = response.tenantObject.business_name
+                business_type = response.tenantObject.business_type
+                email = response.tenantObject.email
+                phone = response.tenantObject.phone
+            }else {
+                business_type = "N/A"
+                business_name = "N/A"
+                email = "N/A"
+                phone = "N/A"
+            }
+
+            console.log(response)
             let html = `<div class="card-body">
                                         <dl class="row align-items-center mb-0">
                                             <dt class="col-sm-2 mb-3 text-muted"> Property Name</dt>
@@ -219,11 +237,11 @@ function viewCompartment() {
                                             </dd>
                                         </dl>
                                         <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Compartments ID</dt>
+                                            <dt class="col-sm-2 mb-3 text-muted">Lettable space ID</dt>
                                             <dd class="col-sm-4 mb-3">
                                                 <strong>${response.compartmentNumber}</strong>
                                             </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted"> Compartment Floor Number</dt>
+                                            <dt class="col-sm-2 mb-3 text-muted"> Lettable space Floor Number</dt>
                                             <dd class="col-sm-4 mb-3">
                                                 <strong>${response.floorNumber}</strong>
                                             </dd>
@@ -242,40 +260,31 @@ function viewCompartment() {
                                             <dt class="col-sm-2 mb-3 text-muted">Last Update</dt>
                                             <dd class="col-sm-4 mb-3">2020-04-21 08:48:18</dd>-->
                                             <dt class="col-sm-2 text-muted">Description</dt>
-                                            <dd class="col-sm-10"> Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                                                condimentum nibh, ut fermentum massa justo sit amet risus.
+                                            <dd class="col-sm-10"> ${response.description}.
                                             </dd>
 
                                         </dl>
                                         <hr class="my-4">
                                         <h5 class="mb-2 mt-4">Tenant Details</h5>
                                         <dl class="row align-items-center mb-0">
-                                            <dt class="col-sm-2 mb-3 text-muted">Name</dt>
+                                            <dt class="col-sm-2 mb-3 text-muted">Business Name</dt>
                                             <dd class="col-sm-4 mb-3">
-                                                Brown Asher
+                                                ${business_name}
                                             </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Surname</dt>
+                                            <dt class="col-sm-2 mb-3 text-muted">Business Type</dt>
                                             <dd class="col-sm-4 mb-3">
-                                                Kelley Sonya
+                                                ${business_type}
                                             </dd>
                                         </dl>
                                         <dl class="row align-items-center mb-0">
                                             <dt class="col-sm-2 mb-3 text-muted">Phone</dt>
                                             <dd class="col-sm-4 mb-3">
-                                                Brown Asher
+                                                ${phone}
                                             </dd>
-                                            <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
-                                            <dd class="col-sm-4 mb-3">
-                                                Kelley Sonya
-                                            </dd>
-                                        </dl>
-                                        <dl class="row align-items-center mb-0">
                                             <dt class="col-sm-2 mb-3 text-muted">Email</dt>
-                                            <dd class="col-sm-4 mb-3">Brown Asher</dd>
-                                            <!--<dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
                                             <dd class="col-sm-4 mb-3">
-                                                <strong>Kelley Sonya</strong>
-                                            </dd>-->
+                                                ${email}
+                                            </dd>
                                         </dl>
                                     </div> <!-- .card-body -->`
 

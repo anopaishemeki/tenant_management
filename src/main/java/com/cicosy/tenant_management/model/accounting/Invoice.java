@@ -1,5 +1,6 @@
 package com.cicosy.tenant_management.model.accounting;
 
+import com.cicosy.tenant_management.model.propertyManagement.Compartment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,8 @@ public class Invoice {
     )
     private Long id;
     private Long compartment;
+    @Transient
+    private Compartment compartmentObject;
 //    private Object services;
     private LocalDate dateIssued = LocalDate.now();
     private String forTheMonthOf;
@@ -35,15 +38,17 @@ public class Invoice {
     private String dueDate;
     private String status;
     private Long user;
-    @ElementCollection
-    List<Services> servicesList = new ArrayList<Services>();
+    private String servicesList;
 
-    public Invoice(Long compartment, String forTheMonthOf, double amount, String dueDate, String status, Long user) {
+    public Invoice(Long compartment, Compartment compartmentObject, LocalDate dateIssued, String forTheMonthOf, double amount, String dueDate, String status, Long user, String servicesList) {
         this.compartment = compartment;
+        this.compartmentObject = compartmentObject;
+        this.dateIssued = dateIssued;
         this.forTheMonthOf = forTheMonthOf;
         this.amount = amount;
         this.dueDate = dueDate;
         this.status = status;
         this.user = user;
+        this.servicesList = servicesList;
     }
 }

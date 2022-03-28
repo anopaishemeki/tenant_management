@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="setAddPropertyDropDown(), setLettableSpaceDropdown(), setServiceDropDown()">
+<body class="vertical  light  " onload="setAddPropertyDropDown(), setLettableSpaceDropdown(), setServiceDropDown(), getInvoices()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -505,33 +505,13 @@
                                                 <div class="form-group col-md-3">
                                                     <label for="simple-select3">Filter By Compartment</label>
                                                     <select class="form-control select2" id="simple-select3">
-                                                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                            <option value="AK">Alaska</option>
-                                                            <option value="HI">Hawaii</option>
-                                                        </optgroup>
-                                                        <optgroup label="Pacific Time Zone">
-                                                            <option value="CA">California</option>
-                                                            <option value="NV" disabled="disabled">Nevada (disabled)
-                                                            </option>
-                                                            <option value="OR">Oregon</option>
-                                                            <option value="WA">Washington</option>
-                                                        </optgroup>
+
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                     <label for="simple-select4">Filter By Lettable Space</label>
                                                     <select class="form-control select2" id="simple-select4">
-                                                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                            <option value="AK">Alaska</option>
-                                                            <option value="HI">Hawaii</option>
-                                                        </optgroup>
-                                                        <optgroup label="Pacific Time Zone">
-                                                            <option value="CA">California</option>
-                                                            <option value="NV" disabled="disabled">Nevada (disabled)
-                                                            </option>
-                                                            <option value="OR">Oregon</option>
-                                                            <option value="WA">Washington</option>
-                                                        </optgroup>
+
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-3">
@@ -628,34 +608,14 @@
                                         <label for="simple-select33">Select Property</label>
                                         <select class="form-control select2" id="simple-select33"
                                                 oninput="setLettableSpaceDropdown()">
-                                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                <option value="-1">Alaska</option>
-                                                <option value="HI">Hawaii</option>
-                                            </optgroup>
-                                            <optgroup label="Pacific Time Zone">
-                                                <option value="CA">California</option>
-                                                <option value="NV" disabled="disabled">Nevada (disabled)
-                                                </option>
-                                                <option value="OR">Oregon</option>
-                                                <option value="WA">Washington</option>
-                                            </optgroup>
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="simple-select44">Select Lettable Space</label>
                                         <select class="form-control select2" id="simple-select44"
                                                 oninput="appendLettableSpace()">
-                                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                <option value="AK">Alaska</option>
-                                                <option value="HI">Hawaii</option>
-                                            </optgroup>
-                                            <optgroup label="Pacific Time Zone">
-                                                <option value="CA">California</option>
-                                                <option value="NV" disabled="disabled">Nevada (disabled)
-                                                </option>
-                                                <option value="OR">Oregon</option>
-                                                <option value="WA">Washington</option>
-                                            </optgroup>
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -1162,17 +1122,5 @@
     }
 </script>
 <script src="../../js/apps.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
-</script>
 </body>
 </html>

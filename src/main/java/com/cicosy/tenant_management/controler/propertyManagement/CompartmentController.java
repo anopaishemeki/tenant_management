@@ -1,5 +1,6 @@
 package com.cicosy.tenant_management.controler.propertyManagement;
 
+import com.cicosy.tenant_management.controler.tenantManagement.TenantController;
 import com.cicosy.tenant_management.model.propertyManagement.Compartment;
 import com.cicosy.tenant_management.service.propertyManagement.CompartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import java.util.List;
 @RequestMapping(path = "/api/compartment")
 public class CompartmentController {
     CompartmentService compartmentService;
+    TenantController tenantController;
 
     @Autowired
-    public CompartmentController(CompartmentService compartmentService) {
+    public CompartmentController(CompartmentService compartmentService, TenantController tenantController) {
         this.compartmentService = compartmentService;
+        this.tenantController = tenantController;
     }
 
     @PostMapping("/save-compartment")
@@ -25,25 +28,57 @@ public class CompartmentController {
 
     @GetMapping("/get-compartments")
     public List<Compartment> getCompartments(){
-        return compartmentService.getCompartments();
+        List<Compartment> compartments = compartmentService.getCompartments();
+
+        for (int i = 0; i < compartments.size(); i++){
+            if (compartments.get(i).getTenant() != null){
+                compartments.get(i).setTenantObject(tenantController.getTenant(compartments.get(i).getTenant()));
+            }
+        }
+
+        return compartments;
     }
 
     @GetMapping("/get-compartments-for-specific-property/{id}")
     public List<Compartment> getCompartmentsForSpecificPropertyApi(@PathVariable Long id){
-        return compartmentService.getCompartmentsForSpecificProperty(id);
+        List<Compartment> compartments = compartmentService.getCompartmentsForSpecificProperty(id);
+
+        for (int i = 0; i < compartments.size(); i++){
+            if (compartments.get(i).getTenant() != null){
+                compartments.get(i).setTenantObject(tenantController.getTenant(compartments.get(i).getTenant()));
+            }
+        }
+
+        return compartments;
     }
 
     public List<Compartment> getCompartmentsForSpecificProperty(Long id){
-        return compartmentService.getCompartmentsForSpecificProperty(id);
+        List<Compartment> compartments = compartmentService.getCompartmentsForSpecificProperty(id);
+
+        for (int i = 0; i < compartments.size(); i++){
+            if (compartments.get(i).getTenant() != null){
+                compartments.get(i).setTenantObject(tenantController.getTenant(compartments.get(i).getTenant()));
+            }
+        }
+
+        return compartments;
     }
 
     @GetMapping("/get-compartment/{id}")
     public Compartment getCompartmentSpecificCompartment(@PathVariable Long id){
-        return compartmentService.getCompartment(id);
+        Compartment compartment = compartmentService.getCompartment(id);
+        if (compartment.getTenant() != null){
+            compartment.setTenantObject(tenantController.getTenant(compartment.getTenant()));
+        }
+        return compartment;
     }
 
     public Compartment getCompartment(Long id){
-        return compartmentService.getCompartment(id);
+        Compartment compartment = compartmentService.getCompartment(id);
+        if (compartment.getTenant() != null){
+            compartment.setTenantObject(tenantController.getTenant(compartment.getTenant()));
+        }
+        return compartment;
     }
 
     @PutMapping("/update-compartment/{id}")
