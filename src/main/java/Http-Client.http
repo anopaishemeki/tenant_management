@@ -1,3 +1,7 @@
 GET http://localhost:8090/api/v1/lease/getEmail/Peter/gera
 
 ###
+
+GET http://localhost:8090/api/v1/lease/tenant/3
+
+###

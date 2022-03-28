@@ -174,7 +174,9 @@ public class LeaseService {
 
         leaseRepository.save(lease);
 
-        lease_history.setTenant_id(lease.getId().intValue());
+        Integer id =lease.getId().intValue();
+        lease_history.setLease_id(id);
+        lease_history.setTenant_id(lease.getTenant_id());
         lease_history.setBuildingLocation(lease.getBuildingLocation());
         lease_history.setBuildingName(lease.getBuildingName());
         lease_history.setDuration(lease.getDuration());
@@ -315,7 +317,9 @@ public class LeaseService {
                 ));
 
 
-        lease_history.setTenant_id(lease.getId().intValue());
+        Integer id =leaseId.intValue();
+        lease_history.setTenant_id(lease.getTenant_id());
+        lease_history.setLease_id(id);
         lease_history.setBuildingLocation(lease.getBuildingLocation());
         lease_history.setBuildingName(lease.getBuildingName());
         lease_history.setDuration(lease.getDuration());
@@ -602,5 +606,10 @@ public class LeaseService {
         }
 
         return leaseRepository.findLeaseBySearch(record);
+    }
+
+
+    public List<Lease> getLeaseByT_ID(String id) {
+        return leaseRepository.findTenant(id);
     }
 }

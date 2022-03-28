@@ -1,17 +1,11 @@
 package com.cicosy.tenant_management.repository.leaseManagement;
 
-import com.cicosy.tenant_management.model.document_management.LeaseDocuments;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
-import com.cicosy.tenant_management.model.tenantManagement.Tenant;
-import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
-import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +42,9 @@ public interface LeaseRepository
 
     @Query(value = "select file_name from lease_documents  where tenant_id=?1 ",nativeQuery = true)
     String findTenantForm(String id);
+
+    @Query(value ="select * from lease where tenant_id=?1" , nativeQuery = true)
+    List<Lease> findTenant(String id);
 
 //    List<Lease>findLeasesByNameIsLikeOrBuildingLocationIsLikeOrBuildingNameIsLike(String record);
     //    Lease findByEmail(String name, String surname);

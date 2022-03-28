@@ -68,6 +68,12 @@ public class LeaseController {
 
     }
 
+    @GetMapping(path = "tenant/{ID}")
+    public List<Lease> getLeaseByT_ID(@PathVariable String ID) {
+        return leaseService.getLeaseByT_ID(ID);
+    }
+
+
 
     @GetMapping("/download/{fileName}")
     ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {

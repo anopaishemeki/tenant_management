@@ -62,6 +62,7 @@ function saveLease() {
 
 
     var jsonDataObj = {
+        "tenant_id":$("#id").val(),
         "name": $("#leaseName").val(),
         "buildingName": $("#buildingName").val(),
         "buildingLocation": $("#buildingLocation").val(),
@@ -135,7 +136,10 @@ function setLocalfile(file){
     localStorage.removeItem("file");
     localStorage.setItem("file", JSON.stringify(file));
 }
-
+function setLocalTenantID(tenant_id) {
+    localStorage.removeItem("tenant_id");
+    localStorage.setItem("tenant_id", JSON.stringify(tenant_id));
+}
 
 function SetLocal(id) {
     localStorage.removeItem("id");
@@ -201,6 +205,12 @@ function getValueAndType() {
 function setLocalLease(lease){
     localStorage.removeItem("lease");
     localStorage.setItem("lease", JSON.stringify(lease));
+
+}
+
+function setLocalTenant(tenant){
+    localStorage.removeItem("tenant");
+    localStorage.setItem("tenant", JSON.stringify(tenant));
 
 }
 
@@ -483,7 +493,9 @@ function loadData() {
             console.log(response);
             let nametag = document.getElementById("TenantName2");
             if (nametag) {
-                nametag.placeholder = response.name;
+
+                nametag.value= response.name;
+                setLocalTenantID(response.tenant_id)
             }
 
         }
@@ -508,6 +520,7 @@ function renewlease() {
 
 
     var id = JSON.parse(localStorage.getItem("id"));
+    var tenant_id = JSON.parse(localStorage.getItem("tenant_id"));
 
     var startDate = document.getElementById("startDate2").value;
     var duration = document.getElementById("duration2").value;
@@ -515,7 +528,8 @@ function renewlease() {
 
     let data = {
         startDate,
-        duration
+        duration,
+        tenant_id
     }
     $.ajax({
         dataType: "json",
@@ -1223,9 +1237,9 @@ function getTenants() {
         type: 'GET',
         success: function (response) {
             let items = response;
-
-
             console.log(response);
+
+            localStorage.setItem("tenant", JSON.stringify(items));
 
             var t_body = document.getElementById("leaseName");
 
@@ -1263,7 +1277,37 @@ function getTenants() {
 
             }
         }
+
     })
+
+}
+
+function setTenantID() {
+
+    let items = JSON.parse(localStorage.getItem("tenant"));
+
+
+    var field = document.getElementById("leaseName").value.trim();
+   console.log("Full Name =",field);
+
+    var name=field.split(" ")[0];
+    console.log("Name =",name);
+    var surname=field.split(" ")[1];
+    console.log("Surname =",surname);
+
+    for (let i = 0; i < items.length; i++) {
+        let string = JSON.stringify(items[i]);
+
+
+        if (string.toLowerCase().includes(name.toLowerCase()) && string.toLowerCase().includes(surname.toLowerCase()) ) {
+
+            let id=document.getElementById("id");
+                id.innerText= `${items[i].id}`;
+                id.value=`${items[i].id}`;
+
+        }
+
+    }
 }
 
 // get Property details

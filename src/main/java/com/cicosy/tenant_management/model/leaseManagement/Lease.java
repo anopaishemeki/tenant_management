@@ -34,6 +34,7 @@ public class Lease {
             generator = "lease_sequence"
     )
     private Long id;
+    private int tenant_id;
     private String name;
 
    // @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
@@ -49,7 +50,8 @@ public class Lease {
     private String status;
 
 
-    public Lease(String name,
+    public Lease(int tenant_id,
+                String name,
                  LocalDate startDate,
                  LocalDate endDate,
                  String buildingName,
@@ -60,6 +62,7 @@ public class Lease {
                  String terms
 
     ) {
+        this.tenant_id=tenant_id;
         this.name = name;
 
         this.startDate = startDate;
@@ -76,6 +79,7 @@ public class Lease {
 
 
     public Lease(Long id,
+                 int tenant_id,
                  String name,
 
                  LocalDate startDate,
@@ -89,6 +93,7 @@ public class Lease {
 
     ) {
         this.id = id;
+        this.tenant_id=tenant_id;
         this.duration = duration;
         this.timeLeft=timeLeft;
         this.name = name;
@@ -187,5 +192,13 @@ public class Lease {
     public void setStatus(String status) {
 
         this.status = status;
+    }
+
+    public int getTenant_id() {
+        return tenant_id;
+    }
+
+    public void setTenant_id(int tenant_id) {
+        this.tenant_id = tenant_id;
     }
 }

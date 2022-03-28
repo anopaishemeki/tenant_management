@@ -34,6 +34,7 @@ public class LeaseHistory {
             generator = "leaseHistory_sequence"
     )
     private Long id;
+    private int lease_id;
     private int tenant_id;
     private String name;
 
@@ -138,5 +139,13 @@ public class LeaseHistory {
 
     public LocalDateTime getActionDate() {
         return actionDate;
+    }
+
+    public int getLease_id() {
+        return lease_id;
+    }
+
+    public void setLease_id(int lease_id) {
+        this.lease_id = lease_id;
     }
 }
