@@ -10,16 +10,16 @@ function getInvoices() {
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
-            console.log(response[1].paymentDate)
+            // console.log(response[1].paymentDate)
 
             for (let i = response.length - 1; i >= 0; i--) {
                 let html = `<td>${response[i].dateIssued}</td>
                                                     <td>${response[i].id}</td>
-                                                    <td>${response[i].compartment}</td>
+                                                    <td>${response[i].compartmentObject.compartmentNumber}</td>
                                                     <td>${response[i].dueDate}</td>
                                                     <td>${response[i].amount}</td>
                                                     <td><span class="text-success">${response[i].status}</span></td>
-                                                    <td>view</td>
+                                                    <td><button type="button" onclick="" class="btn btn-secondary btn-sm"><i class="bi bi-trash-fill"></i>view </button></td>
                                                     `
 
                 let tr = document.createElement('tr');
@@ -370,6 +370,8 @@ function saveInvoice(){
         }
     }
 
+    servicesList = JSON.stringify(servicesList);
+
     let data = {
         compartment,
         amount,
@@ -386,6 +388,7 @@ function saveInvoice(){
         data: JSON.stringify(data),
         success: function (response) {
             console.log(response)
+            getInvoices()
         }
     })
 }

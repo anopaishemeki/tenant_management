@@ -146,7 +146,7 @@
             <li class="nav-item dropdown">
               <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-credit-card fe-16"></i>
-                <span class="ml-3 item-text">Tenant Management</span>
+                <span class="ml-3 item-text">Tenant </span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
@@ -172,7 +172,7 @@
             <li class="nav-item dropdown">
               <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-grid fe-16"></i>
-                <span class="ml-3 item-text">Lease Management</span>
+                <span class="ml-3 item-text">Leasing</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                 <li class="nav-item">
@@ -184,6 +184,9 @@
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="../LeaseManagement/Terminate-Lease.html"><span class="ml-1 item-text">Terminate </span></a>
                 </li>
+                  <li class="nav-item">
+                      <a class="nav-link pl-3" href="../LeaseManagement/View-Renewed-Lease.html"><span class="ml-1 item-text">Renewed Leases </span></a>
+                  </li>
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="../LeaseManagement/Lease-Notices.html"><span class="ml-1 item-text">Lease Notices </span></a>
                 </li>
@@ -230,151 +233,55 @@
               </ul>
             </li>
           </ul>
-          <!--<p class="text-muted nav-heading mt-4 mb-1">
-            <span>Apps</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item w-100">
-              <a class="nav-link" href="calendar.html">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Calendar</span>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-book fe-16"></i>
-                <span class="ml-3 item-text">Contacts</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-                <a class="nav-link pl-3" href="./contacts-list.html"><span class="ml-1">Contact List</span></a>
-                <a class="nav-link pl-3" href="./contacts-grid.html"><span class="ml-1">Contact Grid</span></a>
-                <a class="nav-link pl-3" href="./contacts-new.html"><span class="ml-1">New Contact</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#profile" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-user fe-16"></i>
-                <span class="ml-3 item-text">Profile</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="profile">
-                <a class="nav-link pl-3" href="./profile.html"><span class="ml-1">Overview</span></a>
-                <a class="nav-link pl-3" href="./profile-settings.html"><span class="ml-1">Settings</span></a>
-                <a class="nav-link pl-3" href="./profile-security.html"><span class="ml-1">Security</span></a>
-                <a class="nav-link pl-3" href="./profile-notification.html"><span class="ml-1">Notifications</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#fileman" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-folder fe-16"></i>
-                <span class="ml-3 item-text">File Manager</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="fileman">
-                <a class="nav-link pl-3" href="./files-list.html"><span class="ml-1">Files List</span></a>
-                <a class="nav-link pl-3" href="./files-grid.html"><span class="ml-1">Files Grid</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#support" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-compass fe-16"></i>
-                <span class="ml-3 item-text">Help Desk</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="support">
-                <a class="nav-link pl-3" href="./support-center.html"><span class="ml-1">Home</span></a>
-                <a class="nav-link pl-3" href="./support-tickets.html"><span class="ml-1">Tickets</span></a>
-                <a class="nav-link pl-3" href="./support-ticket-detail.html"><span class="ml-1">Ticket Detail</span></a>
-                <a class="nav-link pl-3" href="./support-faqs.html"><span class="ml-1">FAQs</span></a>
-              </ul>
-            </li>
-          </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Extra</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#pages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-file fe-16"></i>
-                <span class="ml-3 item-text">Pages</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100 w-100" id="pages">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-orders.html">
-                    <span class="ml-1 item-text">Orders</span>
-                  </a>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Finance</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <!--              <li class="nav-item w-100">-->
+                <!--                <a class="nav-link" href="calendar.html">-->
+                <!--                  <i class="fe fe-calendar fe-16"></i>-->
+                <!--                  <span class="ml-3 item-text">Calendar</span>-->
+                <!--                </a>-->
+                <!--              </li>-->
+                <li class="nav-item dropdown">
+                    <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Accounts</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                        <a class="nav-link pl-3" href="../accounting/payments.html"><span class="ml-1">Payments</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Invoicing</span></a>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-timeline.html">
-                    <span class="ml-1 item-text">Timeline</span>
-                  </a>
+                <li class="nav-item dropdown">
+                    <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Services</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                        <a class="nav-link pl-3" href="../services/serviceList.html"><span class="ml-1">Service List</span></a>
+                        <a class="nav-link pl-3" href="../services/addService.html"><span class="ml-1">Add Services</span></a>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-invoice.html">
-                    <span class="ml-1 item-text">Invoice</span>
-                  </a>
+
+            </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Other</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+
+                <li class="nav-item dropdown">
+                    <a href="#apllicants" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Tenant Applications</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="apllicants">
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Application List</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Waiting List</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Rejected Application</span></a>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-404.html">
-                    <span class="ml-1 item-text">Page 404</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-500.html">
-                    <span class="ml-1 item-text">Page 500</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-blank.html">
-                    <span class="ml-1 item-text">Blank</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#auth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-shield fe-16"></i>
-                <span class="ml-3 item-text">Authentication</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="auth">
-                <a class="nav-link pl-3" href="./auth-login.html"><span class="ml-1">Login 1</span></a>
-                <a class="nav-link pl-3" href="./auth-login-half.html"><span class="ml-1">Login 2</span></a>
-                <a class="nav-link pl-3" href="./auth-register.html"><span class="ml-1">Register</span></a>
-                <a class="nav-link pl-3" href="./auth-resetpw.html"><span class="ml-1">Reset Password</span></a>
-                <a class="nav-link pl-3" href="./auth-confirm.html"><span class="ml-1">Confirm Password</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#layouts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-layout fe-16"></i>
-                <span class="ml-3 item-text">Layout</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="layouts">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./index.html"><span class="ml-1 item-text">Default</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./index-horizontal.html"><span class="ml-1 item-text">Top Navigation</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./index-boxed.html"><span class="ml-1 item-text">Boxed</span></a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Documentation</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item w-100">
-              <a class="nav-link" href="../docs/index.html">
-                <i class="fe fe-help-circle fe-16"></i>
-                <span class="ml-3 item-text">Getting Start</span>
-              </a>
-            </li>
-          </ul>
-          <div class="btn-box w-100 mt-4 mb-1">
-            <a href="https://themeforest.net/item/tinydash-bootstrap-html-admin-dashboard-template/27511269" target="_blank" class="btn mb-2 btn-primary btn-lg btn-block">
-              <i class="fe fe-shopping-cart fe-12 mx-2"></i><span class="small">Buy now</span>
-            </a>
-          </div>-->
+            </ul>
         </nav>
       </aside>
       <main role="main" class="main-content">
@@ -403,58 +310,59 @@
                                     <div class="form-group col-md-6">
                                         <label for="application_letter">Application Letter</label>
                                         <input type="file" id="application_letter" class="form-control-file"
-                                         name="application_letter" required>
+                                         name="application_letter" accept=".pdf" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="cr14_form">Cr14 Form</label>
                                         <input type="file" id="cr14_form" class="form-control-file"
-                                             name="cr14_form" required>
+                                             name="cr14_form" accept=".pdf" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="cr6_form">Cr6 Form </label>
                                         <input type="file" id="cr6_form" class="form-control-file"
-                                            name="cr6_form" required>
+                                            name="cr6_form" accept=".pdf" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="director_id">Director ID</label>
                                         <input type="file" id="director_id" class="form-control-file"
-                                             name="director_id" required>
+                                             name="director_id" accept=".pdf" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="tax_clearance">Tax Clearance</label>
                                         <input type="file" id="tax_clearance" class="form-control-file"
-                                              name="tax_clearance" required>
+                                              name="tax_clearance" accept=".pdf" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="vat_reg">Vat Registration</label>
                                         <input type="file" id="vat_reg" class="form-control-file"
-                                               name="vat_reg" required>
+                                               name="vat_reg" accept=".pdf" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="certificate_of_inco">Certificate of Incorporation</label><br><br>
                                         <input type="file" id="certificate_of_inco" class="form-control-file"
-                                               name="certificate_of_inco" required>
+                                               name="certificate_of_inco" accept=".pdf" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="bank_statement">  Bank Statement</label>
                                         <input type="file" id="bank_statement" class="form-control-file"
-                                               name="bank_statement" required>
+                                               name="bank_statement" accept=".pdf" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="article_associ">Article of Association</label>
                                         <input type="file" id="article_associ" class="form-control-file"
-                                               name="article_associ" required>
+                                               name="article_associ" accept=".pdf" required>
                                     </div>
                                 </div>
-                                <button type="button" id="btnSubmit" class="btn btn-primary" onclick="saveTenantDocument()">
+                                <button type="button" data-bs-toggle="modal"
+                                        data-bs-target="#successModal" id="btnSubmit" class="btn btn-primary" onclick="saveTenantDocument()">
                                     Submit
                                 </button>
                             </form>
@@ -463,14 +371,37 @@
                 </div>
             </div>
         </div>
-    </main> <!-- main -->
+                <!-- Modal -->
+          <!-- Modal -->
+          <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+               aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          Documents Uploaded SuccessFully
+                      </div>
+                      <div class="modal-footer">
+                          <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                          <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </main> <!-- main -->
     </div> <!-- .wrapper -->
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/popper.min.js"></script>
     <script src="../../js/moment.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/simplebar.min.js"></script>
-    <script src="../../js/customDoc.js"></script>
+    <script src="../../js/downloadfile.js"></script>
     <script src='../../js/daterangepicker.js'></script>
     <script src='../../js/jquery.stickOnScroll.js'></script>
     <script src='../../js/select2.min.js'></script>
@@ -479,17 +410,7 @@
     <script src="../../js/apps.js"></script>
     <script src="../../js/maintenanceApi.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
-</script>
     <script>
     $('.select2').select2(
         {

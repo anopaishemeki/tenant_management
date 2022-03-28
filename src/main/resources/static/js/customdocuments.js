@@ -559,7 +559,7 @@ function getTenant() {
                             <td>${items[i].id}</td>
                             <td>${items[i].name} ${items[i].surname}</td>     
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rent_status}</small></td>
-                            <td><a class="" href="./view_tenantDocuments.html" onclick="setLocalfile('${items[i].id}'),SetLocal('${items[i].application_letter}')">Display Documents
+                            <td><a class="" href="./view_tenantDocuments.html" onclick="setLocalfile('${items[i].tenantId}')')">Display Documents
                             <button class="btn btn-sm" type="button" >
                             </button>
                             </a>

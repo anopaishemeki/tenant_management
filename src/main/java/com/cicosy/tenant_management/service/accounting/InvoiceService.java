@@ -36,4 +36,8 @@ public class InvoiceService {
     public void delete(Long id) {
         invoiceRepository.deleteById(id);
     }
+
+    public List<Invoice> getInvoiceForSpecificCompartment(Long id) {
+        return invoiceRepository.findByCompartment(id);
+    }
 }

@@ -45,6 +45,10 @@ public class CompartmentService {
             compartment.setTenant(update.getTenant());
         }
 
+        if (update.getStatus() != null && !Objects.equals(compartment.getStatus(), update.getStatus())){
+            compartment.setStatus(update.getStatus());
+        }
+
         return compartmentRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Compartment with id: " + id +" does not exist"));
     }
 }

@@ -49,7 +49,7 @@ function getPayments() {
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
-            console.log(response[1].paymentDate)
+            // console.log(response[1].paymentDate)
 
             for (let i = response.length-1; i >= 0; i--) {
                 let html = `<td>${response[i].paymentDate}</td>
@@ -128,6 +128,8 @@ function setLettableSpaceDropdown() {
 
                     drop.appendChild(option);
                 }
+
+                setInvoiceDropdown();
             }
         })
     } else {
@@ -152,6 +154,69 @@ function setLettableSpaceDropdown() {
                     let option = document.createElement("option");
 
                     option.text = response[i].compartmentNumber;
+                    option.setAttribute("value", `${response[i].id}`)
+
+                    drop.appendChild(option);
+                }
+
+                setInvoiceDropdown();
+            }
+        })
+    }
+}
+
+function setInvoiceDropdown(){
+    let dropDown = document.getElementById("simple-select44").value;
+    if (dropDown == "-1") {
+        $.ajax({
+            url: 'http://localhost:8090/api/invoice/get-all-invoices',
+            type: 'GET',
+            success: function (response) {
+                let drop = document.getElementById("simple-select55");
+
+                while (drop.hasChildNodes()) {
+                    drop.removeChild(drop.firstChild);
+                }
+
+                let opt = document.createElement("option");
+
+                opt.text = "Select invoice"
+                opt.setAttribute("value", `-1`)
+
+                drop.appendChild(opt);
+
+                for (let i = 0; i < response.length; i++) {
+                    let option = document.createElement("option");
+
+                    option.text = response[i].id;
+                    option.setAttribute("value", `${response[i].id}`)
+
+                    drop.appendChild(option);
+                }
+            }
+        })
+    } else {
+        $.ajax({
+            url: 'http://localhost:8090/api/invoice/get-invoice-for-specic-compartment/' + dropDown,
+            type: 'GET',
+            success: function (response) {
+                let drop = document.getElementById("simple-select55");
+
+                while (drop.hasChildNodes()) {
+                    drop.removeChild(drop.firstChild);
+                }
+
+                let opt = document.createElement("option");
+
+                opt.text = "Select invoice"
+                opt.setAttribute("value", `-1`)
+
+                drop.appendChild(opt);
+
+                for (let i = 0; i < response.length; i++) {
+                    let option = document.createElement("option");
+
+                    option.text = response[i].id;
                     option.setAttribute("value", `${response[i].id}`)
 
                     drop.appendChild(option);

@@ -1,5 +1,6 @@
 package com.cicosy.tenant_management.controler.accounting;
 
+import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController;
 import com.cicosy.tenant_management.model.accounting.Invoice;
 import com.cicosy.tenant_management.service.accounting.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import java.util.List;
 @RequestMapping("/api/invoice")
 public class InvoiceController {
     public final InvoiceService invoiceService;
+    private final CompartmentController compartmentController;
 
     @Autowired
-    public InvoiceController(InvoiceService invoiceService) {
+    public InvoiceController(InvoiceService invoiceService, CompartmentController compartmentController) {
         this.invoiceService = invoiceService;
+        this.compartmentController = compartmentController;
     }
 
     @PostMapping("/save-invoice")
@@ -24,7 +27,14 @@ public class InvoiceController {
 
     @GetMapping("/get-all-invoices")
     public List<Invoice> getAllInvoices(){
-        return invoiceService.getAll();
+        List<Invoice> invoices = invoiceService.getAll();
+
+        for(int i = 0; i < invoices.size(); i++){
+            invoices.get(i).setCompartmentObject(compartmentController.getCompartmentSpecificCompartment(invoices.get(i).getCompartment()));
+        }
+
+        System.out.println(invoices);
+        return invoices;
     }
 
     @GetMapping("/get/invoices-by-tenant/{id}")
@@ -35,6 +45,11 @@ public class InvoiceController {
     @GetMapping("/get-specifc-invoice/{id}")
     public Invoice getSpecificInvoice(Long id){
         return invoiceService.getById(id);
+    }
+
+    @GetMapping("/get-invoice-for-specic-compartment/{id}")
+    public List<Invoice> getInvoiceForCompartment(@PathVariable Long id){
+        return invoiceService.getInvoiceForSpecificCompartment(id);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -1,5 +1,4 @@
 function saveTenantDocument(){
-
     var application = $('#fileUploadForm')[0];
     var cr14 = $('#fileUploadForm')[1];
     var cr6 = $('#fileUploadForm')[2];
@@ -127,46 +126,18 @@ function saveTenantDocument(){
             contentType: false,
             cache: false,
             timeout: 600000,
-            success: function (data) {
+            success: function (response) {
+                       $('#successModal').modal('show');
+                       console.log(response)
 
-                var r=document.getElementById("retry");
-                r.setAttribute("style","display:none");
-                console.log("SUCCESS : ", data);
-                $("#btnSubmit").prop("disabled", false);
-                alert('File Saved Successfully ', 'success')
+                   },
+                   error: function (e) {
+                       console.log(e);
+                   }
+                   $("#fileUploadForm")[0].reset()
 
+               })
 
-
-            },
-            error: function (e) {
-                if(e.status.toString()=="200"){
-
-                    var r=document.getElementById("retry");
-                    r.setAttribute("style","display:none");
-                    alert("Documents  Saved Successfully ", 'success');
-                    console.log("ERROR : ", e);
-
-                }else if(e.status.toString()=="500"){
-
-                    var r=document.getElementById("retry");
-                    r.setAttribute("style","display:all");
-                    alert(e.responseJSON.message, 'danger');
-                    $("#btnSubmit").prop("disabled", false);
-                    console.log("ERROR : ", e);
-
-                }else{
-
-                    var r=document.getElementById("retry");
-                    r.setAttribute("style","display:all");
-                    console.log("ERROR : ", e);
-                    alert(e.message, 'success');
-                    $("#btnSubmit").prop("disabled", false);
-                }
-
-
-            }
-
-        });
 
 }
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Agreement Form</title>
+</head>
+<body>
+<div id="form"  >
+	
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.3/pdfobject.min.js" integrity="sha512-bHO4iqeyo1tN+C4qnbroCQ5Hxi3aJcEszT0iOt2nkuXZXQf369U3PUsnoN/ebnKQ5V2iS326OIv9pgXxL+F/kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+
+	let height = window.innerHeight;
+	var y=document.getElementById('form');
+	y.setAttribute("style","height:"+height+"px");
+
+
+	  var file = JSON.parse(localStorage.getItem("file"));
+
+ 	  console.log("file :",filename2);
+     var filename2=file.split("'")[1];
+
+
+
+	if(PDFObject.supportsPDFs){
+		PDFObject.embed("http://localhost:8090/assets/uploads/"+filename2,"#form");
+	}else{
+		window.alert("This Browser Doest support  PDF of this format");
+	}
+
+</script>
+<script type='text/javascript'>
+
+    (function()
+    {
+        if( window.localStorage )
+        {
+            if( !localStorage.getItem('firstLoad') )
+            {
+                localStorage['firstLoad'] = true;
+                window.location.reload();
+            }
+            else
+                localStorage.removeItem('firstLoad');
+        }
+    })();
+
+</script>
+</body>
+</html>
