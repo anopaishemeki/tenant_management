@@ -3,8 +3,8 @@
 <head>
 	<title>Agreement Form</title>
 </head>
-<body >
-<div id="form" >
+<body>
+<div id="form"  >
 	
 </div>
 
@@ -18,8 +18,11 @@
 
 
 	  var file = JSON.parse(localStorage.getItem("file"));
-    var filename2=file.split("'")[1];
-	  console.log("file :",filename2);
+
+ 	  console.log("file :",filename2);
+     var filename2=file.split("'")[1];
+
+
 
 	if(PDFObject.supportsPDFs){
 		PDFObject.embed("http://localhost:8090/assets/uploads/"+filename2,"#form");
@@ -45,6 +48,5 @@
     })();
 
 </script>
-
 </body>
 </html>

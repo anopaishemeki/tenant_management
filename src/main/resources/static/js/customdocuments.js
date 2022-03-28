@@ -1,3 +1,4 @@
+
 function SetLocal(id) {
     localStorage.removeItem("id");
     localStorage.setItem("id",JSON.stringify(id));
@@ -303,318 +304,241 @@ function getDetails() {
     //  console.log(stt);
     //  console.log(rt);
 }
-function getLeases() {
-
-    var id = JSON.parse(localStorage.getItem("id"));
-    console.log(id);
-    $.ajax({
-        url: 'http://localhost:8080/api/v1/lease/getleases',
-        type: 'GET',
-        success: function (response) {
-            let items = response
-
-            console.log(response)
-
-            var t_body = document.getElementById("t_body");
-
-
-            // while (t_body.hasChildNodes()) {
-            //     t_body.removeChild(t_body.firstChild);
-            // }
-
-            for (let i = 0; i < items.length; i++) {
-                let html = `<td class="sorting_1">  ${items[i].id}
-                        </td>
-                        <td>  ${items[i].name}
-                        </td>
-                        <td>  ${items[i].rentalFee}
-                        </td>                                               
-                        <td > ${items[i].status}
-                        </td>
-                        <td >${items[i].agreementDate}
-                        </td>
-                        <td> 
-                        <a href="${pageContext.request.contextPath}/file-upload/downloadFile/{id}" onclick="SetLocal('${items[i].id}')">View</a>
-                      </td>
-                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                            <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" data-toggle="modal"
-                               data-target="#varyModal" data-whatever="@mdo"
-                               href="#">Genarate Expiry Notification</a>                              
-                       </div>
-           
-                    </td>
-                  `
-
-
-                let tr = document.createElement("tr");
-                if (i % 2 == 0) {
-                    tr.setAttribute("class", "even");
-                } else {
-                    tr.setAttribute("class", "odd");
-                }
-                tr.setAttribute("role", "row");
-                tr.innerHTML = html;
-
-                // tr.setAttribute("onclick", `setPropertyDetails('${items[i].id}'), toggleView('propertyDetailsDiv') `);
-
-                // let htmlSpacer = "<td colspan=\"100\">"
-                // let spacer = document.createElement("tr");
-                // spacer.className = "spacer";
-                //
-                // spacer.innerHTML = htmlSpacer;
-
-                // t_body.appendChild(spacer);
-                t_body.appendChild(tr);
-            }
-        }
-    })
-    var body = document.getElementById("body");
-    //
-    //
-    let st = document.createElement("script");
-    st.setAttribute("src", "../../js/jquery.dataTables.min.js");
-    body.append(st);
-}
 
 //fetch records
 
-function FetchDetails() {
-
-    var id = JSON.parse(localStorage.getItem("id"));
-    $.ajax({
-        url: 'http://localhost:61595/api/v1/getexpiredlease/'+ id,
-        type: 'GET',
-        success: function (response) {
-            console.log(response)
-
-
-            let id = document.getElementById("id");
-            let companyName = document.getElementById("companyName");
-            let addressLine1 = document.getElementById("addressLine1");
-            let addressLine2 = document.getElementById("addressLine2");
-            let addressLine3 = document.getElementById("addressLine3");
-            let debit = document.getElementById("debit");
-            let dueDate = document.getElementById("dueDate");
-            let expiryDate = document.getElementById("expiryDate");
-            let signature = document.getElementById("signature");
-            let today = document.getElementById("today");
-
-           
-
-            id.innerText = `${response.id}`;
-            companyName.placeholder = `${response.companyName}`;
-            addressLine1.placeholder = `${response.addressLine1}`;
-            addressLine2.placeholder = `${response.addressLine2}`;
-            addressLine3.placeholder = `${response.addressLine3}`;
-            dueDate.placeholder = `${response.dueDate}`;
-            debit.value = `${response.debit}`;
-            expiryDate.placeholder = `${response.expiryDate}`;
-            signature.placeholder =`${response.siganture}`;
-            today.placeholder=`${response.today}`;
-           
-            companyName.setAttribute("disabled", true);
-            addressLine1.setAttribute("disabled", true);
-            addressLine2.setAttribute("disabled", true);
-            addressLine3.setAttribute("disabled", true);
-            dueDate.setAttribute("disabled", true);
-            debit.setAttribute("disabled", true);
-            expiryDate.setAttribute("disabled", true);
-            signature.setAttribute("disabled", true);
-            today.setAttribute("disabled", true);
-            
-
-
-        }
-    })
-}
-
-
-
-
-function saveTenantDocuments(){
-
-    var application = $('#fileUploadForm')[0];
-    var cr14 = $('#fileUploadForm')[1];
-    var cr6 = $('#fileUploadForm')[2];
-    var director= $('#fileUploadForm')[3];
-    var bank = $('#fileUploadForm')[4];
-    var vat = $('#fileUploadForm')[5];
-    var tax = $('#fileUploadForm')[6];
-    var article = $('#fileUploadForm')[7];
-    var certificate_of = $('#fileUploadForm')[8];
-    
-    var ajaxData = new FormData(application)
-    ajaxData.append(cr14,cr14_form.files[0])
-    ajaxData.append(cr6,cr6_form.files[0])
-    ajaxData.append(director,director_id.files[0])
-    ajaxData.append(bank,bank_statement.files[0])
-    ajaxData.append(vat,vat_reg.files[0])
-    ajaxData.append(tax,tax_clearance.files[0])
-    ajaxData.append(article,article_associ.files[0])
-    ajaxData.append(certificate_of,certificate_of_inco.files[0])
-
-
-    
-    // var y=document.getElementById("application_letter");
-
-    // if(y.value.toString().length==0){
-    //     alert("App File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-    // var x=document.getElementById("cr6_form");
-
-    // if(x.value.toString().length==0){
-    //     alert("Cr6 File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-    // var m=document.getElementById("director_id");
-
-    // if(m.value.toString().length==0){
-    //     alert("d File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-    // var z=document.getElementById("cr14_form");
-
-    // if(z.value.toString().length==0){
-    //     alert("cr File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-    
-    // var u=document.getElementById("vat_reg");
-
-    // if(u.value.toString().length==0){
-    //     alert("var File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-
-    //     return
-    // }
-    // var l=document.getElementById("tax_clearance");
-
-    // if(l.value.toString().length==0){
-    //     alert("tax File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-    // var a=document.getElementById("article_associ");
-
-    // if(a.value.toString().length==0){
-    //     alert("art File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-    // var cert=document.getElementById("certificate_of_inco");
-
-    // if(cert.value.toString().length==0){
-    //     alert("cert File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-
-    
-    var data= new FormData(application);
-    data.append(cr6,cr6_form.files[0])
-    data.append(cr14,cr14_form.files[0]);
-    data.append(bank,bank_statement.files[0]);
-    data.append(director,director_id.files[0]);
-    data.append(certificate,certificate_of_inco.files[0]);
-    data.append(vat,vat_reg.files[0]);
-    data.append(article,article_associ.files[0]);
-    data.append(tax,tax_clearance.files[0]);
-
-    console.log(data)
-
-    // var data= new FormData(file)
-    
-    // var y=document.getElementById("file");
-
-    // if(y.value.toString().length==0){
-    //     alert("Notice File Not Uploaded!!","danger");
-    //     var r=document.getElementById("retry");
-    //     r.setAttribute("style","display:all");
-
-    //     return
-    // }
-
-    $("#btnSubmit").prop("disabled", true);
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/api/tenant/uploadtenantDocument",
-
-            data: data,
-
-            data: ajaxData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 600000,
-            success: function (data) {
-
-                var r=document.getElementById("retry");
-                r.setAttribute("style","display:none");
-                console.log("SUCCESS : ", data);
-                $("#btnSubmit").prop("disabled", false);
-                alert('File Saved Successfully ', 'success')
+//function FetchDetails() {
+//
+//    var id = JSON.parse(localStorage.getItem("id"));
+//    $.ajax({
+//        url: 'http://localhost:61595/api/v1/getexpiredlease/'+ id,
+//        type: 'GET',
+//        success: function (response) {
+//            console.log(response)
+//
+//
+//            let id = document.getElementById("id");
+//            let companyName = document.getElementById("companyName");
+//            let addressLine1 = document.getElementById("addressLine1");
+//            let addressLine2 = document.getElementById("addressLine2");
+//            let addressLine3 = document.getElementById("addressLine3");
+//            let debit = document.getElementById("debit");
+//            let dueDate = document.getElementById("dueDate");
+//            let expiryDate = document.getElementById("expiryDate");
+//            let signature = document.getElementById("signature");
+//            let today = document.getElementById("today");
+//
+//
+//
+//            id.innerText = `${response.id}`;
+//            companyName.placeholder = `${response.companyName}`;
+//            addressLine1.placeholder = `${response.addressLine1}`;
+//            addressLine2.placeholder = `${response.addressLine2}`;
+//            addressLine3.placeholder = `${response.addressLine3}`;
+//            dueDate.placeholder = `${response.dueDate}`;
+//            debit.value = `${response.debit}`;
+//            expiryDate.placeholder = `${response.expiryDate}`;
+//            signature.placeholder =`${response.siganture}`;
+//            today.placeholder=`${response.today}`;
+//
+//            companyName.setAttribute("disabled", true);
+//            addressLine1.setAttribute("disabled", true);
+//            addressLine2.setAttribute("disabled", true);
+//            addressLine3.setAttribute("disabled", true);
+//            dueDate.setAttribute("disabled", true);
+//            debit.setAttribute("disabled", true);
+//            expiryDate.setAttribute("disabled", true);
+//            signature.setAttribute("disabled", true);
+//            today.setAttribute("disabled", true);
+//
+//
+//
+//        }
+//    })
+//}
 
 
 
-            },
-            error: function (e) {
-                if(e.status.toString()=="200"){
 
-                    var r=document.getElementById("retry");
-                    r.setAttribute("style","display:none");
-                    alert("Documents  Saved Successfully ", 'success');
-                    console.log("ERROR : ", e);
-
-                }else if(e.status.toString()=="500"){
-
-                    var r=document.getElementById("retry");
-                    r.setAttribute("style","display:all");
-                    alert(e.responseJSON.message, 'danger');
-                    $("#btnSubmit").prop("disabled", false);
-                    console.log("ERROR : ", e);
-
-                }else{
-
-                    var r=document.getElementById("retry");
-                    r.setAttribute("style","display:all");
-                    console.log("ERROR : ", e);
-                    alert(e.message, 'success');
-                    $("#btnSubmit").prop("disabled", false);
-                }
-
-
-            }
-
-        });
-
-}
+//function saveTenantDocuments(){
+//
+//    var application = $('#fileUploadForm')[0];
+//    var cr14 = $('#fileUploadForm')[1];
+//    var cr6 = $('#fileUploadForm')[2];
+//    var director= $('#fileUploadForm')[3];
+//    var bank = $('#fileUploadForm')[4];
+//    var vat = $('#fileUploadForm')[5];
+//    var tax = $('#fileUploadForm')[6];
+//    var article = $('#fileUploadForm')[7];
+//    var certificate_of = $('#fileUploadForm')[8];
+//
+//    var ajaxData = new FormData(application)
+//    ajaxData.append(cr14,cr14_form.files[0])
+//    ajaxData.append(cr6,cr6_form.files[0])
+//    ajaxData.append(director,director_id.files[0])
+//    ajaxData.append(bank,bank_statement.files[0])
+//    ajaxData.append(vat,vat_reg.files[0])
+//    ajaxData.append(tax,tax_clearance.files[0])
+//    ajaxData.append(article,article_associ.files[0])
+//    ajaxData.append(certificate_of,certificate_of_inco.files[0])
+//
+//
+//
+//    // var y=document.getElementById("application_letter");
+//
+//    // if(y.value.toString().length==0){
+//    //     alert("App File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//    // var x=document.getElementById("cr6_form");
+//
+//    // if(x.value.toString().length==0){
+//    //     alert("Cr6 File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//    // var m=document.getElementById("director_id");
+//
+//    // if(m.value.toString().length==0){
+//    //     alert("d File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//    // var z=document.getElementById("cr14_form");
+//
+//    // if(z.value.toString().length==0){
+//    //     alert("cr File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//
+//    // var u=document.getElementById("vat_reg");
+//
+//    // if(u.value.toString().length==0){
+//    //     alert("var File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//
+//    //     return
+//    // }
+//    // var l=document.getElementById("tax_clearance");
+//
+//    // if(l.value.toString().length==0){
+//    //     alert("tax File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//    // var a=document.getElementById("article_associ");
+//
+//    // if(a.value.toString().length==0){
+//    //     alert("art File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//    // var cert=document.getElementById("certificate_of_inco");
+//
+//    // if(cert.value.toString().length==0){
+//    //     alert("cert File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//
+//
+//    var data= new FormData(application);
+//    data.append(cr6,cr6_form.files[0])
+//    data.append(cr14,cr14_form.files[0]);
+//    data.append(bank,bank_statement.files[0]);
+//    data.append(director,director_id.files[0]);
+//    data.append(certificate,certificate_of_inco.files[0]);
+//    data.append(vat,vat_reg.files[0]);
+//    data.append(article,article_associ.files[0]);
+//    data.append(tax,tax_clearance.files[0]);
+//
+//    console.log(data)
+//
+//    // var data= new FormData(file)
+//
+//    // var y=document.getElementById("file");
+//
+//    // if(y.value.toString().length==0){
+//    //     alert("Notice File Not Uploaded!!","danger");
+//    //     var r=document.getElementById("retry");
+//    //     r.setAttribute("style","display:all");
+//
+//    //     return
+//    // }
+//
+//    $("#btnSubmit").prop("disabled", true);
+//        $.ajax({
+//            type: "POST",
+//            enctype: 'multipart/form-data',
+//            url: "/api/tenant/uploadtenantDocument",
+//
+//            data: data,
+//
+//            data: ajaxData,
+//            processData: false,
+//            contentType: false,
+//            cache: false,
+//            timeout: 600000,
+//            success: function (data) {
+//
+//                var r=document.getElementById("retry");
+//                r.setAttribute("style","display:none");
+//                console.log("SUCCESS : ", data);
+//                $("#btnSubmit").prop("disabled", false);
+//                alert('File Saved Successfully ', 'success')
+//
+//
+//
+//            },
+//            error: function (e) {
+//                if(e.status.toString()=="200"){
+//
+//                    var r=document.getElementById("retry");
+//                    r.setAttribute("style","display:none");
+//                    alert("Documents  Saved Successfully ", 'success');
+//                    console.log("ERROR : ", e);
+//
+//                }else if(e.status.toString()=="500"){
+//
+//                    var r=document.getElementById("retry");
+//                    r.setAttribute("style","display:all");
+//                    alert(e.responseJSON.message, 'danger');
+//                    $("#btnSubmit").prop("disabled", false);
+//                    console.log("ERROR : ", e);
+//
+//                }else{
+//
+//                    var r=document.getElementById("retry");
+//                    r.setAttribute("style","display:all");
+//                    console.log("ERROR : ", e);
+//                    alert(e.message, 'success');
+//                    $("#btnSubmit").prop("disabled", false);
+//                }
+//
+//
+//            }
+//
+//        });
+//
+//}
 function getTenant() {
     $.ajax({
         url: 'http://localhost:8090/api/tenants/get-all-tenants',
@@ -635,9 +559,11 @@ function getTenant() {
                             <td>${items[i].id}</td>
                             <td>${items[i].name} ${items[i].surname}</td>     
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rent_status}</small></td>
-                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" >
-                            <a class="dropdown-item" href="view_tenantDocuments" onclick="generateDocuments()">Display Documents</a>
-                             </button>
+                            <td><a class="" href="./view_tenantDocuments.html" onclick="setLocalfile('${items[i].tenantId}')')">Display Documents
+                            <button class="btn btn-sm" type="button" >
+                            </button>
+                            </a>
+
                              </td>
                             <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span> 
@@ -718,8 +644,19 @@ function getTenant() {
 //     //hide the spinner again
 //     $('#ajaxLoader').hide();
 //  }
- 
- 
+ function setLocalfile(application_letter){
+     // var file=document.getElementById("formName2").innerText;
+     localStorage.removeItem("application_letter");
+     localStorage.setItem("application_letter", JSON.stringify(application_letter));
+ }
+
+
+ function SetLocal(id) {
+     localStorage.removeItem("id");
+
+     localStorage.setItem("id", JSON.stringify(id));
+
+
   
 
 

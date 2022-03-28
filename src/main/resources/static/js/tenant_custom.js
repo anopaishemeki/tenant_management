@@ -110,14 +110,17 @@ function saveTenant() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         success: function (response) {
-            alert("success" + response)
+            $('#successModal').modal('show');
             console.log(response)
 
         },
         error: function (e) {
             console.log(e);
         }
+
     })
+
+    $("#tenant_form")[0].reset();
 }
 
 
@@ -711,12 +714,14 @@ function setAddCompartmentDropDown(compartment_id) {
 
 
             for (let i = 0; i < response.length; i++) {
+                if( response[i].status!="1"){
                 let option = document.createElement("option");
 
                 option.text = response[i].compartmentNumber;
-                option.setAttribute("value", `${response[i].id}`)
+                option.setAttribute("value", `${response[i].id}`);
 
                 dropDown.appendChild(option);
+                }
             }
 
 
@@ -732,7 +737,8 @@ function setTenantOnCompartment(){
     console.log(id);
     console.log(tenant_id)
     var data= {
-        "tenant": tenant_id
+        "tenant": tenant_id,
+        "status":"1"
     }
     $.ajax({
 
@@ -743,14 +749,15 @@ function setTenantOnCompartment(){
         contentType:"application/json; charset=utf-8",
         data:JSON.stringify(data),
         success: function () {
+            $('#assignedModal').modal('show')
 
-            console.log(" Done!"
-            );
 
 //fgjhk
 
         }
     })
+
+    $("assign_form")[0].reset();
 
 }
 

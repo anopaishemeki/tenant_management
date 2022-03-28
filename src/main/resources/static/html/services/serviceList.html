@@ -213,6 +213,9 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="charts">
                         <li class="nav-item">
+                            <a class="nav-link pl-3" href="../documentsManagement/add_tenantdocuments.html"><span class="ml-1 item-text">Add Tenant Documents</span></a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link pl-3" href="../documentsManagement/tenant_documents.html"><span
                                     class="ml-1 item-text">Tenant Documents</span></a>
                         </li>
@@ -509,34 +512,34 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="varyModalLabel">Schedule</h5>
-                            <a href="request.html">
+                            <h5 class="modal-title" id="varyModalLabel">Update Service</h5>
+                            <a href="serviceList.html">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </a>
                         </div>
-                        <div class="modal-body">
+                        <div class=" justify-content-center modal-body" id="liveAlertPlaceholder22" style="display: none">
+                        <p class="text-center">Service Updated</p>
+                    </div>
+                        <div id="cont" class="modal-body">
                             <div class="form-row mb-3">
                                 <div class="col-md-6 mb-3">
 
-                                    <div class="liveAlertPlaceholder" id="liveAlertPlaceholder"></div>
-                                    <div id="cont" class="row justify-content-center">
-                                        <div  class="col-md-10" >
-                                            <label for="date-input1">Schedule Date</label>
+
+                                    <div  class="row justify-content-center">
+                                        <div class="col-md-10">
+                                            <label for="serviceName">Service Name</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control drgpicker" id="date-input1"
-                                                       value="2020-12-02" aria-describedby="button-addon2">
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text" id="button-addon-date"><span
-                                                            class="fe fe-calendar fe-16 mx-2"></span></div>
-                                                </div>
+                                                <input type="text" id="serviceName" class="form-control"
+                                                       aria-describedby="button-addon2">
+
                                             </div>
                                         </div>
 
                                         <div class="col-md-10">
-                                            <label for="date-input1">Assigned Team</label>
+                                            <label for="amount">Amount</label>
                                             <div class="input-group">
-                                                <input type="text" id="teamInput" class="form-control"
+                                                <input type="number" id="amount" class="form-control"
                                                        aria-describedby="button-addon2">
 
                                             </div>
@@ -544,32 +547,76 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer d-flex justify-content-center">
-                                <!--                            <a href="request.html" >-->
-                                <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
-                                <!--                            </a>-->
-                                <a href="request.html">
-                                    <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
-                                            class="btn mb-2 btn-success" aria-label="Close">OK
-                                    </button>
-                                </a>
-                                <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <!--                            <a href="request.html" >-->
+                            <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                            <!--                            </a>-->
+
+                            <a href="serviceList.html">
+                                <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+
+                                        class="btn mb-2 btn-success" aria-label="Close">OK
                                 </button>
-                                <button type="button" class="btn mb-2 btn-primary" onclick="schedule()" id="2">Assign
-                                </button>
-                            </div>
+                            </a>
+                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                            </button>
+                            <button type="button" class="btn mb-2 btn-primary" onclick="updateService()" id="2">Update
+                            </button>
                         </div>
                     </div>
                 </div>
 
 
             </div>
+
+            <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Delete Service</h5>
+                            <a href="serviceList.html">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </a>
+                        </div>
+                        <div  class="modal-body justify-content-" >
+                            <div id="deleteSuccess" class="form-row mb-3 justify-content-center " style="display: none">
+                                <p class="text-center  ">Service deleted successfully</p>
+                            </div>
+                            <div class="form-row mb-3 justify-content-center" id="7">
+                                <p>Are you sure you want to delete this service</p>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                        <!--                            <a href="request.html" >-->
+                        <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                        <!--                            </a>-->
+                        <a href="serviceList.html">
+                            <button type="button" id="01" style="display: none" data-bs-dismiss="modal"
+                                    class="btn mb-2 btn-success" aria-label="Close">OK
+                            </button>
+                        </a>
+                        <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="12">Close
+                        </button>
+                        <button type="button" class="btn mb-2 btn-primary" onclick="deleteService()" id="21">Delete
+                        </button>
+                    </div>
+                    </div>
+                </div>
+
+
+            </div>
+
             <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                            <h5 class="modal-title" id="defaultModalLabel1">Notifications</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -733,17 +780,7 @@
 </script>
 <script src="../../js/apps.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
-</script>
 
 
 <script src='../../js/daterangepicker.js'></script>
