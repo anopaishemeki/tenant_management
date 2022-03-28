@@ -1,20 +1,22 @@
 function setLocal(id) {
     localStorage.removeItem("id");
-    localStorage.setItem("id",JSON.stringify(id));
+    localStorage.setItem("id", JSON.stringify(id));
 
 
 }
-function SetLocal(id,request,description,dateLogged) {
+
+function SetLocal(id, request, description, dateLogged) {
     localStorage.removeItem("id");
     localStorage.removeItem("request");
     localStorage.removeItem("description");
     localStorage.removeItem("dateLogged");
-    localStorage.setItem("id",JSON.stringify(id));
-    localStorage.setItem("description",JSON.stringify(description));
-    localStorage.setItem("request",JSON.stringify(request));
-    localStorage.setItem("dateLogged",JSON.stringify(dateLogged));
+    localStorage.setItem("id", JSON.stringify(id));
+    localStorage.setItem("description", JSON.stringify(description));
+    localStorage.setItem("request", JSON.stringify(request));
+    localStorage.setItem("dateLogged", JSON.stringify(dateLogged));
 
 }
+
 function toggleView(id) {
     let active = document.getElementById(id);
 
@@ -33,47 +35,53 @@ function getRequest() {
 
     var baseurl = "http://localhost:8090/api/maintenance/getAll";
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",baseurl,true);
-    xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
 
             console.log(data)
             $("#example").DataTable({
-                data:data,
-                columns:[
+                data: data,
+                columns: [
 
-                    {"data":"tenantId"},
-                    {"data":"request"},
-                    {"data":"description"},
-                    {"data":"levelOfUrgency"},
-                    {"data":"dateLogged"},
-                    {"data":"schedule.scheduleDate",
-                    "render":function (schedule){
-                        if(!schedule){
-                            return'unscheduled';
-                        }else {
-                            return schedule;
+                    {"data": "tenantId"},
+                    {"data": "request"},
+                    {"data": "description"},
+                    {"data": "levelOfUrgency"},
+                    {"data": "dateLogged"},
+                    {
+                        "data": "schedule.scheduleDate",
+                        "render": function (schedule) {
+                            if (!schedule) {
+                                return 'unscheduled';
+                            } else {
+                                return schedule;
+                            }
                         }
-                    }},
-                    {"data":"status",
-                    "render":function (status){
-                        if(status==="Pending"){
-                            return'<span class="badge badge-primary"> ' +status+'</span>';
-                        }else{
-                            return '<span class="badge badge-danger">' +status+'</span>';
+                    },
+                    {
+                        "data": "status",
+                        "render": function (status) {
+                            if (status === "Pending") {
+                                return '<span class="badge badge-primary"> ' + status + '</span>';
+                            } else {
+                                return '<span class="badge badge-danger">' + status + '</span>';
+                            }
                         }
-                    }},
-                    {"data":"id",
-                    "render": function (data){
-                        return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(`+ data+`)">Schedule</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(` + data + `)">Schedule</a>
 
                       </div>`
-                    }},
+                        }
+                    },
 
                 ]
             });
@@ -84,55 +92,60 @@ function getRequest() {
 
 var alertplaceholder = document.getElementById("liveAlertPlaceholder");
 
-function alert(message,type){
-    var t=document.getElementById("ww");
-    if(t){
-        t.innerHTML='<div class="alert ww alert-'+type+' alert-dismissible" role = "alert">'+ message+'</div>'
-    }else{
-        var h =document.createElement("div");
-        h.setAttribute("id","ww");
-        h.innerHTML='<div class="alert ww alert-'+type+' alert-dismissible" role = "alert">'+ message+'</div>'
+function alert(message, type) {
+    var t = document.getElementById("ww");
+    if (t) {
+        t.innerHTML = '<div class="alert ww alert-' + type + ' alert-dismissible" role = "alert">' + message + '</div>'
+    } else {
+        var h = document.createElement("div");
+        h.setAttribute("id", "ww");
+        h.innerHTML = '<div class="alert ww alert-' + type + ' alert-dismissible" role = "alert">' + message + '</div>'
 
         alertplaceholder.append(h);
     }
 }
+
 //Get Overdue Request
 function getOverdue() {
     var baseurl = "http://localhost:8090/api/maintenance/status/overdue";
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",baseurl,true);
-    xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
 
             console.log(data)
             $("#example").DataTable({
-                data:data,
-                columns:[
-                    {"data":"tenantId"},
-                    {"data":"request"},
-                    {"data":"description"},
-                    {"data":"levelOfUrgency"},
-                    {"data":"dateLogged"},
-                    {"data":"schedule.scheduleDate",
-                        "render":function (schedule){
-                            if(!schedule){
-                                return'unscheduled';
-                            }else {
+                data: data,
+                columns: [
+                    {"data": "tenantId"},
+                    {"data": "request"},
+                    {"data": "description"},
+                    {"data": "levelOfUrgency"},
+                    {"data": "dateLogged"},
+                    {
+                        "data": "schedule.scheduleDate",
+                        "render": function (schedule) {
+                            if (!schedule) {
+                                return 'unscheduled';
+                            } else {
                                 return schedule;
                             }
-                        }},
+                        }
+                    },
 
-                    {"data":"id",
-                        "render": function (data){
+                    {
+                        "data": "id",
+                        "render": function (data) {
                             return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(`+ data+`)">Schedule</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(` + data + `)">Schedule</a>
 
                       </div>`
-                        }},
+                        }
+                    },
 
                 ]
             });
@@ -147,39 +160,43 @@ function getPending() {
 
     var baseurl = "http://localhost:8090/api/maintenance/status/pending";
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",baseurl,true);
-    xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
 
             console.log(data)
             $("#example").DataTable({
-                data:data,
-                columns:[
-                    {"data":"tenantId"},
-                    {"data":"request"},
-                    {"data":"description"},
-                    {"data":"levelOfUrgency"},
-                    {"data":"dateLogged"},
-                    {"data":"schedule.scheduleDate",
-                        "render":function (schedule){
-                            if(!schedule){
-                                return'unscheduled';
-                            }else {
+                data: data,
+                columns: [
+                    {"data": "tenantId"},
+                    {"data": "request"},
+                    {"data": "description"},
+                    {"data": "levelOfUrgency"},
+                    {"data": "dateLogged"},
+                    {
+                        "data": "schedule.scheduleDate",
+                        "render": function (schedule) {
+                            if (!schedule) {
+                                return 'unscheduled';
+                            } else {
                                 return schedule;
                             }
-                        }},
+                        }
+                    },
 
-                    {"data":"id",
-                        "render": function (data){
+                    {
+                        "data": "id",
+                        "render": function (data) {
                             return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(`+ data+`)">Schedule</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal(` + data + `)">Schedule</a>
 
                       </div>`
-                        }},
+                        }
+                    },
 
                 ]
             });
@@ -189,44 +206,44 @@ function getPending() {
 }
 
 // add schedule
-function schedule(){
+function schedule() {
     var id = JSON.parse(localStorage.getItem("id"));
     var jsonDataObj = {
-        "schedule":{
-            "scheduleDate":$("#date-input1").val(),
-            "team":$("#teamInput").val()
+        "schedule": {
+            "scheduleDate": $("#date-input1").val(),
+            "team": $("#teamInput").val()
         }
 
 
     }
-$.ajax({
-    dataType:"json",
-    crossDomain:"true",
-    contentType:"application/json; charset=utf-8",
-    data:JSON.stringify(jsonDataObj),
-    type:"PUT",
-    url:"http://localhost:8090/api/maintenance/"+ id+"/schedule",
-    success: function (response){
-        console.log(response);
+    $.ajax({
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(jsonDataObj),
+        type: "PUT",
+        url: "http://localhost:8090/api/maintenance/" + id + "/schedule",
+        success: function (response) {
+            console.log(response);
 
-    },error:function (e){
-        if(e.status.toString()=="200"){
-            var r=document.getElementById("0");
-            r.setAttribute("style","display:all")
-            var s=document.getElementById("1");
-            s.setAttribute("style","display:none")
-            var t=document.getElementById("2");
-            t.setAttribute("style","display:none")
+        }, error: function (e) {
+            if (e.status.toString() == "200") {
+                var r = document.getElementById("0");
+                r.setAttribute("style", "display:all")
+                var s = document.getElementById("1");
+                s.setAttribute("style", "display:none")
+                var t = document.getElementById("2");
+                t.setAttribute("style", "display:none")
 
-            alert("Schedule Added Successfully" ,"success")
+                alert("Schedule Added Successfully", "success")
 
-            var g = document.getElementById("cont");
-            g.setAttribute("style","display:none");
+                var g = document.getElementById("cont");
+                g.setAttribute("style", "display:none");
+            }
+            console.log("ERROR", e);
         }
-        console.log("ERROR",e);
-    }
 
-})
+    })
 }
 
 
@@ -300,19 +317,19 @@ function getScheduled() {
     })*/
     var baseurl = "http://localhost:8090/api/maintenance/getAllScheduled";
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",baseurl,true);
-    xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
 
             console.log(data)
             $("#example").DataTable({
-                data:data,
+                data: data,
 
 
-                columns:[
+                columns: [
 
-                    {"data":"tenantId"},
+                    {"data": "tenantId"},
                     {"data": "request"},
                     {"data": "description"},
                     {"data": "levelOfUrgency"},
@@ -359,7 +376,7 @@ function getScheduled() {
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" 
-                        data-whatever="@mdo" href="#" onclick="SetLocal( `+data+`)">
+                        data-whatever="@mdo" href="#" onclick="SetLocal( ` + data + `)">
                         Attended</a>
                        
                       </div>`
@@ -375,88 +392,87 @@ function getScheduled() {
 }
 
 //Mark attended
-function Attended(){
+function Attended() {
     var id = JSON.parse(localStorage.getItem("id"));
-    var f=document.getElementById("2");
-    f.setAttribute("disabled","true");
+    var f = document.getElementById("2");
+    f.setAttribute("disabled", "true");
     $.ajax({
 
-        type:"GET",
-        url:"http://localhost:8090/api/maintenance/"+id,
-        success: function (response){
+        type: "GET",
+        url: "http://localhost:8090/api/maintenance/" + id,
+        success: function (response) {
             console.log(response);
             $.ajax({
-                dataType:"json",
-                crossDomain:"true",
-                contentType:"application/json; charset=utf-8",
-                data:JSON.stringify(response),
-                type:"POST",
-                url:"http://localhost:8090/api/maintenance/attended",
-                success: function (response){
+                dataType: "json",
+                crossDomain: "true",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(response),
+                type: "POST",
+                url: "http://localhost:8090/api/maintenance/attended",
+                success: function (response) {
                     console.log(response);
                     console.log("Posted");
 
 
-                },error:function (e){
+                }, error: function (e) {
 
-                    console.log("ERROR",e);
+                    console.log("ERROR", e);
                 }
 
             })
 
-        },error:function (e){
+        }, error: function (e) {
 
-            console.log("ERROR",e);
+            console.log("ERROR", e);
         }
 
     })
 
     $.ajax({
-                        dataType:"json",
-                        crossDomain:"true",
-                        contentType:"application/json; charset=utf-8",
-                        type:"DELETE",
-                        url:"http://localhost:8090/api/maintenance/attended/"+id,
-                        success: function (response){
-                            console.log("Delete")
-                            var r=document.getElementById("1");
-                            r.setAttribute("style","display:all")
-                            var s=document.getElementById("2");
-                            s.setAttribute("style","display:none")
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        type: "DELETE",
+        url: "http://localhost:8090/api/maintenance/attended/" + id,
+        success: function (response) {
+            console.log("Delete")
+            var r = document.getElementById("1");
+            r.setAttribute("style", "display:all")
+            var s = document.getElementById("2");
+            s.setAttribute("style", "display:none")
 
 
-                            alert("Request attended Successfully" ,"success")
+            alert("Request attended Successfully", "success")
 
 
-                            var g = document.getElementById("cont");
-                            g.setAttribute("style","display:none");
-                            console.log(response);
+            var g = document.getElementById("cont");
+            g.setAttribute("style", "display:none");
+            console.log(response);
 
-                        },error:function (e){
-                            if(e.status.toString()=="200"){
-                                var r=document.getElementById("1");
-                                r.setAttribute("style","display:all")
-                                var s=document.getElementById("2");
-                                s.setAttribute("style","display:none")
-                                // var t=document.getElementById("2");
-                                // t.setAttribute("style","display:none")
+        }, error: function (e) {
+            if (e.status.toString() == "200") {
+                var r = document.getElementById("1");
+                r.setAttribute("style", "display:all")
+                var s = document.getElementById("2");
+                s.setAttribute("style", "display:none")
+                // var t=document.getElementById("2");
+                // t.setAttribute("style","display:none")
 
-                                alert("Request attended Successfully" ,"success")
-
-
-                                var g = document.getElementById("cont");
-                                g.setAttribute("style","display:none");
-                                console.log("ERROR",e);
-                            }else{
-                                alert("Request attended unSuccessfully" ,"danger")
-                                console.log("ERROR",e);
-                            }
+                alert("Request attended Successfully", "success")
 
 
+                var g = document.getElementById("cont");
+                g.setAttribute("style", "display:none");
+                console.log("ERROR", e);
+            } else {
+                alert("Request attended unSuccessfully", "danger")
+                console.log("ERROR", e);
+            }
 
-                        }
 
-                    })
+        }
+
+    })
 
 }
 
@@ -516,17 +532,17 @@ function getAttended() {
     })*/
     var baseurl = "http://localhost:8090/api/maintenance/getAllAttended";
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",baseurl,true);
-    xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.readyState==4 && xmlhttp.status ==200){
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
 
             console.log(data)
             $("#example").DataTable({
-                data:data,
+                data: data,
 
 
-                columns:[
+                columns: [
 
                     {"data": "tenantId"},
                     {"data": "request"},
@@ -542,7 +558,7 @@ function getAttended() {
 }
 
 // Request Filter
-function searchFilterRequest(){
+function searchFilterRequest() {
     let items = JSON.parse(localStorage.getItem("request"));
 
     let field = document.getElementById("requestSearch").value;
@@ -558,7 +574,7 @@ function searchFilterRequest(){
         let color = (items[i].status === "Pending") ? "badge badge-primary" : "badge badge-danger"
         let string = JSON.stringify(items[i])
 
-        if (string.toLowerCase().includes(field.toLowerCase())){
+        if (string.toLowerCase().includes(field.toLowerCase())) {
             let new_html = `<td></td>
                         <td>  ${items[i].id}
                         </td>
@@ -594,7 +610,7 @@ function searchFilterRequest(){
 
 // Attended Filter
 
-function searchFilterAttended(){
+function searchFilterAttended() {
     let items = JSON.parse(localStorage.getItem("attended"));
 
     let field = document.getElementById("attendedSearch").value;
@@ -609,7 +625,7 @@ function searchFilterAttended(){
 
         let string = JSON.stringify(items[i])
 
-        if (string.toLowerCase().includes(field.toLowerCase())){
+        if (string.toLowerCase().includes(field.toLowerCase())) {
             let new_html = `<td></td>
                         <td>  ${items[i].id}
                         </td>
@@ -645,7 +661,7 @@ function saveRequest() {
         description,
         tenantId
     }
-    console.log("data",data)
+    console.log("data", data)
 
     $.ajax({
         url: 'http://localhost:8090/api/maintenance',
@@ -656,16 +672,16 @@ function saveRequest() {
         data: JSON.stringify(data),
         success: function (response) {
             // alert("success" + response)
-            console.log("response",response)
+            console.log("response", response)
             // getProperties();
             // let element = document.getElementById("successModal");
             $('#toast').modal('show')
 
             document.getElementById("_form").reset();
         },
-        error:function (error){
+        error: function (error) {
 
-            if(error.status.toString()==="200"){
+            if (error.status.toString() === "200") {
                 let element = document.getElementById("toast");
 
                 $('#successModal').modal('show')
@@ -673,8 +689,8 @@ function saveRequest() {
 
                 document.getElementById("_form").reset();
 
-            }else{
-                console.log("error",error)
+            } else {
+                console.log("error", error)
             }
         }
     })
@@ -720,6 +736,7 @@ function onSetTenants() {
 
 
 }
+
 function tenantAssignLocalTenant(tenantId) {
     localStorage.removeItem("tenantId");
     localStorage.setItem("tenantId", JSON.stringify(tenantId));

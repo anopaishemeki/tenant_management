@@ -32,8 +32,15 @@ public class ServiceController {
         return serviceService.getService(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete-service/{id}")
     public void deleteService(@PathVariable Long id){
-        serviceService.delete(id);
+        serviceService.deleteService(id);
     }
+
+    @PutMapping("/updateService/{id}")
+    public  void updateService(@PathVariable Long id ,  @RequestBody Services updateDetails) throws Exception{
+        System.out.println(updateDetails);
+        serviceService.updateService(id,updateDetails);
+    }
+
 }
