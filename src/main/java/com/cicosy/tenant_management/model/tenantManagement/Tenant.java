@@ -1,6 +1,7 @@
 package com.cicosy.tenant_management.model.tenantManagement;
 
 
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class Tenant {
     private Long id;
 
     private String name;
-    private  String surname;
+    private String surname;
 
     private String email;
     private String phone;
@@ -38,8 +39,6 @@ public class Tenant {
 
     private String deposit;
     private String rental_fee;
-
-
 
 
     private String house_no;
@@ -53,11 +52,10 @@ public class Tenant {
     private String shop_number;
 
 
-
-
-
     private String lease;
     private String property;
+    @Transient
+    private Lease leaseObject;
 
     public Tenant(String deposit, String rental_fee) {
         this.deposit = deposit;
@@ -66,7 +64,7 @@ public class Tenant {
 
     public Tenant(String name, String surname, String email, String phone,
                   String id_passport, String residential_address,
-                  String lease, String property, String rentStatus) {
+                  String lease, String property, String rentStatus, Lease leaseObject) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -75,6 +73,7 @@ public class Tenant {
         this.lease = lease;
         this.property = property;
         this.rentStatus = rentStatus;
+        this.leaseObject = leaseObject;
     }
 
 }

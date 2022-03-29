@@ -93,6 +93,10 @@ function setLettableSpaceDropdown() {
                 for (let i = 0; i < response.length; i++) {
                     let option = document.createElement("option");
 
+                    if(response[i].tenant == null){
+                        continue
+                    }
+
                     option.text = response[i].compartmentNumber;
                     option.setAttribute("value", `${response[i].id}`)
 

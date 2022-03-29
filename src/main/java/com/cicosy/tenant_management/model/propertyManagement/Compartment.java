@@ -40,7 +40,7 @@ public class Compartment {
         this.floorNumber = floorNumber;
         this.floorArea = floorArea;
         this.rentalRate = rentalRate;
-        this.status = status;
+        this.status = "0";
         this.compartmentNumber = compartmentNumber;
         this.tenantObject = tenantObject;
         this.tenant = tenant;
