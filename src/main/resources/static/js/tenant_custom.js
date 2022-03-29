@@ -731,7 +731,9 @@ function setAddCompartmentDropDown(compartment_id) {
 }
 
 function setTenantOnCompartment(){
-    let id = JSON.parse(localStorage.getItem("compartment_id"));
+    //let id = JSON.parse(localStorage.getItem("compartment_id"));
+
+    var id  =document.getElementById("compartmentDropdown").value
 
     let tenant_id = JSON.parse(localStorage.getItem("tenant_id"));
     console.log(id);

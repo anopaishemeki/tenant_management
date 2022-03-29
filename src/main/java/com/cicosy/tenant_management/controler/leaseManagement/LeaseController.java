@@ -68,7 +68,7 @@ public class LeaseController {
 
     }
 
-    @GetMapping(path = "tenant/{ID}")
+    //@GetMapping(path = "tenant/{ID}")
     public List<Lease> getLeaseByT_ID(@PathVariable String ID) {
         return leaseService.getLeaseByT_ID(ID);
     }
