@@ -152,7 +152,7 @@ function getDetails() {
     var id = JSON.parse(localStorage.getItem("id"));
     console.log(id);
     $.ajax({
-        url: 'http://localhost:8080/api/v1/getexpiredlease'+ id,
+        url: 'http://cicosy-property-management.herokuapp.com/api/v1/getexpiredlease'+ id,
         type: 'GET',
         success: function (response) {
             let items = response
@@ -657,6 +657,5 @@ function getTenant() {
      localStorage.setItem("id", JSON.stringify(id));
 
 
-  
-
+ }
 
