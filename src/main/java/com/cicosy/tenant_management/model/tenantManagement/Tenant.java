@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -28,7 +29,7 @@ public class Tenant {
 
     private String name;
     private  String surname;
-
+    private LocalDate register_Date=LocalDate.now();
     private String email;
     private String phone;
     private String id_passport;
@@ -36,8 +37,6 @@ public class Tenant {
 
     private String rentStatus;
 
-    private String deposit;
-    private String rental_fee;
 
 
 
@@ -50,7 +49,7 @@ public class Tenant {
     private String business_name;
     private String business_type;
     private String services;
-    private String shop_number;
+
 
 
 
@@ -59,10 +58,6 @@ public class Tenant {
     private String lease;
     private String property;
 
-    public Tenant(String deposit, String rental_fee) {
-        this.deposit = deposit;
-        this.rental_fee = rental_fee;
-    }
 
     public Tenant(String name, String surname, String email, String phone,
                   String id_passport, String residential_address,

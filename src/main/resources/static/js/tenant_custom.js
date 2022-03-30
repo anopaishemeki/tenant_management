@@ -16,12 +16,12 @@ function getTenants() {
             for (let i = 0; i < items.length; i++) {
                 let html = `<tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474 ${items[i].id}">
                             <td>${items[i].id}</td>
-                            <td>${items[i].name} ${items[i].surname}</td>
-                            <td>${today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()}</td>
+                            <td>${items[i].business_name}</td>
+                            <td>${items[i].register_Date}</td>
                             <td>${items[i].shop_number}</td>
                             
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rent_status}</small></td>
-                            <td>${items[i].deposit}</td>
+                           
                             <td>${items[i].rental_fee}</td>
                             <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span>
@@ -60,16 +60,16 @@ function saveTenant() {
 
     //property contact details
     let phone = document.getElementById("phone").value;
-    let deposit = document.getElementById("deposit").value;
+
 
 
     //owner Object properties
-    let rental_fee = document.getElementById("rent").value;
+
     let business_name = document.getElementById("business_name").value;
 
     let business_type = document.getElementById("business_type").value;
     let services = document.getElementById("services").value;
-    let shop_number = document.getElementById("shop_no").value;
+
     let street = document.getElementById("street").value;
 
 
@@ -86,7 +86,6 @@ function saveTenant() {
         country,
         house_no,
         street,
-        deposit,
         email,
         id_passport,
         lease,
@@ -94,12 +93,10 @@ function saveTenant() {
         phone,
         property,
         rent_status,
-        rental_fee,
         surname,
         business_name,
         business_type,
-        services,
-        shop_number
+        services
     }
 
     $.ajax({
