@@ -1,13 +1,13 @@
 package com.cicosy.tenant_management.model.tenantManagement;
 
 
-import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -28,8 +28,8 @@ public class Tenant {
     private Long id;
 
     private String name;
-    private String surname;
-
+    private  String surname;
+    private LocalDate register_Date=LocalDate.now();
     private String email;
     private String phone;
     private String id_passport;
@@ -37,8 +37,8 @@ public class Tenant {
 
     private String rentStatus;
 
-    private String deposit;
-    private String rental_fee;
+
+
 
 
     private String house_no;
@@ -49,22 +49,19 @@ public class Tenant {
     private String business_name;
     private String business_type;
     private String services;
-    private String shop_number;
+
+
+
+
 
 
     private String lease;
     private String property;
-    @Transient
-    private Lease leaseObject;
 
-    public Tenant(String deposit, String rental_fee) {
-        this.deposit = deposit;
-        this.rental_fee = rental_fee;
-    }
 
     public Tenant(String name, String surname, String email, String phone,
                   String id_passport, String residential_address,
-                  String lease, String property, String rentStatus, Lease leaseObject) {
+                  String lease, String property, String rentStatus) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -73,7 +70,6 @@ public class Tenant {
         this.lease = lease;
         this.property = property;
         this.rentStatus = rentStatus;
-        this.leaseObject = leaseObject;
     }
 
 }
