@@ -286,6 +286,36 @@ function viewCompartment() {
                                                 ${email}
                                             </dd>
                                         </dl>
+                                        <hr class="my-4">
+                                        <h5 class="mb-2 mt-4">Payment History</h5>
+                                        <dl class="row align-items-center mb-0">
+                                            <div class="col-md-12 my-4">
+                                                <div class="card shadow">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Payment History</h5>
+                                                        <p class="card-text">Below is a list of all payments for the tenant.</p>
+                                                       <table class="table table-hover table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <!--                              <th>ID #</th>-->
+                                                                <th>Reference #</th>
+                                                                <th>Company/Tenant</th>
+                                                                <th>Payment Method</th>
+                                                                <th>Invoice #</th>
+                                                                <th>Amount</th>
+            <!--                                                    <th>View</th>-->
+                                                                <!--                              <th>Status</th>-->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="t_body">
+            
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dl>
                                     </div> <!-- .card-body -->`
 
             let propertyDetails = document.getElementById("compartmentDetails");
@@ -296,6 +326,65 @@ function viewCompartment() {
 
             propNameOne.innerText = "Lettable Space " + response.compartmentNumber;
             propNameTwo.innerText = "Lettable Space " + response.compartmentNumber;
+
+            v_c_appendPayments()
+        }
+    })
+
+
+}
+
+function v_c_appendPayments(){
+    let id = JSON.parse(localStorage.getItem("idComp"));
+
+    $.ajax({
+        url: 'http://localhost:8090/api/payment/get-payments-for-specific-tenant/' + id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+
+            if (response !== null) {
+                let t_body = document.getElementById("t_body");
+
+                while (t_body.hasChildNodes()) {
+                    t_body.removeChild(t_body.firstChild);
+                }
+                // console.log(response[1].paymentDate)
+
+                for (let i = response.length - 1; i >= 0; i--) {
+                    let html = `<td>${response[i].paymentDate}</td>
+                                                    <td>${response[i].reference}</td>
+                                                    <td>${response[i].tenantObject.business_name}</td>
+                                                    <td>${response[i].method}</td>
+                                                    <td>${response[i].invoice}</td>
+                                                    <td><span class="text-success">${response[i].amount}</span></td>`
+
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = html;
+
+                    t_body.appendChild(tr);
+                }
+            } else {
+                let t_body = document.getElementById("t_body");
+
+                while (t_body.hasChildNodes()) {
+                    t_body.removeChild(t_body.firstChild);
+                }
+                // console.log(response[1].paymentDate)
+
+                let html = `<td>"N/A"</td>
+                                                    <td>"N/A"</td>
+                                                    <td>"N/A"</td>
+                                                    <td>"N/A"</td>
+                                                    <td>"N/A"</td>
+                                                    <td><span class="text-success">"N/A"</span></td>`
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = html;
+
+                t_body.appendChild(tr);
+
+            }
         }
     })
 }

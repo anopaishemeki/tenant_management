@@ -26,31 +26,48 @@ public class PaymentController {
     }
 
     @PostMapping("/save-payment")
-    public Payment savePayment(@RequestBody Payment payment){
+    public Payment savePayment(@RequestBody Payment payment) {
         System.out.println(payment.toString());
         return paymentService.save(payment);
     }
 
     @GetMapping("/get-payments")
-    public List<Payment> getPayments(){
+    public List<Payment> getPayments() {
         List<Payment> payments = paymentService.getAll();
 
-        for (int i = 0; i < payments.size(); i++){
+        for (int i = 0; i < payments.size(); i++) {
             payments.get(i).setCompartmentObject(compartmentController.getCompartment(payments.get(i).getCompartment()));
-            if (payments.get(i).getProperty() == null){
+            if (payments.get(i).getProperty() == null) {
                 payments.get(i).setPropertyObject(propertyController.getProperty(compartmentController.getCompartmentSpecificCompartment(payments.get(i).getCompartment()).getProperty()));
-            }else{
+            } else {
                 payments.get(i).setPropertyObject(propertyController.getProperty(payments.get(i).getProperty()));
             }
-            payments.get(i).setTenantObject(tenantController.getTenant(compartmentController.getCompartmentSpecificCompartment(payments.get(i).getCompartment()).getTenant()));
+            payments.get(i).setTenantObject(compartmentController.getCompartment(payments.get(i).getCompartment()).getTenantObject());
+
+            System.out.println(compartmentController.getCompartment(payments.get(i).getCompartment()).getTenantObject() + "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
         }
 
 
+        System.out.println(payments);
         return payments;
     }
 
     @GetMapping("/get-payments-for-specific-tenant/{id}")
-    public List<Payment> getByTenant(@PathVariable Long id){
-        return paymentService.getByTenant(id);
+    public List<Payment> getByTenant(@PathVariable Long id) {
+        if (compartmentController.getCompartment(id).getTenant() != null) {
+            List<Payment> payments = paymentService.getByTenant(compartmentController.getCompartment(id).getTenant());
+
+            for (int i = 0; i < payments.size(); i++) {
+                payments.get(i).setTenantObject(compartmentController.getCompartment(payments.get(i).getCompartment()).getTenantObject());
+
+                System.out.println(compartmentController.getCompartment(payments.get(i).getCompartment()).getTenantObject() + "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+                payments.get(i).setTenantObject(compartmentController.getCompartment(payments.get(i).getCompartment()).getTenantObject());
+
+                System.out.println(compartmentController.getCompartment(payments.get(i).getCompartment()).getTenantObject() + "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+
+            }
+            return payments;
+        }
+        else return null;
     }
 }

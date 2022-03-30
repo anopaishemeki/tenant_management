@@ -1,5 +1,6 @@
 package com.cicosy.tenant_management.controler.propertyManagement;
 
+import com.cicosy.tenant_management.controler.leaseManagement.LeaseController;
 import com.cicosy.tenant_management.controler.tenantManagement.TenantController;
 import com.cicosy.tenant_management.model.propertyManagement.Compartment;
 import com.cicosy.tenant_management.service.propertyManagement.CompartmentService;
@@ -14,11 +15,13 @@ import java.util.List;
 public class CompartmentController {
     CompartmentService compartmentService;
     TenantController tenantController;
+    LeaseController leaseController;
 
     @Autowired
-    public CompartmentController(CompartmentService compartmentService, TenantController tenantController) {
+    public CompartmentController(CompartmentService compartmentService, TenantController tenantController, LeaseController leaseController) {
         this.compartmentService = compartmentService;
         this.tenantController = tenantController;
+        this.leaseController = leaseController;
     }
 
     @PostMapping("/save-compartment")
@@ -58,6 +61,9 @@ public class CompartmentController {
         for (int i = 0; i < compartments.size(); i++){
             if (compartments.get(i).getTenant() != null){
                 compartments.get(i).setTenantObject(tenantController.getTenant(compartments.get(i).getTenant()));
+//                if(!leaseController.getLeaseByT_ID(compartments.get(i).getTenant()).isEmpty()){
+//
+//                }
             }
         }
 
