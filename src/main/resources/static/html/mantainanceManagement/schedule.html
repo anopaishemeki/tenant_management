@@ -510,7 +510,7 @@
 
             <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="varyModalLabel">Attended</h5>
@@ -519,11 +519,13 @@
                                         aria-label="Close"></button>
                             </a>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body justify-content-center">
                             <div class="form-row ">
                                 <div class="liveAlertPlaceholder" id="liveAlertPlaceholder"></div>
-                                <div class="col-md-6 " id="cont">
-                                    <p> Processing ...</p>
+                                <div class="col-md-6 justify-content-center" id="cont">
+                                    <p class="text-center"> Mark this request as attended</p>
+
+
                                 </div>
                             </div>
                         </div>
@@ -538,7 +540,7 @@
                                         class="btn mb-2 btn-success" aria-label="Close">OK
                                 </button>
                             </a>
-                            <button type="button" class="btn mb-2 btn-primary" onclick="Attended()" id="2">Continue</button>
+                            <button type="button" class="btn mb-2 btn-primary" onclick="Attended()" id="2">Attended</button>
                         </div>
                     </div>
                 </div>
