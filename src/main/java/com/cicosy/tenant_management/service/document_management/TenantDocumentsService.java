@@ -66,13 +66,13 @@ public class TenantDocumentsService {
   public void store(String tenantId,Long id,String uploadDir,String fileName, MultipartFile multipartFile) throws IOException {
  // Path uploadPath = fileStorageLocation;
       int id1 = Integer.parseInt(tenantId);
-      String uploadPath="src/main/resources/static/assets/uploads/Tenant"+id1+"/";
+      String uploadPath=System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"TenantDocuments"+File.separator+"Tenant"+id1;
       File pathAsFile = new File(uploadPath);
   if (!Files.exists(Paths.get(uploadPath))) {
   Files.createDirectories(Paths.get(uploadPath));
   }
       byte[]  data =multipartFile.getBytes();
-      Path path = Paths.get(uploadPath+multipartFile.getOriginalFilename());
+      Path path = Paths.get(uploadPath+File.separator+multipartFile.getOriginalFilename());
       Files.write(path,data);
 
 

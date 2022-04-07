@@ -18,11 +18,11 @@
 
 
 	  var file = JSON.parse(localStorage.getItem("file"));
-    var filename2=file.split("'")[1];
-	  console.log("file :",filename2);
+   /* var filename2=file.split("'")[1];
+	  console.log("file :",filename2);*/
 
 	if(PDFObject.supportsPDFs){
-		PDFObject.embed("http://localhost:8090/assets/uploads/"+filename2,"#form");
+		PDFObject.embed("http://localhost:8090/uploads/Leases/"+file,"#form");
 	}else{
 		window.alert("This Browser Doest support  PDF of this format");
 	}

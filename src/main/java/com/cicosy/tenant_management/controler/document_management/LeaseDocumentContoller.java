@@ -47,7 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class LeaseDocumentContoller {
 
 	private static Logger log = LoggerFactory.getLogger(LeaseDocumentContoller.class);
-	public static String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
+	public static String uploadDirectory = System.getProperty("user.dir") + File.separator+"uploads"+File.separator+"TenantDocuments";
 
 	@Autowired
 	LeaseDocumentService leaseDocumentService;

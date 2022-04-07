@@ -29,7 +29,7 @@ public class LeaseController {
 
     private final LeaseService leaseService;
     private final LeaseDocumentService leaseDocumentService;
-    public static String uploadDirectory = System.getProperty("user.dir") + "/uploads/leaseDocuments";
+
 
     @Autowired
     public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService) {
@@ -73,7 +73,15 @@ public class LeaseController {
         return leaseService.getLeaseByT_ID(ID);
     }
 
+    @GetMapping("/load/{fileName}")
+   public ResponseEntity<Object> LoadFile(@PathVariable String fileName, HttpServletRequest request) {
 
+        Resource resource = leaseService.downloadFile(fileName);
+
+        return ResponseEntity.ok()
+                .body(new ResponseMessage(resource.toString()));
+
+    }
 
     @GetMapping("/download/{fileName}")
     ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {

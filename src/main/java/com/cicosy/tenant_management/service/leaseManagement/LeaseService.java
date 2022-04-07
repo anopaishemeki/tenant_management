@@ -540,7 +540,7 @@ public class LeaseService {
     }
     public Resource downloadFile(String fileName) {
 
-        String DocumentPath="src/main/resources/static/assets/uploads";
+        String DocumentPath=System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"Leases";
 //        File pathAsFile = new File(DocumentPath);
 
 

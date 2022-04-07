@@ -851,7 +851,7 @@ function FetchRecord() {
         success: function (response) {
             console.log(response);
             var r=document.getElementById("formName");
-            setLocalfile("'"+response+"'");
+            setLocalfile(response);
              r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
              var attr=document.getElementById("fileAttr");
              attr.setAttribute("style","margin-left: 10px;padding-left: 10px;padding-right:10px;display: all;background-color: white!important ;border-radius: 8%")
@@ -860,6 +860,27 @@ function FetchRecord() {
     })
 
 }
+
+//Load file url for viewing
+function loadURL(){
+    var file = JSON.parse(localStorage.getItem("file"));
+    $.ajax({
+
+        url: 'http://localhost:8090/api/v1/lease/load/' + file,
+        type: 'GET',
+        success: function (response) {
+           var g=response.message;
+           var c=g.replace("URL ["," ").trim();
+           var f=c.replace("]"," ").trim();
+            console.log(f);
+            var i =document.getElementById("url");
+            i.innerHTML= `<a target="_blank" href="localhost:8090/uploads/'+file+'"> <button class="btn btn-success" style="margin-top: 35px" >Open File</button></a>
+                <a href="#"><button onclick="OPEN()">Test</button></a>`
+        }
+    })
+
+}
+
 
 
 // Fetching Record For Editing

@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -57,6 +58,9 @@ public class LeaseDocumentService  {
 	}
 
 
+
+
+
 	public LeaseDocuments store(MultipartFile file,String ID) throws IOException {
 //		  String uploadDirectory = System.getProperty("user.dir") + "src/main/resources/static/assets/uploads/leaseDocuments";
 
@@ -68,25 +72,23 @@ public class LeaseDocumentService  {
 
 
 //		List<String> filesPath=new ArrayList<>();
-		String DocumentPath="src/main/resources/static/assets/uploads/";
+		//String DocumentPath="src/main/resources/static/assets/uploads/";
+		String DocumentPath=System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"Leases";
         File pathAsFile = new File(DocumentPath);
 
-        if (!Files.exists(Paths.get(DocumentPath))) {
+        if (!Files.exists(Paths.get(DocumentPath), new LinkOption[0])) {
             pathAsFile.mkdir();
         }
 
 		byte[]  data =file.getBytes();
-		Path path = Paths.get(DocumentPath+file.getOriginalFilename());
-		Files.write(path,data);
+		Path path = Paths.get(DocumentPath+File.separator+file.getOriginalFilename());
+		Files.write(path,data, new LinkOption[0]);
 //		filesPath.add(path.toString());
 
 
 		LeaseDocuments leaseDocuments = new LeaseDocuments(
 				fileName,filePath,size,file.getContentType(),ID);
-		if(fileName.contains(".."))
-		{
-			System.out.println("not a a valid file");
-		}
+
 
 
 

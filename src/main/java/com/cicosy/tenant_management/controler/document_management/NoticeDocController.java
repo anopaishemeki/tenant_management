@@ -58,7 +58,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoticeDocController {
 
 	private static Logger log = LoggerFactory.getLogger(NoticeDocController.class);
-	public static String uploadDirectory = System.getProperty("user.dir") + "src/main/resources/static/assets/uploads/noticedocuments";
+	public static String uploadDirectory = System.getProperty("user.dir") + File.separator+"uploads"+File.separator+"noticedocuments";
 
 	@Autowired
 	NoticeDocumentsService noticeDocumentsService;
