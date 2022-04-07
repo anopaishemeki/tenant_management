@@ -77,7 +77,7 @@ public class LeaseDocumentService  {
         File pathAsFile = new File(DocumentPath);
 
         if (!Files.exists(Paths.get(DocumentPath), new LinkOption[0])) {
-            pathAsFile.mkdir();
+           Files.createDirectories(Paths.get(DocumentPath));
         }
 
 		byte[]  data =file.getBytes();
