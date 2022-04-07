@@ -234,8 +234,10 @@ function schedule() {
                 s.setAttribute("style", "display:none")
                 var t = document.getElementById("2");
                 t.setAttribute("style", "display:none")
+                var rx = document.getElementById("liveAlertPlaceholder");
+                rx.setAttribute("style", "display:all")
 
-                alert("Schedule Added Successfully", "success")
+
 
                 var g = document.getElementById("cont");
                 g.setAttribute("style", "display:none");

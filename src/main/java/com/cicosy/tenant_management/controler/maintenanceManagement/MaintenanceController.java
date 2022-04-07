@@ -16,7 +16,7 @@ public class MaintenanceController {
     @Autowired
     private MaintenanceService maintenanceService;
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
+
     @RequestMapping("getAll")
     public List<MaintenanceRequests> getAllMaintenanceRequests() {
         return maintenanceService.getAllMaintenanceRequests();

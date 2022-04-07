@@ -507,9 +507,8 @@
 
             <!--            <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel"-->
             <!--                 aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">-->
-            <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+           <!-- <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog " role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="varyModalLabel">Update Service</h5>
@@ -550,9 +549,9 @@
 
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <!--                            <a href="request.html" >-->
-                            <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
-                            <!--                            </a>-->
+                            &lt;!&ndash;                            <a href="request.html" >&ndash;&gt;
+                            &lt;!&ndash;                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>&ndash;&gt;
+                            &lt;!&ndash;                            </a>&ndash;&gt;
 
                             <a href="serviceList.html">
                                 <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
@@ -569,11 +568,71 @@
                 </div>
 
 
+            </div>-->
+            <div class="modal right fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="varyModalLabel">Update Service</h5>
+                            <a href="serviceList.html">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </a>
+                        </div>
+                        <div class=" justify-content-center modal-body" id="liveAlertPlaceholder22" style="display: none">
+                            <p class="text-center">Service Updated</p>
+                        </div>
+                        <div id="cont" class="modal-body">
+                            <div class="form-row mb-3">
+                                <div class="col-md-6 mb-3">
+
+
+                                    <div  class="row justify-content-center">
+                                        <div class="col-md-10">
+                                            <label for="serviceName">Service Name</label>
+                                            <div class="input-group">
+                                                <input type="text" id="serviceName" class="form-control"
+                                                       aria-describedby="button-addon2">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-10">
+                                            <label for="amount">Amount</label>
+                                            <div class="input-group">
+                                                <input type="number" id="amount" class="form-control"
+                                                       aria-describedby="button-addon2">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                                                       <a href="request.html" >
+                                                          <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>
+                                                       </a>
+
+                            <a href="serviceList.html">
+                                <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+
+                                        class="btn mb-2 btn-success" aria-label="Close">OK
+                                </button>
+                            </a>
+                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                            </button>
+                            <button type="button" class="btn mb-2 btn-primary" onclick="updateService()" id="2">Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            <div class="modal left fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabel">Delete Service</h5>
@@ -611,7 +670,7 @@
 
             </div>
 
-            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+            <div class="modal fade modal-notif modal-slide " tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">

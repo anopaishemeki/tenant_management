@@ -512,7 +512,7 @@
             <!--                 aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">-->
             <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="varyModalLabel">Schedule</h5>
@@ -521,12 +521,15 @@
                                         aria-label="Close"></button>
                             </a>
                         </div>
-                        <div class="modal-body">
+                        <div class=" justify-content-center modal-body" id="liveAlertPlaceholder" style="display: none">
+                            <p class="text-center">Request Updated</p>
+                        </div>
+                        <div id="cont" class="modal-body justify-content-center">
                             <div class="form-row mb-3">
                                 <div class="col-md-6 mb-3">
 
-                                    <div class="liveAlertPlaceholder" id="liveAlertPlaceholder"></div>
-                                    <div id="cont" class="row justify-content-center">
+
+                                    <div  class="row justify-content-center">
                                         <div  class="col-md-10" >
                                         <label for="date-input1">Schedule Date</label>
                                         <div class="input-group">
@@ -550,6 +553,8 @@
                                 </div>
                             </div>
                         </div>
+
+                    </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <!--                            <a href="request.html" >-->
                             <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
@@ -564,7 +569,6 @@
                             <button type="button" class="btn mb-2 btn-primary" onclick="schedule()" id="2">Assign
                             </button>
                         </div>
-                    </div>
                 </div>
             </div>
 
