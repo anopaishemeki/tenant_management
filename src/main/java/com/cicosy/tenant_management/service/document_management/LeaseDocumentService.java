@@ -79,9 +79,13 @@ public class LeaseDocumentService  {
         if (!Files.exists(Paths.get(DocumentPath), new LinkOption[0])) {
            Files.createDirectories(Paths.get(DocumentPath));
         }
+        if(fileName.contains(" "))
+		{
+			fileName= fileName.replace(" ","_");
+		}
 
 		byte[]  data =file.getBytes();
-		Path path = Paths.get(DocumentPath+File.separator+file.getOriginalFilename());
+		Path path = Paths.get(DocumentPath+File.separator+fileName);
 		Files.write(path,data, new LinkOption[0]);
 //		filesPath.add(path.toString());
 

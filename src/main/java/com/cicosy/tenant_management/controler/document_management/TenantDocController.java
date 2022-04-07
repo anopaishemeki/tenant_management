@@ -127,7 +127,48 @@ public class TenantDocController {
     String tax_clearance = StringUtils.cleanPath(file7.getOriginalFilename());
     String article_associ = StringUtils.cleanPath(file8.getOriginalFilename());
 
-   
+   if(application_letter.contains(" "))
+    {
+      application_letter= application_letter.replace(" ","_");
+    }
+
+    if(cr14_form.contains(" "))
+    {
+      cr14_form= cr14_form.replace(" ","_");
+    }
+    if(cr6_form.contains(" "))
+    {
+      cr6_form= cr6_form.replace(" ","_");
+    }
+
+    if(director_id.contains(" "))
+    {
+      director_id= director_id.replace(" ","_");
+    }
+    if(certificate_of_incorporation.contains(" "))
+    {
+      certificate_of_incorporation= certificate_of_incorporation.replace(" ","_");
+    }
+
+    if(vat_reg.contains(" "))
+    {
+      vat_reg= vat_reg.replace(" ","_");
+    }
+    if(bank_statement.contains(" "))
+    {
+      bank_statement= bank_statement.replace(" ","_");
+    }
+
+    if(tax_clearance.contains(" "))
+    {
+      tax_clearance= tax_clearance.replace(" ","_");
+    }
+
+    if(article_associ.contains(" "))
+    {
+      article_associ= article_associ.replace(" ","_");
+    }
+    
     TenantDocuments documents= new TenantDocuments(tenantId);
 
 

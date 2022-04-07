@@ -68,11 +68,16 @@ public class TenantDocumentsService {
       int id1 = Integer.parseInt(tenantId);
       String uploadPath=System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"TenantDocuments"+File.separator+"Tenant"+id1;
       File pathAsFile = new File(uploadPath);
+  
   if (!Files.exists(Paths.get(uploadPath))) {
   Files.createDirectories(Paths.get(uploadPath));
   }
+    if(fileName.contains(" "))
+    {
+      fileName= fileName.replace(" ","_");
+    }
       byte[]  data =multipartFile.getBytes();
-      Path path = Paths.get(uploadPath+File.separator+multipartFile.getOriginalFilename());
+      Path path = Paths.get(uploadPath+File.separator+fileName);
       Files.write(path,data);
 
 
