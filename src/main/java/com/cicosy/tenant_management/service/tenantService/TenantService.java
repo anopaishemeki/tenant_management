@@ -23,7 +23,6 @@ public class TenantService {
 
     public String updateTenant(Long id, Tenant tenant) {
         Tenant existing_tenant = tenantRepository.getById(id);
-        existing_tenant.setLease(tenant.getLease());
         existing_tenant.setPhone(tenant.getPhone());
         existing_tenant.setName(tenant.getName());
         existing_tenant.setProperty(tenant.getProperty());
@@ -38,6 +37,10 @@ public class TenantService {
     public List<Tenant> getAll() {
         return tenantRepository.findAll();
     }
+    public List<Tenant> getAllTenants() {
+        return tenantRepository.findAll();
+    }
+    
 
     public Tenant getTenantById(Tenant tenant, Long id) {
         Tenant existing_tenant = tenantRepository.getById(id);

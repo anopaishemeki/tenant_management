@@ -14,17 +14,33 @@ function getTenants() {
             }
 
             for (let i = 0; i < items.length; i++) {
+                let compartment = "";
+                let rentalFee="";
+                for (let j = 0; j < response[i].compartmentObjectlist.length; j++){
+                    compartment =compartment +" ; "+ response[i].compartmentObjectlist[j].compartmentNumber;
+                    rentalFee = rentalFee +" ; $ " +response[i].compartmentObjectlist[j].rentalRate * response[i].compartmentObjectlist[j].floorArea ;
+                }
+                compartment = compartment.substr(2,compartment.length);
+                rentalFee = rentalFee.substr(3,rentalFee.length);
+
+                if(compartment.length==0){
+                    compartment="...."
+                }
+                if(rentalFee.length==0){
+                    rentalFee="...."
+                }
+                console.log(compartment);
                 let html = `<tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474 ${items[i].id}">
                             <td>${items[i].id}</td>
                             <td>${items[i].business_name}</td>
-                            <td>${items[i].register_Date}</td>
-                            <td>${items[i].shop_number}</td>
+                            <td>${items[i].phone}</td>
+                            <td>${compartment}</td>
                             
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].rent_status}</small></td>
                            
-                            <td>${items[i].rental_fee}</td>
-                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted sr-only">Action</span>
+                            <td> ${rentalFee}</td>
+                            <td><button class="btn btn-sm " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="#" onclick="viewTenant('${i}')">View</a>
@@ -53,7 +69,6 @@ function getTenants() {
 function saveTenant() {
     let name = document.getElementById("name").value
     let property = "Joina City";
-    let lease = " Active"
     let surname = document.getElementById("surname").value
     let email = document.getElementById("email").value
     let id_passport = document.getElementById("passport").value;
@@ -88,7 +103,6 @@ function saveTenant() {
         street,
         email,
         id_passport,
-        lease,
         name,
         phone,
         property,

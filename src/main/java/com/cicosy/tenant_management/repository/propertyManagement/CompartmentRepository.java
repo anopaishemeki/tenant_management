@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface CompartmentRepository extends JpaRepository<Compartment, Long> {
     @Query("SELECT s FROM Compartment  s WHERE s.property = ?1")
     List<Compartment> findByProperty(Long id);
+
+    List<Compartment> findByTenant(Long id);
 }

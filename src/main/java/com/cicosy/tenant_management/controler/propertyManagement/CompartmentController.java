@@ -55,6 +55,8 @@ public class CompartmentController {
         return compartments;
     }
 
+
+
     public List<Compartment> getCompartmentsForSpecificProperty(Long id){
         List<Compartment> compartments = compartmentService.getCompartmentsForSpecificProperty(id);
 

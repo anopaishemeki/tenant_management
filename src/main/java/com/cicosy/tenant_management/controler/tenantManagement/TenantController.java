@@ -1,9 +1,10 @@
 package com.cicosy.tenant_management.controler.tenantManagement;
 
+import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController;
+import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController2;
 import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.tenantService.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +15,21 @@ public class TenantController {
 
     @Autowired
     private TenantService tenantService;
+    private CompartmentController2 compartmentController;
+
+@Autowired
+    public TenantController(TenantService tenantService, CompartmentController2 compartmentController) {
+        this.tenantService = tenantService;
+        this.compartmentController = compartmentController;
+    }
 
     @GetMapping("/get-all-tenants")
     public List<Tenant> getTenants(){
-        return tenantService.getAll();
+        List<Tenant> tenants= tenantService.getAllTenants();
+        for (int i = 0; i<tenants.size();i++){
+            tenants.get(i).setCompartmentObjectlist(compartmentController.getCompartmentsForSpecificTenant(tenants.get(i).getId()));
+        }
+        return tenants;
     }
 
     @PostMapping("/addTenant")

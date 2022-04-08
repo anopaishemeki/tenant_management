@@ -51,4 +51,8 @@ public class CompartmentService {
 
         return compartmentRepository.findById(id).orElseThrow(() -> new  IllegalStateException ("Compartment with id: " + id +" does not exist"));
     }
+
+    public List<Compartment> getCompartmentsForSpecificTenant(Long id) {
+        return compartmentRepository.findByTenant(id);
+    }
 }
