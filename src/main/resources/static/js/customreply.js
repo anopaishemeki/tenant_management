@@ -116,7 +116,7 @@ if(fop.value.toString().length==0){
 $("#btnSubmit").prop("disabled", true);
     $.ajax({
         type: "POST",
-        url: "/api/v1/replyDocuments",
+        url: "http://localhost:8090/api/v1/replyDocuments",
         data: data,
         processData: false,
         contentType: false,

@@ -120,7 +120,7 @@ function saveTenantDocument(){
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "/api/tenant/uploadtenantDocument",
+            url: "http://localhost:8090/api/tenant/uploadtenantDocument",
             data: ajaxData,
             processData: false,
             contentType: false,

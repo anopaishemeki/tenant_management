@@ -75,7 +75,7 @@ function saveLease() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "/api/v1/lease/addlease",
+        url: "http://localhost:8090/api/v1/lease/addlease",
         data: data,
         processData: false,
         contentType: false,
@@ -537,7 +537,7 @@ function renewlease() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         type: "PUT",
-        url: "/api/v1/lease/renewlease/" + id,
+        url: "http://localhost:8090/api/v1/lease/renewlease/" + id,
 
 
         success: function (response) {
@@ -624,7 +624,7 @@ function Terminate() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         type: "PUT",
-        url: "/api/v1/lease/terminatelease/" + id,
+        url: "http://localhost:8090/api/v1/lease/terminatelease/" + id,
 
 
         success: function (response) {
@@ -698,7 +698,7 @@ function saveUpdate() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(jsonDataObj),
         type: "PUT",
-        url: "/api/v1/lease/updatelease/" + id,
+        url: "http://localhost:8090/api/v1/lease/updatelease/" + id,
 
 
         success: function (response) {
@@ -1254,7 +1254,7 @@ function hover() {
 // Get Tenant Names
 function getTenants() {
     $.ajax({
-        url: '/api/tenants/get-all-tenants',
+        url: 'http://localhost:8090/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response;
@@ -1334,7 +1334,7 @@ function setTenantID() {
 // get Property details
 function getProperty() {
         $.ajax({
-            url: '/api/property/get-all-properties',
+            url: 'http://localhost:8090/api/property/get-all-properties',
             type: 'GET',
             success: function (response) {
                 let items = response;

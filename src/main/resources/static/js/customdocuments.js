@@ -100,7 +100,7 @@ if(mc.value.toString().length==0){
 $("#btnSubmit").prop("disabled", true);
     $.ajax({
         type: "POST",
-        url: "/api/v1/expiredDocuments",
+        url: "http://localhost:8090/api/v1/expiredDocuments",
         data: data,
         processData: false,
         contentType: false,
@@ -488,7 +488,7 @@ function getDetails() {
 //        $.ajax({
 //            type: "POST",
 //            enctype: 'multipart/form-data',
-//            url: "/api/tenant/uploadtenantDocument",
+//            url: "http://localhost:8090/api/tenant/uploadtenantDocument",
 //
 //            data: data,
 //
