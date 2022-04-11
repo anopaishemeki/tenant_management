@@ -102,11 +102,11 @@ public class LeaseService {
 
 
     public void addNewLease(Lease lease, LeaseHistory lease_history) {
-        Optional<Lease> name = leaseRepository.findLeaseByName(lease.getName());
+        Optional<Lease> name = leaseRepository.findLeaseByTenantID(lease.getTenant_id());
 
 
         if (name.isPresent()) {
-            throw new IllegalStateException("Record with provided name already Exists");
+            throw new IllegalStateException("Record with provided Business Name already Exists");
 
         }
         if ((lease.getBuildingName().isEmpty())) {
@@ -182,7 +182,6 @@ public class LeaseService {
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setName(lease.getName());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction("Added");
@@ -267,13 +266,6 @@ public class LeaseService {
             throw new IllegalStateException("Sorry You cant Edit a Terminated Lease");
         }
 
-        if (update.getName() != null &&
-                update.getName().length() > 0 &&
-                !Objects.equals(lease.getName(), update.getName())) {
-            lease.setName(update.getName());
-        }
-
-
         if (update.getBuildingName() != null &&
                 update.getBuildingName().length() > 0 &&
                 !Objects.equals(lease.getBuildingName(), update.getBuildingName())) {
@@ -325,7 +317,6 @@ public class LeaseService {
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setName(lease.getName());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction(status);

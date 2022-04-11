@@ -34,8 +34,8 @@ public class Lease {
             generator = "lease_sequence"
     )
     private Long id;
-    private int tenant_id;
-    private String name;
+    private String tenant_id;
+   // private String name;
 
    // @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
    @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -50,8 +50,7 @@ public class Lease {
     private String status;
 
 
-    public Lease(int tenant_id,
-                String name,
+    public Lease(String tenant_id,
                  LocalDate startDate,
                  LocalDate endDate,
                  String buildingName,
@@ -63,7 +62,6 @@ public class Lease {
 
     ) {
         this.tenant_id=tenant_id;
-        this.name = name;
 
         this.startDate = startDate;
         this.endDate = endDate;
@@ -79,8 +77,7 @@ public class Lease {
 
 
     public Lease(Long id,
-                 int tenant_id,
-                 String name,
+                 String tenant_id,
 
                  LocalDate startDate,
                  LocalDate endDate,
@@ -96,7 +93,6 @@ public class Lease {
         this.tenant_id=tenant_id;
         this.duration = duration;
         this.timeLeft=timeLeft;
-        this.name = name;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -129,9 +125,7 @@ public class Lease {
 
 
 
-    public String getName() {
-        return name;
-    }
+
 
     public LocalDate getStartDate() {
         return startDate;
@@ -156,9 +150,7 @@ public class Lease {
         return endDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
@@ -194,11 +186,11 @@ public class Lease {
         this.status = status;
     }
 
-    public int getTenant_id() {
+    public String getTenant_id() {
         return tenant_id;
     }
 
-    public void setTenant_id(int tenant_id) {
+    public void setTenant_id(String tenant_id) {
         this.tenant_id = tenant_id;
     }
 }

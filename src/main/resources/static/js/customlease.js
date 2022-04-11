@@ -33,7 +33,7 @@ function saveLease() {
     }
     var we = document.getElementById("leaseName");
     if (we.value.toString().length == 0) {
-        alert("Tenant Name is Required", "danger");
+        alert("Business Name is Required", "danger");
         var r = document.getElementById("retry");
         r.setAttribute("style", "display:all");
 
@@ -42,7 +42,7 @@ function saveLease() {
 
     var pr = document.getElementById("buildingLocation");
     if (pr.value.toString().length == 0) {
-        alert("Building Location is Required", "danger");
+        alert("Portfolio Location is Required", "danger");
         var r = document.getElementById("retry");
         r.setAttribute("style", "display:all");
 
@@ -1271,7 +1271,7 @@ function getTenants() {
 
             let r = document.createElement("option");
 
-            var t = "Select Tenant Name";
+            var t = "Select Business Name";
 
             r.setAttribute("disabled", "true");
             r.setAttribute("value", "-1");
@@ -1282,16 +1282,16 @@ function getTenants() {
 
 
             for (let i = 0; i < items.length; i++) {
-                let html = `${items[i].name} ${items[i].surname}`;
+
 
                 let tr = document.createElement("option");
 
-                var name = `${items[i].name} ${items[i].surname}`;
+                var name = `${items[i].business_name}`;
 
-                tr.setAttribute("value", name);
+                tr.setAttribute("value", `${items[i].id}`);
 
 
-                tr.innerHTML = html;
+                tr.innerHTML = name;
 
                 t_body.appendChild(tr);
 
@@ -1352,7 +1352,7 @@ function getProperty() {
 
                 let r = document.createElement("option");
 
-                var t = "Select Building Name";
+                var t = "Select Portfolio";
 
                 r.setAttribute("disabled", "true");
                 r.setAttribute("value", "-1");

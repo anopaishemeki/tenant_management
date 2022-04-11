@@ -15,6 +15,9 @@ public interface LeaseRepository
     @Query("select s from Lease s WHERE s.name = ?1 ")
     Optional<Lease>findLeaseByName(String name);
 
+    @Query(value ="select * from lease where tenant_id=?1" , nativeQuery = true)
+    Optional<Lease>findLeaseByTenantID(String tenant_id);
+
     @Query("select s from Lease s WHERE s.buildingLocation = ?1 ")
     Optional<Lease>findLeaseByBuildingLocation(String buildingLocation);
 
