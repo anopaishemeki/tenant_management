@@ -69,6 +69,7 @@ function getTenants() {
 function saveTenant() {
     let name = document.getElementById("name").value
     let property = "Joina City";
+    let lease = " Active"
     let surname = document.getElementById("surname").value
     let email = document.getElementById("email").value
     let id_passport = document.getElementById("passport").value;
@@ -103,6 +104,7 @@ function saveTenant() {
         street,
         email,
         id_passport,
+        lease,
         name,
         phone,
         property,

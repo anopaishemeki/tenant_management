@@ -35,7 +35,9 @@ public class LeaseHistory {
     )
     private Long id;
     private int lease_id;
-    private String tenant_id;
+    private int tenant_id;
+    private String name;
+
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
@@ -53,10 +55,13 @@ public class LeaseHistory {
         this.action = action;
     }
 
-    public void setTenant_id(String tenant_id) {
+    public void setTenant_id(int tenant_id) {
         this.tenant_id = tenant_id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
@@ -93,9 +98,14 @@ public class LeaseHistory {
         return id;
     }
 
-    public String getTenant_id() {
+    public int getTenant_id() {
         return tenant_id;
     }
+
+    public String getName() {
+        return name;
+    }
+
 
 
     public LocalDate getStartDate() {
