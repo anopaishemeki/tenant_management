@@ -404,7 +404,64 @@ function toggleView(id) {
 }
 
 function getProperties() {
-    $.ajax({
+   // -----------------
+    var baseurl = "http://localhost:8090/api/property/get-all-properties";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#property_list").DataTable({
+                data: data,
+                columns: [
+
+                    {"data":function (){
+                        return '<div class="avatar avatar-md"> <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle"> </div>'
+                    },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data": "id"},
+                    {"data": function (row) {
+                                return "<b> Name :</b> "+ row.name + " <br> "+ "<b>Address : </b>" +row.addressObject.address;
+
+                        } },
+                    {"data": function (row) {
+                            return "<b>Line 1 : </b>"+row.propertyContactObject.mobileNumber +"<br> <b>Line 2 : </b>"+row.propertyContactObject.phone +"<br><a href='mailto:"+row.propertyContactObject.email+ "'>"+row.propertyContactObject.email+"</a>";
+                        }},
+                    {"data":function(row){
+                            return "<b>Name : </b>"+ row.ownerObject.name+" "+row.ownerObject.lastName+"<br>"+ "<b>Phone : </b>" + row.ownerObject.contactDetailsObject.mobileNumber+" <br>" +"<a href='mailto:"+row.ownerObject.contactDetailsObject.email+ "'>"+row.ownerObject.contactDetailsObject.email+"</a>" ;
+                        }},
+                    {"data":"numberOfFloors"},
+                    { "data": "numberOfCompartments" },
+                    {"data": function (row) {
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="text-muted sr-only">Action</span>
+                          </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="edit_property.html" onclick="setLocal('`+row.id+`')">Edit</a>
+                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('`+row.id+`','`+row.name+`')">View</a>
+                              <a class="dropdown-item" href="#">Assign</a>
+                            </div>`
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+   // ---------------
+
+
+
+
+    /*$.ajax({
         url: 'http://localhost:8090/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
@@ -414,11 +471,15 @@ function getProperties() {
 
             console.log(response)
 
-            var t_body = document.getElementById("t_body");
+           /!* var t_body = document.getElementById("t_body");
 
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
+*!/
+
+
+
 
             for (let i = 0; i < items.length; i++) {
                 let new_html = `<td>
@@ -467,7 +528,7 @@ function getProperties() {
                 t_body.appendChild(tr);
             }
         }
-    })
+    })*/
 }
 
 function saveProperty() {
