@@ -1,5 +1,89 @@
 function getTenants() {
-    $.ajax({
+    // -----
+    var baseurl = "http://localhost:8090/api/tenants/get-all-tenants";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#tenants").DataTable({
+                data: data,
+                columns: [
+
+                    {"data":"id"},
+                    {"data":"business_name"},
+                    {"data":"phone"},
+                    {"data":function(row) {
+
+                            let compartment = "";
+                            for (let i = 0; i < row.compartmentObjectlist.length; i++) {
+                                compartment = compartment + " ; " + row.compartmentObjectlist[i].compartmentNumber;
+
+                            }
+                            compartment = compartment.substr(2, compartment.length);
+
+
+                                if(compartment.length==0) {
+                                    compartment = "...."
+                                }
+
+
+                            return compartment ;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data":function (row) {
+                        var rentStatus="";
+                        if(row.rentStatus===null) {
+                            rentStatus="unpaid"
+                          }else{
+                            rentStatus=row.rentStatus;
+                        }
+                        return rentStatus;
+                        }},
+                    {"data":function(row) {
+
+                            let rentalFee="";
+                            for (let i = 0; i < row.compartmentObjectlist.length; i++) {
+                                rentalFee = rentalFee +" ; $ " +row.compartmentObjectlist[i].rentalRate *row.compartmentObjectlist[i].floorArea ;
+
+                            }
+                            rentalFee = rentalFee.substr(3,rentalFee.length);
+
+                            if(rentalFee.length==0){
+                                rentalFee="...."
+                            }
+
+                            return rentalFee ;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data":function(row){
+                        return`<button class="btn btn-sm " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#" onclick="viewTenant('`+row.id+`')">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Assign</a>
+                              </div>`
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    }
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+    // --------
+    /*$.ajax({
         url: 'http://localhost:8090/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
@@ -62,7 +146,7 @@ function getTenants() {
             }
 
         }
-    })
+    })*/
 }
 
 

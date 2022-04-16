@@ -189,7 +189,55 @@ function downloadFile(type){
 
 function getTenant() {
    // $("#btn").prop("disabled", true);
-    $.ajax({
+    // ---------------------------
+
+    var baseurl = "http://localhost:8090/api/tenants/get-all-tenants";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#tenant_table").DataTable({
+                data: data,
+                columns: [
+
+                    {"data":"id"},
+                    {"data": function (row) {
+                            return row.name + " " +row.surname;
+
+                        } },
+                    {"data": function (row) {
+                            return `<a class="" href="./view_tenantDocuments.html" >
+                            <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
+                            </a>`;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data":function(){
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#" onclick="generateDocuments()">Genarate Reply Documents</a>
+                              </div>`;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    }
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+
+
+    // ---------------------
+    /*$.ajax({
         url: 'http://localhost:8090/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
@@ -233,7 +281,7 @@ function getTenant() {
             }
 
         }
-    })
+    })*/
 }
 function saveTenantDocument(){
     var application = $('#fileUploadForm')[0];
