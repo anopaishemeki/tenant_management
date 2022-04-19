@@ -180,8 +180,13 @@ function appendCompartments() {
                          "sortable":false,
                      "searchable":false },
                     {"data": function (row) {
-                        return` <p class="mb-0 text-muted">Tenant Bussiness</p>
-                                <small class="mb-0 text-muted">teneant email , tenant phone</small>`   ;
+                       let businessName="";
+                        if(row.tenantObject===null){
+                            businessName=" ......"
+                        }else{
+                            businessName =row.tenantObject.business_name
+                        }
+                        return businessName;
                         }},
                     {"data":function(row){
                             return ` <p class="mb-0 text-muted"><a href="#" class="text-muted">status:<span class="badge badge-secondary">owing</span></a></p>
