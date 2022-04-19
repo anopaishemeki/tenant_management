@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../css/uppy.min.css">
     <link rel="stylesheet" href="../../css/jquery.steps.css">
     <link rel="stylesheet" href="../../css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../../css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="../../css/quill.snow.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="../../css/daterangepicker.css">
@@ -566,7 +567,7 @@
                                     <!-- table -->
                                     <div class="card shadow">
                                         <div class="card-body">
-                                            <table class="table table-hover  dataTables table-borderless border-v" style="width:100%!important;">
+                                            <table class="table table-hover  dataTables table-borderless border-v" style="width:100%!important;" id="property-compartment">
                                                 <thead class="thead-dark">
                                                 <tr>
                                                     <th>
@@ -583,9 +584,7 @@
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody id="t_body">
                                                
-                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -752,6 +751,8 @@
 <script src='../../js/uppy.min.js'></script>
 <script src='../../js/quill.min.js'></script>
 <script src='../../js/custom.js'></script>
+<script src='../../js/jquery.dataTables.min.js'></script>
+<script src='../../js/dataTables.bootstrap4.min.js'></script>
 <script>
     $('.select2').select2(
         {
@@ -947,17 +948,6 @@
     }
 </script>
 <script src="../../js/apps.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
-</script>
 </body>
 </html>

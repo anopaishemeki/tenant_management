@@ -149,6 +149,72 @@ function saveCompartment() {
 
 function appendCompartments() {
     let id = JSON.parse(localStorage.getItem("id"));
+   
+
+ // -----------------
+    var baseurl = 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#property-compartment").DataTable({
+                data: data,
+                columns: [
+
+                    {"data":function (){
+                        return `<div class="avatar avatar-sm">
+                                <img src="../../assets/avatars/data-random-squares.png" alt="..." class="avatar-img rounded-circle">
+                                </div> `
+                    },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data": "id"},
+                    {"data": function (row) {
+                                return row.compartmentNumber+ "<br> Floor : "+row.floorNumber;
+
+                        },
+                         "sortable":false,
+                     "searchable":false },
+                    {"data": function (row) {
+                        return` <p class="mb-0 text-muted">Tenant Bussiness</p>
+                                <small class="mb-0 text-muted">teneant email , tenant phone</small>`   ;
+                        }},
+                    {"data":function(row){
+                            return ` <p class="mb-0 text-muted"><a href="#" class="text-muted">status:<span class="badge badge-secondary">owing</span></a></p>
+                                    <small class="mb-0 text-muted">`+row.floorArea * row.rentalRate + `</small>`;
+                        }},
+                    {"data": function (row) {
+                                return row.floorArea+ " &#13217";
+                            }},
+                    { "data": function(row){
+                        return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('`+row.id+`')">View</a>
+                                </div>`
+                    },
+                     "sortable":false,
+                     "searchable":false }
+                    
+                       
+                    
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+   // ---------------
+
+/*
+
     $.ajax({
         url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id,
         type: 'GET',
@@ -197,7 +263,7 @@ function appendCompartments() {
                 t_body.appendChild(tr);
             }
         }
-    });
+    });*/
 }
 
 function viewCompartment() {
@@ -541,6 +607,8 @@ function saveProperty() {
     let owner = ""
     let assetValue = document.getElementById("assetValue").value;
     let dateRegistered = document.getElementById("date-input").value;
+     let numberOfFloors = document.getElementById("numberOfFloors").value;
+    
 
     //property contact details
     let propertyEmail = document.getElementById("propertyEmail").value;
@@ -576,6 +644,7 @@ function saveProperty() {
             country: propertyCountry,
             property: 0
         },
+        numberOfFloors,
         address,
         tenant,
         insurance,
