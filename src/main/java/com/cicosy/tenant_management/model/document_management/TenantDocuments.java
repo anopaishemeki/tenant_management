@@ -43,12 +43,13 @@ public class TenantDocuments  {
     private String vat_reg;
     private String tax_clearance;
     private String article_of_association;
+    private String company_profile;
 
   
 
 
     public TenantDocuments(String tenantId,String application_letter, String cr14_form,String cr6_form,
-    String certificate_of_incorporation,String director_id,String bank_statement,String vat_reg,String tax_clearance,String article_of_association) {
+    String certificate_of_incorporation,String director_id,String bank_statement,String vat_reg,String tax_clearance,String article_of_association,String company_profile) {
         this.application_letter=application_letter;
         this.cr14_form=cr14_form;
         this.cr6_form=cr6_form;
@@ -59,6 +60,7 @@ public class TenantDocuments  {
         this.article_of_association=article_of_association;
         this.bank_statement=bank_statement;
         this.tenantId=tenantId;
+        this.company_profile=company_profile;
 
     }
 
@@ -127,7 +129,11 @@ public class TenantDocuments  {
         return this.tenantId;
     }
 
+    public String getCompany_profile() {
+        return company_profile;
+    }
 
-   
-    
+    public void setCompany_profile(String company_profile) {
+        this.company_profile = company_profile;
+    }
 }

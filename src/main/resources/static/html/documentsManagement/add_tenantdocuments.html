@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Add Request</title>
+    <title>Add Documents</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="../../css/simplebar.css">
     <!-- Fonts CSS -->
@@ -188,7 +188,7 @@
             </li>
             <li class="nav-item dropdown">
               <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-pie-chart fe-16"></i>
+                <i class="fe fe-file fe-16"></i>
                 <span class="ml-3 item-text">Documents</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="charts">
@@ -293,70 +293,77 @@
                             <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="tenant_list">Tenant Name :</label>
+                                        <label for="tenant_list">Business Name :</label>
                                         <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
                                                 required>
                                             <optgroup id="Available Tenants" label="Available Tenants" >
-                                                <option value="">Select Tenant Name</option>
+                                                <option value="">Select Business Name</option>
                                             </optgroup>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="application_letter">Application Letter</label>
                                         <input type="file" id="application_letter" class="form-control-file"
                                          name="application_letter" accept=".pdf" required>
                                     </div>
-                                </div>
-                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="cr14_form">Cr14 Form</label>
                                         <input type="file" id="cr14_form" class="form-control-file"
-                                             name="cr14_form" accept=".pdf" required>
+                                               name="cr14_form" accept=".pdf" required>
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="cr6_form">Cr6 Form </label>
                                         <input type="file" id="cr6_form" class="form-control-file"
-                                            name="cr6_form" accept=".pdf" required>
+                                               name="cr6_form" accept=".pdf" required>
                                     </div>
-                                </div>
-                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="director_id">Director ID</label>
                                         <input type="file" id="director_id" class="form-control-file"
-                                             name="director_id" accept=".pdf" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="tax_clearance">Tax Clearance</label>
-                                        <input type="file" id="tax_clearance" class="form-control-file"
-                                              name="tax_clearance" accept=".pdf" required>
+                                               name="director_id" accept=".pdf" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="tax_clearance">Tax Clearance</label>
+                                        <input type="file" id="tax_clearance" class="form-control-file"
+                                               name="tax_clearance" accept=".pdf" required>
+                                    </div>
                                     <div class="form-group col-md-6">
                                         <label for="vat_reg">Vat Registration</label>
                                         <input type="file" id="vat_reg" class="form-control-file"
                                                name="vat_reg" accept=".pdf" required>
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="certificate_of_inco">Certificate of Incorporation</label><br><br>
                                         <input type="file" id="certificate_of_inco" class="form-control-file"
                                                name="certificate_of_inco" accept=".pdf" required>
                                     </div>
-                                </div>
-                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="bank_statement">  Bank Statement</label>
                                         <input type="file" id="bank_statement" class="form-control-file"
                                                name="bank_statement" accept=".pdf" required>
                                     </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="article_associ">Article of Association</label>
                                         <input type="file" id="article_associ" class="form-control-file"
                                                name="article_associ" accept=".pdf" required>
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="company_profile">Company Profile</label>
+                                        <input type="file" id="company_profile" class="form-control-file"
+                                               name="company_profile" accept=".pdf" required>
+                                    </div>
                                 </div>
                                 <button type="button" data-bs-toggle="modal"
-                                        data-bs-target="#successModal" id="btnSubmit" class="btn btn-primary" onclick="saveTenantDocument()">
+                                        data-bs-target="#successModal,errorModal" id="btnSubmit" class="btn btn-primary" onclick="saveTenantDocument()">
                                     Submit
                                 </button>
                             </form>
@@ -387,6 +394,27 @@
                   </div>
               </div>
           </div>
+          <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+               aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle1">Operation Successful</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          Documents not Uploaded
+                      </div>
+                      <div class="modal-footer">
+                          <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                          <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
 
       </main> <!-- main -->
     </div> <!-- .wrapper -->
@@ -402,7 +430,6 @@
     <script src="../../js/tinycolor-min.js"></script>
     <script src="../../js/config.js"></script>
     <script src="../../js/apps.js"></script>
-    <script src="../../js/maintenanceApi.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
     <script>
