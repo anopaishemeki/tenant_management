@@ -208,7 +208,7 @@ function getTenant() {
 
                     {"data":"id"},
                     {"data": function (row) {
-                            return row.name + " " +row.surname;
+                            return row.business_name;
 
                         } },
                     {"data": function (row) {
