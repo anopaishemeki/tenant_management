@@ -126,6 +126,18 @@ if(filetype=="cert"){
 		window.alert("This Browser Doest support  PDF of this format");
 	}
 }
+    if(filetype=="comp"){
+        var file = JSON.parse(localStorage.getItem("company_profile"));
+
+        //var filename2=file.split("'")[1];
+        console.log("file :",file);
+
+        if(PDFObject.supportsPDFs){
+            PDFObject.embed("http://localhost:8090/uploads/TenantDocuments/Tenant"+id+"/"+file,"#form");
+        }else{
+            window.alert("This Browser Doest support  PDF of this format");
+        }
+    }
 
 </script>
 <script type='text/javascript'>

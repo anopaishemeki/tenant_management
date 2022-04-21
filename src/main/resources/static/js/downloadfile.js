@@ -2,7 +2,7 @@ function setLocalfile(id){
      localStorage.removeItem("tenantId");
      localStorage.setItem("tenantId", JSON.stringify(id));
  }
-function setLocalfiles(application_letter,article,bank_statement,cr6_form,cr14_form,director_id,tax_clearance,vat_reg,certificate_of_incorporation){
+function setLocalfiles(application_letter,article,bank_statement,cr6_form,cr14_form,director_id,tax_clearance,vat_reg,certificate_of_incorporation,company_profile){
        localStorage.removeItem("application_letter");
      localStorage.setItem("application_letter", JSON.stringify(application_letter));
  localStorage.removeItem("article");
@@ -21,7 +21,10 @@ function setLocalfiles(application_letter,article,bank_statement,cr6_form,cr14_f
      localStorage.setItem("vat_reg", JSON.stringify(vat_reg));
  localStorage.removeItem("certificate_of_incorporation");
      localStorage.setItem("certificate_of_incorporation", JSON.stringify(certificate_of_incorporation));
- }
+    localStorage.removeItem("company_profile");
+    localStorage.setItem("company_profile", JSON.stringify(company_profile));
+
+}
 
 function loadfile(){
 var id = JSON.parse(localStorage.getItem("tenantId"));
@@ -30,7 +33,7 @@ var id = JSON.parse(localStorage.getItem("tenantId"));
         type: 'GET',
         success: function (response) {
         console.log(response);
-        setLocalfiles(response[0].application_letter,response[0].article,response[0].bank_statement,response[0].cr6_form,response[0].cr14_form,response[0].director_id,response[0].tax_clearance,response[0].vat_reg,response[0].certificate_of_incorporation);
+        setLocalfiles(response[0].application_letter,response[0].article,response[0].bank_statement,response[0].cr6_form,response[0].cr14_form,response[0].director_id,response[0].tax_clearance,response[0].vat_reg,response[0].certificate_of_incorporation,response[0].company_profile);
         }
     })
 }
@@ -205,7 +208,7 @@ function getTenant() {
 
                     {"data":"id"},
                     {"data": function (row) {
-                            return row.name + " " +row.surname;
+                            return row.business_name;
 
                         } },
                     {"data": function (row) {
@@ -293,6 +296,7 @@ function saveTenantDocument(){
     var tax = $('#fileUploadForm')[6];
     var article = $('#fileUploadForm')[7];
     var certificate_of = $('#fileUploadForm')[8];
+    var company = $('#fileUploadForm')[9];
 
     var ajaxData = new FormData(application)
     ajaxData.append(cr14,cr14_form.files[0])
@@ -303,7 +307,7 @@ function saveTenantDocument(){
     ajaxData.append(tax,tax_clearance.files[0])
     ajaxData.append(article,article_associ.files[0])
     ajaxData.append(certificate_of,certificate_of_inco.files[0])
-
+    ajaxData.append(company,company_profile.files[0])
 
     let tenantId = JSON.parse(localStorage.getItem("tenantId"));
     console.log(tenantId)
@@ -401,7 +405,7 @@ function saveTenantDocument(){
     //     return
     // }
 
-    $("#btnSubmit").prop("disabled", true);
+    $("#btnSubmit").prop("disabled", false);
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
@@ -417,6 +421,7 @@ function saveTenantDocument(){
 
                    },
                    error: function (e) {
+                       $('#errorModal').modal('show');
                        console.log(e);
                    }
 
@@ -511,4 +516,52 @@ function getLeaseDocument() {
 
         }
     })
+}
+function setAddTenantDropDown() {
+    $.ajax({
+        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+            let dropDown = document.getElementById("tenant_list");
+
+            /*while (dropDown.hasChildNodes()) {
+                dropDown.removeChild(dropDown.firstChild);
+            }*/
+
+            for (let i = 0; i < response.length; i++) {
+                let option = document.createElement("option");
+
+                option.text = response[i].business_name;
+                option.setAttribute("value", `${response[i].id}`)
+
+                dropDown.appendChild(option);
+            }
+        }
+    })
+}
+
+function onSetTenants() {
+
+    console.log("tenantId");
+    var select = document.getElementById("tenant_list");
+
+    var selected = select.options[select.selectedIndex];
+
+
+    // setDropDownLocal(id);
+    var tenantId = selected.value;
+    console.log(tenantId);
+
+    tenantAssignLocalTenant(tenantId)
+
+
+}
+
+function tenantAssignLocalTenant(tenantId) {
+    localStorage.removeItem("tenantId");
+    localStorage.setItem("tenantId", JSON.stringify(tenantId));
+    console.log(tenantId);
+
+
 }

@@ -111,7 +111,7 @@ public class TenantDocController {
   @RequestParam("bank_statement") MultipartFile file5,
   @RequestParam("vat_reg") MultipartFile file6,
   @RequestParam("tax_clearance") MultipartFile file7,
-  @RequestParam("article_associ") MultipartFile file8,
+  @RequestParam("article_associ") MultipartFile file8, @RequestParam("company_profile") MultipartFile file9,
   @RequestParam("tenantID")  String tenantId,Long id) throws IOException{
 
 
@@ -126,8 +126,10 @@ public class TenantDocController {
     String bank_statement = StringUtils.cleanPath(file6.getOriginalFilename());
     String tax_clearance = StringUtils.cleanPath(file7.getOriginalFilename());
     String article_associ = StringUtils.cleanPath(file8.getOriginalFilename());
+    String company_profile = StringUtils.cleanPath(file9.getOriginalFilename());
 
-   if(application_letter.contains(" "))
+
+      if(application_letter.contains(" "))
     {
       application_letter= application_letter.replace(" ","_");
     }
@@ -136,6 +138,11 @@ public class TenantDocController {
     {
       cr14_form= cr14_form.replace(" ","_");
     }
+
+      if(company_profile.contains(" "))
+      {
+          company_profile= company_profile.replace(" ","_");
+      }
     if(cr6_form.contains(" "))
     {
       cr6_form= cr6_form.replace(" ","_");
@@ -181,7 +188,7 @@ public class TenantDocController {
     documents.setBankStatement(bank_statement);
     documents.setTax(tax_clearance);
     documents.setArticle(article_associ);
-
+    documents.setCompany_profile(company_profile);
     TenantDocuments docs = tenantRepo.save(documents);
     String uploadDir = System.getProperty("user.dir") + "assets/uploads/tenantDocuments" + docs.getId();
 
@@ -194,6 +201,7 @@ public class TenantDocController {
       tenantdocumentsService.store(tenantId,id,uploadDir, bank_statement, file6);
       tenantdocumentsService.store(tenantId,id,uploadDir, tax_clearance, file7);
       tenantdocumentsService.store(tenantId,id,uploadDir, article_associ, file8);
+      tenantdocumentsService.store(tenantId,id,uploadDir, company_profile, file9);
       
 	
    
