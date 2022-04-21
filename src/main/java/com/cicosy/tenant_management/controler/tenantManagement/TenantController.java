@@ -53,6 +53,17 @@ public class TenantController {
 
         }
 
+    @GetMapping("/getTenantByID/{id}")
+    public Tenant getTenantByID(@PathVariable Long id){
+        Tenant tenant=tenantService.getTenantByID(id);
+
+        tenant.setCompartmentObjectlist(compartmentController.getCompartmentsForSpecificTenant(tenant.getId()));
+        return tenant;
+
+    }
+
+
+
     public Tenant getTenant(Long id){
         return tenantService.getTenant(id);
         //for mpume

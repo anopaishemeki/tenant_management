@@ -158,23 +158,13 @@ function appendCompartments() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-
             console.log(data);
             $("#property-compartment").DataTable({
                 data: data,
                 columns: [
-
-                    {"data":function (){
-                        return `<div class="avatar avatar-sm">
-                                <img src="../../assets/avatars/data-random-squares.png" alt="..." class="avatar-img rounded-circle">
-                                </div> `
-                    },
-                        "sortable":false,
-                        "searchable":false
-                    },
                     {"data": "id"},
                     {"data": function (row) {
-                                return row.compartmentNumber+ "<br> Floor : "+row.floorNumber;
+                                return "Space ID : "+row.compartmentNumber+ "<br> Floor : "+row.floorNumber;
 
                         },
                          "sortable":false,
@@ -189,8 +179,7 @@ function appendCompartments() {
                         return businessName;
                         }},
                     {"data":function(row){
-                            return ` <p class="mb-0 text-muted"><a href="#" class="text-muted">status:<span class="badge badge-secondary">owing</span></a></p>
-                                    <small class="mb-0 text-muted">`+row.floorArea * row.rentalRate + `</small>`;
+                            return "$"+row.floorArea * row.rentalRate ;
                         }},
                     {"data": function (row) {
                                 return row.floorArea+ " &#13217";
@@ -488,12 +477,6 @@ function getProperties() {
                 data: data,
                 columns: [
 
-                    {"data":function (){
-                        return '<div class="avatar avatar-md"> <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle"> </div>'
-                    },
-                        "sortable":false,
-                        "searchable":false
-                    },
                     {"data": "id"},
                     {"data": function (row) {
                                 return "<b> Name :</b> "+ row.name + " <br> "+ "<b>Address : </b>" +row.addressObject.address;

@@ -614,7 +614,7 @@
                         <div class="col-md-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header">
-                                    <strong class="card-title"> Portfolio Details</strong>
+                                    <h5><strong class="card-title"> Portfolio Details</strong></h5>
                                 </div>
                                 <div class="card-body">
                                     <form>
@@ -635,13 +635,10 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="date-input">Date of registration with NW</label>
+
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control drgpicker" id="date-input"
-                                                           value="04/24/2020" aria-describedby="button-addon2">
-                                                    <div class="input-group-append">
-                                                        <div class="input-group-text" id="button-addon-date"><span
-                                                                class="fe fe-calendar fe-16"></span></div>
-                                                    </div>
+                                                    <input class="form-control" id="date-input" type="date" name="Date">
+
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -661,7 +658,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row" style="display:none">
                                             <div class="col-md-12 mb-4">
                                                 <div class="card shadow">
                                                     <div class="card-body">
@@ -675,18 +672,29 @@
                                             </div> <!-- /.col -->
                                         </div>
                                     </form>
-                                </div> <!-- /. card-body -->
-                            </div> <!-- /. card -->
-                        </div> <!-- /. col -->
-                    </div> <!-- /. end-section -->
-                    <!--Address-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header">
-                                    <strong class="card-title">Property Address</strong>
-                                </div>
-                                <div class="card-body">
+                                    <h5 class="mb-2 mt-4">Property Contact Details</h5>
+                                        <p class="mb-4">Input property owner contact details </p>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="propertyEmail">Email</label>
+                                                <input type="email" class="form-control" id="propertyEmail">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="propertyPhone">Phone</label>
+                                                <input type="text" class="form-control" id="propertyPhone">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="propertyMobileNumber">Mobile Number</label>
+                                                <input type="text" class="form-control" id="propertyMobileNumber">
+                                            </div>
+                                        </div>
+                                    <hr class="my-4">
+                                   <div class="card-header">
+                                     <h5><strong class="card-title">Property Address</strong></h5>
+                                  </div>
+                                  <br>
                                     <form>
                                         <div class="form-group">
                                             <label for="propertyAddress">Address</label>
@@ -714,37 +722,23 @@
                                                 <input type="text" class="form-control" id="propertyZipCode">
                                             </div>
                                         </div>
-                                        <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Contact Details</h5>
-                                        <p class="mb-4">Input property owner contact details </p>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="propertyEmail">Email</label>
-                                                <input type="email" class="form-control" id="propertyEmail">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyPhone">Phone</label>
-                                                <input type="text" class="form-control" id="propertyPhone">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="propertyMobileNumber">Mobile Number</label>
-                                                <input type="text" class="form-control" id="propertyMobileNumber">
-                                            </div>
-                                        </div>
+                                       
+                                        
                                     </form>
+
+
                                 </div> <!-- /. card-body -->
                             </div> <!-- /. card -->
                         </div> <!-- /. col -->
                     </div> <!-- /. end-section -->
+                   
 
                     <!--Property Owner Details-->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header">
-                                    <strong class="card-title">Contact Person Details</strong>
+                                   <h5> <strong class="card-title">Propert  Manager Details</strong></h5>
                                 </div>
                                 <div class="card-body">
                                     <form id="_form">
@@ -756,6 +750,26 @@
                                             <div class="form-group col-md-6">
                                                 <label for="ownerLastName">Lastname</label>
                                                 <input type="text" id="ownerLastName" class="form-control">
+                                            </div>
+                                        </div>
+                                        <hr class="my-4">
+                                        
+                                        <h5 class="mb-2 mt-4">Contact Details</h5>
+                                        <p class="mb-4">Input property owner contact details </p>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="ownerEmailAddress">Email</label>
+                                                <input type="email" class="form-control" id="ownerEmailAddress">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="ownerPhone">Phone</label>
+                                                <input type="text" class="form-control" id="ownerPhone">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="ownerCellNumber">Mobile Number</label>
+                                                <input type="text" class="form-control" id="ownerCellNumber">
                                             </div>
                                         </div>
                                         <hr class="my-4">
@@ -789,25 +803,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <hr class="my-4">
-                                        <h5 class="mb-2 mt-4">Contact Details</h5>
-                                        <p class="mb-4">Input property owner contact details </p>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <label for="ownerEmailAddress">Email</label>
-                                                <input type="email" class="form-control" id="ownerEmailAddress">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="ownerPhone">Phone</label>
-                                                <input type="text" class="form-control" id="ownerPhone">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="ownerCellNumber">Mobile Number</label>
-                                                <input type="text" class="form-control" id="ownerCellNumber">
-                                            </div>
-                                        </div>
+                                       
+                                        
                                         <hr class="my-4">
                                         <div class="form-row">
                                             <div class="form-group col-sm-3">
@@ -1008,17 +1005,9 @@
 <script src="../../js/config.js"></script>
 <script src="../../js/apps.js"></script>
 <script src="../../js/custom.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
-</script>
+<script src='../../js/select2.min.js'></script>
+<script src='../../js/jquery.steps.min.js'></script>
+<script src='../../js/jquery.validate.min.js'></script>
+<script src='../../js/jquery.timepicker.js'></script>
 </body>
 </html>
