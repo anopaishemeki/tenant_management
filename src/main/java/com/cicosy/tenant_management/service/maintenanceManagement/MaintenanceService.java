@@ -86,7 +86,7 @@ public class MaintenanceService {
 
     public void updateMaintenanceRequest(Long id, MaintenanceRequests requestDetails) throws Exception {
         MaintenanceRequests maintenanceRequest = maintenanceRepo.findById(id)
-                .orElseThrow(() -> new Exception("Employee not exist with id :" + id));
+                .orElseThrow(() -> new Exception("Employee with id :" + id+" does not exist"));
 
         maintenanceRequest.setRequest(requestDetails.getRequest());
         maintenanceRequest.setDateLogged(requestDetails.getDateLogged());
