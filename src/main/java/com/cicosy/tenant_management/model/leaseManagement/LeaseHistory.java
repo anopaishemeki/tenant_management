@@ -1,6 +1,7 @@
 package com.cicosy.tenant_management.model.leaseManagement;
 
 
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -36,13 +37,11 @@ public class LeaseHistory {
     private Long id;
     private int lease_id;
     private int tenant_id;
-    private String name;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
-    private String buildingName;
-    private String buildingLocation;
+
     private String terms;
     @Transient
     private int duration;
@@ -50,6 +49,8 @@ public class LeaseHistory {
 
     private String action;
     private LocalDateTime actionDate;
+    @Transient
+    private Tenant tenant;
 
     public void setAction(String action) {
         this.action = action;
@@ -59,9 +60,7 @@ public class LeaseHistory {
         this.tenant_id = tenant_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
@@ -69,14 +68,6 @@ public class LeaseHistory {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-    }
-
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
-    }
-
-    public void setBuildingLocation(String buildingLocation) {
-        this.buildingLocation = buildingLocation;
     }
 
 
@@ -102,9 +93,6 @@ public class LeaseHistory {
         return tenant_id;
     }
 
-    public String getName() {
-        return name;
-    }
 
 
 
@@ -112,13 +100,6 @@ public class LeaseHistory {
         return startDate;
     }
 
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public String getBuildingLocation() {
-        return buildingLocation;
-    }
 
 
     public String getTerms() {
@@ -147,5 +128,13 @@ public class LeaseHistory {
 
     public void setLease_id(int lease_id) {
         this.lease_id = lease_id;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 }

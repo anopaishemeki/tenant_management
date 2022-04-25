@@ -34,8 +34,9 @@ public class Tenant {
     private String phone;
     private String id_passport;
     private String rentStatus;
-    private String house_no;
-    private String street;
+
+    private String address;
+
     private String city;
     private String country;
     private String business_name;
@@ -43,11 +44,17 @@ public class Tenant {
     private String services;
     private String property;
 
+    private String b_phone;
+    private String b_email;
+    private String b_tel;
+    private String website;
+
+
   @Transient
   private List<Compartment> compartmentObjectlist;
 
     public Tenant(String name, String surname, String email, String phone,
-                  String id_passport, String residential_address, String property, String rentStatus, List<Compartment> compartmentObjectlist) {
+                  String id_passport, String property, String rentStatus, List<Compartment> compartmentObjectlist) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -131,20 +138,45 @@ public class Tenant {
         this.rentStatus = rentStatus;
     }
 
-    public String getHouse_no() {
-        return house_no;
+
+    public String getAddress() {
+        return address;
     }
 
-    public void setHouse_no(String house_no) {
-        this.house_no = house_no;
+    public String getWebsite() {
+        return website;
     }
 
-    public String getStreet() {
-        return street;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getB_phone() {
+        return b_phone;
+    }
+
+    public void setB_phone(String b_phone) {
+        this.b_phone = b_phone;
+    }
+
+    public String getB_email() {
+        return b_email;
+    }
+
+    public void setB_email(String b_email) {
+        this.b_email = b_email;
+    }
+
+    public String getB_tel() {
+        return b_tel;
+    }
+
+    public void setB_tel(String b_tel) {
+        this.b_tel = b_tel;
     }
 
     public String getCity() {

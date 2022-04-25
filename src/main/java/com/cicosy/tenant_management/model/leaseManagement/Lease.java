@@ -1,5 +1,6 @@
 package com.cicosy.tenant_management.model.leaseManagement;
 
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -12,7 +13,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+import java.util.List;
 
 
 @Data
@@ -35,14 +36,11 @@ public class Lease {
     )
     private Long id;
     private int tenant_id;
-    private String name;
 
    // @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
    @JsonDeserialize(using = LocalDateDeserializer.class)
    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
-    private String buildingName;
-    private String buildingLocation;
     private String terms;
     private int duration;
     private LocalDate endDate;
@@ -50,12 +48,12 @@ public class Lease {
     private String status;
 
 
+    @Transient
+    private Tenant tenant;
+
     public Lease(int tenant_id,
-                String name,
                  LocalDate startDate,
                  LocalDate endDate,
-                 String buildingName,
-                 String buildingLocation,
                  String status,
                  int duration,
                  int timeLeft,
@@ -63,15 +61,12 @@ public class Lease {
 
     ) {
         this.tenant_id=tenant_id;
-        this.name = name;
-
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;
         this.timeLeft=timeLeft;
         this.status = status;
-        this.buildingName = buildingName;
-        this.buildingLocation = buildingLocation;
+
         this.terms = terms;
 
     }
@@ -80,13 +75,9 @@ public class Lease {
 
     public Lease(Long id,
                  int tenant_id,
-                 String name,
-
                  LocalDate startDate,
                  LocalDate endDate,
-                 String buildingName,
                  int timeLeft,
-                 String buildingLocation,
                  String status,
                  int duration,
                  String terms
@@ -96,18 +87,21 @@ public class Lease {
         this.tenant_id=tenant_id;
         this.duration = duration;
         this.timeLeft=timeLeft;
-        this.name = name;
+
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.buildingName = buildingName;
-        this.buildingLocation = buildingLocation;
         this.terms = terms;
 
     }
 
+    public Tenant getTenant() {
+        return tenant;
+    }
 
-
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
 
     public int getDuration() {
         return duration;
@@ -129,20 +123,10 @@ public class Lease {
 
 
 
-    public String getName() {
-        return name;
-    }
+
 
     public LocalDate getStartDate() {
         return startDate;
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public String getBuildingLocation() {
-        return buildingLocation;
     }
 
     public int getTimeLeft() {
@@ -156,21 +140,12 @@ public class Lease {
         return endDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
-    }
-
-    public void setBuildingLocation(String buildingLocation) {
-        this.buildingLocation = buildingLocation;
-    }
 
     public void setTerms(String terms) {
         this.terms = terms;

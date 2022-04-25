@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="../../css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="../../css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="getTenants(), getProperty()">
+<body class="vertical  light  " onload="getTenants()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -274,56 +274,21 @@
                                         <!--<form  class="needs-validation" novalidate style="padding-left: 50px">-->
                                         <!--<form  class="needs-validation" novalidate style="padding-left: 50px">-->
                                         <p class="mb-2"><strong>Fill Below</strong></p>
-                                        <div class="d-flex justify-content-center rounded-pill" style="border:1px solid lightgrey">
-                                            <h4 class="mb-2" style="padding: 10px"><strong> ID = <span id="id"></span></strong></h4>
-                                        </div>
-                                        <div class="form-row">
+
+                                        <div class="form-row mt-3" >
                                             <div class="form-group col-md-4">
-                                                <label for="leaseName">Tenant Name :</label>
+                                                <label for="leaseName">Business Name :</label>
                                                 <select class="form-control select2" id="leaseName" name="leaseName"
-                                                        required onchange="setTenantID()">
+                                                        required >
                                                     <!--<optgroup label="Available Tenants" id="t_body">-->
                                                         <!--<option value="">Select Tenant Name</option>-->
                                                     <!--</optgroup>-->
                                                 </select>
                                             </div> <!-- form-group -->
                                             <div class="col-md-2"></div>
-                                            <div class="col-md-4 form-group mb-3">
-                                                <label for="buildingName">Building Name:</label>
-                                                <select class="form-control select2" id="buildingName" name="buildingName"
-                                                        required>
-                                                    <!--<optgroup label="Available Buildings" id="BN_body">-->
-                                                        <!--<option value="">Select Building Name</option>-->
-
-                                                    <!--</optgroup>-->
-                                                </select>
-
-
-                                                <!--<input type="text" class="form-control" id="buildingName" name="buildingName" required>-->
-
-                                            </div>
-                                            <!-- form-group -->
-                                        </div> <!-- form-row -->
-
-                                        <div class="form-row">
                                             <div class="form-group col-md-4 mb-3">
-                                                <label for="buildingLocation">Building Location:</label>
-                                                <select class="form-control select2" id="buildingLocation" name="buildingLocation"
-                                                        required>
-                                                    <!--<optgroup label="Locations" id="BL_body">-->
-                                                        <!--<option value="">Select Building Location</option>-->
-
-                                                    <!--</optgroup>-->
-                                                </select>
-
-
-                                                <!--<input type="text" class="form-control" id="buildingLocation" name="buildingLocation" required>-->
-                                                <!--<div class="valid-feedback"> Looks good! </div>-->
-                                            </div>
-                                            <div class="col-md-2"></div>
-                                            <div class="form-group col-md-4 mb-3">
-                                                <label for="duration">Duration :</label>
-                                                <input class="form-control" id="duration" type="number" name="duration"
+                                                <label for="startDate">Start Date</label>
+                                                <input class="form-control" id="startDate" type="date" name="startDate"
                                                        required>
                                             </div>
 
@@ -331,10 +296,11 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-4 mb-3">
-                                                <label for="startDate">Start Date</label>
-                                                <input class="form-control" id="startDate" type="date" name="startDate"
+                                                <label for="duration">Duration : (Months)</label>
+                                                <input class="form-control" id="duration" type="number" name="duration"
                                                        required>
                                             </div>
+
                                             <div class="col-md-2"></div>
                                             <div class="form-group col-md-4 mb-3">
 
@@ -787,11 +753,7 @@
     })();
 </script>
 
-<script>
-    $(document).ready(function() {
-     setTenantID()
-    });
-</script>
+
 <!--<script>
     var uptarg = document.getElementById('drag-drop-area');
     if (uptarg) {

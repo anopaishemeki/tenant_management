@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.controler.leaseManagement;
 
 
 import com.cicosy.tenant_management.controler.document_management.message.ResponseMessage;
+import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController2;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
@@ -15,10 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,12 +28,14 @@ public class LeaseController {
 
     private final LeaseService leaseService;
     private final LeaseDocumentService leaseDocumentService;
+    private CompartmentController2 compartmentController;
 
 
     @Autowired
-    public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService) {
+    public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService, CompartmentController2 compartmentController) {
         this.leaseService = leaseService;
         this.leaseDocumentService = leaseDocumentService;
+        this.compartmentController = compartmentController;
     }
 
 //    @GetMapping(path = "home")
@@ -53,6 +54,8 @@ public class LeaseController {
     }
     @GetMapping(path = "getleases")
     public List<Lease> getLeases() {
+
+
         return leaseService.getLeases();
     }
 
@@ -151,14 +154,19 @@ public class LeaseController {
 //    }
     @GetMapping(path = "getLease/{leaseId}")
     public Lease getLease(@PathVariable Long leaseId) {
-        return leaseService.findLeaseById(leaseId);
+
+        Lease lease= leaseService.findLeaseById(leaseId);
+
+            lease.setTenant(compartmentController.getTenantForSpecificLease(lease.getTenant_id()));
+
+
+        return lease;
 
     }
 
-    @GetMapping(path = "getEmail/{name}/{surname}")
-    public String getEmail(@PathVariable String name,
-                          @PathVariable String surname) {
-        return leaseService.findTenantEmail(name,surname);
+    @GetMapping(path = "getEmail/{name}/")
+    public String getEmail(@PathVariable String name) {
+        return leaseService.findTenantEmail(name);
 
     }
 

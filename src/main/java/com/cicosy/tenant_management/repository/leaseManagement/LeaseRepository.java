@@ -12,11 +12,11 @@ import java.util.Optional;
 @Repository
 public interface LeaseRepository
         extends JpaRepository<Lease,Long> {
-    @Query("select s from Lease s WHERE s.name = ?1 ")
+   /* @Query("select s from Lease s WHERE s.name = ?1 ")
     Optional<Lease>findLeaseByName(String name);
 
     @Query("select s from Lease s WHERE s.buildingLocation = ?1 ")
-    Optional<Lease>findLeaseByBuildingLocation(String buildingLocation);
+    Optional<Lease>findLeaseByBuildingLocation(String buildingLocation);*/
 
 //    @Query("select s,p from lease s,lease_documents p where s.Status=?1  and s.id= p.id")
 //    List<LeaseDocuments> findstatus(String status);
@@ -32,12 +32,12 @@ public interface LeaseRepository
 
 
 
-    @Query(value = "select p.email,p.phone from tenant p where p.name=?1 and p.surname=?2",nativeQuery = true)
-    String findByEmail(String name, String surname);
+    @Query(value = "select p.email,p.phone from tenant p where p.b_email=?1",nativeQuery = true)
+    String findByEmail(String name);
 
 
 //    @Query(value = "select s from Lease s where lower(s.name) like lower('%:record%') or lower(s.status) like lower('%:record%') or lower(s.buildingLocation) like lower('%:record%') or lower(s.buildingName) like lower('%:record%') order by s.id asc ")
-    @Query("Select c from Lease c where lower(c.name) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingName) like lower(concat('%', concat(:record, '%'))) or lower(c.buildingLocation) like lower(concat('%', concat(:record, '%'))) or lower(c.status) like lower(concat('%', concat(:record, '%'))) or lower(c.id) like lower(concat('%', concat(:record, '%'))) order by c.id asc")
+    @Query("Select c from Lease c where lower(c.status) like lower(concat('%', concat(:record, '%'))) or lower(c.id) like lower(concat('%', concat(:record, '%'))) order by c.id asc")
     List<Lease> findLeaseBySearch(@Param("record")String record);
 
     @Query(value = "select file_name from lease_documents  where tenant_id=?1 ",nativeQuery = true)

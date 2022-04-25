@@ -1,5 +1,6 @@
 package com.cicosy.tenant_management.service.leaseManagement;
 
+import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController2;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -26,14 +26,14 @@ import java.util.Optional;
 public class LeaseService {
     private final LeaseRepository leaseRepository;
     private final LeaseHistoryRepository leaseHistoryRepository;
+    private CompartmentController2 compartmentController;
 
 
     @Autowired
-    public LeaseService(LeaseRepository leaseRepository, LeaseHistoryRepository leaseHistoryRepository) {
+    public LeaseService(LeaseRepository leaseRepository, LeaseHistoryRepository leaseHistoryRepository, CompartmentController2 compartmentController) {
         this.leaseRepository = leaseRepository;
-
-
         this.leaseHistoryRepository = leaseHistoryRepository;
+        this.compartmentController = compartmentController;
     }
 
     public List<Lease> getLeases() {
@@ -45,6 +45,8 @@ public class LeaseService {
                     .orElseThrow(() -> new IllegalStateException(
                             "Record With ID " + leaseID + " Does Not Exist"
                     ));
+
+            lease.setTenant(compartmentController.getTenantForSpecificLease(lease.getTenant_id()));
 
             if ((lease.getEndDate().isBefore(LocalDate.now())) &&
                     (!(Objects.equals(lease.getStatus(), "Terminated")))) {
@@ -102,16 +104,8 @@ public class LeaseService {
 
 
     public void addNewLease(Lease lease, LeaseHistory lease_history) {
-        Optional<Lease> name = leaseRepository.findLeaseByName(lease.getName());
 
 
-        if (name.isPresent()) {
-            throw new IllegalStateException("Record with provided name already Exists");
-
-        }
-        if ((lease.getBuildingName().isEmpty())) {
-            lease.setBuildingName("Unspecified");
-        }
         if ((lease.getTerms().isEmpty())) {
             lease.setTerms("Unspecified");
         }
@@ -177,12 +171,11 @@ public class LeaseService {
         Integer id =lease.getId().intValue();
         lease_history.setLease_id(id);
         lease_history.setTenant_id(lease.getTenant_id());
-        lease_history.setBuildingLocation(lease.getBuildingLocation());
-        lease_history.setBuildingName(lease.getBuildingName());
+
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setName(lease.getName());
+
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction("Added");
@@ -267,23 +260,6 @@ public class LeaseService {
             throw new IllegalStateException("Sorry You cant Edit a Terminated Lease");
         }
 
-        if (update.getName() != null &&
-                update.getName().length() > 0 &&
-                !Objects.equals(lease.getName(), update.getName())) {
-            lease.setName(update.getName());
-        }
-
-
-        if (update.getBuildingName() != null &&
-                update.getBuildingName().length() > 0 &&
-                !Objects.equals(lease.getBuildingName(), update.getBuildingName())) {
-            Optional<Lease> leaseOptional = leaseRepository
-                    .findLeaseByName(lease.getBuildingName());
-            if (leaseOptional.isPresent()) {
-                throw new IllegalStateException("That building is already allocated to Someone");
-            }
-            lease.setBuildingName(update.getBuildingName());
-        }
 
         if (update.getTerms() != null &&
                 update.getTerms().length() > 0 &&
@@ -320,12 +296,10 @@ public class LeaseService {
         Integer id =leaseId.intValue();
         lease_history.setTenant_id(lease.getTenant_id());
         lease_history.setLease_id(id);
-        lease_history.setBuildingLocation(lease.getBuildingLocation());
-        lease_history.setBuildingName(lease.getBuildingName());
+
         lease_history.setDuration(lease.getDuration());
         lease_history.setEndDate(lease.getEndDate());
         lease_history.setStartDate(lease.getStartDate());
-        lease_history.setName(lease.getName());
         lease_history.setTerms(lease.getTerms());
         lease_history.setActionDate(LocalDateTime.now());
         lease_history.setAction(status);
@@ -346,6 +320,8 @@ public class LeaseService {
                     .orElseThrow(() -> new IllegalStateException(
                             "Record With ID " + leaseID + " Does Not Exist"
                     ));
+            lease.setTenant(compartmentController.getTenantForSpecificLease(lease.getTenant_id()));
+
             lease.setEndDate(lease.getStartDate().plusMonths(lease.getDuration()));
 
 
@@ -402,7 +378,13 @@ public class LeaseService {
 
    @Transactional
    public List<LeaseHistory> getRenewed(){
-        return leaseHistoryRepository.getRenewed();
+
+        List<LeaseHistory> renewedLeases= leaseHistoryRepository.getRenewed();
+            for (int i =0;i<renewedLeases.size() ; i++ ) {
+               renewedLeases.get(i).setTenant(compartmentController.getTenantForSpecificLease(renewedLeases.get(i).getTenant_id()));
+            }
+
+        return renewedLeases;
    }
 
     @Transactional
@@ -531,9 +513,9 @@ public class LeaseService {
                 ));
     }
 
-    public String findTenantEmail(String name, String surname) {
+    public String findTenantEmail(String name) {
 
-        return leaseRepository.findByEmail(name, surname);
+        return leaseRepository.findByEmail(name);
     }
     public String getFormName( String ID) {
         return leaseRepository.findTenantForm(ID);

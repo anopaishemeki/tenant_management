@@ -149,6 +149,66 @@ function saveCompartment() {
 
 function appendCompartments() {
     let id = JSON.parse(localStorage.getItem("id"));
+   
+
+ // -----------------
+    var baseurl = 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            console.log(data);
+            $("#property-compartment").DataTable({
+                data: data,
+                columns: [
+                    {"data": "id"},
+                    {"data": function (row) {
+                                return "Space ID : "+row.compartmentNumber+ "<br> Floor : "+row.floorNumber;
+
+                        },
+                         "sortable":false,
+                     "searchable":false },
+                    {"data": function (row) {
+                       let businessName="";
+                        if(row.tenantObject===null){
+                            businessName=" ......"
+                        }else{
+                            businessName =row.tenantObject.business_name
+                        }
+                        return businessName;
+                        }},
+                    {"data":function(row){
+                            return "$"+row.floorArea * row.rentalRate ;
+                        }},
+                    {"data": function (row) {
+                                return row.floorArea+ " &#13217";
+                            }},
+                    { "data": function(row){
+                        return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('`+row.id+`')">View</a>
+                                </div>`
+                    },
+                     "sortable":false,
+                     "searchable":false }
+                    
+                       
+                    
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+   // ---------------
+
+/*
+
     $.ajax({
         url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id,
         type: 'GET',
@@ -197,7 +257,7 @@ function appendCompartments() {
                 t_body.appendChild(tr);
             }
         }
-    });
+    });*/
 }
 
 function viewCompartment() {
@@ -417,12 +477,6 @@ function getProperties() {
                 data: data,
                 columns: [
 
-                    {"data":function (){
-                        return '<div class="avatar avatar-md"> <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle"> </div>'
-                    },
-                        "sortable":false,
-                        "searchable":false
-                    },
                     {"data": "id"},
                     {"data": function (row) {
                                 return "<b> Name :</b> "+ row.name + " <br> "+ "<b>Address : </b>" +row.addressObject.address;
@@ -541,6 +595,8 @@ function saveProperty() {
     let owner = ""
     let assetValue = document.getElementById("assetValue").value;
     let dateRegistered = document.getElementById("date-input").value;
+     let numberOfFloors = document.getElementById("numberOfFloors").value;
+    
 
     //property contact details
     let propertyEmail = document.getElementById("propertyEmail").value;
@@ -576,6 +632,7 @@ function saveProperty() {
             country: propertyCountry,
             property: 0
         },
+        numberOfFloors,
         address,
         tenant,
         insurance,

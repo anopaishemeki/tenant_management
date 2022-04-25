@@ -47,6 +47,14 @@ public class TenantService {
         return existing_tenant;
     }
 
+
+    public Tenant getTenantByID( Long id) {
+        return tenantRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Tenant With ID " + id + " Does Not Exist"
+                ));
+
+    }
     public Tenant getTenantByName(Tenant tenant, String name) {
         Tenant existing_tenant = tenantRepository.getByName(name);
         return existing_tenant;

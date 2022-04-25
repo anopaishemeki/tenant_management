@@ -67,7 +67,7 @@ function getTenants() {
                                 <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#" onclick="viewTenant('`+row.id+`')">View</a>
+                                <a class="dropdown-item"  onclick="LocalTenantID('`+row.id+`')" href="tenant_detail.html">View</a>
                                 <a class="dropdown-item" href="#">Edit</a>
                                 <a class="dropdown-item" href="#">Assign</a>
                               </div>`
@@ -158,23 +158,25 @@ function saveTenant() {
     let email = document.getElementById("email").value
     let id_passport = document.getElementById("passport").value;
 
+
+    let b_email = document.getElementById("b_email").value
+    let b_phone = document.getElementById("b_phone").value
+    let b_tel = document.getElementById("b_tel").value;
+    let address = document.getElementById("address").value;
     //property contact details
     let phone = document.getElementById("phone").value;
 
 
 
     //owner Object properties
-
+    let website = document.getElementById("website").value;
     let business_name = document.getElementById("business_name").value;
 
     let business_type = document.getElementById("business_type").value;
     let services = document.getElementById("services").value;
 
-    let street = document.getElementById("street").value;
-
 
     let city = document.getElementById("city").value;
-    let house_no = document.getElementById("house").value;
     let country = document.getElementById("country").value;
 
     //property address object properties
@@ -184,9 +186,12 @@ function saveTenant() {
     let data = {
         city,
         country,
-        house_no,
-        street,
         email,
+        website,
+        address,
+        b_email,
+        b_phone,
+        b_tel,
         id_passport,
         lease,
         name,
@@ -220,276 +225,173 @@ function saveTenant() {
     $("#tenant_form")[0].reset();
 }
 
-
-//to view tenant details
-function viewTenant(id) {
-    console.log("Working!");
-    $("#tenant_table").addClass("d-none");
-    $("#view_Tenant").addClass("d-block");
-    var view_tenant = document.getElementById("view_Tenant");
-
-
-    $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
-        type: 'GET',
-        success: function (response) {
-            let items = response
-
-            let tenant_profile_html = `
-                <div class="row justify-content-center">
-                          <div class="col-12">
-                            <h2 class="h3 mb-4 page-title text-muted">Tenant id: ${items[id].id}</h2>
-                            <div class="row mt-5 align-items-center">
-<!--                              <div class="col-md-3 text-center mb-5">-->
-<!--                                <div class="avatar avatar-xl">-->
-<!--                                  <img src="../../assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">-->
-<!--                                </div>-->
-<!--                              </div>-->
-                              <div class="col">
-                                <div class="row align-items-center">
-                                  <div class="col-md-7">
-                                    <h4 class="mb-1">${items[id].name} ${items[id].surname}</h4>
-                                    <p class="small mb-3"><span class="badge badge-dark">${items[id].city}, ${items[id].country}</span></p>
-                                  </div>
-                                </div>
-                                <div class="row mb-4">
-                                  <div class="col-md-7">
-                                    <p class="text-muted"><strong> Identification No:</strong>  ${items[id].id_passport} <br> <strong>Email Address:</strong>  ${items[id].email} <br> <strong>Phone Number:</strong>  ${items[id].phone} </p>
-                                  </div>
-                                  <div class="col">
-                                    <p class="small mb-0 text-muted">House ${items[id].house_no}</p>
-                                    <p class="small mb-0 text-muted">P.O. Box 464, ${items[id].city}</p>
-                                    <p class="small mb-0 text-muted">${items[id].country}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row my-4">
-                              <div class="col-md-4">
-                                <div class="card mb-4 shadow">
-                                  <div class="card-body my-n3">
-                                    <div class="row align-items-center">
-                                      <div class="col-3 text-center">
-<!--                          <span class="circle circle-lg bg-light">-->
-<!--&lt;!&ndash;                            <i class="fe fe-user fe-24 text-primary"></i>&ndash;&gt;-->
-<!--                          </span>-->
-                                      </div> <!-- .col -->
-                                      <div class="col">
-                                        <a href="#">
-                                          <h3 class="h5 mt-4 mb-1">Services to Personal</h3>
-                                        </a>
-                                        <p class="text-muted">
-                                        <ul class="list-unstyled">
-                                        <li>Parking</li>
-                                        <li>.</li>
-                                        <li>.</li>
-                                        <li>.</li>
-</ul></p>
-                                      </div> <!-- .col -->
-                                    </div> <!-- .row -->
-                                  </div> <!-- .card-body -->
-<!--                                  <div class="card-footer">-->
-<!--                                    <a href="" class="d-flex justify-content-between text-muted"><span>Account Settings</span><i class="fe fe-chevron-right"></i></a>-->
-<!--                                  </div> &lt;!&ndash; .card-footer &ndash;&gt;-->
-                                </div> <!-- .card -->
-                              </div> <!-- .col-md-->
-                              <div class="col-md-4">
-                                <div class="card mb-4 shadow">
-                                  <div class="card-body my-n3">
-                                    <div class="row align-items-center">
-                                      <div class="col-3 text-center">
-<!--                          <span class="circle circle-lg bg-light">-->
-<!--&lt;!&ndash;                            <i class="fe fe-shield fe-24 text-primary"></i>&ndash;&gt;-->
-<!--                          </span>-->
-                                      </div> <!-- .col -->
-                                      <div class="col">
-                                        <a href="#">
-                                          <h3 class="h5 mt-4 mb-1">Business Details</h3>
-                                        </a>
-                                        <p class="text-muted">
-                                        <ul class="list-unstyled">
-                                        <li><strong>Name:</strong> ${items[id].business_name}</li>
-                                        <li><strong>Type:</strong> ${items[id].business_type}</li>
-                                        <li><strong>Shop No:</strong> ${items[id].shop_number}</li>
-                                        <li><strong>Services:</strong> ${items[id].services}</li>
-</ul></p>
-                                      </div> <!-- .col -->
-                                    </div> <!-- .row -->
-                                  </div> <!-- .card-body -->
-<!--                                  <div class="card-footer">-->
-<!--                                    <a href="" class="d-flex justify-content-between text-muted"><span>Security Settings</span><i class="fe fe-chevron-right"></i></a>-->
-<!--                                  </div> &lt;!&ndash; .card-footer &ndash;&gt;-->
-                                </div> <!-- .card -->
-                              </div> <!-- .col-md-->
-                              <div class="col-md-4">
-                                <div class="card mb-4 shadow">
-                                  <div class="card-body my-n3">
-                                    <div class="row align-items-center">
-                                      <div class="col-3 text-center">
-<!--                          <span class="circle circle-lg bg-light">-->
-<!--&lt;!&ndash;                            <i class="fe fe-bell fe-24 text-primary"></i>&ndash;&gt;-->
-<!--                          </span>-->
-                                      </div> <!-- .col -->
-                                      <div class="col">
-                                        <a href="#">
-                                          <h3 class="h5 mt-4 mb-1">Notifications</h3>
-                                        </a>
-                                        <p class="text-muted">
-                                        <ul class="list-unstyled">
-                                        <li>Maintance Due</li>
-                                        <li>Missing Documents</li>
-                                        <li>Lease Updated</li>
-                                        <li>Late Rent</li>
-                                        </ul></p>
-                                      </div> <!-- .col -->
-                                    </div> <!-- .row -->
-                                  </div> <!-- .card-body -->
-<!--                                  <div class="card-footer">-->
-<!--                                    <a href="" class="d-flex justify-content-between text-muted"><span>Notification Settings</span><i class="fe fe-chevron-right"></i></a>-->
-<!--                                  </div> &lt;!&ndash; .card-footer &ndash;&gt;-->
-                                </div> <!-- .card -->
-                              </div> <!-- .col-md-->
-                            </div> <!-- .row-->
-                            <h3>Subscription & Payments</h3>
-                            <p class="text-muted">Tenant Lease and Rental details...</p>
-                            <div class="card-deck my-4">
-                              <div class="card mb-4 shadow">
-                                <div class="card-body text-center my-4">
-                                  <a href="#">
-                                    <h3 class="h5 mt-4 mb-0">Lease</h3>
-                                  </a>
-                                  <p class="text-muted">package</p>
-                                  <span class="h1 mb-0">$ 6000</span>
-                                  <p class="text-muted">year</p>
-                                  <ul class="list-unstyled">
-                                    <li>Lorem ipsum dolor sit amet</li>
-                                    <li>Consectetur adipiscing elit</li>
-                                    <li>Integer molestie lorem at massa</li>
-                                    <li>Eget porttitor lorem</li>
-                                  </ul>
-                                  <span class="dot dot-lg bg-success"></span>
-                                  <span class="text-muted ml-3">Active</span>
-                                </div> <!-- .card-body -->
-                              </div> <!-- .card -->
-                              <div class="card mb-4">
-                                <div class="card-body text-center my-4">
-                                  <a href="#">
-                                    <h3 class="h5 mt-4 mb-0">Rent</h3>
-                                  </a>
-                                  <p class="text-muted">package</p>
-                                  <span class="h1 mb-0">$ ${items[id].rental_fee}</span>
-                                  <p class="text-muted">month</p>
-                                  <ul class="list-unstyled">
-                                    <li>Lorem ipsum dolor sit amet</li>
-                                    <li>Consectetur adipiscing elit</li>
-                                    <li>Integer molestie lorem at massa</li>
-                                    <li>Eget porttitor lorem</li>
-                                  </ul>
-                                  <button type="button" class="btn mb-2 btn-primary btn-lg">Review</button>
-                                </div> <!-- .card-body -->
-                              </div> <!-- .card -->
-                            </div> <!-- .card-group -->
-                            <h6 class="mb-3">Last payments</h6>
-                            <table class="table table-borderless table-striped">
-                              <thead>
-                              <tr role="row">
-                                <th>ID</th>
-                                <th>Payment Date</th>
-                                <th>Total</th>
-                                <th>Payment</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr>
-                                <th scope="col">1331</th>
-                                <td>2020-12-26 01:32:21</td>
-                                <td>$16.9</td>
-                                <td>Paypal</td>
-                                <td><span class="dot dot-lg bg-warning mr-2"></span>Due</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="text-muted sr-only">Action</span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      <a class="dropdown-item" href="#">Edit</a>
-                                      <a class="dropdown-item" href="#">Remove</a>
-                                      <a class="dropdown-item" href="#">Assign</a>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="col">1156</th>
-                                <td>2020-04-21 00:38:38</td>
-                                <td>$9.9</td>
-                                <td>Paypal</td>
-                                <td><span class="dot dot-lg bg-danger mr-2"></span>False</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="text-muted sr-only">Action</span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      <a class="dropdown-item" href="#">Edit</a>
-                                      <a class="dropdown-item" href="#">Remove</a>
-                                      <a class="dropdown-item" href="#">Assign</a>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="col">1038</th>
-                                <td>2019-06-25 19:13:36</td>
-                                <td>$9.9</td>
-                                <td>Credit Card </td>
-                                <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="text-muted sr-only">Action</span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      <a class="dropdown-item" href="#">Edit</a>
-                                      <a class="dropdown-item" href="#">Remove</a>
-                                      <a class="dropdown-item" href="#">Assign</a>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="col">1227</th>
-                                <td>2021-01-22 13:28:00</td>
-                                <td>$9.9</td>
-                                <td>Paypal</td>
-                                <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="text-muted sr-only">Action</span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      <a class="dropdown-item" href="#">Edit</a>
-                                      <a class="dropdown-item" href="#">Remove</a>
-                                      <a class="dropdown-item" href="#">Assign</a>
-                                    </div>`
-
-            let div = document.createElement("div");
-
-
-            div.innerHTML = tenant_profile_html;
-
-            view_tenant.appendChild(div);
-
-        }
-
-
-    });
+function LocalTenantID(id) {
+    localStorage.removeItem("t_id");
+    localStorage.setItem("t_id", JSON.stringify(id));
 
 
 }
+function setLocalfile(id){
+     localStorage.removeItem("tenantId");
+     localStorage.setItem("tenantId", JSON.stringify(id));
+ }
+ function setType(filetype){
+ localStorage.removeItem("filetype");
+ localStorage.setItem("filetype", JSON.stringify(filetype));
+
+}
+
+function setLocalfiles(application_letter,article,bank_statement,cr6_form,cr14_form,director_id,tax_clearance,vat_reg,certificate_of_incorporation){
+       localStorage.removeItem("application_letter");
+     localStorage.setItem("application_letter", JSON.stringify(application_letter));
+ localStorage.removeItem("article");
+     localStorage.setItem("article", JSON.stringify(article));
+ localStorage.removeItem("bank_statement");
+     localStorage.setItem("bank_statement", JSON.stringify(bank_statement));
+ localStorage.removeItem("cr6_form");
+     localStorage.setItem("cr6_form", JSON.stringify(cr6_form));
+ localStorage.removeItem("cr14_form");
+     localStorage.setItem("cr14_form", JSON.stringify(cr14_form));
+ localStorage.removeItem("director_id");
+     localStorage.setItem("director_id", JSON.stringify(director_id));
+ localStorage.removeItem("tax_clearance");
+     localStorage.setItem("tax_clearance", JSON.stringify(tax_clearance));
+ localStorage.removeItem("vat_reg");
+     localStorage.setItem("vat_reg", JSON.stringify(vat_reg));
+ localStorage.removeItem("certificate_of_incorporation");
+     localStorage.setItem("certificate_of_incorporation", JSON.stringify(certificate_of_incorporation));
+ }
+
+// view Tenant Details
+function getTenantBYid(){
+ let id = JSON.parse(localStorage.getItem("t_id"));
+  $.ajax({
+        url: 'http://localhost:8090/api/tenants/getTenantByID/'+id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+            let businessName = document.getElementById("businessName");
+            businessName.innerHTML=`${response.business_name}`;
+            let businessType = document.getElementById("businessType");
+            businessType.innerHTML=`${response.business_type}`;
+            let businessEmail = document.getElementById("b_email");
+            businessEmail.innerHTML=`${response.b_email}`;
+            let businessPhone = document.getElementById("b_phone");
+            businessPhone.innerHTML=`${response.b_phone}`;
+            let businessTel = document.getElementById("b_tel");
+            businessTel.innerHTML=`${response.b_tel}`;
+            let businessCountry = document.getElementById("businessCountry");
+            businessCountry.innerHTML=`${response.country}`;
+            let businessCity = document.getElementById("businessCity");
+            businessCity.innerHTML=`${response.city}`;
+
+            if (response.website==null){
+                let website = document.getElementById("website");
+                website.innerHTML="N/A";
+            }else{
+                let website = document.getElementById("website");
+                website.innerHTML=`${response.website}`;
+                website.setAttribute("href",`${response.website}`);
+            }
+
+            if (response.website==null){
+                let businessService = document.getElementById("businessService");
+                businessService.innerHTML="N/A";
+            }else{
+                let businessService = document.getElementById("businessService");
+                businessService.innerHTML=`${response.services}`;
+            }
+
+            let tenantname = document.getElementById("tenantname");
+            tenantname.innerHTML=`${response.name}`;
+            let tenantsurname = document.getElementById("tenantsurname");
+            tenantsurname.innerHTML=`${response.surname}`;
+            let tenantphone = document.getElementById("tenantphone");
+            tenantphone.innerHTML=`${response.phone}`;
+
+            let tenantemail = document.getElementById("tenantemail");
+            tenantemail.innerHTML=`${response.email}`;
+
+            let businessName2 = document.getElementById("businessName2");
+            businessName2.innerHTML=`${response.business_name}`;
+            
+            let businessName3 = document.getElementById("businessName3");
+            businessName3.innerHTML=`${response.business_name}`;
+
+
+            $("#tenant-compartment").DataTable({
+                data: response.compartmentObjectlist,
+                columns: [
+                    {"data": "id"},
+                    {"data": function (row) {
+                            return "Space ID : "+row.compartmentNumber+ "<br> Floor : "+row.floorNumber;
+
+                        },
+                        "sortable":false,
+                        "searchable":false },
+                    {"data":function (row) {
+                            return "$"+row.rentalRate;
+                        }},
+
+                    {"data": function (row) {
+                            return row.floorArea+ " &#13217";
+                        }},
+                    {"data":function(row){
+                            return "$"+row.floorArea * row.rentalRate ;
+                        }},
+                    { "data": function(row){
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('`+row.id+`')">View</a>
+                                </div>`
+                        },
+                        "sortable":false,
+                        "searchable":false }
+                ]
+            })
+
+
+
+        }
+    })
+  $.ajax({
+        url: 'http://localhost:8090/api/tenant/fetchfile/' + id ,
+        type: 'GET',
+        success: function (response) {
+        console.log(response);
+        if (response.length==0) {
+            let processing=document.getElementById("processing");
+            processing.setAttribute("style","display:none");
+
+            let notAvailable=document.getElementById("notavailable");
+            notAvailable.setAttribute("style","display:all");
+
+             let found=document.getElementById("documents");
+            found.setAttribute("style","display:none");
+        }else{
+            setLocalfile(id);
+            setLocalfiles(response[0].application_letter,response[0].article,response[0].bank_statement,response[0].cr6_form,response[0].cr14_form,response[0].director_id,response[0].tax_clearance,response[0].vat_reg,response[0].certificate_of_incorporation);
+        
+             let processing=document.getElementById("processing");
+            processing.setAttribute("style","display:none");
+
+            let notAvailable=document.getElementById("notavailable");
+            notAvailable.setAttribute("style","display:none");
+
+             let found=document.getElementById("documents");
+            found.setAttribute("style","display:all");
+        }
+       
+        }
+    })
+
+}
+
+
+
 
 
 function getTenantsAssign() {
