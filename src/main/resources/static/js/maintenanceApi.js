@@ -213,8 +213,6 @@ function schedule() {
             "scheduleDate": $("#date-input1").val(),
             "team": $("#teamInput").val()
         }
-
-
     }
     $.ajax({
         dataType: "json",

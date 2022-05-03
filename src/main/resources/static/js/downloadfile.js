@@ -212,7 +212,7 @@ function getTenant() {
 
                         } },
                     {"data": function (row) {
-                            return `<a class="" href="./view_tenantDocuments.html" >
+                            return `<a class="" href="viewTenatDocuments" >
                             <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
                             </a>`;
                         },
@@ -464,8 +464,68 @@ var id = JSON.parse(localStorage.getItem("id"));
 function getLeaseDocument() {
    // $("#btn").prop("disabled", true);
 
+    //----------------------
+    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
 
-    $.ajax({
+            console.log(data);
+            $("#dataTable").DataTable({
+                data: data,
+                columns: [
+
+                    {"data":"id"},
+                    {"data":function (row) {
+                            return row.tenant.business_name;
+                        }},
+                    {"data":"startDate"},
+                    {"data":function(row) {
+
+                            if(row.status=="Active") {
+                            return `<span class="badge badge-pill badge-success ">A</span><small class="text-muted">`+row.status.substr(1,row.status.length);
+                            }else if(row.status=="Terminated"){
+                                return `<span class="badge badge-pill badge-danger ">T</span><small class="text-muted">`+row.status.substr(1,row.status.length);
+                            }else if(row.status=="Expired"){
+                                return `<span class="badge badge-pill badge-warning ">E</span><small class="text-muted">`+row.status.substr(1,row.status.length);
+                            }
+
+                        },
+                        "searchable":false
+                    },
+                    {"data":function (row) {
+
+                            return `<a  href="LeaseForm"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('`+row.id+`'),FetchRecord()">Open File</button> <button class="btn btn-sm" type="button" ></button></a>`;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data":function(row) {
+
+                            return `
+                            <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#" onclick="generateDocuments()">Genarate ExpiredLease Documents</a>
+                              </div>
+                            ` ;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    }
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+    //----------------------------
+
+   /* $.ajax({
         url: 'http://localhost:8090/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
@@ -485,10 +545,10 @@ function getLeaseDocument() {
             for (let i = 0; i < items.length; i++) {
                 let html = `<tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474 ${items[i].id}">
                             <td>${items[i].id}</td>
-                            <td>${items[i].name} </td>
+                            <td>${items[i].tenant.business_name} </td>
                             <td>${items[i].startDate}</td>
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].status}</td>
-                            <td> <a  href="./DeaseForm.html"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('${items[i].id}'),FetchRecord()">Open File</button>
+                            <td> <a  href="LeaseForm"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('${items[i].id}'),FetchRecord()">Open File</button>
                             <button class="btn btn-sm" type="button" >
                             </button>
                             </a>
@@ -515,7 +575,7 @@ function getLeaseDocument() {
             }
 
         }
-    })
+    })*/
 }
 function setAddTenantDropDown() {
     $.ajax({

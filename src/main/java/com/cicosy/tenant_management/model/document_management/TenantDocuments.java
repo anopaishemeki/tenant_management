@@ -136,4 +136,8 @@ public class TenantDocuments  {
     public void setCompany_profile(String company_profile) {
         this.company_profile = company_profile;
     }
+
+    public void setApplication_letter(String application_letter) {
+        this.application_letter = application_letter;
+    }
 }

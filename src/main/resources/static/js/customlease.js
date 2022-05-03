@@ -292,7 +292,7 @@ emailjs.send('gmail','template_rqpdjmc',tempParams)
 // change icon on search box and fetch searched data from view lease Notice table
 function ChangeIconAndSearch2(){
     var y=document.getElementById('searchbox');
-    y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
+    y.setAttribute("style","background-image:url('assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
 
     var t_body = document.getElementById("t_body");
 
@@ -543,6 +543,8 @@ function renewlease() {
             Close.setAttribute("style", "display:all");
             alert2('Lease Renewed Successfully !!', 'success')
 
+            let Cu= document.getElementById("hhh");
+            Cu.setAttribute("style", "display:none");
         }
         ,
         error: function (e) {
@@ -555,7 +557,9 @@ function renewlease() {
                 div.setAttribute("style", "display:none");
                 btn.setAttribute("style", "display:none");
                 Close.setAttribute("style", "display:all");
-                alert2('Lease Renewed Successfully !!', 'success')
+                alert2('Lease Renewed Successfully !!', 'success');
+                let Cu= document.getElementById("hhh");
+                Cu.setAttribute("style", "display:none");
                 console.log("ERROR : ", e);
                 return;
             } else if ((e.status.toString() == "500")) {
@@ -850,7 +854,7 @@ function FetchRecord() {
             console.log(response);
             var r=document.getElementById("formName");
             setLocalfile(response);
-             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
+             r.innerHTML=' <img src="assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
              var attr=document.getElementById("fileAttr");
              attr.setAttribute("style","margin-left: 10px;padding-left: 10px;padding-right:10px;display: all;background-color: white!important ;border-radius: 8%")
              // r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
@@ -948,6 +952,30 @@ function fetchRecord() {
 
 
 // Load Terminate Table
+
+function getImageProfile() {
+    var username=document.getElementById("Uname").innerText.trim() ;
+
+    console.log("wth innter text uname =",username);
+
+
+
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getUser/' + username,
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+
+            var profileImage=document.getElementById("profileImage");
+            if(response.photo==null){
+                profileImage.setAttribute("src","/assets/images/profileImages/avatar.jpg");
+            }else{
+                profileImage.setAttribute("src","/assets/images/profileImages/"+response.photo);
+            }
+        }
+
+    })
+}
 
 function T_Records() {
     var baseurl = "http://localhost:8090/api/v1/lease/getleases";
@@ -1116,10 +1144,10 @@ function getLeases() {
                         render:function (data) {
                         return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <span class="text-muted sr-only">Action</span></button>'+`
                             <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('`+data+`')">Edit</a>
+                            <a class="dropdown-item" href="Edit-Lease" onclick="setLocal('`+data+`')">Edit</a>
                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</a>
                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('`+data+`'),loadData() " href="#">Renew</a>
-                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('`+data+`')">View More Details</a>
+                            <a class="dropdown-item" href="Lease-Detail" onclick="setLocal('`+data+`')">View More Details</a>
                         </div>`
 
                     }}

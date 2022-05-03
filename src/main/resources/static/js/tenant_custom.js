@@ -67,7 +67,7 @@ function getTenants() {
                                 <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item"  onclick="LocalTenantID('`+row.id+`')" href="tenant_detail.html">View</a>
+                                <a class="dropdown-item"  onclick="LocalTenantID('`+row.id+`')" href="tenantDetail"">View</a>
                                 <a class="dropdown-item" href="#">Edit</a>
                                 <a class="dropdown-item" href="#">Assign</a>
                               </div>`
@@ -556,7 +556,7 @@ function searchFilter() {
                           </td>
                           <td>
                             <div class="avatar avatar-md">
-                              <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
+                              <img src="assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
                             </div>
                           </td>
                           <td>

@@ -5,9 +5,12 @@ import com.cicosy.tenant_management.controler.propertyManagement.CompartmentCont
 import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.tenantService.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping(value = "/api/tenants")
@@ -77,4 +80,9 @@ public class TenantController {
     }
 
 
+
+
+
 }
+
+

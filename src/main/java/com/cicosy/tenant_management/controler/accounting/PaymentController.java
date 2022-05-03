@@ -5,9 +5,12 @@ import com.cicosy.tenant_management.controler.tenantManagement.TenantController;
 import com.cicosy.tenant_management.model.accounting.Payment;
 import com.cicosy.tenant_management.service.accounting.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/api/payment")
@@ -70,4 +73,7 @@ public class PaymentController {
         }
         else return null;
     }
+
+
+
 }

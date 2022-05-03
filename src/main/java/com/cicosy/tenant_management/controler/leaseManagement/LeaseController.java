@@ -5,6 +5,8 @@ import com.cicosy.tenant_management.controler.document_management.message.Respon
 import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController2;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
+import com.cicosy.tenant_management.security.models.User;
+import com.cicosy.tenant_management.security.repositories.UserRepository;
 import com.cicosy.tenant_management.service.document_management.LeaseDocumentService;
 import com.cicosy.tenant_management.service.leaseManagement.LeaseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,10 +42,10 @@ public class LeaseController {
         this.compartmentController = compartmentController;
     }
 
-//    @GetMapping(path = "home")
-//    public List<Lease> getExpiredLeases(@PathVariable String Status) {
-//        return leaseService.getExpiredLeases(Status);
-//    }
+    @Autowired
+    private UserRepository userRepository;
+
+
 
 
     @GetMapping(path = "notice/{time}")
@@ -212,4 +216,13 @@ public class LeaseController {
 
         leaseService.SaveToHistory(leaseId, leaseHistory, status);
     }
+
+
+   @GetMapping("/getUser/{user}")
+    public User getUser(@PathVariable String user){
+       User systemUser =userRepository.findByUsername(user);
+        return systemUser;
+   }
+
+
 }

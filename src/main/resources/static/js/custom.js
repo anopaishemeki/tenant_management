@@ -42,7 +42,7 @@ function searchFilter() {
                           </td>
                           <td>
                             <div class="avatar avatar-md">
-                              <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
+                              <img src="assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
                             </div>
                           </td>
                           <td>
@@ -227,7 +227,7 @@ function appendCompartments() {
                                                         </td>
                                                         <td>
                                                             <div class="avatar avatar-sm">
-                                                                <img src="../../assets/avatars/data-random-squares.png" alt="..." class="avatar-img rounded-circle">
+                                                                <img src="assets/avatars/data-random-squares.png" alt="..." class="avatar-img rounded-circle">
                                                             </div>
                                                         </td>
                                                         <td>
@@ -495,8 +495,8 @@ function getProperties() {
                             <span class="text-muted sr-only">Action</span>
                           </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a class="dropdown-item" href="edit_property.html" onclick="setLocal('`+row.id+`')">Edit</a>
-                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('`+row.id+`','`+row.name+`')">View</a>
+                              <a class="dropdown-item" href="editProperty" onclick="setLocal('`+row.id+`')">Edit</a>
+                              <a class="dropdown-item" href="view-property" onclick="setLocal('`+row.id+`','`+row.name+`')">View</a>
                               <a class="dropdown-item" href="#">Assign</a>
                             </div>`
                         },
@@ -544,7 +544,7 @@ function getProperties() {
                           </td>
                           <td>
                             <div class="avatar avatar-md">
-                              <img src="../../assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
+                              <img src="assets/avatars/office-building.png" alt="..." class="avatar-img rounded-circle">
                             </div>
                           </td>
                           <td>
