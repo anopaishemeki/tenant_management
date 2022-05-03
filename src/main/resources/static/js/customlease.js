@@ -967,8 +967,12 @@ function getImageProfile() {
             console.log(response);
 
             var profileImage=document.getElementById("profileImage");
+           /* var profileName=document.getElementById("profileName");
+            profileName.setAttribute("th:href","@{/userEdit/"+response.username +"}");*/
             if(response.photo==null){
                 profileImage.setAttribute("src","/assets/images/profileImages/avatar.jpg");
+
+               // th:href ="${#authentication.getPrincipal().getUsername()}}"
             }else{
                 profileImage.setAttribute("src","/assets/images/profileImages/"+response.photo);
             }
