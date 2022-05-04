@@ -952,13 +952,31 @@ function fetchRecord() {
 
 
 // Load Terminate Table
+function setName(){
+    var username=document.getElementById("Uname").innerText.trim() ;
+    setNametoLocal(username)
 
+}
+function  setNametoLocal(username) {
+    localStorage.removeItem("username");
+    localStorage.setItem("username", JSON.stringify(username));
+}
+function getProfile(){
+    var username = JSON.parse(localStorage.getItem("username"));
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getUser/' +username,
+        type: 'GET',
+        success: function (response) {
+            var username=document.getElementById("Username");
+            username.value=response.username;
+            console.log(response);
+        }
+    })
+}
 function getImageProfile() {
     var username=document.getElementById("Uname").innerText.trim() ;
 
     console.log("wth innter text uname =",username);
-
-
 
     $.ajax({
         url: 'http://localhost:8090/api/v1/lease/getUser/' + username,
