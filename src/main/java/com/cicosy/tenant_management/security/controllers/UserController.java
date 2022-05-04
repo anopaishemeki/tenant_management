@@ -21,9 +21,8 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/userEdit/{username}")
-    public String getUser(Model model,@PathVariable String username) {
-        model.addAttribute("user", userService.findByUsername(username));
+    @GetMapping("/editProfile")
+    public String getUser() {
         return "/security/userEdit";
     }
 

@@ -198,4 +198,12 @@ public String LodgeRequest() {
     }
 
 
+
+
+
+    @GetMapping("/navbar")
+    public String getNabar() {
+        return "navbar";
+    }
+
 }
