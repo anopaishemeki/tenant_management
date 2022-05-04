@@ -208,23 +208,26 @@ function getTenant() {
 
                     {"data":"id"},
                     {"data": function (row) {
-                            return row.business_name;
+                            return row.name;
 
                         } },
                     {"data": function (row) {
-                            return `<a class="" href="viewTenatDocuments" >
+                            return `<a class="" th:href="@{/viewTenantDocuments}" >
                             <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
                             </a>`;
                         },
                         "sortable":false,
                         "searchable":false
                     },
-                    {"data":function(){
+                    {"data":function(row){
                             return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#" onclick="generateDocuments()">Genarate Reply Documents</a>
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal('`+row.id +`'),setAddTenantDropDown()">Tenant Reply Details</a>
+                              </div>
+                              <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">Generate Reply Documents</a>
                               </div>`;
                         },
                         "sortable":false,
@@ -421,7 +424,7 @@ function saveTenantDocument(){
 
                    },
                    error: function (e) {
-                       $('#errorModal').modal('show');
+
                        console.log(e);
                    }
 
@@ -464,68 +467,8 @@ var id = JSON.parse(localStorage.getItem("id"));
 function getLeaseDocument() {
    // $("#btn").prop("disabled", true);
 
-    //----------------------
-    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", baseurl, true);
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var data = JSON.parse(xmlhttp.responseText);
 
-            console.log(data);
-            $("#dataTable").DataTable({
-                data: data,
-                columns: [
-
-                    {"data":"id"},
-                    {"data":function (row) {
-                            return row.tenant.business_name;
-                        }},
-                    {"data":"startDate"},
-                    {"data":function(row) {
-
-                            if(row.status=="Active") {
-                            return `<span class="badge badge-pill badge-success ">A</span><small class="text-muted">`+row.status.substr(1,row.status.length);
-                            }else if(row.status=="Terminated"){
-                                return `<span class="badge badge-pill badge-danger ">T</span><small class="text-muted">`+row.status.substr(1,row.status.length);
-                            }else if(row.status=="Expired"){
-                                return `<span class="badge badge-pill badge-warning ">E</span><small class="text-muted">`+row.status.substr(1,row.status.length);
-                            }
-
-                        },
-                        "searchable":false
-                    },
-                    {"data":function (row) {
-
-                            return `<a  href="LeaseForm"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('`+row.id+`'),FetchRecord()">Open File</button> <button class="btn btn-sm" type="button" ></button></a>`;
-                        },
-                        "sortable":false,
-                        "searchable":false
-                    },
-                    {"data":function(row) {
-
-                            return `
-                            <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted sr-only">Action</span>
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#" onclick="generateDocuments()">Genarate ExpiredLease Documents</a>
-                              </div>
-                            ` ;
-                        },
-                        "sortable":false,
-                        "searchable":false
-                    }
-
-                ]
-            });
-        }
-    };
-    xmlhttp.send();
-
-    //----------------------------
-
-   /* $.ajax({
+    $.ajax({
         url: 'http://localhost:8090/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
@@ -545,10 +488,10 @@ function getLeaseDocument() {
             for (let i = 0; i < items.length; i++) {
                 let html = `<tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474 ${items[i].id}">
                             <td>${items[i].id}</td>
-                            <td>${items[i].tenant.business_name} </td>
+                            <td>${items[i].name} </td>
                             <td>${items[i].startDate}</td>
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].status}</td>
-                            <td> <a  href="LeaseForm"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('${items[i].id}'),FetchRecord()">Open File</button>
+                            <td> <a  href="./DeaseForm.html"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('${items[i].id}'),FetchRecord()">Open File</button>
                             <button class="btn btn-sm" type="button" >
                             </button>
                             </a>
@@ -575,7 +518,7 @@ function getLeaseDocument() {
             }
 
         }
-    })*/
+    })
 }
 function setAddTenantDropDown() {
     $.ajax({
@@ -625,3 +568,322 @@ function tenantAssignLocalTenant(tenantId) {
 
 
 }
+
+function saveReplyDetails() {
+
+
+    var data = new FormData();
+
+
+
+    var p=document.getElementById("addressline1");
+
+    if(p.value.toString().length==0){
+        alert("Address Line 1 is required","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var we =document.getElementById("addressline2");
+    if(we.value.toString().length==0){
+        alert("Address Line2 is Required","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+
+    var pr=document.getElementById("addressline3");
+    if(pr.value.toString().length==0){
+        alert(" Address line 3 is Required","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+
+
+    var ss=document.getElementById("shop_size");
+
+    if(ss.value.toString().length==0){
+        alert("Shop size is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var sso=document.getElementById("floor_number");
+
+    if(ss.value.toString().length==0){
+        alert("Floor is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var re=document.getElementById("rent");
+
+    if(re.value.toString().length==0){
+        alert("Rent fee is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var df=document.getElementById("deposit_fee");
+
+    if(df.value.toString().length==0){
+        alert("Deposit Fee is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var oc=document.getElementById("operation_cost");
+
+    if(oc.value.toString().length==0){
+        alert("Operation cost is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var lt=document.getElementById("lease_term");
+
+    if(lt.value.toString().length==0){
+        alert("Lease Term is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var fop=document.getElementById("fit_out_period");
+
+    if(fop.value.toString().length==0){
+        alert("Fit out Period is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+    var guh=document.getElementById("tenant_list");
+
+    if(fop.value.toString().length==0){
+        alert("Fit out Period is Required!!","danger");
+        var r=document.getElementById("retry");
+        r.setAttribute("style","display:all");
+
+        return
+    }
+
+
+
+    let tenantId = JSON.parse(localStorage.getItem("tenantId"));
+    console.log(tenantId)
+
+
+
+
+    var jsonDataObj = {
+        "business_name": $("#business_name").val(),
+        "addressline1": $("#addressline1").val(),
+        "addressline2": $("#addressline2").val(),
+        "addressline3": $("#addressline3").val(),
+        "fit_out_period": $("#fit_out_period").val(),
+        "lease_term":$("#lease_term").val(),
+        "operation_cost":$("#operation_cost").val(),
+        "deposit_fee":$("#deposit_fee").val(),
+        "rent":$("#rent").val(),
+        "shop_size":$("#shop_size").val(),
+        "floor_number":$("#floor_number").val(),
+    };
+    data.append("jsondata", JSON.stringify(jsonDataObj));
+    $("#btnSubmit").prop("disabled", false);
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8090/api/v1/replyDocuments",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (response) {
+
+            $('#exampleModal').modal('show');
+            console.log(response)
+
+        },
+        error: function (e) {
+            $('#errorModal').modal('show');
+            console.log(e);
+        }
+
+
+
+
+    });
+
+}
+function getReplyDetails(){
+    var id = JSON.parse(localStorage.getItem("id"));
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/getreply/' + id,
+        type: 'GET',
+        success: function (response) {
+            let obj= response
+            console.log(obj)
+
+            var t_body = document.getElementById("t_body");
+            while (t_body.hasChildNodes()) {
+                t_body.removeChild(t_body.firstChild);
+            }
+
+
+                let html = `<tr>
+                      <td bgcolor='#FFFFFF' style='text-align:left;' width='100%'>
+                        <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px; padding:0; font-weight:normal;margin-left:20px;'>
+                            The Director
+                          </p>
+                          <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px; padding:0; font-weight:normal;margin-left:20px;'>
+                            obj[0].deposit_fee
+                          </p>
+                          <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px; padding:0; font-weight:normal;margin-left:20px;'>
+                            ${obj[0].rent} ${obj.deposit_fee}
+                          </p>
+                          <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px; padding:0; font-weight:normal;margin-left:20px;'>
+                            {obj[0].deposit_fee}
+                          </p>
+                          <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px; padding:0; font-weight:normal;margin-left:20px;'>
+                            Harare
+                          </p>
+                        <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px;margin-left:20px; padding:0; font-weight:normal;'>
+                          Dear Sir /Madam
+                        </p>
+                        <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px;margin-left:20px; padding:0; font-weight:normal;'>
+                          We refer to your application letter for space to let at Joina City and are pleased to advice you that shop number
+                          ${items[i].floor_number}  on the floor ${items[i].floor_number}  has been reserved for you.
+                         </p><br><br>
+                        <p style='color:#222222; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:19px; margin-top:0; margin-bottom:20px;margin-left:20px; padding:0; font-weight:normal;'>
+                          The following will apply.<br>
+                            <br>Shop Size                                 -   ${items[i].shop_size} square metres<br>
+                               Rent                                       -   ${items[i].rent} per month excluding VAT
+                            <br>Deposit                                   -   ${items[i].deposit_fee}
+                            <br>Operating Cost                            -   ${items[i].operation_cost}<br>
+                               Lease Term                                 -   ${items[i].lease_term}<br>
+                               Shop Fit-Out Period                        -   ${items[i].fit_out_period}<br><br>
+
+
+                               A draft Lease Agreement will be generated  for your  perusal and the final Lease  Agreement will be generated thereafter for your signatures.
+
+
+                              <br><br><br> Terms and Conditions Shall be as per the Lease Agreement.<br><br><br>
+
+                              We hope you shall find all in order
+
+
+                            <br><br><br><br>
+                            Thank You
+
+                            <br><br><br><br>
+                            <strong>Francis Makuwa</strong>
+                            <strong>For New World Property Managers</strong>
+                            <br>
+
+                            {signature}
+
+                        </p>
+
+                      </td>
+                    </tr>`
+
+
+                let tr = document.createElement("tr");
+
+
+                tr.innerHTML = html;
+
+                t_body.appendChild(tr);
+
+
+
+
+        }
+    })
+}
+
+function getDoc(){
+    var id = JSON.parse(localStorage.getItem("id"));
+
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/exportreply/' + id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response)
+        },
+
+    })
+
+}
+function getDetails() {
+    // $("#btn").prop("disabled", true);
+    // ---------------------------
+
+    var baseurl = "http://localhost:8090/api/v1/getallreply";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#reply_table").DataTable({
+                data: data,
+                columns: [
+
+                    {"data": "id"},
+                    {
+                        "data": function (row) {
+                            return row.business_name;
+
+                        }
+                    },
+                    {
+                        "data": function (row) {
+                            return row.deposit_fee;
+
+                        }
+                    },
+                    {
+                        "data": function (row) {
+                            return row.rent;
+
+                        }
+                    },
+                    {
+                        "data": function (row) {
+                            return row.floor_number;
+
+                        }
+                    },
+
+                    {
+                        "data": function (row) {
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo"  href="./replydocuments.html">Generate Reply Documents</a>
+                              </div>`;
+                        },
+                        "sortable": false,
+                        "searchable": false
+                    }
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+}
+
