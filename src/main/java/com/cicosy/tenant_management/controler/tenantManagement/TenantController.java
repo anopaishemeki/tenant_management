@@ -5,9 +5,12 @@ import com.cicosy.tenant_management.controler.propertyManagement.CompartmentCont
 import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.service.tenantService.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping(value = "/api/tenants")
@@ -53,6 +56,17 @@ public class TenantController {
 
         }
 
+    @GetMapping("/getTenantByID/{id}")
+    public Tenant getTenantByID(@PathVariable Long id){
+        Tenant tenant=tenantService.getTenantByID(id);
+
+        tenant.setCompartmentObjectlist(compartmentController.getCompartmentsForSpecificTenant(tenant.getId()));
+        return tenant;
+
+    }
+
+
+
     public Tenant getTenant(Long id){
         return tenantService.getTenant(id);
         //for mpume
@@ -66,4 +80,9 @@ public class TenantController {
     }
 
 
+
+
+
 }
+
+

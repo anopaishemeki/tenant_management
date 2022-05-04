@@ -240,48 +240,48 @@ function getDetails() {
     //
     //
     //let st = document.createElement("script");
-    //st.setAttribute("src", "../../js/jquery.dataTables.min.js");
+    //st.setAttribute("src", "js/jquery.dataTables.min.js");
     //body.append(st);
     
       let a = document.createElement("script");
-      a.setAttribute("src","../../js/jquery.min.js");
+      a.setAttribute("src","js/jquery.min.js");
       body.append(a);
     //
     //
     //  let b = document.createElement("script");
-    //  b.setAttribute("src","../../js/popper.min.js");
+    //  b.setAttribute("src","js/popper.min.js");
     //  body.append(b);
     //
     //  let d= document.createElement("script");
-    //  d.setAttribute("src","../../js/moment.min.js");
+    //  d.setAttribute("src","js/moment.min.js");
     //  body.append(d);
     //
     //  let u= document.createElement("script");
-    //  u.setAttribute("src","../../js/bootstrap.min.js");
+    //  u.setAttribute("src","js/bootstrap.min.js");
     //  body.append(u);
     //
     //  let e= document.createElement("script");
-    //  e.setAttribute("src","../../js/simplebar.min.js");
+    //  e.setAttribute("src","js/simplebar.min.js");
     //  body.append(e);
     //
     //  let f= document.createElement("script");
-    //  f.setAttribute("src","../../js/jquery.stickOnScroll.js");
+    //  f.setAttribute("src","js/jquery.stickOnScroll.js");
     //  body.append(f);
     //
     //  let g= document.createElement("script");
-    //  g.setAttribute("src","../../js/config.js");
+    //  g.setAttribute("src","js/config.js");
     //  body.append(g);
     //
     //  let h= document.createElement("script");
-    //  h.setAttribute("src","../../js/bootstrap.bundle.min.js");
+    //  h.setAttribute("src","js/bootstrap.bundle.min.js");
     //  body.append(h);
     //
     //  let j= document.createElement("script");
-    //  j.setAttribute("src","../../js/popper.min.js");
+    //  j.setAttribute("src","js/popper.min.js");
     //  body.append(j);
     //
     //  let k= document.createElement("script");
-    //  k.setAttribute("src","../../js/apps.js");
+    //  k.setAttribute("src","js/apps.js");
     //  body.append(k);
     //
     //
@@ -290,7 +290,7 @@ function getDetails() {
     //
     //
     //  let rt=document.createElement("script");
-    //  rt.setAttribute("src","../../js/dataTables.bootstrap4.min.js");
+    //  rt.setAttribute("src","js/dataTables.bootstrap4.min.js");
     //  body.append(rt);
     //
     //

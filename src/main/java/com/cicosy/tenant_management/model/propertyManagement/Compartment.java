@@ -45,4 +45,12 @@ public class Compartment {
         this.tenantObject = tenantObject;
         this.tenant = tenant;
     }
+
+    public Long getTenant() {
+        return tenant;
+    }
+
+    public void setTenantObject(Tenant tenantObject) {
+        this.tenantObject = tenantObject;
+    }
 }

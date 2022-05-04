@@ -3,9 +3,12 @@ package com.cicosy.tenant_management.controler.propertyManagement;
 import com.cicosy.tenant_management.model.propertyManagement.Property;
 import com.cicosy.tenant_management.service.propertyManagement.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @CrossOrigin()
 @RestController
@@ -87,4 +90,11 @@ public class propertyController {
     public List<Object> propertyIdAndName(){
         return propertyService.getPropertyIdAndName();
     }
+
+
+
+
+
+
+
 }

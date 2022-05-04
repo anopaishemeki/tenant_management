@@ -3,9 +3,12 @@ package com.cicosy.tenant_management.controler.accounting;
 import com.cicosy.tenant_management.model.accounting.Services;
 import com.cicosy.tenant_management.service.accounting.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/api/services")
@@ -42,5 +45,9 @@ public class ServiceController {
         System.out.println(updateDetails);
         serviceService.updateService(id,updateDetails);
     }
+
+
+
+
 
 }

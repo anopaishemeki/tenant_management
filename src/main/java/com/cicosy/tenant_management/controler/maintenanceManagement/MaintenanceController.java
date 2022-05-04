@@ -5,10 +5,12 @@ import com.cicosy.tenant_management.model.maintenanceManagement.MaintenanceReque
 import com.cicosy.tenant_management.service.maintenanceManagement.MaintenanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("api/maintenance")
@@ -59,4 +61,7 @@ public class MaintenanceController {
     public ResponseEntity<Map<String, Boolean>> deleteRequest(@PathVariable Long id , AttendedRequest attendedRequestDetails){
         return maintenanceService.deleteRequest(id,attendedRequestDetails);
     }
+
+
 }
+

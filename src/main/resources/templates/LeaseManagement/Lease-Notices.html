@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>Tenant Management System</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="css/feather.css">
+    <link rel="stylesheet" href="css/customlease.css">
+    <link rel="stylesheet" href="css/all.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <!--<link rel="stylesheet" href="css/fontawesome.css">-->
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
+</head>
+<body class="vertical  light  " id="body" onload="getLeaseNotice()">
+<div class="wrapper">
+    <nav class="topnav navbar navbar-light">
+        <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+            <i class="fe fe-menu navbar-toggler-icon"></i>
+        </button>
+        <form class="form-inline mr-auto searchform text-muted">
+            <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
+                   placeholder="Type something..." aria-label="Search">
+        </form>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+                    <i class="fe fe-sun fe-16"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+                   data-target=".modal-shortcut">
+                    <span class="fe fe-grid fe-16"></span>
+                </a>
+            </li>
+            <li class="nav-item nav-notif">
+                <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+                   data-target=".modal-notif">
+                    <span class="fe fe-bell fe-16"></span>
+                    <span class="dot dot-md bg-success"></span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar avatar-sm mt-2">
+                <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+              </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <a class="dropdown-item" href="#">Activities</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+        <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+            <i class="fe fe-x"><span class="sr-only"></span></i>
+        </a>
+        <nav class="vertnav navbar navbar-light">
+            <!-- nav bar -->
+            <div class="w-100 mb-4 d-flex">
+                <a class="navbar-brand mx-auto mt-2 flex-fill text-center" th:href="@{/index}">
+                    <img  src="assets/logo/joina-logo.jpg"  alt="joina-logo" style="margin-left:-40px">
+                </a>
+            </div>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <li class="nav-item dropdown">
+                    <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-home fe-16"></i>
+                        <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                        <li class="nav-item active">
+                            <a class="nav-link pl-3" th:href="@{/index}"><span class="ml-1 item-text">Default</span></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Components</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <li class="nav-item dropdown">
+                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle nav-link">
+                        <i class="fe fe-box fe-16"></i>
+                        <span class="ml-3 item-text">Property Portfolios</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/propertyList}"><span
+                                    class="ml-1 item-text">Portfolio List</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addProperty}"><span
+                                    class="ml-1 item-text">Add Portfolio</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addCompartment}"><span
+                                    class="ml-1 item-text">Add Lettable space</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-credit-card fe-16"></i>
+                        <span class="ml-3 item-text">Tenants</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/tenantList}"><span
+                                    class="ml-1 item-text">Tenant List</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addTenant}"><span
+                                    class="ml-1 item-text">Add Tenant</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/assignProperty}"><span
+                                    class="ml-1 item-text">Assign Property</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-grid fe-16"></i>
+                        <span class="ml-3 item-text">Leasing</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/View-Lease}"><span
+                                    class="ml-1 item-text">View Leases</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/AddLease}"><span
+                                    class="ml-1 item-text">Add Lease</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/Terminate-Lease}"><span
+                                    class="ml-1 item-text">Terminate </span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3"  th:href="@{/View-Renewed}"><span
+                                    class="ml-1 item-text">Renewed Leases </span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/Lease-Notices}"><span
+                                    class="ml-1 item-text">Lease Notices </span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-pie-chart fe-16"></i>
+                        <span class="ml-3 item-text">Documents</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addTenantDocuments}"><span class="ml-1 item-text">Add Tenant Documents</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
+                                    class="ml-1 item-text">Tenant Documents</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/noticedocuments}"><span
+                                    class="ml-1 item-text">Notice Documents</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/leasedocuments}"><span
+                                    class="ml-1 item-text">Lease Documents </span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#maintenance" data-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle nav-link">
+                        <i class="fe fe-pie-chart fe-16"></i>
+                        <span class="ml-3 item-text">Maintenance</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/request}"><span
+                                    class="ml-1 item-text">Requests</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/schedule}"><span
+                                    class="ml-1 item-text">Schedule</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/overdueRequest}"><span
+                                    class="ml-1 item-text">Overdue</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/pending}"><span
+                                    class="ml-1 item-text">Pending</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Finance</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+
+                <li class="nav-item dropdown">
+                    <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Accounts</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                        <a class="nav-link pl-3" th:href="@{/Payments}"><span class="ml-1">Payments</span></a>
+                        <a class="nav-link pl-3" th:href="@{/Invoicing}"><span class="ml-1">Invoicing</span></a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Services</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                        <a class="nav-link pl-3" th:href="@{/ServiceList}"><span class="ml-1">Service List</span></a>
+                        <a class="nav-link pl-3" th:href="@{/AddService}"><span class="ml-1">Add Services</span></a>
+                    </ul>
+                </li>
+
+            </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Other</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <li class="nav-item dropdown">
+                    <a href="#apllicants" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Tenant Applications</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="apllicants">
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Application List</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Waiting List</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Rejected Application</span></a>
+                    </ul>
+                </li>
+            </ul>
+
+        </nav>
+    </aside>
+    <main role="main" class="main-content">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h2 class="mb-2 page-title">Leases About To Expire</h2>
+                    <p class="card-text">lease management</p>
+                    <div class="row my-4">
+                        <!-- Small table -->
+                        <div class="col-md-12">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <div>
+                                        <div class="form-row Customtopnav" style="margin-right: 0!important;margin-left:0!important;">
+
+                                            <div class="form-group d-flex justify-content-start">
+                                                <div class="form-group  " style="width: 120px;">
+                                                    <div class="d-flex justify-content-center"><label
+                                                            style="font-weight:bold;" for="adjT">Adjust Time</label>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <input class="form-control" style="width: 60%" id="adjT"
+                                                               oninput="getLeaseNotice()" type="number" name="number"
+                                                               value="30" min="0">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group  ">
+                                                    <div style="padding-left: 10px">
+                                                        <div class="d-flex justify-content-center"><label
+                                                                style="font-weight: bold;" for="opt"> Unit :</label>
+                                                        </div>
+                                                        <select class="form-control" oninput="getLeaseNotice()"
+                                                                id="opt">
+
+                                                            <option value="day" selected>Days</option>
+                                                            <option value="month">Months</option>
+                                                            <option value="year">Years</option>
+                                                        </select>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group" style="margin-left: auto!important;">
+                                                <div>
+                                                    <input type="text" id="searchbox" name="search"
+                                                           placeholder="Search.." onkeyup="ChangeIconAndSearch2()">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- table -->
+                                    <table class="table table-hover  dataTables table-borderless border-v" id="dataTable"  style="width:100%!important;">
+                                        <thead class="thead-dark">
+                                        <tr>
+
+                                            <th>ID</th>
+                                            <th>Business</th>
+                                            <th>Portfolio & Location</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Status</th>
+                                            <th>Days Left</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="t_body">
+                                            
+                                        </tbody>
+
+
+                                    </table>
+
+
+
+                                    <!-- table -->
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                         data-bs-backdrop="static"
+                                         data-bs-keyboard="false">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Expiry
+                                                        Notification Dialog</h5>
+                                                    <a href="">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="alert alert-info" role="alert" id="alerrt">
+
+
+                                                        <div>
+                                                            <div class="col-md-6 mb-2">
+                                                                <ul class="nav nav-pills" id="pills-tab2"
+                                                                    role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link px-3 active"
+                                                                           id="pills-home-tab2" data-toggle="pill"
+                                                                           href="#email" role="tab"
+                                                                           aria-controls="pills-home2"
+                                                                           aria-selected="true"><span
+                                                                                class="fe fe-16 fe-mail"
+                                                                                style="font-size: 25px;color: darkred"
+                                                                                onclick="showEmailfooter()"></span></a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link px-3" id="pills-profile-tab2"
+                                                                           data-toggle="pill" href="#pills-profile2"
+                                                                           role="tab" aria-controls="pills-profile2"
+                                                                           aria-selected="false"><span
+                                                                                class="fe fe-16 fe-phone"
+                                                                                style="font-size: 25px;color: darkgreen"
+                                                                                onclick="showPhonefooter()"></span></a>
+                                                                    </li>
+                                                                    <li class="nav-item" style="display: none">
+                                                                        <a class="nav-link px-3" id="pills-contact-tab2"
+                                                                           data-toggle="pill" href="#pills-contact2"
+                                                                           role="tab" aria-controls="pills-contact"
+                                                                           aria-selected="false"><span
+                                                                                class="fe fe-16 fe-coffee"
+                                                                                style="font-size: 25px"></span></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <div class="tab-content mb-2" id="pills-tabContent2">
+                                                                    <div class="tab-pane fade show active" id="email"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="pills-home-tab2">
+                                                                        <div class="card mb-0">
+                                                                            <div class="card-body"
+                                                                                 style="padding-top: 10px;padding-bottom: 10px;">
+                                                                                <div id="liveAlertPlaceholderEmail"></div>
+                                                                                <div id="mailSentToast" class="mt-3" style="display: none">
+                                                                                    <div class="toast-body alert alert-success" >
+                                                                                        Mail Sent Sucessfully<span class="fe fe-12 fe-check ml-3" ></span>
+                                                                                    </div>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a th:href="@{/Lease-Notices}">
+                                                                                            <button type="button" class="btn btn-success"
+                                                                                                    data-bs-dismiss="modal" id="Close2">
+                                                                                                Ok
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="mailNotSentToast" class="mt-3" style="display: none">
+
+                                                                                    <div class="toast-body alert alert-danger" id="mailunsent" >
+                                                                                       Failed ,  Mail Sending Failed, Close & Try Again <span class="fe fe-12 fe-alert-triangle ml-3" ></span>
+                                                                                    </div>
+                                                                                    <!--<div class="d-flex justify-content-center">
+                                                                                        <a href="./Lease-Notices.html">
+                                                                                            <button type="button" class="btn btn-success"
+                                                                                                    data-bs-dismiss="modal" id="Close4">
+                                                                                                Ok
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>-->
+                                                                                </div>
+                                                                                <div style="width: 100%" id="mailform">
+                                                                                    <div class="d-flex justify-content-center">
+
+                                                                                        <h5><label>ID = <span id="tID"> 23</span></label>
+                                                                                        </h5>
+                                                                                    </div>
+                                                                                    <div class="row mb-3">
+                                                                                        <div class="col-md-4 col-sm-6">
+                                                                                            <label for="tName"><h5>
+                                                                                                Name</h5></label>
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 one">
+                                                                                            <input type="text"
+                                                                                                   style="width: 100%;"
+                                                                                                   id="tName" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-3">
+                                                                                        <div class="col-md-4 col-sm-6 ">
+                                                                                            <label for="T_email"><h5>
+                                                                                                Email</h5></label>
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 one">
+                                                                                            <input type="email"
+                                                                                                   style="width: 100%;"
+                                                                                                   id="T_email">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row mb-3">
+                                                                                        <div class="col-md-4 col-sm-6">
+                                                                                            <label for="subject"><h5>
+                                                                                                Subject</h5></label>
+                                                                                        </div>
+                                                                                        <div class="col-md-6 col-sm-6 one">
+                                                                                            <input type="text"
+                                                                                                   style="width: 100%;"
+                                                                                                   id="subject">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-2">
+                                                                                        <label><h5>Message</h5></label>
+                                                                                    </div>
+                                                                                    <div style="width:100%;"
+                                                                                         class="  d-flex justify-content-center">
+
+                                                                                        <textarea style="width: 100%"
+                                                                                                  rows="5"
+                                                                                                  id="cont">Anim pariatur
+cliche reprehenderit, enim eiusmod
+high life accusamus terry richardson ad squid. 3
+wolf moon officia aute, non cupidatat skateboard
+dolor brunch. Food truck quinoa nesciunt laborum
+eiusmod. Brunch 3 wolf moon tempor, sunt aliqua
+put a bird on it squid single-origin coffee
+nulla assumenda shoreditch et.
+Anim pariatur cliche reprehenderit, enim eiusmod
+high life accusamus terry richardson ad squid. 3
+wolf moon officia aute, non cupidatat skateboard
+dolor brunch. Food truck quinoa nesciunt laborum
+eiusmod. Brunch 3 wolf moon tempor, sunt aliqua
+put a bird on it squid single-origin coffee
+nulla assumenda shoreditch et.
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane fade" id="pills-profile2"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="pills-profile-tab2">
+                                                                        <div class="card">
+                                                                            <div style="width: 100%" class="card-body">
+                                                                                <div class="d-flex justify-content-center">
+                                                                                    <h5><label>ID =<span
+                                                                                            id="tID2"> 23</span></label>
+                                                                                    </h5>
+                                                                                </div>
+                                                                                <div class="row mb-3">
+                                                                                    <div class="col-md-4 col-sm-6">
+                                                                                        <label for="tName2"><h5>
+                                                                                            Name</h5></label>
+                                                                                    </div>
+                                                                                    <div class="col-md-6 col-sm-6 one">
+                                                                                        <input type="text"
+                                                                                               style="width: 100%;"
+                                                                                               id="tName2" disabled>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row mb-3">
+                                                                                    <div class="col-md-4 col-sm-6 ">
+                                                                                        <label for="phone"><h5>
+                                                                                            Phone</h5></label>
+                                                                                    </div>
+                                                                                    <div class="col-md-6 col-sm-6 one">
+                                                                                        <input type="phone"
+                                                                                               style="width: 100%;"
+                                                                                               id="phone">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div style="width:100%;"
+                                                                                     class="  d-flex justify-content-center">
+                                                                                    <div style="padding-top: 20px">
+                                                                                        <div class="p-3"><a href="#"
+                                                                                                            onclick="call()"><i
+                                                                                                style="font-size:50px"
+                                                                                                class="fe fe-24 fe-phone-call"></i></a>
+                                                                                        </div>
+
+                                                                                        <h6><span
+                                                                                                class="small text-muted"><span
+                                                                                                class="mls"> Click  To <span
+                                                                                                class="circle"
+                                                                                                style="background: none;border: none"> <i
+                                                                                                class="fe fe-24 fe-chevrons-up"></i> </span>  Make the Call Using PC</span></span>
+                                                                                        </h6>
+                                                                                        <span class="pulse"
+                                                                                              style="display: none"></span>
+                                                                                        <!--<span class="fe fe-24 fe-chevrons-up"></span>-->
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane fade" id="pills-contact2"
+                                                                         role="tabpanel"
+                                                                         aria-labelledby="pills-contact-tab2"
+                                                                         style="display: none">
+                                                                        Anim pariatur cliche reprehenderit, enim eiusmod
+                                                                        high life accusamus terry richardson ad squid. 3
+                                                                        wolf moon officia aute, non cupidatat skateboard
+                                                                        dolor brunch. Food truck quinoa nesciunt laborum
+                                                                        eiusmod. Brunch 3 wolf moon tempor, sunt aliqua
+                                                                        put a bird on it squid single-origin coffee
+                                                                        nulla assumenda shoreditch et.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
+                                                    <div id="phonefooter" style="display: none">
+                                                        <a th:href="@{/Lease-Notices}">
+                                                            <button type="button" class="btn btn-success"
+                                                                    data-bs-dismiss="modal" id="Close">
+                                                                Done
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div id="emailfooter">
+                                                        <a th:href="@{/Lease-Notices}">
+                                                            <button type="button" class="btn btn-success"
+                                                                    data-bs-dismiss="modal" id="Close3"
+                                                                    style="display: none">Ok
+                                                            </button>
+                                                        </a>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
+                                                        </button>
+                                                        <button type="button" id="liveAlertBtn" class="btn btn-primary"
+                                                                onclick="SendMail()">Send <i
+                                                                class="fe fe-20 fe-navigation"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- simple table -->
+                    </div> <!-- end section -->
+                </div> <!-- .col-12 -->
+            </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group list-group-flush my-n3">
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-box fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Package has uploaded successfull</strong></small>
+                                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-download fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Widgets are updated successfull</strong></small>
+                                        <div class="my-0 text-muted small">Just create new layout Index, form, table
+                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-inbox fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Notifications have been sent</strong></small>
+                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-link fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Link was attached to menu</strong></small>
+                                        <div class="my-0 text-muted small">New layout has been attached to the menu
+                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                                    </div>
+                                </div>
+                            </div> <!-- / .row -->
+                        </div> <!-- / .list-group -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
+             aria-labelledby="defaultModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-5">
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-success justify-content-center">
+                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Control area</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Activity</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Droplet</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Upload</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Users</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Settings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main> <!-- main -->
+
+</div> <!-- .wrapper -->
+
+<style>
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+        color: #ffffff;
+        background-color: lightgrey !important;
+    }
+
+    @media (max-width: 576px) {
+        .col-sm-6 {
+            width: 40%;
+        }
+
+        .one {
+            width: auto;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .p-3 a, .p-3 a:hover {
+        text-decoration: none;
+    }
+
+    .p-3 a:hover {
+        color: darkgreen;
+    }
+
+    .circle {
+        background-color: #fff;
+        height: 40px;
+        width: 30px;
+        display: block;
+        border: 1px solid #00baff;
+        border-radius: 100px;
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        animation-name: circle;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-play-state: running;
+        -webkit-animation-name: circle;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-delay: 0s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        -webkit-animation-play-state: running;
+    }
+
+    .circle .fe {
+        font-size: 30px;
+        color: #00baff;
+        bottom: 27px;
+        position: absolute;
+        left: 50%;
+        /*margin-left: -18px;*/
+        animation-name: arrow;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-play-state: running;
+        -webkit-animation-name: arrow;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-delay: 0s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        -webkit-animation-play-state: running;
+    }
+
+    .pulse {
+        margin: 0 auto;
+        border-radius: 100px;
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        z-index: 0;
+        background-color: transparent;
+        opacity: 0;
+        width: 110px;
+        height: 110px;
+        border: 10px solid #00baff;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+        -o-border-radius: 100px;
+        -ms-border-radius: 100px;
+        border-radius: 100px;
+        /* Giving Animation Function */
+        -webkit-animation: pulse 1s linear infinite 0.3s;
+        -moz-animation: pulse 1s linear infinite 0.3s;
+        border-image: initial;
+    }
+
+    @keyframes arrow {
+        0% {
+            bottom: 0;
+        }
+        75% {
+            bottom: 30px;
+        }
+        100% {
+            bottom: 0;
+        }
+    }
+
+    @-webkit-keyframes arrow {
+        0% {
+            bottom: 0;
+        }
+        75% {
+            bottom: 30px;
+        }
+        100% {
+            bottom: 0;
+        }
+    }
+
+    @keyframes circle {
+        0% {
+            height: 10px;
+        }
+        10% {
+            height: 10px;
+        }
+        50% {
+            height: 20px;
+        }
+        75% {
+            height: 30px;
+        }
+        90% {
+            height: 35px;
+        }
+        100% {
+            height: 30px;
+        }
+    }
+
+    @-webkit-keyframes circle {
+        0% {
+            height: 10px;
+        }
+        10% {
+            height: 10px;
+        }
+        50% {
+            height: 20px;
+        }
+        75% {
+            height: 30px;
+        }
+        90% {
+            height: 35px;
+        }
+        100% {
+            height: 30px;
+        }
+    }
+
+    @-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        8% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        15% {
+            -webkit-transform: scale(0.1);
+            opacity: 1;
+        }
+        30% {
+            -webkit-transform: scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: scale(1.5);
+        }
+    }
+
+    @-moz-keyframes pulse {
+        0% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        8% {
+            -webkit-transform: scale(0);
+            opacity: 0;
+        }
+        15% {
+            -webkit-transform: scale(0.1);
+            opacity: 1;
+        }
+        30% {
+            -webkit-transform: scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            -webkit-transform: scale(1.5);
+        }
+    }
+</style>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/simplebar.min.js"></script>
+<script src='js/daterangepicker.js'></script>
+<script src='js/jquery.stickOnScroll.js'></script>
+<script src="js/tinycolor-min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/apps.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/customlease.js"></script>
+<script src='js/bootstrap.bundle.min.js'></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>-->
+<!-- <script src="js/dataTables.bootstrap4.min.js"></script>
+<script src='js/jquery.dataTables.min.js'></script> -->
+<script src="js/email.min.js"></script>
+<script type="text/javascript">
+    (function () {
+        emailjs.init("D-bkYkdt8KPF0Wdop");
+    })();
+</script>
+
+
+</body>
+</html>
+
+
+
+
+

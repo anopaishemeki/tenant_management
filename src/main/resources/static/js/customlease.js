@@ -33,22 +33,12 @@ function saveLease() {
     }
     var we = document.getElementById("leaseName");
     if (we.value.toString().length == 0) {
-        alert("Tenant Name is Required", "danger");
+        alert("Business Name is Required", "danger");
         var r = document.getElementById("retry");
         r.setAttribute("style", "display:all");
 
         return
     }
-
-    var pr = document.getElementById("buildingLocation");
-    if (pr.value.toString().length == 0) {
-        alert("Building Location is Required", "danger");
-        var r = document.getElementById("retry");
-        r.setAttribute("style", "display:all");
-
-        return
-    }
-
 
     var qs = document.getElementById("file");
 
@@ -62,10 +52,7 @@ function saveLease() {
 
 
     var jsonDataObj = {
-        "tenant_id":$("#id").val(),
-        "name": $("#leaseName").val(),
-        "buildingName": $("#buildingName").val(),
-        "buildingLocation": $("#buildingLocation").val(),
+        "tenant_id":$("#leaseName").val(),
         "startDate": $("#startDate").val(),
         "duration": $("#duration").val(),
         "terms": $("#terms").val()
@@ -131,6 +118,8 @@ function setLocal(id) {
     localStorage.setItem("id", JSON.stringify(id));
 
 }
+
+
 function setLocalfile(file){
     // var file=document.getElementById("formName2").innerText;
     localStorage.removeItem("file");
@@ -303,7 +292,7 @@ emailjs.send('gmail','template_rqpdjmc',tempParams)
 // change icon on search box and fetch searched data from view lease Notice table
 function ChangeIconAndSearch2(){
     var y=document.getElementById('searchbox');
-    y.setAttribute("style","background-image:url('../../assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
+    y.setAttribute("style","background-image:url('assets/images/giphy.gif'); background-size :60px 60px; background-position: top -10px left -10px");
 
     var t_body = document.getElementById("t_body");
 
@@ -357,17 +346,21 @@ function ChangeIconAndSearch2(){
 
 }
 // store notice data
-function setNotice(id, name, status, endDate,timeLeft) {
+function setNotice(id, name, status, endDate,timeLeft,email,phone) {
     localStorage.removeItem("id");
     localStorage.removeItem("name");
     localStorage.removeItem("status");
     localStorage.removeItem("endDate");
     localStorage.removeItem("tLeft");
+    localStorage.removeItem("email");
+    localStorage.removeItem("phone");
     localStorage.setItem("id", JSON.stringify(id));
     localStorage.setItem("tLeft", JSON.stringify(timeLeft));
     localStorage.setItem("name", JSON.stringify(name));
     localStorage.setItem("status", JSON.stringify(status));
     localStorage.setItem("endDate", JSON.stringify(endDate));
+    localStorage.setItem("email", JSON.stringify(email));
+    localStorage.setItem("phone", JSON.stringify(phone));
 }
 //customising notice modal
 function showPhonefooter(){
@@ -391,12 +384,15 @@ function loaddata() {
     var endDate = JSON.parse(localStorage.getItem("endDate"));
     var status = JSON.parse(localStorage.getItem("status"));
 
+    var email = JSON.parse(localStorage.getItem("email"));
+    var phone = JSON.parse(localStorage.getItem("phone"));
 
     var nametag = document.getElementById("tName");
     var idtag = document.getElementById("tID");
     var nametag2 = document.getElementById("tName2");
     var idtag2 = document.getElementById("tID2");
-
+    var phone2 = document.getElementById("phone");
+    var email2 =document.getElementById("T_email");
 
 
 
@@ -410,18 +406,9 @@ function loaddata() {
     }
 
 
-    let Name = name.split(" ")[0];
-    let surname = "";
-    if ((name.split(" ").length)>2) {
-        surname = name.split(" ")[2];
-    } else {
-        surname = name.split(" ")[1];
-    }
-    var phone = document.getElementById("phone");
-    var email =document.getElementById("T_email");
 
-    console.log("Name :",Name);
-    console.log("Surame :",surname);
+
+
 
     var message="";
 
@@ -439,16 +426,20 @@ function loaddata() {
     MessageBox.value=message;
 
     var subject=document.getElementById("subject");
-    subject.value="Lease Expiry Notice"
+    subject.value="Lease Expiry Notice";
 
-    $.ajax({
+
+    email2.value=email;
+    phone2.value = phone;
+
+  /*  $.ajax({
         type: "GET",
         url: "http://localhost:8090/api/v1/lease/getEmail/" + Name + "/" + surname,
         success: function (response) {
             console.log("Email: ",response);
             email.value=response.split(",")[0];
             if (phone) {
-                phone.value = response.split(",")[1];;
+                phone.value = response.split(",")[1];
 
             }
 
@@ -465,7 +456,7 @@ function loaddata() {
         }
 
 
-    })
+    })*/
 
 
 }
@@ -494,7 +485,7 @@ function loadData() {
             let nametag = document.getElementById("TenantName2");
             if (nametag) {
 
-                nametag.value= response.name;
+                nametag.value= response.tenant.business_name;
                 setLocalTenantID(response.tenant_id)
             }
 
@@ -552,6 +543,8 @@ function renewlease() {
             Close.setAttribute("style", "display:all");
             alert2('Lease Renewed Successfully !!', 'success')
 
+            let Cu= document.getElementById("hhh");
+            Cu.setAttribute("style", "display:none");
         }
         ,
         error: function (e) {
@@ -564,7 +557,9 @@ function renewlease() {
                 div.setAttribute("style", "display:none");
                 btn.setAttribute("style", "display:none");
                 Close.setAttribute("style", "display:all");
-                alert2('Lease Renewed Successfully !!', 'success')
+                alert2('Lease Renewed Successfully !!', 'success');
+                let Cu= document.getElementById("hhh");
+                Cu.setAttribute("style", "display:none");
                 console.log("ERROR : ", e);
                 return;
             } else if ((e.status.toString() == "500")) {
@@ -815,6 +810,10 @@ function FetchRecord() {
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
+
+            let  b_name = document.getElementById("b_name");
+            let  b_phone = document.getElementById("b_phone");
+
             let duration = document.getElementById("duration");
             let startDate = document.getElementById("startDate");
             let status = document.getElementById("status");
@@ -823,10 +822,13 @@ function FetchRecord() {
             let terms = document.getElementById("terms");
 
 
+            
             id.innerText = `${response.id}`;
-            tenantName.value = `${response.name}`;
-            buildingName.value = `${response.buildingName}`;
-            buildingLocation.value = `${response.buildingLocation}`;
+            b_name.value=`${response.tenant.business_name}`;
+            b_phone.value=`${response.tenant.b_phone}`;
+            tenantName.value = `${response.tenant.name} ${response.tenant.surname}`;
+            buildingName.value = `${response.tenant.property}`;
+            buildingLocation.value = `${response.tenant.city}`;
             duration.value = `${response.duration}`;
             startDate.value = `${response.startDate}`;
             status.value = `${response.status}`;
@@ -852,7 +854,7 @@ function FetchRecord() {
             console.log(response);
             var r=document.getElementById("formName");
             setLocalfile(response);
-             r.innerHTML=' <img src="../../assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
+             r.innerHTML=' <img src="assets/images/pdf.png" alt="No File" height="85px" width="60px" style="margin-top: 12px"/>';
              var attr=document.getElementById("fileAttr");
              attr.setAttribute("style","margin-left: 10px;padding-left: 10px;padding-right:10px;display: all;background-color: white!important ;border-radius: 8%")
              // r.innerHTML='<i class="fe fe-file-text" style="font-size:80px;"></i>'
@@ -894,6 +896,10 @@ function fetchRecord() {
 
 
             let id = document.getElementById("id");
+
+            let b_name = document.getElementById("b_name");
+            let b_phone = document.getElementById("b_phone");
+
             let buildingName = document.getElementById("buildingName");
             let tenantName = document.getElementById("TenantName");
             let buildingLocation = document.getElementById("buildingLocation");
@@ -908,9 +914,11 @@ function fetchRecord() {
 
 
             id.innerText = `${response.id}`;
-            tenantName.value = `${response.name}`;
-            buildingName.value = `${response.buildingName}`;
-            buildingLocation.value = `${response.buildingLocation}`;
+            b_name.value = `${response.tenant.business_name}`;
+            b_phone.value = `${response.tenant.phone}`;
+            tenantName.value = `${response.tenant.name}`;
+            buildingName.value = `${response.tenant.property}`;
+            buildingLocation.value = `${response.tenant.city}`;
             duration.value = `${response.duration}`;
             startDate.value = `${response.startDate}`;
             status.value = `${response.status}`;
@@ -921,6 +929,8 @@ function fetchRecord() {
             let terminate = "Terminated";
             let Cstatus = `${response.status}`;
             if (terminate == Cstatus) {
+                b_name.setAttribute("disabled", true);
+                b_phone.setAttribute("disabled", true);
                 tenantName.setAttribute("disabled", true);
                 buildingName.setAttribute("disabled", true);
                 buildingLocation.setAttribute("disabled", true);
@@ -942,6 +952,52 @@ function fetchRecord() {
 
 
 // Load Terminate Table
+function setName(){
+    var username=document.getElementById("Uname").innerText.trim() ;
+    setNametoLocal(username)
+
+}
+function  setNametoLocal(username) {
+    localStorage.removeItem("username");
+    localStorage.setItem("username", JSON.stringify(username));
+}
+function getProfile(){
+    var username = JSON.parse(localStorage.getItem("username"));
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getUser/' +username,
+        type: 'GET',
+        success: function (response) {
+            var username=document.getElementById("Username");
+            username.value=response.username;
+            console.log(response);
+        }
+    })
+}
+function getImageProfile() {
+    var username=document.getElementById("Uname").innerText.trim() ;
+
+    console.log("wth innter text uname =",username);
+
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/lease/getUser/' + username,
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+
+            var profileImage=document.getElementById("profileImage");
+           /* var profileName=document.getElementById("profileName");
+            profileName.setAttribute("th:href","@{/userEdit/"+response.username +"}");*/
+            if(response.photo==null){
+                profileImage.setAttribute("src","/assets/images/profileImages/avatar.jpg");
+
+               // th:href ="${#authentication.getPrincipal().getUsername()}}"
+            }else{
+                profileImage.setAttribute("src","/assets/images/profileImages/"+response.photo);
+            }
+        }
+
+    })
+}
 
 function T_Records() {
     var baseurl = "http://localhost:8090/api/v1/lease/getleases";
@@ -955,13 +1011,11 @@ function T_Records() {
                 data:data,
                 columns:[
                     {"data":"id"},
-                    {"data":"name",
-                        render:function(data){
-                            return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                    {"data":function(row){
+                            return row.tenant.business_name;
                         }},
-                    {"data":"buildingName",
-                        render:function(data){
-                            return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
+                    {"data":function(row){
+                            return row.tenant.property;
                         }},
 
                     {"data":"startDate",
@@ -988,7 +1042,7 @@ function T_Records() {
                         "sortable":false,
                         "searchable":false,
                         render:function (data) {
-                            return ` <a href="#"> <span class="badge badge-pill badge-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</span></a>`
+                            return ` <a href="#"> <span class="badge badge-pill badge-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" >Terminate</span></a>`
 
                         }}
                     ],
@@ -1073,18 +1127,18 @@ function getLeases() {
                 data:data,
                 columns:[
                     {"data":"id"},
-                    {"data":"name",
-                    render:function(data){
-                        return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                    {"data":function(row){
+                        return row.tenant.business_name;
                     }},
-                    {"data":"buildingName",
-                        render:function(data){
-                            return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
+                    {"data":function(row){
+                            return row.tenant.property;
                         }},
-                    {"data":"buildingLocation",
-                        render:function(data){
-                            return " <a href='https://www.google.com/maps/search/"+data+"/' rel='noopener noreferrer' style='text-decoration: none;' target='_blank'> <i class='fe fe-map-pin' style='color: blue'></i></a> <strong>"+data+"</strong>"
-                        }},
+                    {"data":function(row){
+                            return row.tenant.b_phone;
+                        },
+                        "sortable":false,
+                        "searchable":false,
+                        },
 
                     {"data":"startDate",
                         render:function(data){
@@ -1112,10 +1166,10 @@ function getLeases() {
                         render:function (data) {
                         return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <span class="text-muted sr-only">Action</span></button>'+`
                             <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="Edit-Lease.html" onclick="setLocal('`+data+`')">Edit</a>
+                            <a class="dropdown-item" href="Edit-Lease" onclick="setLocal('`+data+`')">Edit</a>
                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</a>
                             <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('`+data+`'),loadData() " href="#">Renew</a>
-                            <a class="dropdown-item" href="./LeaseDetail.html" onclick="setLocal('`+data+`')">View More Details</a>
+                            <a class="dropdown-item" href="Lease-Detail" onclick="setLocal('`+data+`')">View More Details</a>
                         </div>`
 
                     }}
@@ -1147,13 +1201,11 @@ function getRenewedLeases() {
                 data:data,
                 columns:[
                     {"data":"tenant_id"},
-                    {"data":"name",
-                        render:function(data){
-                            return "<i class='fe fe-user'></i> <strong>"+data+"</strong>"
+                    {"data":function(row){
+                            return row.tenant.business_name;
                         }},
-                    {"data":"buildingName",
-                        render:function(data){
-                            return "<i class='fe fe-home'></i> <strong>"+data+"</strong>"
+                    {"data":function(row){
+                            return row.tenant.property;
                         }},
 
                     {"data":"startDate",
@@ -1271,7 +1323,7 @@ function getTenants() {
 
             let r = document.createElement("option");
 
-            var t = "Select Tenant Name";
+            var t = "Select Business Name";
 
             r.setAttribute("disabled", "true");
             r.setAttribute("value", "-1");
@@ -1282,13 +1334,13 @@ function getTenants() {
 
 
             for (let i = 0; i < items.length; i++) {
-                let html = `${items[i].name} ${items[i].surname}`;
+                let html = `${items[i].business_name}`;
 
                 let tr = document.createElement("option");
 
-                var name = `${items[i].name} ${items[i].surname}`;
+                var tID =items[i].id;
 
-                tr.setAttribute("value", name);
+                tr.setAttribute("value", tID);
 
 
                 tr.innerHTML = html;
@@ -1302,6 +1354,7 @@ function getTenants() {
     })
 
 }
+/*
 
 function setTenantID() {
 
@@ -1330,9 +1383,10 @@ function setTenantID() {
 
     }
 }
+*/
 
 // get Property details
-function getProperty() {
+/*function getProperty() {
         $.ajax({
             url: 'http://localhost:8090/api/property/get-all-properties',
             type: 'GET',
@@ -1418,7 +1472,7 @@ function getProperty() {
 
             }
         })
-    }
+    }*/
 
 //Get Lease Notices
 function getLeaseNotice() {
@@ -1446,21 +1500,75 @@ function getLeaseNotice() {
         success: function (response) {
             let items = response;
 
-            console.log(response);
+            console.log("Response: ",response);
             localStorage.setItem("lease", JSON.stringify(items));
-            var t_body = document.getElementById("t_body");
+            var t_body=document.getElementById("t_body");
 
 
             while (t_body.hasChildNodes()) {
                 t_body.removeChild(t_body.firstChild);
             }
 
+           /* 
+            // -------------
+
+            var data = response;
+            
+            $("#dataTable").DataTable({
+                data:data,
+                columns:[
+                    {"data":"id"},
+                    {"data":function(row){
+                            return row.tenant.business_name;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.property+" "+ row.tenant.city;
+                        }},
+
+                    {"data":"startDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i>  "+data;
+                        }},
+
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                        render:function(data){
+                            if(data==="Renewed"){
+                                return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                            } else if(data==="Expired"){
+                                return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                            }else{
+                                return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                            }
+                        }},
+                    {"data":"timeLeft"},
+                    {"data":function(row){
+                            return `<a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('`+row.id+`','`+row.tenant.business_name+`','`+row.status+`','`+row.endDate+`','`+row.timeLeft+`'),loaddata()" class="badge badge-pill badge-success "> <i class="fe fe-bell" style="margin-right: 10px;color: white;"></i>Notify</span></a>`
+                        }}
+                ],
+                autoWidth: true,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ]
+            });
+            // ---------
+            */
+
+
+
+
+
             for (let i = 0; i < items.length; i++) {
                 let html = `<td class="sorting_1">  ${items[i].id}
                         </td>
-                        <td>  ${items[i].name}
+                        <td>  ${items[i].tenant.business_name}
                         </td>
-                        <td> ${items[i].buildingName} , ${items[i].buildingLocation}
+                        <td> ${items[i].tenant.property} , ${items[i].tenant.city}
                         </td>
                         <td > ${items[i].startDate}
                         </td>
@@ -1471,7 +1579,7 @@ function getLeaseNotice() {
                         <td >${items[i].timeLeft}
                     </td>
                     <td>
-                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}'),loaddata()" class="badge badge-pill badge-success "> <i class="fe fe-bell" style="margin-right: 10px;color: white;"></i>Notify</span></a>
+                        <a href="#"><span  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setNotice('${items[i].id}','${items[i].tenant.business_name}','${items[i].status}','${items[i].endDate}','${items[i].timeLeft}','${items[i].tenant.b_email}','${items[i].tenant.b_phone}'),loaddata()" class="badge badge-pill badge-success "> <i class="fe fe-bell" style="margin-right: 10px;color: white;"></i>Notify</span></a>
 
                     </td>`
 
