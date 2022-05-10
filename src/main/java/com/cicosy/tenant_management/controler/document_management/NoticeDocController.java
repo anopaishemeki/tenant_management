@@ -58,81 +58,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoticeDocController {
 
 	private static Logger log = LoggerFactory.getLogger(NoticeDocController.class);
-	public static String uploadDirectory = System.getProperty("user.dir") + File.separator+"uploads"+File.separator+"noticedocuments";
+	public static String uploadDirectory = System.getProperty("user.dir") + File.separator+"uploads"+File.separator+"other_doc";
 
 	@Autowired
 	NoticeDocumentsService noticeDocumentsService;
-  
-  
-
-
-
-	@PostMapping("/uploadNotice")
-	public @ResponseBody ResponseEntity<?> createFile(NoticeDocuments noticeDocuments,
-			 final @RequestParam("file") MultipartFile file) {
-		try {
-		
-			String fileName = file.getOriginalFilename();
-			String filePath = Paths.get(uploadDirectory, fileName).toString();
-			String fileType = file.getContentType();
-			long size = file.getSize();
-			String fileSize = String.valueOf(size);
-			
-
-		
-			log.info("FileName: " + file.getOriginalFilename());
-			log.info("FileType: " + file.getContentType());
-			log.info("FileSize: " + file.getSize());
-
-			// Save the file locally
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
-			stream.write(file.getBytes());
-			stream.close();
-
-	;
-			noticeDocuments.setFileName(fileName);
-			noticeDocuments.setFilePath(filePath);
-			noticeDocuments.setFileType(fileType);
-			noticeDocuments.setFileSize(fileSize);
-			
-
-			String status = noticeDocumentsService.saveFile(noticeDocuments);
-			if (status.equals("success")) {
-				log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
-				return new ResponseEntity<>(" File Saved - " + fileName, HttpStatus.OK);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.info("Exception: " + e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	}
-
-	@GetMapping("/downloadNoticeFile/{id}/{fileName}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable Long id,@PathVariable String fileName, HttpServletRequest request) {
-		// Load file as Resource
-		Resource resource = noticeDocumentsService.loadFileAsResource(fileName,id);
-		log.info("resource: " + resource);
-		// Try to determine file's content type
-		String contentType = null;
-		try {
-			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-			log.info("contentType: " + contentType);
-		} catch (IOException ex) {
-			log.info("Could not determine file type.");
-		}
-
-		// Fallback to the default content type if type could not be determined
-		if (contentType == null) {
-			contentType = "application/octet-stream";
-		}
-
-		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
-	}
-
 
 
 

@@ -208,11 +208,11 @@ function getTenant() {
 
                     {"data":"id"},
                     {"data": function (row) {
-                            return row.name;
+                            return row.business_name;
 
                         } },
                     {"data": function (row) {
-                            return `<a class="" th:href="@{/viewTenantDocuments}" >
+                            return `<a  th:href='/viewTenantDocuments' >
                             <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
                             </a>`;
                         },
@@ -886,4 +886,124 @@ function getDetails() {
     };
     xmlhttp.send();
 }
+
+
+
+function saveOtherDetails(){
+    let doc = $('#other_doc')[0];
+    let document_name = document.getElementById("document_name").value
+
+    let ajaxData = new FormData(doc)
+
+
+    let tenantId = JSON.parse(localStorage.getItem("tenantId"));
+    ajaxData.append("tenantId",tenantId)
+
+
+    ajaxData.append("document_name", JSON.stringify(document_name));
+
+    console.log(ajaxData)
+    $("#btnSubmit").prop("disabled", false);
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "http://localhost:8090/api/v1/uploadOther/" + tenantId,
+        data: ajaxData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (response) {
+            $('#successModal').modal('show');
+            console.log(response)
+
+
+        },
+        error: function (e) {
+
+            console.log(e);
+        }
+
+
+    })
+
+
+
+}
+function setDocumentName(document_name){
+    // var file=document.getElementById("formName2").innerText;
+    localStorage.removeItem("document_name");
+    localStorage.setItem("document_name", JSON.stringify(document_name));
+}
+function loadOtherFile(){
+    let id = JSON.parse(localStorage.getItem("tenantId"));
+    let name = JSON.parse(localStorage.getItem("document_name"))
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/getoth/'+id + '/' + name,
+        type: 'GET',
+        success: function (response) {
+            console.log("response",response);
+            localStorage.setItem("file", JSON.stringify(response));
+
+        }
+    })
+}
+
+function getAll() {
+    // $("#btn").prop("disabled", true);
+    // ---------------------------
+    let id = JSON.parse(localStorage.getItem("tenantId"));
+
+    var baseurl = "http://localhost:8090/api/v1/getAll_other/" + id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#other_table").DataTable({
+                data: data,
+                columns: [
+
+                    {"data": "id"},
+                    {
+                        "data": function (row) {
+
+                            return row.document_name;
+
+                        }
+                    },
+                    {
+                        "data": function (row) {
+                            return `<a  th:href='/OtherForm' >
+                            <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('` + row.id + `'),setDocumentName('` + row.document_name + `')">Open Files</button>
+                            </a>`;
+                        },
+                        "sortable": false,
+                        "searchable": false
+                    },
+                    {
+                        "data": function (row) {
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" >update</a>
+                              </div>
+                              <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">delete</a>
+                              </div>`;
+                        },
+                        "sortable": false,
+                        "searchable": false
+                    }
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+}
+
 

@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.controler.ProductToken;
 
 
 import com.cicosy.tenant_management.model.ProductToken.ProductToken;
+import com.cicosy.tenant_management.security.services.MyUserDetailsService;
 import com.cicosy.tenant_management.service.ProductToken.Decrypt;
 import com.cicosy.tenant_management.service.ProductToken.EncryptToken;
 import com.cicosy.tenant_management.service.ProductToken.ProductTokenService;
@@ -16,6 +17,9 @@ public class ProductTokenControler {
 
     @Autowired
     private ProductTokenService productTokenService;
+
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
 
 
     @PostMapping("/savedetails")
@@ -60,4 +64,21 @@ public class ProductTokenControler {
     public ProductToken updateToken(@PathVariable Long id) throws Exception {
         return productTokenService.Update(id);
     }
+
+    @PostMapping("authenticate")
+    public  void auth(@RequestBody ProductToken token){
+       System.out.println("Consuming Token :" +token.getToken());
+        Decrypt decrypt = new Decrypt();
+        String decryptedMessage = "";
+        try {
+            decrypt.initFromStrings("CHuO1Fjd8YgJqTyapibFBQ==", "e3IYYJC2hxe24/EO");
+            decryptedMessage = decrypt.decrypt(token.getToken());
+            System.out.println("Decrypted Message : " + decryptedMessage);
+        } catch (Exception ignored) {
+        }
+
+        myUserDetailsService.loadByToken(decryptedMessage);
+    }
+
+
 }

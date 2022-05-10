@@ -2,6 +2,7 @@ package com.cicosy.tenant_management.config;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class PageNavigations {
@@ -16,6 +17,12 @@ public class PageNavigations {
     @GetMapping("/Payments")
     public String payments(){
         return "/accounting/payments";
+    }
+
+
+    @GetMapping("/key")
+    public String key(){
+        return "/company/genKey";
     }
 
 
@@ -66,7 +73,7 @@ public class PageNavigations {
 
     @GetMapping("/tenantDocuments")
     public String tenantDocuments(){
-        return "/documentsManagement/tenant_Documents";
+        return "/documentsManagement/tenant_documents";
     }
 
     @GetMapping("/viewTenantDocuments")
@@ -78,6 +85,12 @@ public class PageNavigations {
     public String viewFile(){
         return "/documentsManagement/viewFile";
     }
+
+    @GetMapping("/OtherForm")
+    public String OtherFile(){
+            return "/documentsManagement/OtherForm";
+    }
+
 
 
     //Lease Page Navigations

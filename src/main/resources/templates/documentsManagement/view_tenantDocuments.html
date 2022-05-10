@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,13 +14,14 @@
     <!-- Icons CSS -->
     <link rel="stylesheet" href="css/feather.css">
     <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="css/select2.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light " onload="loadfile()" >
+  <body class="vertical  light" onload="loadfile(),setAddTenantDropDown(),getAll()">
     <div class="wrapper">
       <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -274,79 +275,9 @@
                 </div>
                 <div class="col-auto">
                   <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" >
-                  <button type="button" class="btn btn-lg btn-primary"><span class="fe fe-plus fe-16 mr-3"></span>New Documents</button>
+                  <button type="button" class="btn btn-primary"><span class="fe fe-plus fe-16 mr-3"></span>New Documents</button>
                   </a>
                 </div>
-
-
-                <!--- modal-->
-                <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                     aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="varyModalLabel">Genarate</h5>
-                        <a href="tenant_documents.html">
-                          <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                  aria-label="Close"></button>
-                        </a>
-                      </div>
-                      <div class="modal-body">
-                        <div class="container-fluid">
-                          <div class="row ">
-                            <div class="col-12">
-                              <h2 class="page-title">Fill The Information</h2>
-                              <div class="card-body">
-                                <form method="POST" enctype="multipart/form-data" id="application">
-                                  <div class="form-group">
-                                    <label for="tenant_list">Business Name :</label>
-                                    <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
-                                            required>
-                                      <optgroup id="Available Tenants" label="Available Tenants" >
-                                        <option value="">Select Business Name</option>
-                                      </optgroup>
-                                    </select>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="document_name">Document Name </label>
-                                    <input type="text" class="form-control" id="document_name">
-                                  </div>
-                                  <div class="form-group">
-                                  <label for="document">Document</label>
-                                  <input type="file" id="document" class="form-control-file"
-                                         name="document" accept=".pdf" required>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="modal-footer d-flex justify-content-center">
-                            <!--                            <a href="request.html" >-->
-                            <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
-                            <!--                            </a>-->
-                            <a href="tenant_documents.html">
-                              <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
-                                      class="btn mb-2 btn-success" aria-label="Close">OK
-                              </button>
-                            </a>
-                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
-                            </button>
-                            <button class="btn btn-primary " type="submit" onclick="saveReplyDetails()"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#successModalu" id="btnSubmit">
-                              Save
-
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                    <!--- modal end-->
-
               </div>
                   <hr class="my-4">
                   <h6 class="mb-3">Business Files</h6>
@@ -660,13 +591,347 @@
                         </div> <!-- .card-footer -->
                       </div> <!-- .row -->
                     </div> <!-- .file-panel -->
+
                   </div>
             </div>
           </div>
         </div>
-                
+
+
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="mb-2 page-title">Other Documents</h2>
+
+              <div class="row my-4">
+                <!-- Small table -->
+                <div class="col-md-12">
+                  <div class="card shadow">
+                    <div class="card-body">
+
+                      <!-- table -->
+                      <table class="table table-hover  dataTables table-borderless border-v" id="other_table" style="width:100%!important;">
+                        <thead class="thead-dark">
+                        <tr>
+                          <th>Document No</th>
+                          <th><span class="fe fe-user"></span>Document Name</th>
+                          <th>View Documents</th>
+                          <th>Action</th>
+                        </tr>
+                        </thead>
+                        <!--<tbody id="t_body">
+                        </tbody>-->
+                      </table>
+
+                      <div class="container-fluid d-none" id="view_Tenant">
+
+                      </div>
+                      </td>
+                      </tbody>
+                      </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div> <!-- simple table -->
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--- modal-->
+        <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="varyModalLabel">Other Form</h5>
+                <a href="tenant_documents.html">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                </a>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row ">
+                    <div class="col-12">
+                      <h2 class="page-title">Fill The Information</h2>
+                      <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data" id="other_doc">
+                          <div class="form-group">
+                            <label for="tenant_list">Business Name :</label>
+                            <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
+                                    required>
+                              <optgroup id="Available Tenants" label="Available Tenants" >
+                                <option value="">Select Business Name</option>
+                              </optgroup>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="document_name">Document Name </label>
+                            <input type="text" class="form-control" id="document_name">
+                          </div>
+                          <div class="form-group">
+                            <label for="file">Document</label>
+                            <input type="file" id="file" class="form-control-file"
+                                   name="file" accept=".pdf" required>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <!--                            <a href="request.html" >-->
+                    <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                    <!--                            </a>-->
+                    <a th:href="@{/view_tenantDocuments}">
+                      <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+                              class="btn mb-2 btn-success" aria-label="Close" >OK
+                      </button>
+                    </a>
+                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1" onclick="loadOtherFile()">Close
+                    </button>
+                    <button class="btn btn-primary " type="submit" onclick="saveOtherDetails()"
+                            data-bs-toggle="modal"
+                            data-bs-target="#successModalu" id="btnSubmit">
+                      Save
+
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                   aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Documents Uploaded SuccessFully
+                    </div>
+                    <div class="modal-footer">
+                      <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                      <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main> <!-- main -->
     </div> <!-- .wrapper -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/simplebar.min.js"></script>
+    <script src="js/downloadfile.js"></script>
+    <script src='js/daterangepicker.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
+    <script src='js/select2.min.js'></script>
+    <script src="js/tinycolor-min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/apps.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script>
+      $('.select2').select2(
+              {
+                theme: 'bootstrap4',
+              });
+      $('.select2-multi').select2(
+              {
+                multiple: true,
+                theme: 'bootstrap4',
+              });
+      $('.drgpicker').daterangepicker(
+              {
+                singleDatePicker: true,
+                timePicker: false,
+                showDropdowns: true,
+                locale:
+                        {
+                          format: 'MM/DD/YYYY'
+                        }
+              });
+      $('.time-input').timepicker(
+              {
+                'scrollDefault': 'now',
+                'zindex': '9999' /* fix modal open */
+              });
+      /** date range picker */
+      if ($('.datetimes').length) {
+        $('.datetimes').daterangepicker(
+                {
+                  timePicker: true,
+                  startDate: moment().startOf('hour'),
+                  endDate: moment().startOf('hour').add(32, 'hour'),
+                  locale:
+                          {
+                            format: 'M/DD hh:mm A'
+                          }
+                });
+      }
+      var start = moment().subtract(29, 'days');
+      var end = moment();
+
+      function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      }
+
+      $('#reportrange').daterangepicker(
+              {
+                startDate: start,
+                endDate: end,
+                ranges:
+                        {
+                          'Today': [moment(), moment()],
+                          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                          'This Month': [moment().startOf('month'), moment().endOf('month')],
+                          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        }
+              }, cb);
+      cb(start, end);
+      $('.input-placeholder').mask("00/00/0000",
+              {
+                placeholder: "__/__/____"
+              });
+      $('.input-zip').mask('00000-000',
+              {
+                placeholder: "____-___"
+              });
+      $('.input-money').mask("#,##0.00",
+              {
+                reverse: true
+              });
+      $('.input-phoneus').mask('(000) 000-0000');
+      $('.input-mixed').mask('AAA 000-S0S');
+      $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+              {
+                translation:
+                        {
+                          'Z':
+                                  {
+                                    pattern: /[0-9]/,
+                                    optional: true
+                                  }
+                        },
+                placeholder: "___.___.___.___"
+              });
+      // editor
+      var editor = document.getElementById('editor');
+      if (editor) {
+        var toolbarOptions = [
+          [
+            {
+              'font': []
+            }],
+          [
+            {
+              'header': [1, 2, 3, 4, 5, 6, false]
+            }],
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [
+            {
+              'header': 1
+            },
+            {
+              'header': 2
+            }],
+          [
+            {
+              'list': 'ordered'
+            },
+            {
+              'list': 'bullet'
+            }],
+          [
+            {
+              'script': 'sub'
+            },
+            {
+              'script': 'super'
+            }],
+          [
+            {
+              'indent': '-1'
+            },
+            {
+              'indent': '+1'
+            }], // outdent/indent
+          [
+            {
+              'direction': 'rtl'
+            }], // text direction
+          [
+            {
+              'color': []
+            },
+            {
+              'background': []
+            }], // dropdown with defaults from theme
+          [
+            {
+              'align': []
+            }],
+          ['clean'] // remove formatting button
+        ];
+        var quill = new Quill(editor,
+                {
+                  modules:
+                          {
+                            toolbar: toolbarOptions
+                          },
+                  theme: 'snow'
+                });
+      }
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
@@ -679,70 +944,46 @@
     <script src="js/config.js"></script>
     <script src='js/jquery.dataTables.min.js'></script>
     <script src='js/dataTables.bootstrap4.min.js'></script>
-    <script>
-      /* defind global options */
-      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
-      Chart.defaults.global.defaultFontColor = colors.mutedColor;
-    </script>
-    <script src="js/gauge.min.js"></script>
-    <script src="js/jquery.sparkline.min.js"></script>
-    <script src="js/apexcharts.min.js"></script>
-    <script src="js/apexcharts.custom.js"></script>
-    <script src="js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag()
-      {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'UA-56159088-1');
-    </script>-->
 
 
     <script>
-
-
       $('.select2').select2(
-      {
-        theme: 'bootstrap4',
-      });
+              {
+                theme: 'bootstrap4',
+              });
       $('.select2-multi').select2(
-      {
-        multiple: true,
-        theme: 'bootstrap4',
-      });
+              {
+                multiple: true,
+                theme: 'bootstrap4',
+              });
       $('.drgpicker').daterangepicker(
-      {
-        singleDatePicker: true,
-        timePicker: false,
-        showDropdowns: true,
-        locale:
-        {
-          format: 'MM/DD/YYYY'
-        }
-      });
+              {
+                singleDatePicker: true,
+                timePicker: false,
+                showDropdowns: true,
+                locale:
+                        {
+                          format: 'MM/DD/YYYY'
+                        }
+              });
       $('.time-input').timepicker(
-      {
-        'scrollDefault': 'now',
-        'zindex': '9999' /* fix modal open */
-      });
+              {
+                'scrollDefault': 'now',
+                'zindex': '9999' /* fix modal open */
+              });
       /** date range picker */
       if ($('.datetimes').length)
       {
         $('.datetimes').daterangepicker(
-        {
-          timePicker: true,
-          startDate: moment().startOf('hour'),
-          endDate: moment().startOf('hour').add(32, 'hour'),
-          locale:
-          {
-            format: 'M/DD hh:mm A'
-          }
-        });
+                {
+                  timePicker: true,
+                  startDate: moment().startOf('hour'),
+                  endDate: moment().startOf('hour').add(32, 'hour'),
+                  locale:
+                          {
+                            format: 'M/DD hh:mm A'
+                          }
+                });
       }
       var start = moment().subtract(29, 'days');
       var end = moment();
@@ -752,114 +993,114 @@
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
       }
       $('#reportrange').daterangepicker(
-      {
-        startDate: start,
-        endDate: end,
-        ranges:
-        {
-          'Today': [moment(), moment()],
-          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month': [moment().startOf('month'), moment().endOf('month')],
-          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-      }, cb);
+              {
+                startDate: start,
+                endDate: end,
+                ranges:
+                        {
+                          'Today': [moment(), moment()],
+                          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                          'This Month': [moment().startOf('month'), moment().endOf('month')],
+                          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        }
+              }, cb);
       cb(start, end);
       $('.input-placeholder').mask("00/00/0000",
-      {
-        placeholder: "__/__/____"
-      });
+              {
+                placeholder: "__/__/____"
+              });
       $('.input-zip').mask('00000-000',
-      {
-        placeholder: "____-___"
-      });
+              {
+                placeholder: "____-___"
+              });
       $('.input-money').mask("#.##0,00",
-      {
-        reverse: true
-      });
+              {
+                reverse: true
+              });
       $('.input-phoneus').mask('(000) 000-0000');
       $('.input-mixed').mask('AAA 000-S0S');
       $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
-      {
-        translation:
-        {
-          'Z':
-          {
-            pattern: /[0-9]/,
-            optional: true
-          }
-        },
-        placeholder: "___.___.___.___"
-      });
+              {
+                translation:
+                        {
+                          'Z':
+                                  {
+                                    pattern: /[0-9]/,
+                                    optional: true
+                                  }
+                        },
+                placeholder: "___.___.___.___"
+              });
       // editor
       var editor = document.getElementById('editor');
       if (editor)
       {
         var toolbarOptions = [
           [
-          {
-            'font': []
-          }],
+            {
+              'font': []
+            }],
           [
-          {
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
+            {
+              'header': [1, 2, 3, 4, 5, 6, false]
+            }],
           ['bold', 'italic', 'underline', 'strike'],
           ['blockquote', 'code-block'],
           [
-          {
-            'header': 1
-          },
-          {
-            'header': 2
-          }],
+            {
+              'header': 1
+            },
+            {
+              'header': 2
+            }],
           [
-          {
-            'list': 'ordered'
-          },
-          {
-            'list': 'bullet'
-          }],
+            {
+              'list': 'ordered'
+            },
+            {
+              'list': 'bullet'
+            }],
           [
-          {
-            'script': 'sub'
-          },
-          {
-            'script': 'super'
-          }],
+            {
+              'script': 'sub'
+            },
+            {
+              'script': 'super'
+            }],
           [
-          {
-            'indent': '-1'
-          },
-          {
-            'indent': '+1'
-          }], // outdent/indent
+            {
+              'indent': '-1'
+            },
+            {
+              'indent': '+1'
+            }], // outdent/indent
           [
-          {
-            'direction': 'rtl'
-          }], // text direction
+            {
+              'direction': 'rtl'
+            }], // text direction
           [
-          {
-            'color': []
-          },
-          {
-            'background': []
-          }], // dropdown with defaults from theme
+            {
+              'color': []
+            },
+            {
+              'background': []
+            }], // dropdown with defaults from theme
           [
-          {
-            'align': []
-          }],
+            {
+              'align': []
+            }],
           ['clean'] // remove formatting button
         ];
         var quill = new Quill(editor,
-        {
-          modules:
-          {
-            toolbar: toolbarOptions
-          },
-          theme: 'snow'
-        });
+                {
+                  modules:
+                          {
+                            toolbar: toolbarOptions
+                          },
+                  theme: 'snow'
+                });
       }
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function()
@@ -887,243 +1128,16 @@
     </script>
     <script>
       $('#dataTable-1').DataTable(
-      {
-        autoWidth: true,
-        "lengthMenu": [
-          [16, 32, 64, -1],
-          [16, 32, 64, "All"]
-        ]
-      });
-    </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag()
-      {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'UA-56159088-1');
-    </script>
-   
-   
-    
-    
-    <script src='js/daterangepicker.js'></script>
-    
-  
-    
-    <script src='js/select2.min.js'></script>
- 
-    <script src='js/jquery.validate.min.js'></script>
-    
-    
-  
-
-    <script>
-      $('.select2').select2(
-      {
-        theme: 'bootstrap4',
-      });
-      $('.select2-multi').select2(
-      {
-        multiple: true,
-        theme: 'bootstrap4',
-      });
-      $('.drgpicker').daterangepicker(
-      {
-        singleDatePicker: true,
-        timePicker: false,
-        showDropdowns: true,
-        locale:
-        {
-          format: 'MM/DD/YYYY'
-        }
-      });
-      $('.time-input').timepicker(
-      {
-        'scrollDefault': 'now',
-        'zindex': '9999' /* fix modal open */
-      });
-      /** date range picker */
-      if ($('.datetimes').length)
-      {
-        $('.datetimes').daterangepicker(
-        {
-          timePicker: true,
-          startDate: moment().startOf('hour'),
-          endDate: moment().startOf('hour').add(32, 'hour'),
-          locale:
-          {
-            format: 'M/DD hh:mm A'
-          }
-        });
-      }
-      var start = moment().subtract(29, 'days');
-      var end = moment();
-
-      function cb(start, end)
-      {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-      }
-      $('#reportrange').daterangepicker(
-      {
-        startDate: start,
-        endDate: end,
-        ranges:
-        {
-          'Today': [moment(), moment()],
-          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month': [moment().startOf('month'), moment().endOf('month')],
-          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-      }, cb);
-      cb(start, end);
-      $('.input-placeholder').mask("00/00/0000",
-      {
-        placeholder: "__/__/____"
-      });
-      $('.input-zip').mask('00000-000',
-      {
-        placeholder: "____-___"
-      });
-      $('.input-money').mask("#.##0,00",
-      {
-        reverse: true
-      });
-      $('.input-phoneus').mask('(000) 000-0000');
-      $('.input-mixed').mask('AAA 000-S0S');
-      $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
-      {
-        translation:
-        {
-          'Z':
-          {
-            pattern: /[0-9]/,
-            optional: true
-          }
-        },
-        placeholder: "___.___.___.___"
-      });
-      // editor
-      var editor = document.getElementById('editor');
-      if (editor)
-      {
-        var toolbarOptions = [
-          [
-          {
-            'font': []
-          }],
-          [
-          {
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote', 'code-block'],
-          [
-          {
-            'header': 1
-          },
-          {
-            'header': 2
-          }],
-          [
-          {
-            'list': 'ordered'
-          },
-          {
-            'list': 'bullet'
-          }],
-          [
-          {
-            'script': 'sub'
-          },
-          {
-            'script': 'super'
-          }],
-          [
-          {
-            'indent': '-1'
-          },
-          {
-            'indent': '+1'
-          }], // outdent/indent
-          [
-          {
-            'direction': 'rtl'
-          }], // text direction
-          [
-          {
-            'color': []
-          },
-          {
-            'background': []
-          }], // dropdown with defaults from theme
-          [
-          {
-            'align': []
-          }],
-          ['clean'] // remove formatting button
-        ];
-        var quill = new Quill(editor,
-        {
-          modules:
-          {
-            toolbar: toolbarOptions
-          },
-          theme: 'snow'
-        });
-      }
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function()
-      {
-        'use strict';
-        window.addEventListener('load', function()
-        {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form)
-          {
-            form.addEventListener('submit', function(event)
-            {
-              if (form.checkValidity() === false)
               {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
+                autoWidth: true,
+                "lengthMenu": [
+                  [10, 50, 100, -1],
+                  [10, 50, 100, "All"]
+                ]
+              });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.3/pdfobject.min.js" integrity="sha512-bHO4iqeyo1tN+C4qnbroCQ5Hxi3aJcEszT0iOt2nkuXZXQf369U3PUsnoN/ebnKQ5V2iS326OIv9pgXxL+F/kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-    <script type='text/javascript'>
-
-    (function()
-    {
-        if( window.localStorage )
-        {
-            if( !localStorage.getItem('firstLoad') )
-            {
-                localStorage['firstLoad'] = true;
-                window.location.reload();
-            }
-            else
-                localStorage.removeItem('firstLoad');
-        }
-    })();
-
-</script>
-   
-
+    <script src="js/apps.js"></script>
+    <script src='js/select2.min.js'></script>
+    <script src='js/jquery.validate.min.js'></script>
   </body>
 </html>

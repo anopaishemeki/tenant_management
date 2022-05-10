@@ -30,41 +30,26 @@ public class NoticeDocuments {
 
     @Id
     @SequenceGenerator(
-            name = "leaseDocuments_sequence",
-            sequenceName = "leaseDocuments_sequence",
+            name = "noticeDocuments_sequence",
+            sequenceName = "noticeDocuments_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "leaseDocuments_sequence"
+            generator = "noticeDocuments_sequence"
     )
     private Long id;
-	
-	@Column(name = "file_name")
 	private String fileName;
-	
-	@Column(name = "file_path")
-	private String filePath;
-	
-	@Column(name = "file_type")
-	private String fileType;
-	
-	@Column(name = "file_size")
-	private String fileSize;
+	private String tenant_id;
 	
 
 	public NoticeDocuments() {
 		
 	}
 
-	public NoticeDocuments(Long id, String fileName, String filePath, String fileType,
-			String fileSize) {
-		this.id = id;
-		
+	public NoticeDocuments(String fileName,String tenant_id){
 		this.fileName = fileName;
-		this.filePath = filePath;
-		this.fileType = fileType;
-		this.fileSize = fileSize;
+		this.tenant_id=tenant_id;
 		
 	}
 
@@ -72,8 +57,17 @@ public class NoticeDocuments {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getTenant_id() {
+		return tenant_id;
+	}
+
+	public void setTenant_id(String tenant_id) {
+		if(tenant_id.isEmpty()){
+			tenant_id="null";
+		}else{
+			this.tenant_id = tenant_id;
+		}
+
 	}
 
 	
@@ -85,36 +79,5 @@ public class NoticeDocuments {
 		this.fileName = fileName;
 	}
 
-	public String getFilePath() {
-		return filePath;
-	}
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
-
-	public String getFileType() {
-		return fileType;
-	}
-
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
-	}
-
-	public String getFileSize() {
-		return fileSize;
-	}
-
-	public void setFileSize(String fileSize) {
-		this.fileSize = fileSize;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "NoticeDocuments [id=" + id +  ", fileName=" + fileName
-				+ ", filePath=" + filePath + ", fileType=" + fileType + ", fileSize=" + fileSize +"]";
-	}
-	
 }
