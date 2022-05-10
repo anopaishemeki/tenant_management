@@ -14,4 +14,6 @@ public interface CompartmentRepository extends JpaRepository<Compartment, Long> 
     List<Compartment> findByProperty(Long id);
 
     List<Compartment> findByTenant(Long id);
+
+
 }

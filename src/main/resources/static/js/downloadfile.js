@@ -212,7 +212,7 @@ function getTenant() {
 
                         } },
                     {"data": function (row) {
-                            return `<a class="" href="viewTenatDocuments" >
+                            return `<a class="" href="viewTenantDocuments" >
                             <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
                             </a>`;
                         },

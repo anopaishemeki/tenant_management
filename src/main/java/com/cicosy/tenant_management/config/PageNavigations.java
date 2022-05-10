@@ -69,7 +69,7 @@ public class PageNavigations {
         return "/documentsManagement/tenant_Documents";
     }
 
-    @GetMapping("/viewTenatDocuments")
+    @GetMapping("/viewTenantDocuments")
     public String viewTenantDocuments(){
         return "/documentsManagement/view_tenantDocuments";
     }
@@ -201,9 +201,9 @@ public String LodgeRequest() {
 
 
 
-    @GetMapping("/navbar")
+    @GetMapping("/linechart")
     public String getNabar() {
-        return "navbar";
+        return "linechart";
     }
 
 }

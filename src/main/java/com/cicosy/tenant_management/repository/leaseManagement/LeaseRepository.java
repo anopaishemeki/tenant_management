@@ -46,6 +46,9 @@ public interface LeaseRepository
     @Query(value ="select * from lease where tenant_id=?1" , nativeQuery = true)
     List<Lease> findTenant(String id);
 
-//    List<Lease>findLeasesByNameIsLikeOrBuildingLocationIsLikeOrBuildingNameIsLike(String record);
+
+  /*  List<Lease> findByTenant_id(int id);*/
+
+    //    List<Lease>findLeasesByNameIsLikeOrBuildingLocationIsLikeOrBuildingNameIsLike(String record);
     //    Lease findByEmail(String name, String surname);
 }

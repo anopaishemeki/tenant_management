@@ -1,6 +1,7 @@
 package com.cicosy.tenant_management.model.tenantManagement;
 
 
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.propertyManagement.Compartment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,8 @@ public class Tenant {
     )
     private Long id;
     private String name;
-    private  String surname;
-    private LocalDate register_Date=LocalDate.now();
+    private String surname;
+    private LocalDate register_Date = LocalDate.now();
     private String email;
     private String phone;
     private String id_passport;
@@ -49,12 +50,13 @@ public class Tenant {
     private String b_tel;
     private String website;
 
-
-  @Transient
-  private List<Compartment> compartmentObjectlist;
+    @Transient
+    private List<Lease> leaseObjectlist;
+    @Transient
+    private List<Compartment> compartmentObjectlist;
 
     public Tenant(String name, String surname, String email, String phone,
-                  String id_passport, String property, String rentStatus, List<Compartment> compartmentObjectlist) {
+                  String id_passport, String property, String rentStatus, List<Compartment> compartmentObjectlist,List<Lease> leaseObjectlist) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -62,6 +64,7 @@ public class Tenant {
         this.id_passport = id_passport;
         this.property = property;
         this.rentStatus = rentStatus;
+        this.leaseObjectlist=leaseObjectlist;
         this.compartmentObjectlist = compartmentObjectlist;
 
     }
@@ -143,16 +146,16 @@ public class Tenant {
         return address;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getWebsite() {
         return website;
     }
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getB_phone() {
@@ -226,5 +229,13 @@ public class Tenant {
 
     public void setProperty(String property) {
         this.property = property;
+    }
+
+    public List<Lease> getLeaseObjectlist() {
+        return leaseObjectlist;
+    }
+
+    public void setLeaseObjectlist(List<Lease> leaseObjectlist) {
+        this.leaseObjectlist = leaseObjectlist;
     }
 }

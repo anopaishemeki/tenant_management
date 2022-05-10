@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="assets/logo/sysIco.png">
     <title>Add Request</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
@@ -21,9 +21,9 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="setAddTenantDropDown()">
+<body class="vertical  light  " onload="setAddTenantDropDown(),getImageProfile()">
 <div class="wrapper">
-    <nav class="topnav navbar navbar-light">
+    <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
             <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
@@ -54,11 +54,18 @@
                 <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-              </span>
+                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+
+              </span><br>
+                    <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+
+                    <b class="caret"></b>
                 </a>
+
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+                    <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+                    <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="dropdown-item" href="#">Activities</a>
                 </div>
@@ -541,7 +548,7 @@
 <script src="js/tinycolor-min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/apps.js"></script>
-
+<script src="js/register.js"></script>
 <script src="js/maintenanceApi.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
