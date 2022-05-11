@@ -109,7 +109,13 @@ public class LeaseService {
 
     public void addNewLease(Lease lease, LeaseHistory lease_history) {
 
+        Optional<Lease> ID = leaseRepository.findTenantid(lease.getTenant_id());
 
+
+        if (ID.isPresent()) {
+            throw new IllegalStateException("That Tenant Already Exists");
+
+        }
         if ((lease.getTerms().isEmpty())) {
             lease.setTerms("Unspecified");
         }

@@ -66,7 +66,7 @@ public class PageNavigations {
 
     @GetMapping("/tenantDocuments")
     public String tenantDocuments(){
-        return "/documentsManagement/tenant_Documents";
+        return "/documentsManagement/tenant_documents";
     }
 
     @GetMapping("/viewTenantDocuments")
