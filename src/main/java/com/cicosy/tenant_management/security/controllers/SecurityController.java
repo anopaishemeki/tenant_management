@@ -23,9 +23,12 @@ public class SecurityController {
         return "security/login";
     }
 
+
+
+
     @GetMapping("/register")
     public String register() {
-        return "security/register";
+        return "security/register2";
     }
 
     @RequestMapping("/index")

@@ -35,44 +35,40 @@ public class Other_DocumentsControler {
     private Other_documentsRepo other_documentsRepo;
 
 
-    ObjectMapper objectmapper = new ObjectMapper();
+//    ObjectMapper objectmapper = new ObjectMapper();
+//
+//    @RequestMapping(path = "/{id}/add_other", method = RequestMethod.POST,
+//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Object> addnewdoc(
+//            @RequestParam(required = true, value = "jsondata") String jsondata,
+//            @RequestParam(required = true, value = "file") MultipartFile file ,@PathVariable Long id) throws IOException {
+//
+//
+//        Other_documents other_documents = objectmapper.readValue(jsondata, Other_documents.class);
+//
+//        other_documentsService.store(other_documents);
+//        String ID=other_documents.getId().toString();
+//
+//
+//        String message = "";
+//
+//
+//
+//        try {
+//
+//            noticeDocumentsService.store(file,ID);
+//
+//
+//            message = "details : " + file.getOriginalFilename();
+//
+//            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+//        } catch (Exception e) {
+//            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+//            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+//        }
+//
+//    }
 
-    @RequestMapping(path = "/{id}/add_other", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> addnewdoc(
-            @RequestParam(required = true, value = "jsondata") String jsondata,
-            @RequestParam(required = true, value = "file") MultipartFile file ,@PathVariable Long id) throws IOException {
-
-
-        Other_documents other_documents = objectmapper.readValue(jsondata, Other_documents.class);
-
-        other_documentsService.store(other_documents);
-        String ID=other_documents.getId().toString();
-
-
-        String message = "";
-
-
-
-        try {
-
-            noticeDocumentsService.store(file,ID);
-
-
-            message = "details : " + file.getOriginalFilename();
-
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
-
-    }
-    @GetMapping(path = "/getotherform/{ID}")
-    public String getFormName(@PathVariable String ID) {
-        return other_documentsService.getFormName(ID);
-
-    }
     @GetMapping(path="/getAll_other/{id}")
     public List<Other_documents> getAll(@PathVariable Long id){
        return  other_documentsService.getAll_OtherDocuments(id);
@@ -96,6 +92,10 @@ public class Other_DocumentsControler {
             otherF= otherF.replace(" ","_");
         }
 
+        document_name = document_name.replaceAll("^\"|\"$", "");
+
+
+
         Other_documents documents= new Other_documents();
 
 
@@ -114,7 +114,7 @@ public class Other_DocumentsControler {
         return "success";
     }
 
-    @GetMapping("/getoth/{id}/{name}")
+    @GetMapping("/getoth/{tenantId}/{document_name}")
     public String getForm(@PathVariable String tenantId,@PathVariable String document_name){
 
         return other_documentsService.getOth(tenantId,document_name);

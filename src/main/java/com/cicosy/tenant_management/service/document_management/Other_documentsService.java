@@ -28,15 +28,13 @@ public class Other_documentsService {
     private final Path fileStorageLocation= Paths.get(uploadDirectory)
             .toAbsolutePath().normalize();
 
-    public String store(Other_documents other_documents) throws IOException {
+    public String store3(Other_documents other_documents) throws IOException {
 
         other_documentsRepo.save(other_documents);
         return "success";
     }
 
-    public String getFormName( String ID) {
-        return other_documentsRepo.findOtherForm(ID);
-    }
+
 
     public List<Other_documents> getAll_OtherDocuments(Long id){
 
@@ -76,7 +74,7 @@ public class Other_documentsService {
   throw new IOException("Could not save file: " + fileName, ioe);
   }   */
     }
-    public String getOth(String document_name,String tenantId){
+    public String getOth(String tenantId,String document_name){
         return other_documentsRepo.findOther(tenantId,document_name);
     }
 

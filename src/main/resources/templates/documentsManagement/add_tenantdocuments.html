@@ -357,8 +357,10 @@
                                     </div>
                                 </div>
                                 <button type="button" data-bs-toggle="modal"
-                                        data-bs-target="#successModal" id="btnSubmit" class="btn btn-primary" onclick="saveTenantDocument()">
-                                    Submit
+                                        data-bs-target="#successModal" id="btnSubmit" class="btn mb-2 btn-outline-primary" onclick="saveTenantDocument()">
+                                    <span class="fe fe-upload-cloud fe-16">
+                                    Upload
+                                    </span>
                                 </button>
                             </form>
                         </div>
@@ -374,12 +376,13 @@
                   <div class="modal-content">
                       <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
+
                       </div>
                       <div class="modal-body">
-                          Documents Uploaded SuccessFully
+                          <h4>Documents Uploaded SuccessFully</h4>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                              <span aria-hidden="true" >OK</span>
+                          </button>
                       </div>
                       <div class="modal-footer">
                           <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->

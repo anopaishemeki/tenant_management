@@ -330,22 +330,28 @@
                         </div>
 
                     </div>
-                    <button class="btn btn-primary" type="button" onclick="setTenantOnCompartment()">Assign</button>
+                    <button class="btn mb-2 btn-outline-primary" type="button" onclick="setTenantOnCompartment()">
+                     <span class="fe fe-upload-cloud fe-16">
+                        Assign
+                     </span>
+                    </button>
                     <!--                    </form>-->
 
                 </div>
 
-                <div class="modal fade" id="assignedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade" id="assignedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+
                             </div>
                             <div class="modal-body">
-                                Tenant Lettable space added successfully!
+                                <h4>The Lettable Space Was Assigned SuccessFully</h4>
+                                <button type="button" class="btn btn-primary mb-2" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                                    <span aria-hidden="true" >OK</span>
+                                </button>
                             </div>
                             <div class="modal-footer">
                                 <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->

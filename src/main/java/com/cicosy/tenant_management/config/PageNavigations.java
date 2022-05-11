@@ -86,7 +86,7 @@ public class PageNavigations {
         return "/documentsManagement/viewFile";
     }
 
-    @GetMapping("/OtherForm")
+    @GetMapping("/otherForm")
     public String OtherFile(){
             return "/documentsManagement/OtherForm";
     }

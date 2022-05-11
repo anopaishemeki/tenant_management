@@ -9,12 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Other_documentsRepo extends JpaRepository<Other_documents,Long> {
 
-    @Query(value = "select file_name from notice_documents  where tenant_id=?1 ",nativeQuery = true)
-    String findOtherForm(String id);
-
-
     @Query(value = "select other_file from other_documents  where document_name=?1 and tenant_id=?1  ",nativeQuery = true)
     String findOther(String tenantId,String document_name);
 
 
 }
+

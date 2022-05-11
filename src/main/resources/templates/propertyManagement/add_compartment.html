@@ -469,7 +469,7 @@
                                         <hr class="my-4">
                                         <div class="form-row">
                                             <div class="form-group col-sm-3">
-                                                <button type="button" class="btn mb-2 btn-outline-success" onclick="saveCompartment()"><span class="fe fe-upload-cloud fe-16"> Save</span></button>
+                                                <button type="button" class="btn mb-2 btn-outline-primary" onclick="saveCompartment()"><span class="fe fe-upload-cloud fe-16"> Save</span></button>
                                             </div>
                                             <div class="form-group col-sm-9">
                                                 <div id="toast" class="toast align-items-center text-white bg-success-light border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -477,7 +477,7 @@
                                                         <div class="toast-body">
                                                             Lettable Space was added successfully
                                                         </div>
-                                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close  btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -607,17 +607,19 @@
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
         <!-- Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
                     </div>
                     <div class="modal-body">
-                        The Compartment was successfully saved
+                        <h4>The compartment was Saved SuccessFully</h4>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                            <span aria-hidden="true" >OK</span>
+                        </button>
                     </div>
                     <div class="modal-footer">
                         <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->

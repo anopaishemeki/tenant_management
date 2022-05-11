@@ -342,7 +342,7 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-sm-3 ">
-                                                <button type="button" class="btn mb-2 btn-outline-success"
+                                                <button type="button" class="btn mb-2 btn-outline-primary"
                                                         onclick="saveRequest()"><span class="fe fe-upload-cloud fe-16">Add Request</span>
                                                 </button> &nbsp;
                                             </div>
@@ -363,6 +363,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
 
 
                                     </form>
@@ -386,26 +387,27 @@
 
 
         <!-- Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        The Request was successfully lodged
-                    </div>
-                    <div class="modal-footer">
-                        <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                        <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                    </div>
-                </div>
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+
+            </div>
+            <div class="modal-body">
+                <h4>Request Saved SuccessFully</h4>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                    <span aria-hidden="true" >OK</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div>
+    </div>
+</div>
         <!---->
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
              aria-hidden="true">
