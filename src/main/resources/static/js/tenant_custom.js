@@ -179,7 +179,7 @@ function getTenants() {
 
 function saveTenant() {
     let name = document.getElementById("name").value
-    let property = "Joina City";
+    let property = "null";
     let lease = " Active"
     let surname = document.getElementById("surname").value
     let email = document.getElementById("email").value

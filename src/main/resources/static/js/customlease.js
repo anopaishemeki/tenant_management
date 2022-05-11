@@ -93,7 +93,7 @@ function saveLease() {
                 r.setAttribute("style", "display:all");
                 alert(e.responseJSON.message, 'danger');
                 $("#btnSubmit").prop("disabled", false);
-                console.log("Date :", document.getElementById("startDate").value)
+                console.log("Date :", document.getElementById("startDate").value);
                 console.log("ERROR : ", e);
 
             } else {
@@ -1087,13 +1087,13 @@ function getLeases() {
                         return row.tenant.business_name;
                     }},
                     {"data":function(row){
-                            return row.tenant.property;
+                            return row.tenant.name +" "+row.tenant.surname;
                         }},
                     {"data":function(row){
                             return row.tenant.b_phone;
                         },
                         "sortable":false,
-                        "searchable":false,
+                        "searchable":false
                         },
 
                     {"data":"startDate",
