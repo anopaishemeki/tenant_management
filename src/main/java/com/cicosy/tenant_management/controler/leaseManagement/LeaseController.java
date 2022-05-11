@@ -16,6 +16,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,8 @@ public class LeaseController {
     private final LeaseDocumentService leaseDocumentService;
     private CompartmentController2 compartmentController;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public LeaseController(LeaseService leaseService, LeaseDocumentService leaseDocumentService, CompartmentController2 compartmentController) {
@@ -220,9 +224,31 @@ public class LeaseController {
 
    @GetMapping("/getUser/{user}")
     public User getUser(@PathVariable String user){
+
+
        User systemUser =userRepository.findByUsername(user);
+
         return systemUser;
    }
 
+    @PostMapping("/comparePass/{username}")
+    public void ComparePass(@PathVariable String username,@RequestBody User user){
+
+        User systemUser =userRepository.findByUsername(username);
+        if(systemUser==null){
+            throw new IllegalStateException("Username not found");
+        }else{
+            if(passwordEncoder.matches(user.getPassword(),systemUser.getPassword())){
+                System.out.println("Password matches");
+                systemUser.setPassword(passwordEncoder.encode(user.getNewPass()));
+                userRepository.save(systemUser);
+                System.out.println("Password Changed");
+            }else{
+                throw new IllegalStateException("Password mismatch");
+            }
+        }
+
+
+    }
 
 }

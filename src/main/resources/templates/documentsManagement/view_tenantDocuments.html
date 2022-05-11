@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="assets/logo/sysIco.png">
     <title>Tenant Management System</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
@@ -21,9 +21,11 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light" onload="loadfile(),setAddTenantDropDown(),getAll()">
+
+  <body class="vertical  light" onload="loadfile(),setAddTenantDropDown(),getAll(),getImageProfile()">
+
     <div class="wrapper">
-      <nav class="topnav navbar navbar-light">
+      <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
@@ -54,11 +56,18 @@
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-              </span>
+                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+
+              </span><br>
+              <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+
+              <b class="caret"></b>
             </a>
+
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Profile</a>
+              <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+              <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+              <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
               <a class="dropdown-item" href="#">Settings</a>
               <a class="dropdown-item" href="#">Activities</a>
             </div>
@@ -273,7 +282,7 @@
                 <div class="col">
                   <h2 class="page-title">Files</h2>
                 </div>
-                <div class="col-auto">
+                <div class="">
                   <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" >
                   <button type="button" class="btn btn-primary"><span class="fe fe-plus fe-16 mr-3"></span>New Documents</button>
                   </a>
@@ -299,14 +308,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Application Letter</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('appl')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('appl')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
                         </div> <!-- .card-footer -->
@@ -331,14 +340,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>CR14 Form</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('cr14')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('cr14')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
 
@@ -362,14 +371,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>CR6 Form</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('cr6')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('cr6')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
 
@@ -393,14 +402,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Certificate Of Incorporation</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('cert')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('cert')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
 
@@ -424,14 +433,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-image fe-24 text-success"></span>
+                            <span class="fe fe-image fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Director's ID</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('director')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('director')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
 
@@ -455,14 +464,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Bank Statement</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('bank')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('bank')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
 
@@ -486,14 +495,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Vat Registration Certificate</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          <a onclick="setType('vat')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          <a onclick="setType('vat')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
                         </div> <!-- .card-footer -->
@@ -516,14 +525,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Tax Clearance Certificate</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          </button><a onclick="setType('tax')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          </button><a onclick="setType('tax')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
 
@@ -548,14 +557,14 @@
                       </div>
                     </div>
                     <div class="circle circle-lg bg-light my-4">
-                      <span class="fe fe-file fe-24 text-success"></span>
+                      <span class="fe fe-file fe-24 text-primary"></span>
                     </div>
                     <div class="file-info">
                       <strong>Article of Association</strong>
                     </div>
                   </div> <!-- .card-body -->
                   <div class="card-footer bg-transparent border-0 fname">
-                    </button><a onclick="setType('article')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                    </button><a onclick="setType('article')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
                   </div> <!-- .card-footer -->
@@ -578,14 +587,14 @@
                             </div>
                           </div>
                           <div class="circle circle-lg bg-light my-4">
-                            <span class="fe fe-file fe-24 text-success"></span>
+                            <span class="fe fe-file fe-24 text-primary"></span>
                           </div>
                           <div class="file-info">
                             <strong>Company Profile</strong>
                           </div>
                         </div> <!-- .card-body -->
                         <div class="card-footer bg-transparent border-0 fname">
-                          </button><a onclick="setType('comp')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-success" style="margin-top: 8px" >Open File</button></a>
+                          </button><a onclick="setType('comp')" th:href="@{/viewFile}"  target="_blank"  > <button class="btn btn-primary" style="margin-top: 8px" >Open File</button></a>
 
 
                         </div> <!-- .card-footer -->
@@ -705,15 +714,18 @@
                     <!--                            </a>-->
                     <a th:href="@{/view_tenantDocuments}">
                       <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
-                              class="btn mb-2 btn-success" aria-label="Close" >OK
+                              class="btn mb-2 btn-outline-primary" aria-label="Close" >
+                        <span class="fe fe-upload-cloud fe-16">OK</span>
                       </button>
                     </a>
                     <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1" onclick="loadOtherFile()">Close
                     </button>
-                    <button class="btn btn-primary " type="submit" onclick="saveOtherDetails()"
+                    <button class="btn mb-2 btn-outline-primary" type="submit" onclick="saveOtherDetails()"
                             data-bs-toggle="modal"
                             data-bs-target="#successModalu" id="btnSubmit">
+                      <span class="fe fe-upload-cloud fe-16">
                       Save
+                      </span>
 
                     </button>
                   </div>
@@ -725,12 +737,13 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+
                     </div>
                     <div class="modal-body">
-                      Documents Uploaded SuccessFully
+                      <h4>Documents Uploaded SuccessFully</h4>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                        <span aria-hidden="true" >OK</span>
+                      </button>
                     </div>
                     <div class="modal-footer">
                       <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
@@ -748,6 +761,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/register.js"></script>
     <script src="js/simplebar.min.js"></script>
     <script src="js/downloadfile.js"></script>
     <script src='js/daterangepicker.js'></script>

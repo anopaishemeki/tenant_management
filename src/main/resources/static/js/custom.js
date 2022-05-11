@@ -66,8 +66,8 @@ function searchFilter() {
                             <span class="text-muted sr-only">Action</span>
                           </button>
                             <div class="dropdown-menu dropdown-menu-right"  >
-                              <a class="dropdown-item" href="edit_property.html" onclick="setLocal('${items[i].id}')">Edit</a>
-                              <a class="dropdown-item" href="view-property.html" onclick="setLocal('${items[i].id}','${items[i].name}')">View</a>
+                              <a class="dropdown-item" href="editProperty" onclick="setLocal('${items[i].id}')">Edit</a>
+                              <a class="dropdown-item" href="viewProperty" onclick="setLocal('${items[i].id}','${items[i].name}')">View</a>
 <!--                              <a class="dropdown-item" href="#">Assign</a>-->
                             </div>
                           </td>`
@@ -190,7 +190,7 @@ function appendCompartments() {
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('`+row.id+`')">View</a>
+                                <a class="dropdown-item" href="viewCompartment" onclick="setLocalCompartment('`+row.id+`')">View</a>
                                 </div>`
                     },
                      "sortable":false,
@@ -496,7 +496,7 @@ function getProperties() {
                           </button>
                             <div class="dropdown-menu dropdown-menu-right">
                               <a class="dropdown-item" href="editProperty" onclick="setLocal('`+row.id+`')">Edit</a>
-                              <a class="dropdown-item" href="view-property" onclick="setLocal('`+row.id+`','`+row.name+`')">View</a>
+                              <a class="dropdown-item" href="viewProperty" onclick="setLocal('`+row.id+`','`+row.name+`')">View</a>
                               <a class="dropdown-item" href="#">Assign</a>
                             </div>`
                         },

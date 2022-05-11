@@ -1,19 +1,27 @@
 package com.cicosy.tenant_management.security.controllers;
 
 import com.cicosy.tenant_management.security.models.User;
+import com.cicosy.tenant_management.security.repositories.UserRepository;
 import com.cicosy.tenant_management.security.services.RoleService;
 import com.cicosy.tenant_management.security.services.UserService;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+
+@Slf4j
 @Controller
 public class UserController {
+
+
 
     @Autowired
     private UserService userService;
@@ -25,6 +33,20 @@ public class UserController {
     public String getUser() {
         return "/security/userEdit";
     }
+
+
+ @PostMapping("/editProfileImage/{username}" )
+    public RedirectView addNew(RedirectAttributes redir,
+        @PathVariable String username,
+        @RequestParam(required = true, value = "file") MultipartFile file) throws IOException {
+
+      userService.setProfile(username, file);
+     RedirectView redirectView = new RedirectView("/editProfile", true);
+     //redir.addFlashAttribute("message", "You have successfully registered a new user!");
+       // return "redirect:/editProfile";
+     return redirectView;
+    }
+
 
     @GetMapping("/security/users")
     public String getAll(Model model) {
@@ -43,11 +65,22 @@ public class UserController {
 
     @PostMapping("/users/addNew")
     public RedirectView addNew(User user, RedirectAttributes redir) {
-        userService.save(user);
 
-        RedirectView redirectView = new RedirectView("/login", true);
-        redir.addFlashAttribute("message", "You have successfully registered a new user!");
+        String status= userService.save(user);
+
+        RedirectView redirectView=null;
+        redir.addFlashAttribute("message", status);
+
+        if(status=="Account Created Successful"){
+            redirectView = new RedirectView("/login", true);
+        }else{
+            redirectView = new RedirectView("/register", true);
+        }
+
+
         return redirectView;
     }
+
+
 
 }

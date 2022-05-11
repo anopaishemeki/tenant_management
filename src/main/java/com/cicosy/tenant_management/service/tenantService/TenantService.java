@@ -1,6 +1,8 @@
 package com.cicosy.tenant_management.service.tenantService;
 
+import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.tenantManagement.Tenant;
+import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import com.cicosy.tenant_management.repository.tenantManagement.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,8 +12,15 @@ import java.util.List;
 @Service
 public class TenantService {
 
-    @Autowired
+
     private TenantRepository tenantRepository;
+    private  LeaseRepository leaseRepository;
+
+    @Autowired
+    public TenantService(TenantRepository tenantRepository, LeaseRepository leaseRepository) {
+        this.tenantRepository = tenantRepository;
+        this.leaseRepository = leaseRepository;
+    }
 
     public Tenant addTenant(Tenant tenant) {
         return tenantRepository.save(tenant);
@@ -63,4 +72,15 @@ public class TenantService {
     public Tenant getTenant(Long id) {
         return tenantRepository.findById(id).orElseThrow(() -> new IllegalStateException("Tenant with id" + id + " does not exist"));
     }
+
+   /* public List<Lease> findLeasesByTenant_id(int id) {
+
+        List <Lease> leases = leaseRepository.findByTenant_id(id);
+
+        for (int i = 0 ; i < leases.size(); i++){
+            Long ID =Long.parseLong( String.valueOf(leases.get(i).getTenant_id()));
+            leases.get(i).setTenant(getTenant(ID));
+        }
+        return leases;
+    }*/
 }

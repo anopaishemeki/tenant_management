@@ -214,9 +214,9 @@ public String LodgeRequest() {
 
 
 
-    @GetMapping("/navbar")
+    @GetMapping("/linechart")
     public String getNabar() {
-        return "navbar";
+        return "linechart";
     }
 
 }

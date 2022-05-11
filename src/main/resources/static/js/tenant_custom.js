@@ -5,65 +5,87 @@ function getTenants() {
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
             var data = JSON.parse(xmlhttp.responseText);
 
-            console.log(data);
-            $("#tenants").DataTable({
-                data: data,
-                columns: [
 
-                    {"data":"id"},
-                    {"data":"business_name"},
-                    {"data":"phone"},
-                    {"data":function(row) {
+            var url = "http://localhost:8090/api/v1/lease/getleases";
+            var xxx = new XMLHttpRequest();
+            xxx.open("GET", url, true);
+            xxx.onreadystatechange = function () {
 
-                            let compartment = "";
-                            for (let i = 0; i < row.compartmentObjectlist.length; i++) {
-                                compartment = compartment + " ; " + row.compartmentObjectlist[i].compartmentNumber;
+                if (xxx.readyState == 4 && xxx.status == 200) {
 
+
+                    var leases = JSON.parse(xxx.responseText);
+
+                    for (let i = 0; i < data.length; i++ ){
+                        data[i].leases = [];
+                        for (let j = 0; j < leases.length; j++){
+                            if (data[i].id == leases[j].tenant_id){
+
+                                data[i].leases.push(leases[j]);
                             }
-                            compartment = compartment.substr(2, compartment.length);
-
-
-                                if(compartment.length==0) {
-                                    compartment = "...."
-                                }
-
-
-                            return compartment ;
-                        },
-                        "sortable":false,
-                        "searchable":false
-                    },
-                    {"data":function (row) {
-                        var rentStatus="";
-                        if(row.rentStatus===null) {
-                            rentStatus="unpaid"
-                          }else{
-                            rentStatus=row.rentStatus;
                         }
-                        return rentStatus;
-                        }},
-                    {"data":function(row) {
+                    }
 
-                            let rentalFee="";
-                            for (let i = 0; i < row.compartmentObjectlist.length; i++) {
-                                rentalFee = rentalFee +" ; $ " +row.compartmentObjectlist[i].rentalRate *row.compartmentObjectlist[i].floorArea ;
+                    console.log(data);
+                    $("#tenants").DataTable({
+                        data: data,
+                        columns: [
 
-                            }
-                            rentalFee = rentalFee.substr(3,rentalFee.length);
+                            {"data":"id"},
+                            {"data":"business_name"},
+                            {"data":"phone"},
+                            {"data":function(row) {
 
-                            if(rentalFee.length==0){
-                                rentalFee="...."
-                            }
+                                    let compartment = "";
+                                    for (let i = 0; i < row.compartmentObjectlist.length; i++) {
+                                        compartment = compartment + " ; " + row.compartmentObjectlist[i].compartmentNumber;
 
-                            return rentalFee ;
-                        },
-                        "sortable":false,
-                        "searchable":false
-                    },
-                    {"data":function(row){
-                        return`<button class="btn btn-sm " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    }
+                                    compartment = compartment.substr(2, compartment.length);
+
+
+                                    if(compartment.length==0) {
+                                        compartment = "...."
+                                    }
+
+
+                                    return compartment ;
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            },
+                            {"data":function (row) {
+                                    var rentStatus="";
+                                    if(row.rentStatus===null) {
+                                        rentStatus="unpaid"
+                                    }else{
+                                        rentStatus=row.rentStatus;
+                                    }
+                                    return rentStatus;
+                                }},
+                            {"data":function(row) {
+
+                                    let rentalFee="";
+                                    for (let i = 0; i < row.compartmentObjectlist.length; i++) {
+                                        rentalFee = rentalFee +" ; $ " +row.compartmentObjectlist[i].rentalRate *row.compartmentObjectlist[i].floorArea ;
+
+                                    }
+                                    rentalFee = rentalFee.substr(3,rentalFee.length);
+
+                                    if(rentalFee.length==0){
+                                        rentalFee="...."
+                                    }
+
+                                    return rentalFee ;
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            },
+                            {"data":function(row){
+                                    return`<button class="btn btn-sm " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
@@ -71,13 +93,18 @@ function getTenants() {
                                 <a class="dropdown-item" href="#">Edit</a>
                                 <a class="dropdown-item" href="#">Assign</a>
                               </div>`
-                        },
-                        "sortable":false,
-                        "searchable":false
-                    }
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            }
 
-                ]
-            });
+                        ]
+                    });
+                }
+            }
+            xxx.send();
+
+
         }
     };
     xmlhttp.send();
@@ -167,7 +194,6 @@ function saveTenant() {
     let phone = document.getElementById("phone").value;
 
 
-
     //owner Object properties
     let website = document.getElementById("website").value;
     let business_name = document.getElementById("business_name").value;
@@ -231,171 +257,179 @@ function LocalTenantID(id) {
 
 
 }
-function setLocalfile(id){
-     localStorage.removeItem("tenantId");
-     localStorage.setItem("tenantId", JSON.stringify(id));
- }
- function setType(filetype){
- localStorage.removeItem("filetype");
- localStorage.setItem("filetype", JSON.stringify(filetype));
+
+function setLocalfile(id) {
+    localStorage.removeItem("tenantId");
+    localStorage.setItem("tenantId", JSON.stringify(id));
+}
+
+function setType(filetype) {
+    localStorage.removeItem("filetype");
+    localStorage.setItem("filetype", JSON.stringify(filetype));
 
 }
 
-function setLocalfiles(application_letter,article,bank_statement,cr6_form,cr14_form,director_id,tax_clearance,vat_reg,certificate_of_incorporation){
-       localStorage.removeItem("application_letter");
-     localStorage.setItem("application_letter", JSON.stringify(application_letter));
- localStorage.removeItem("article");
-     localStorage.setItem("article", JSON.stringify(article));
- localStorage.removeItem("bank_statement");
-     localStorage.setItem("bank_statement", JSON.stringify(bank_statement));
- localStorage.removeItem("cr6_form");
-     localStorage.setItem("cr6_form", JSON.stringify(cr6_form));
- localStorage.removeItem("cr14_form");
-     localStorage.setItem("cr14_form", JSON.stringify(cr14_form));
- localStorage.removeItem("director_id");
-     localStorage.setItem("director_id", JSON.stringify(director_id));
- localStorage.removeItem("tax_clearance");
-     localStorage.setItem("tax_clearance", JSON.stringify(tax_clearance));
- localStorage.removeItem("vat_reg");
-     localStorage.setItem("vat_reg", JSON.stringify(vat_reg));
- localStorage.removeItem("certificate_of_incorporation");
-     localStorage.setItem("certificate_of_incorporation", JSON.stringify(certificate_of_incorporation));
- }
+function setLocalfiles(application_letter, article, bank_statement, cr6_form, cr14_form, director_id, tax_clearance, vat_reg, certificate_of_incorporation) {
+    localStorage.removeItem("application_letter");
+    localStorage.setItem("application_letter", JSON.stringify(application_letter));
+    localStorage.removeItem("article");
+    localStorage.setItem("article", JSON.stringify(article));
+    localStorage.removeItem("bank_statement");
+    localStorage.setItem("bank_statement", JSON.stringify(bank_statement));
+    localStorage.removeItem("cr6_form");
+    localStorage.setItem("cr6_form", JSON.stringify(cr6_form));
+    localStorage.removeItem("cr14_form");
+    localStorage.setItem("cr14_form", JSON.stringify(cr14_form));
+    localStorage.removeItem("director_id");
+    localStorage.setItem("director_id", JSON.stringify(director_id));
+    localStorage.removeItem("tax_clearance");
+    localStorage.setItem("tax_clearance", JSON.stringify(tax_clearance));
+    localStorage.removeItem("vat_reg");
+    localStorage.setItem("vat_reg", JSON.stringify(vat_reg));
+    localStorage.removeItem("certificate_of_incorporation");
+    localStorage.setItem("certificate_of_incorporation", JSON.stringify(certificate_of_incorporation));
+}
 
 // view Tenant Details
-function getTenantBYid(){
- let id = JSON.parse(localStorage.getItem("t_id"));
-  $.ajax({
-        url: 'http://localhost:8090/api/tenants/getTenantByID/'+id,
+function getTenantBYid() {
+    let id = JSON.parse(localStorage.getItem("t_id"));
+    $.ajax({
+        url: 'http://localhost:8090/api/tenants/getTenantByID/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response);
             let businessName = document.getElementById("businessName");
-            businessName.innerHTML=`${response.business_name}`;
+            businessName.innerHTML = `${response.business_name}`;
             let businessType = document.getElementById("businessType");
-            businessType.innerHTML=`${response.business_type}`;
+            businessType.innerHTML = `${response.business_type}`;
             let businessEmail = document.getElementById("b_email");
-            businessEmail.innerHTML=`${response.b_email}`;
+            businessEmail.innerHTML = `${response.b_email}`;
             let businessPhone = document.getElementById("b_phone");
-            businessPhone.innerHTML=`${response.b_phone}`;
+            businessPhone.innerHTML = `${response.b_phone}`;
             let businessTel = document.getElementById("b_tel");
-            businessTel.innerHTML=`${response.b_tel}`;
+            businessTel.innerHTML = `${response.b_tel}`;
             let businessCountry = document.getElementById("businessCountry");
-            businessCountry.innerHTML=`${response.country}`;
+            businessCountry.innerHTML = `${response.country}`;
             let businessCity = document.getElementById("businessCity");
-            businessCity.innerHTML=`${response.city}`;
+            businessCity.innerHTML = `${response.city}`;
 
-            if (response.website==null){
+            if (response.website == null) {
                 let website = document.getElementById("website");
-                website.innerHTML="N/A";
-            }else{
+                website.innerHTML = "N/A";
+            } else {
                 let website = document.getElementById("website");
-                website.innerHTML=`${response.website}`;
-                website.setAttribute("href",`${response.website}`);
+                website.innerHTML = `${response.website}`;
+                website.setAttribute("href", `${response.website}`);
             }
 
-            if (response.website==null){
+            if (response.website == null) {
                 let businessService = document.getElementById("businessService");
-                businessService.innerHTML="N/A";
-            }else{
+                businessService.innerHTML = "N/A";
+            } else {
                 let businessService = document.getElementById("businessService");
-                businessService.innerHTML=`${response.services}`;
+                businessService.innerHTML = `${response.services}`;
             }
 
             let tenantname = document.getElementById("tenantname");
-            tenantname.innerHTML=`${response.name}`;
+            tenantname.innerHTML = `${response.name}`;
             let tenantsurname = document.getElementById("tenantsurname");
-            tenantsurname.innerHTML=`${response.surname}`;
+            tenantsurname.innerHTML = `${response.surname}`;
             let tenantphone = document.getElementById("tenantphone");
-            tenantphone.innerHTML=`${response.phone}`;
+            tenantphone.innerHTML = `${response.phone}`;
 
             let tenantemail = document.getElementById("tenantemail");
-            tenantemail.innerHTML=`${response.email}`;
+            tenantemail.innerHTML = `${response.email}`;
 
             let businessName2 = document.getElementById("businessName2");
-            businessName2.innerHTML=`${response.business_name}`;
-            
+            businessName2.innerHTML = `${response.business_name}`;
+
             let businessName3 = document.getElementById("businessName3");
-            businessName3.innerHTML=`${response.business_name}`;
+            businessName3.innerHTML = `${response.business_name}`;
 
 
             $("#tenant-compartment").DataTable({
                 data: response.compartmentObjectlist,
                 columns: [
                     {"data": "id"},
-                    {"data": function (row) {
-                            return "Space ID : "+row.compartmentNumber+ "<br> Floor : "+row.floorNumber;
+                    {
+                        "data": function (row) {
+                            return "Space ID : " + row.compartmentNumber + "<br> Floor : " + row.floorNumber;
 
                         },
-                        "sortable":false,
-                        "searchable":false },
-                    {"data":function (row) {
-                            return "$"+row.rentalRate;
-                        }},
+                        "sortable": false,
+                        "searchable": false
+                    },
+                    {
+                        "data": function (row) {
+                            return "$" + row.rentalRate;
+                        }
+                    },
 
-                    {"data": function (row) {
-                            return row.floorArea+ " &#13217";
-                        }},
-                    {"data":function(row){
-                            return "$"+row.floorArea * row.rentalRate ;
-                        }},
-                    { "data": function(row){
+                    {
+                        "data": function (row) {
+                            return row.floorArea + " &#13217";
+                        }
+                    },
+                    {
+                        "data": function (row) {
+                            return "$" + row.floorArea * row.rentalRate;
+                        }
+                    },
+                    {
+                        "data": function (row) {
                             return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('`+row.id+`')">View</a>
+                                <a class="dropdown-item" href="view-compartment.html" onclick="setLocalCompartment('` + row.id + `')">View</a>
                                 </div>`
                         },
-                        "sortable":false,
-                        "searchable":false }
+                        "sortable": false,
+                        "searchable": false
+                    }
                 ]
             })
 
 
-
         }
     })
-  $.ajax({
-        url: 'http://localhost:8090/api/tenant/fetchfile/' + id ,
+    $.ajax({
+        url: 'http://localhost:8090/api/tenant/fetchfile/' + id,
         type: 'GET',
         success: function (response) {
-        console.log(response);
-        if (response.length==0) {
-            let processing=document.getElementById("processing");
-            processing.setAttribute("style","display:none");
+            console.log(response);
+            if (response.length == 0) {
+                let processing = document.getElementById("processing");
+                processing.setAttribute("style", "display:none");
 
-            let notAvailable=document.getElementById("notavailable");
-            notAvailable.setAttribute("style","display:all");
+                let notAvailable = document.getElementById("notavailable");
+                notAvailable.setAttribute("style", "display:all");
 
-             let found=document.getElementById("documents");
-            found.setAttribute("style","display:none");
-        }else{
-            setLocalfile(id);
-            setLocalfiles(response[0].application_letter,response[0].article,response[0].bank_statement,response[0].cr6_form,response[0].cr14_form,response[0].director_id,response[0].tax_clearance,response[0].vat_reg,response[0].certificate_of_incorporation);
-        
-             let processing=document.getElementById("processing");
-            processing.setAttribute("style","display:none");
+                let found = document.getElementById("documents");
+                found.setAttribute("style", "display:none");
+            } else {
+                setLocalfile(id);
+                setLocalfiles(response[0].application_letter, response[0].article, response[0].bank_statement, response[0].cr6_form, response[0].cr14_form, response[0].director_id, response[0].tax_clearance, response[0].vat_reg, response[0].certificate_of_incorporation);
 
-            let notAvailable=document.getElementById("notavailable");
-            notAvailable.setAttribute("style","display:none");
+                let processing = document.getElementById("processing");
+                processing.setAttribute("style", "display:none");
 
-             let found=document.getElementById("documents");
-            found.setAttribute("style","display:all");
-        }
-       
+                let notAvailable = document.getElementById("notavailable");
+                notAvailable.setAttribute("style", "display:none");
+
+                let found = document.getElementById("documents");
+                found.setAttribute("style", "display:all");
+            }
+
         }
     })
 
 }
 
 
-
-
-
 function getTenantsAssign() {
-    $.ajax({
+ /*   $.ajax({
         url: 'http://localhost:8090/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
@@ -423,7 +457,7 @@ function getTenantsAssign() {
 
         }
 
-    })
+    })*/
 
     $.ajax({
         url: 'http://localhost:8090/api/property/get-all-properties',
@@ -465,7 +499,7 @@ function getTenantsAssign() {
 }
 
 
-function getCompartmentDetails(){
+function getCompartmentDetails() {
 
     $.ajax({
         url: 'http://localhost:8090/api/property/get-all-properties',
@@ -480,20 +514,19 @@ function getCompartmentDetails(){
 
             for (let i = 0; i < buildings.length; i++) {
 
-                if(buildings[i].name === prop ){
+                if (buildings[i].name === prop) {
 
                     console.log(buildings[i].id);
                     let id = buildings[i].id;
 
                     $.ajax({
-                        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/'+id,
+                        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id,
                         type: 'GET',
                         data: {id},
                         success: function (response) {
                             let compartments = response
 
                             console.log(response)
-
 
 
                             let fl = document.getElementById("compartmentDropdown");
@@ -523,9 +556,7 @@ function getCompartmentDetails(){
             }
 
 
-
         }
-
 
 
     })
@@ -606,9 +637,9 @@ function setAddPropertyDropDown() {
             console.log(response)
             let dropDown = document.getElementById("property-dropdown");
 
-           /* while (dropDown.hasChildNodes()) {
-                dropDown.removeChild(dropDown.firstChild);
-            }*/
+            /* while (dropDown.hasChildNodes()) {
+                 dropDown.removeChild(dropDown.firstChild);
+             }*/
 
             for (let i = 0; i < response.length; i++) {
                 let option = document.createElement("option");
@@ -623,7 +654,7 @@ function setAddPropertyDropDown() {
 }
 
 function setAddTenantDropDown() {
-    $.ajax({
+   /* $.ajax({
         url: 'http://localhost:8090/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
@@ -647,7 +678,129 @@ function setAddTenantDropDown() {
                 dropDown.appendChild(option);
             }
         }
-    })
+    })*/
+
+
+
+    /*tenant dropdown*/
+    var baseurl = "http://localhost:8090/api/tenants/get-all-tenants";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+            var data = JSON.parse(xmlhttp.responseText);
+
+
+            var url = "http://localhost:8090/api/v1/lease/getleases";
+            var xxx = new XMLHttpRequest();
+            xxx.open("GET", url, true);
+            xxx.onreadystatechange = function () {
+
+                if (xxx.readyState == 4 && xxx.status == 200) {
+
+
+                    var leases = JSON.parse(xxx.responseText);
+
+                    for (let i = 0; i < data.length; i++ ){
+                        data[i].leases = [];
+                        for (let j = 0; j < leases.length; j++){
+                            if (data[i].id == leases[j].tenant_id){
+
+                                data[i].leases.push(leases[j]);
+                            }
+                        }
+                    }
+
+                    console.log(data);
+
+
+
+                 /*   Fillling*/
+
+                    let dropDown = document.getElementById("tenant_list");
+
+                    while (dropDown.hasChildNodes()) {
+                        dropDown.removeChild(dropDown.firstChild);
+                    }
+                    let option = document.createElement("option");
+
+                    option.text = "Available Business";
+                    dropDown.appendChild(option);
+
+                    for (let i =0;i<data.length;i++){
+                        if (data[i].leases.length.toString()==="0"){
+                            let option = document.createElement("option");
+
+                            option.text = data[i].business_name;
+                            option.setAttribute("value", `${data[i].id}`)
+
+                            dropDown.appendChild(option);
+                        }else{
+
+                           var terminated = new Boolean(false);
+
+                            for ( let j =0;j<data[i].leases.length;j++){
+
+                                if(data[i].leases[j].status==="Expired"){
+
+                                    terminated = false
+                                }
+                                else if(data[i].leases[j].status==="Active"){
+
+                                    terminated = false
+                                }
+                                else if(data[i].leases[j].status==="Terminated"){
+                                    terminated=true;
+                                    break;
+                                }
+                            }
+                            if(terminated===false){
+                                let option = document.createElement("option");
+
+                                option.text = data[i].business_name;
+                                option.setAttribute("value", `${data[i].id}`);
+
+                                dropDown.appendChild(option);
+                            }
+                        }
+
+                    }
+
+
+                   /* let dropDown = document.getElementById("tenant_list");
+
+                    while (dropDown.hasChildNodes()) {
+                        dropDown.removeChild(dropDown.firstChild);
+                    }
+                    let option = document.createElement("option");
+
+                    option.text = "Available Business";
+                    dropDown.appendChild(option);
+                     for (let i = 0; i < response.length; i++) {
+                        let option = document.createElement("option");
+
+                        option.text = response[i].business_name;
+                        option.setAttribute("value", `${response[i].id}`)
+
+                        dropDown.appendChild(option);
+                    }*/
+
+              /*   filling*/
+
+                }
+            }
+            xxx.send();
+
+
+        }
+    };
+    xmlhttp.send();
+
+
+    /*tenant dropdown*/
+
+
 }
 
 
@@ -658,10 +811,11 @@ function tenantAssignLocalTenant(tenant_id) {
 
 }
 
-function tenantAssignLocalCompartment(compartment_id){
+function tenantAssignLocalCompartment(compartment_id) {
     localStorage.removeItem("compartment_id");
     localStorage.setItem("compartment_id", JSON.stringify(compartment_id));
 }
+
 function onSetTenants() {
 
     // console.log("tenant_id");
@@ -713,52 +867,49 @@ function setAddCompartmentDropDown(compartment_id) {
 
 
             for (let i = 0; i < response.length; i++) {
-                if( response[i].status!="1"){
-                let option = document.createElement("option");
+                if (response[i].status != "1") {
+                    let option = document.createElement("option");
 
-                option.text = response[i].compartmentNumber;
-                option.setAttribute("value", `${response[i].id}`);
+                    option.text = response[i].compartmentNumber;
+                    option.setAttribute("value", `${response[i].id}`);
 
-                dropDown.appendChild(option);
+                    dropDown.appendChild(option);
                 }
             }
-
 
 
         }
     })
 }
 
-function setTenantOnCompartment(){
+function setTenantOnCompartment() {
     //let id = JSON.parse(localStorage.getItem("compartment_id"));
 
-    var id  =document.getElementById("compartmentDropdown").value
+    var id = document.getElementById("compartmentDropdown").value
 
     let tenant_id = JSON.parse(localStorage.getItem("tenant_id"));
     console.log(id);
     console.log(tenant_id)
-    var data= {
+    var data = {
         "tenant": tenant_id,
-        "status":"1"
-    }
+        "status": "1"
+    };
     $.ajax({
 
-        url: 'http://localhost:8090/api/compartment/update-compartment/'+ id,
+        url: 'http://localhost:8090/api/compartment/update-compartment/' + id,
         type: 'PUT',
-        dataType:"json",
-        crossDomain:"true",
-        contentType:"application/json; charset=utf-8",
-        data:JSON.stringify(data),
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
         success: function () {
             $('#assignedModal').modal('show')
 
 
-//fgjhk
-
         }
-    })
+    });
 
-    $("assign_form")[0].reset();
+    $("#assign_form")[0].reset();
 
 }
 

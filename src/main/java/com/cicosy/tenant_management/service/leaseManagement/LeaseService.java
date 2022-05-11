@@ -3,8 +3,10 @@ package com.cicosy.tenant_management.service.leaseManagement;
 import com.cicosy.tenant_management.controler.propertyManagement.CompartmentController2;
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
+import com.cicosy.tenant_management.model.propertyManagement.Compartment;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
+import com.cicosy.tenant_management.repository.propertyManagement.CompartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,16 +26,18 @@ import java.util.Optional;
 
 @Service
 public class LeaseService {
-    private final LeaseRepository leaseRepository;
-    private final LeaseHistoryRepository leaseHistoryRepository;
-    private CompartmentController2 compartmentController;
+     LeaseRepository leaseRepository;
+     LeaseHistoryRepository leaseHistoryRepository;
+     CompartmentController2 compartmentController;
+     CompartmentRepository compartmentRepository;
 
 
     @Autowired
-    public LeaseService(LeaseRepository leaseRepository, LeaseHistoryRepository leaseHistoryRepository, CompartmentController2 compartmentController) {
+    public LeaseService(LeaseRepository leaseRepository, LeaseHistoryRepository leaseHistoryRepository, CompartmentController2 compartmentController ,CompartmentRepository compartmentRepository) {
         this.leaseRepository = leaseRepository;
         this.leaseHistoryRepository = leaseHistoryRepository;
         this.compartmentController = compartmentController;
+        this.compartmentRepository=compartmentRepository;
     }
 
     public List<Lease> getLeases() {
@@ -241,6 +245,16 @@ public class LeaseService {
                     update.getStatus().trim().length() > 0) {
                 lease.setStatus("Terminated");
                 lease.setTimeLeft(0);
+
+
+                Long id=Long.parseLong(String.valueOf(lease.getTenant_id()));
+                List<Compartment> compartment = compartmentRepository.findByTenant(id);
+                for (int i = 0; i<compartment.size();i++){
+                    compartment.get(i).setTenant(null);
+                    compartment.get(i).setStatus("0");
+
+                }
+
             }
         }
 
@@ -591,7 +605,11 @@ public class LeaseService {
     }
 
 
+
     public List<Lease> getLeaseByT_ID(String id) {
         return leaseRepository.findTenant(id);
     }
+
+
+
 }
