@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout">>
 
 <head>
     <meta charset="utf-8">
@@ -7,7 +8,7 @@
     <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
     <meta name="author" content="GeeksLabs">
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" href="assets/logo/sysIco(2).ico">
 
     <title>Register New USer</title>
 
@@ -42,34 +43,33 @@
 <div class="container">
 
     <form class="login-form" th:action="@{/users/addNew}" method="post">
+        <h5 th:utext="${message}" style="margin-left:90px;color: red;font-style: oblique;font-weight: 700 " class="mt-3 "></h5>
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
 
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_profile"></i></span>
-                <input type="text" class="form-control" placeholder="Firstname" autofocus name="firstname">
+                <input type="text"   class="form-control" placeholder="Firstname" autofocus name="firstname" required>
             </div>
 
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_profile"></i></span>
-                <input type="text" class="form-control" placeholder="Lastname" autofocus name="lastname">
+                <input type="text"  class="form-control" placeholder="Lastname" autofocus name="lastname" required>
             </div>
 
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_profile"></i></span>
-                <input type="text" class="form-control" placeholder="Username" name="username" autofocus>
+                <input type="text" class="form-control" placeholder="Username" name="username" autofocus required>
             </div>
 
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
             </div>
-
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword">
+                <input type="password" class="form-control" placeholder="Confirm Password" id="password2"  required>
             </div>
-
             <label class="checkbox">
                 <span><a th:href="@{/login}"> Login Page</a></span>
                 <span class="pull-right"> <a th:href="@{/forgot-password}"> Forgot Password?</a></span>

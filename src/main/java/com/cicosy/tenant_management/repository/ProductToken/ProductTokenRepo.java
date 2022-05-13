@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductTokenRepo extends JpaRepository<ProductToken,Long> {
     @Query(value="SELECT token FROM product_token WHERE id = ?1",nativeQuery = true)
     String get_token(Long id);
+
+    ProductToken findByToken(String token);
 }

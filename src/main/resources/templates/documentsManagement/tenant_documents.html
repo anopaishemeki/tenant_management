@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="assets/logo/sysIco(2).ico">
     <title>Tenant Management System</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light"  onload="getTenant()">
+  <body class="vertical  light"  onload="getTenant(),getImageProfile()">
     <div class="wrapper">
-        <nav class="topnav navbar navbar-light">
+        <nav class="topnav navbar navbar-light" >
             <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
                 <i class="fe fe-menu navbar-toggler-icon"></i>
             </button>
@@ -53,11 +53,18 @@
                     <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-              </span>
+                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+
+              </span><br>
+                        <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+
+                        <b class="caret"></b>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+                        <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+                        <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
                         <a class="dropdown-item" href="#">Settings</a>
                         <a class="dropdown-item" href="#">Activities</a>
                     </div>
@@ -304,106 +311,7 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-        <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
-       <div class="modal-dialog" role="document">
-           <div class="modal-content">
-               <div class="modal-header">
-                   <h5 class="modal-title" id="varyModalLabel">Genarate</h5>
-                   <a href="tenant_documents.html">
-                       <button type="button" class="btn-close" data-bs-dismiss="modal"
-                               aria-label="Close"></button>
-                   </a>
-               </div>
-               <div class="modal-body">
-                <div class="container-fluid">
-                  <div class="row ">
-                      <div class="col-12">
-                          <h2 class="page-title">Upload Tenant Documents</h2>
-                                      <div class="card-body">
-                                        <form method="POST" enctype="multipart/form-data" id="application">
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" id="application_letter" name="application_letter">
-                                              <label class="custom-file-label" for="application_letter">Application Letter</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="cr14_form" id="cr14_form">
-                                              <label class="custom-file-label" for="cr14_form">CR14</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="cr6_form" id="cr6_form">
-                                              <label class="custom-file-label" for="cr6_form">CR6</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" id="director_id" name="director_id">
-                                              <label class="custom-file-label" for="director_id">Director's ID</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="bank_statement" id="bank_statement">
-                                              <label class="custom-file-label" for="bank_statement">Bank Statement</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="certificate_of_inco" id="certificate_of_inco">
-                                              <label class="custom-file-label" for="certificate_of_inco">Certificate of Incorporation</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="tax_clearance" id="tax_clearance">
-                                              <label class="custom-file-label" for="tax_clearance">Tax Clearance</label>
-                                            </div>
-                                          </div>
-
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="vat_reg" id="vat_reg">
-                                              <label class="custom-file-label" for="vat_reg">Vat Registration</label>
-                                            </div>
-                                          </div>
-                                          <div class="form-group">
-                                            <div class="custom-file">
-                                              <input type="file" class="custom-file-input" name="article_associ" id="article_associ">
-                                              <label class="custom-file-label" for="article_associ">Article of Association</label>
-                                            </div>
-                                          </div>
-
-                                        </form>
-                                          </div>
-                   </div>
-               </div>
-               <div class="modal-footer d-flex justify-content-center">
-                   <!--                            <a href="request.html" >-->
-                   <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
-                   <!--                            </a>-->
-                   <a href="tenant_documents.html">
-                       <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
-                               class="btn mb-2 btn-success" aria-label="Close">OK
-                       </button>
-                   </a>
-                   <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
-                   </button>
-                   <button class="btn btn-primary " type="submit" onclick="SaveTenantDocuments()"
-                   data-bs-toggle="modal"
-                   data-bs-target="#exampleModal" id="btnSubmit">
-                    Upload
-
-                 </button>
-               </div>
-           </div>
-       </div>
-   </div>
-   <div class="modal fade" id="exampleModal" tabindex="-1"
+       <div class="modal fade" id="exampleModal" tabindex="-1"
    aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
    data-bs-keyboard="false">
   <div class="modal-dialog">
@@ -446,132 +354,9 @@
   <input type="text" name="phone" id="phone" style="display: none">
   <input type="text" name="email" id="email" style="display: none">
 </div>
-        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="list-group list-group-flush my-n3">
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-box fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Package has uploaded successfull</strong></small>
-                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-download fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Widgets are updated successfull</strong></small>
-                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
-                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-inbox fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Notifications have been sent</strong></small>
-                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                      </div>
-                    </div> <!-- / .row -->
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-link fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Link was attached to menu</strong></small>
-                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
-                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                      </div>
-                    </div>
-                  </div> <!-- / .row -->
-                </div> <!-- / .list-group -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body px-5">
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-success justify-content-center">
-                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Control area</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Activity</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Droplet</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Upload</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Users</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Settings</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-                    </div> <!-- /.col-12 -->
+                          </div> <!-- /.col-12 -->
                   </div> <!-- .row -->
-                </div> <!-- .container-fluid -->
+              <!-- .container-fluid -->
 
 
       </main> <!-- main -->
@@ -583,6 +368,7 @@
     <script src="js/simplebar.min.js"></script>
     <script src="js/downloadfile.js"></script>
     <script src='js/daterangepicker.js'></script>
+    <script src="js/register.js"></script>
     <script src='js/jquery.stickOnScroll.js'></script>
     <script src="js/tinycolor-min.js"></script>
     <script src="js/config.js"></script>

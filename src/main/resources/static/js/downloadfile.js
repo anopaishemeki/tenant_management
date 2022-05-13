@@ -208,26 +208,27 @@ function getTenant() {
 
                     {"data":"id"},
                     {"data": function (row) {
-                            return row.name;
+                            return row.business_name;
 
                         } },
                     {"data": function (row) {
-                            return `<a class="" th:href="@{/viewTenantDocuments}" >
-                            <button class="btn btn-success" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
+
+
+
+                            return `<a class="" href="viewTenantDocuments" >
+
+                            <button class="btn btn-primary" style="margin-top: 8px" onclick="setLocalfile('`+row.id +`')">Open Files</button>
                             </a>`;
                         },
                         "sortable":false,
                         "searchable":false
                     },
-                    {"data":function(row){
+                    {"data":function(){
                             return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-muted sr-only">Action</span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" onclick="setLocal('`+row.id +`'),setAddTenantDropDown()">Tenant Reply Details</a>
-                              </div>
-                              <div class="dropdown-menu dropdown-menu-right">
-                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">Generate Reply Documents</a>
+                                <a class="dropdown-item" href="#" onclick="generateDocuments()">Genarate Reply Documents</a>
                               </div>`;
                         },
                         "sortable":false,
@@ -424,7 +425,7 @@ function saveTenantDocument(){
 
                    },
                    error: function (e) {
-
+                       $('#errorModal').modal('show');
                        console.log(e);
                    }
 
@@ -467,8 +468,68 @@ var id = JSON.parse(localStorage.getItem("id"));
 function getLeaseDocument() {
    // $("#btn").prop("disabled", true);
 
+    //----------------------
+    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
 
-    $.ajax({
+            console.log(data);
+            $("#dataTable").DataTable({
+                data: data,
+                columns: [
+
+                    {"data":"id"},
+                    {"data":function (row) {
+                            return row.tenant.business_name;
+                        }},
+                    {"data":"startDate"},
+                    {"data":function(row) {
+
+                            if(row.status=="Active") {
+                            return `<span class="badge badge-pill badge-success ">A</span><small class="text-muted">`+row.status.substr(1,row.status.length);
+                            }else if(row.status=="Terminated"){
+                                return `<span class="badge badge-pill badge-danger ">T</span><small class="text-muted">`+row.status.substr(1,row.status.length);
+                            }else if(row.status=="Expired"){
+                                return `<span class="badge badge-pill badge-warning ">E</span><small class="text-muted">`+row.status.substr(1,row.status.length);
+                            }
+
+                        },
+                        "searchable":false
+                    },
+                    {"data":function (row) {
+
+                            return `<a  href="LeaseForm"  target="_blank"> <button class="btn btn-primary" style="margin-top: 8px" onclick="setLocal('`+row.id+`'),FetchRecord()">Open File</button> <button class="btn btn-sm" type="button" ></button></a>`;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+                    {"data":function(row) {
+
+                            return `
+                            <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#" onclick="generateDocuments()">Genarate ExpiredLease Documents</a>
+                              </div>
+                            ` ;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    }
+
+                ]
+            });
+        }
+    };
+    xmlhttp.send();
+
+    //----------------------------
+
+   /* $.ajax({
         url: 'http://localhost:8090/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
@@ -488,10 +549,10 @@ function getLeaseDocument() {
             for (let i = 0; i < items.length; i++) {
                 let html = `<tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474 ${items[i].id}">
                             <td>${items[i].id}</td>
-                            <td>${items[i].name} </td>
+                            <td>${items[i].tenant.business_name} </td>
                             <td>${items[i].startDate}</td>
                             <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">${items[i].status}</td>
-                            <td> <a  href="./DeaseForm.html"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('${items[i].id}'),FetchRecord()">Open File</button>
+                            <td> <a  href="LeaseForm"  target="_blank"> <button class="btn btn-success" style="margin-top: 8px" onclick="setLocal('${items[i].id}'),FetchRecord()">Open File</button>
                             <button class="btn btn-sm" type="button" >
                             </button>
                             </a>
@@ -518,7 +579,7 @@ function getLeaseDocument() {
             }
 
         }
-    })
+    })*/
 }
 function setAddTenantDropDown() {
     $.ajax({
@@ -568,6 +629,7 @@ function tenantAssignLocalTenant(tenantId) {
 
 
 }
+
 
 function saveReplyDetails() {
 
@@ -886,4 +948,127 @@ function getDetails() {
     };
     xmlhttp.send();
 }
+
+
+
+function saveOtherDetails(){
+    let doc = $('#other_doc')[0];
+    let document_name = document.getElementById("document_name").value
+
+    let ajaxData = new FormData(doc)
+
+
+    let tenantId = JSON.parse(localStorage.getItem("tenantId"));
+    ajaxData.append("tenantId",tenantId)
+
+
+    ajaxData.append("document_name", JSON.stringify(document_name));
+
+    console.log(ajaxData)
+    $("#btnSubmit").prop("disabled", false);
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "http://localhost:8090/api/v1/uploadOther/" + tenantId,
+        data: ajaxData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (response) {
+            $('#successModal').modal('show');
+            console.log(response)
+
+
+        },
+        error: function (e) {
+
+            console.log(e);
+        }
+
+
+    })
+
+
+
+}
+function setDocumentName(document_name){
+    // var file=document.getElementById("formName2").innerText;
+    localStorage.removeItem("document_name");
+    localStorage.setItem("document_name", JSON.stringify(document_name));
+}
+
+function loadOtherFile(){
+    let id = JSON.parse(localStorage.getItem("tenantId"));
+    let name = JSON.parse(localStorage.getItem("document_name"))
+    $.ajax({
+        url: 'http://localhost:8090/api/v1/getoth/'+id + '/' + name,
+        type: 'GET',
+        success: function (response) {
+            console.log("response",response);
+            localStorage.setItem("file", JSON.stringify(response));
+
+        }
+    })
+}
+
+function getAll() {
+    // $("#btn").prop("disabled", true);
+    // ---------------------------
+    let tenant_id = JSON.parse(localStorage.getItem("tenantId"));
+
+    var baseurl = "http://localhost:8090/api/v1/getAll_other/" + tenant_id;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", baseurl, true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+
+            console.log(data);
+            $("#other_table").DataTable({
+                data: data,
+                columns: [
+
+                    {"data": "id"},
+                    {
+                        "data": function (row) {
+
+                            return row.document_name;
+
+                        }
+                    },
+                    {
+                        "data": function (row) {
+                            return `<a  href="otherForm">
+                            <button class="btn btn-primary" style="margin-top: 8px" onclick="setDocumentName('` + row.document_name + `')">Open Files</button>
+                            </a>`;
+                        },
+                        "sortable": false,
+                        "searchable": false
+                    },
+                    {
+                        "data": function (row) {
+                            return `<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted sr-only">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#" >update</a>
+                              </div>
+                              <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo" href="#">delete</a>
+                              </div>`;
+                        },
+                        "sortable": false,
+                        "searchable": false
+                    }
+
+                ]
+            });
+
+        }
+    };
+    xmlhttp.send();
+}
+
+
 

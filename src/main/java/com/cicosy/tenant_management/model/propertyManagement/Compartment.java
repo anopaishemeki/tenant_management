@@ -53,4 +53,13 @@ public class Compartment {
     public void setTenantObject(Tenant tenantObject) {
         this.tenantObject = tenantObject;
     }
+
+    public void setTenant(Long tenant) {
+        this.tenant = tenant;
+    }
+
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

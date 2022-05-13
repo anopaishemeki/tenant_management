@@ -6,17 +6,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -37,7 +35,6 @@ public class Lease {
     private Long id;
     private int tenant_id;
 
-   // @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
    @JsonDeserialize(using = LocalDateDeserializer.class)
    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
@@ -47,52 +44,19 @@ public class Lease {
     private int timeLeft;
     private String status;
 
-
     @Transient
     private Tenant tenant;
 
-    public Lease(int tenant_id,
-                 LocalDate startDate,
-                 LocalDate endDate,
-                 String status,
-                 int duration,
-                 int timeLeft,
-                 String terms
 
-    ) {
-        this.tenant_id=tenant_id;
+    public Lease(int tenant_id, LocalDate startDate, String terms, int duration, LocalDate endDate, int timeLeft, String status, Tenant tenant) {
+        this.tenant_id = tenant_id;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.duration = duration;
-        this.timeLeft=timeLeft;
-        this.status = status;
-
         this.terms = terms;
-
-    }
-
-
-
-    public Lease(Long id,
-                 int tenant_id,
-                 LocalDate startDate,
-                 LocalDate endDate,
-                 int timeLeft,
-                 String status,
-                 int duration,
-                 String terms
-
-    ) {
-        this.id = id;
-        this.tenant_id=tenant_id;
         this.duration = duration;
-        this.timeLeft=timeLeft;
-
-        this.status = status;
-        this.startDate = startDate;
         this.endDate = endDate;
-        this.terms = terms;
-
+        this.timeLeft = timeLeft;
+        this.status = status;
+        this.tenant = tenant;
     }
 
     public Tenant getTenant() {
@@ -120,9 +84,6 @@ public class Lease {
     public Long getId() {
         return id;
     }
-
-
-
 
 
     public LocalDate getStartDate() {

@@ -93,7 +93,7 @@ function saveLease() {
                 r.setAttribute("style", "display:all");
                 alert(e.responseJSON.message, 'danger');
                 $("#btnSubmit").prop("disabled", false);
-                console.log("Date :", document.getElementById("startDate").value)
+                console.log("Date :", document.getElementById("startDate").value);
                 console.log("ERROR : ", e);
 
             } else {
@@ -952,52 +952,8 @@ function fetchRecord() {
 
 
 // Load Terminate Table
-function setName(){
-    var username=document.getElementById("Uname").innerText.trim() ;
-    setNametoLocal(username)
 
-}
-function  setNametoLocal(username) {
-    localStorage.removeItem("username");
-    localStorage.setItem("username", JSON.stringify(username));
-}
-function getProfile(){
-    var username = JSON.parse(localStorage.getItem("username"));
-    $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getUser/' +username,
-        type: 'GET',
-        success: function (response) {
-            var username=document.getElementById("Username");
-            username.value=response.username;
-            console.log(response);
-        }
-    })
-}
-function getImageProfile() {
-    var username=document.getElementById("Uname").innerText.trim() ;
 
-    console.log("wth innter text uname =",username);
-
-    $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getUser/' + username,
-        type: 'GET',
-        success: function (response) {
-            console.log(response);
-
-            var profileImage=document.getElementById("profileImage");
-           /* var profileName=document.getElementById("profileName");
-            profileName.setAttribute("th:href","@{/userEdit/"+response.username +"}");*/
-            if(response.photo==null){
-                profileImage.setAttribute("src","/assets/images/profileImages/avatar.jpg");
-
-               // th:href ="${#authentication.getPrincipal().getUsername()}}"
-            }else{
-                profileImage.setAttribute("src","/assets/images/profileImages/"+response.photo);
-            }
-        }
-
-    })
-}
 
 function T_Records() {
     var baseurl = "http://localhost:8090/api/v1/lease/getleases";
@@ -1131,13 +1087,13 @@ function getLeases() {
                         return row.tenant.business_name;
                     }},
                     {"data":function(row){
-                            return row.tenant.property;
+                            return row.tenant.name +" "+row.tenant.surname;
                         }},
                     {"data":function(row){
                             return row.tenant.b_phone;
                         },
                         "sortable":false,
-                        "searchable":false,
+                        "searchable":false
                         },
 
                     {"data":"startDate",
@@ -1599,4 +1555,5 @@ function getLeaseNotice() {
 
 
 }
+
 

@@ -1,3 +1,20 @@
-GET http://165.22.126.3:8090/nwpm/api/lease/status/Expired
+POST http://localhost:8090/api/v1/savedetails
+Content-Type: application/json
+
+{
+  "period": 4,
+  "num_users": 5
+}
+
+###
+POST http://localhost:8090/login
+Content-Type: application/json
+
+{
+  "username": "1234",
+  "password": "1234"
+}
+
+###
 
 ###

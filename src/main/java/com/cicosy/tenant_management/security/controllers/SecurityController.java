@@ -7,14 +7,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SecurityController {
 
+    @RequestMapping("/token")
+    public String tokenPage(){
+        return "company/productkey";
+    }
+
+    @GetMapping("/company")
+    public String company(){
+        return "/company/companyPage";
+    }
+
+
     @RequestMapping("/login")
     public String loginPage() {
         return "security/login";
     }
 
+
+
+
     @GetMapping("/register")
     public String register() {
-        return "security/register";
+        return "security/register2";
     }
 
     @RequestMapping("/index")

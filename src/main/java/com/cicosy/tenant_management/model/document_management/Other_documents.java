@@ -1,8 +1,17 @@
 package com.cicosy.tenant_management.model.document_management;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 @Entity
 @Table(name="other_documents")
 public class Other_documents {
@@ -10,28 +19,37 @@ public class Other_documents {
 
     @Id
     @SequenceGenerator(
-            name = "otherdocuments_sequence",
-            sequenceName = "otherdocuments_sequence",
+            name = "otherDocuments_sequence",
+            sequenceName = "otherDocuments_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "otherdocuments_sequence"
+            generator = "otherDocuments_sequence"
     )
-
     private Long id;
+    @Column(name = "tenantId")
     private String tenantId;
+    @Column(name = "document_name")
     private String document_name;
-    private  String document;
+    @Column(name = "otherFile")
+    private String otherFile;
+
 
     public Other_documents() {
     }
 
-    public Other_documents(String tenantId, String document_name, String document) {
+    public Other_documents(String tenantId, String document_name,String otherFile) {
         this.tenantId = tenantId;
         this.document_name = document_name;
-        this.document = document;
+        this.otherFile=otherFile;
+
     }
+
+    public Long getId() {
+        return id;
+    }
+
 
     public String getTenantId() {
         return tenantId;
@@ -49,11 +67,6 @@ public class Other_documents {
         this.document_name = document_name;
     }
 
-    public String getDocument() {
-        return document;
-    }
 
-    public void setDocument(String document) {
-        this.document = document;
-    }
+
 }

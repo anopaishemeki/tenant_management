@@ -24,13 +24,13 @@ import javax.persistence.*;
 public class TenantDocuments  {
     @Id
     @SequenceGenerator(
-            name = "leaseDocuments_sequence",
-            sequenceName = "leaseDocuments_sequence",
+            name = "tenantDocuments_sequence",
+            sequenceName = "tenantDocuments_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "leaseDocuments_sequence"
+            generator = "tenantDocuments_sequence"
     )
     private Long id;
     private String tenantId;

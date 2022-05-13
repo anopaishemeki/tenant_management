@@ -27,8 +27,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/resources/**", "/css/**", "/fonts/**", "/img/**").permitAll()
-                .antMatchers("/register", "/resources/**", "/css/**", "/fonts/**", "/img/**", "/js/**").permitAll()
+                .antMatchers("/login", "/resources/**", "/css/**", "/fonts/**", "/img/**", "/js/**","/vendor/**").permitAll()
+                .antMatchers("/register", "/resources/**", "/css/**", "/fonts/**", "/img/**", "/js/**","/vendor/**").permitAll()
                 .antMatchers("/users/addNew").permitAll()
               //  .antMatchers("/security/user/Edit/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
@@ -45,6 +45,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/accessDenied")
         ;
     }
+
 
     @Autowired
     private UserDetailsService userDetailsService;

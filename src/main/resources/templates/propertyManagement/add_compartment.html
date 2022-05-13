@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="assets/logo/sysIco(2).ico">
     <title>Add Compartment</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="setAddPropertyDropDown()">
+<body class="vertical  light  " onload="setAddPropertyDropDown(),getImageProfile()">
 <div class="wrapper">
-    <nav class="topnav navbar navbar-light">
+    <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
             <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
@@ -53,11 +53,18 @@
                 <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
-              </span>
+                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+
+              </span><br>
+                    <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+
+                    <b class="caret"></b>
                 </a>
+
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+                    <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+                    <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="dropdown-item" href="#">Activities</a>
                 </div>
@@ -462,7 +469,7 @@
                                         <hr class="my-4">
                                         <div class="form-row">
                                             <div class="form-group col-sm-3">
-                                                <button type="button" class="btn mb-2 btn-outline-success" onclick="saveCompartment()"><span class="fe fe-upload-cloud fe-16"> Save</span></button>
+                                                <button type="button" class="btn mb-2 btn-outline-primary" onclick="saveCompartment()"><span class="fe fe-upload-cloud fe-16"> Save</span></button>
                                             </div>
                                             <div class="form-group col-sm-9">
                                                 <div id="toast" class="toast align-items-center text-white bg-success-light border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -470,7 +477,7 @@
                                                         <div class="toast-body">
                                                             Lettable Space was added successfully
                                                         </div>
-                                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close  btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -600,17 +607,19 @@
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
         <!-- Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
                     </div>
                     <div class="modal-body">
-                        The Compartment was successfully saved
+                        <h4>The compartment was Saved SuccessFully</h4>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                            <span aria-hidden="true" >OK</span>
+                        </button>
                     </div>
                     <div class="modal-footer">
                         <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
@@ -756,6 +765,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/simplebar.min.js"></script>
 <script src='js/daterangepicker.js'></script>
+<script src="js/register.js"></script>
 <script src='js/jquery.stickOnScroll.js'></script>
 <script src="js/tinycolor-min.js"></script>
 <script src="js/config.js"></script>
