@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light  " onload="getImageProfile()">
+  <body class="vertical  light"  onload="getTenant(),getImageProfile()">
     <div class="wrapper">
         <nav class="topnav navbar navbar-light" >
             <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -184,14 +184,7 @@
                                 <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
                                         class="ml-1 item-text">Tenant Documents</span></a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link pl-3" th:href="@{/noticedocuments}"><span
-                                        class="ml-1 item-text">Notice Documents</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link pl-3" th:href="@{/leasedocuments}"><span
-                                        class="ml-1 item-text">Lease Documents </span></a>
-                            </li>
+
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -275,29 +268,34 @@
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
-              <h2 class="mb-2 page-title">Notice Documents</h2>
-              
+              <h2 class="mb-2 page-title">Tenant Documents</h2>
+
               <div class="row my-4">
                 <!-- Small table -->
                 <div class="col-md-12">
                   <div class="card shadow">
                     <div class="card-body">
-                      <!-- table -->
-                      <table class="table table-hover  dataTables table-borderless border-v" id="dataTable-1" style="width:100%!important;">
-                        <thead class="thead-dark">
-                          <tr>
-                          
-                            <th>id</th>
-                            <th>Tenant Name</th>
-                            <th>Tenant Email</th>
-                            <th>Period</th>
-                            <th>Display Notice</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                    
+                <!-- table -->
+                <table class="table table-hover  dataTables table-borderless border-v" id="tenant_table" style="width:100%!important;">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Tenant No</th>
+                      <th><span class="fe fe-user"></span>Business Name</th>
+                      <th>View Documents</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <!--<tbody id="t_body">
+                  </tbody>-->
+                </table>
 
-                        </tbody>
+                <div class="container-fluid d-none" id="view_Tenant">
+
+                            </div>
+                          </td>
+                      </tbody>
+                        </tr>
                       </table>
                     </div>
                   </div>
@@ -306,63 +304,14 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-        <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true" width="800">
-       <div class="modal-dialog" role="document">
-           <div class="modal-content">
-               <div class="modal-header">
-                   <h5 class="modal-title" id="varyModalLabel">Genarate</h5>
-                   <a th:href="@{/noticedocuments}">
-                       <button type="button" class="btn-close" data-bs-dismiss="modal"
-                               aria-label="Close"></button>
-                   </a>
-               </div>
-               <div class="modal-body">
-                <div class="container-fluid">
-                  <div class="row ">
-                      <div class="col-12">
-                          <h2 class="page-title">Submit Notice Documents</h2>
-                                      <div class="card-body">
-                                        <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-                                          <div class="form-group">
-                                            <label for="file">Attach Notice Document Here:</label><br><br>
-                                            <input type="file" id="file" class="form-control-file"
-                                                 name="file" required>
-                                          </div> 
-                                        </form>
-                                          </div>
-                   </div>
-               </div>
-               <div class="modal-footer d-flex justify-content-center">
-                   <!--                            <a href="request.html" >-->
-                   <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
-                   <!--                            </a>-->
-                   <a th:href="@{/noticedocuments}">
-                       <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
-                               class="btn mb-2 btn-success" aria-label="Close">OK
-                       </button>
-                   </a>
-                   <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
-                   </button>
-                   <button class="btn btn-primary " type="submit" onclick="saveNoticeDocuments()"
-                   data-bs-toggle="modal"
-                   data-bs-target="#exampleModal" id="btnSubmit">
-                   Submit
-                  
-                 </button>
-               </div>
-           </div>
-       </div>
-   </div>
-   
-   <div class="modal fade" id="exampleModal" tabindex="-1"
+       <div class="modal fade" id="exampleModal" tabindex="-1"
    aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
    data-bs-keyboard="false">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Save Record Dialog</h5>
-              <a href="">
+              <a href="lease_documents.html">
                   <button type="button" class="btn-close" data-bs-dismiss="modal"
                           aria-label="Close"></button>
               </a>
@@ -382,7 +331,7 @@
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
                       style="display: none">Edit & Retry
               </button>
-              <a th:href="@{/noticedocuments}">
+              <a href="lease_documents.html">
 
                   <button type="button" class="btn btn-success"
                           data-bs-dismiss="modal" id="Close"
@@ -398,133 +347,11 @@
   <input type="text" name="phone" id="phone" style="display: none">
   <input type="text" name="email" id="email" style="display: none">
 </div>
- 
-        
-            
-        
-        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="list-group list-group-flush my-n3">
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-box fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Package has uploaded successfull</strong></small>
-                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-download fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Widgets are updated successfull</strong></small>
-                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
-                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-inbox fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Notifications have been sent</strong></small>
-                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                      </div>
-                    </div> <!-- / .row -->
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-link fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Link was attached to menu</strong></small>
-                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
-                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                      </div>
-                    </div>
-                  </div> <!-- / .row -->
-                </div> <!-- / .list-group -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body px-5">
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-success justify-content-center">
-                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Control area</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Activity</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Droplet</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Upload</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Users</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Settings</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                          </div> <!-- /.col-12 -->
+                  </div> <!-- .row -->
+              <!-- .container-fluid -->
+
+
       </main> <!-- main -->
     </div> <!-- .wrapper -->
     <script src="js/jquery.min.js"></script>
@@ -532,15 +359,16 @@
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/simplebar.min.js"></script>
-    <script src="js/register.js"></script>
+    <script src="js/downloadfile.js"></script>
     <script src='js/daterangepicker.js'></script>
+    <script src="js/register.js"></script>
     <script src='js/jquery.stickOnScroll.js'></script>
     <script src="js/tinycolor-min.js"></script>
     <script src="js/config.js"></script>
     <script src='js/jquery.dataTables.min.js'></script>
     <script src='js/dataTables.bootstrap4.min.js'></script>
-    
-  <script src="js/savenoticedoc.js"></script>
+    <script src="js/maintenanceApi.js"></script>
+
     <script>
       $('.select2').select2(
       {
@@ -726,16 +554,13 @@
       {
         autoWidth: true,
         "lengthMenu": [
-          [16, 32, 64, -1],
-          [16, 32, 64, "All"]
+          [10, 50, 100, -1],
+          [10, 50, 100, "All"]
         ]
       });
     </script>
     <script src="js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
 
-   
-   
     
     
     <script src='js/daterangepicker.js'></script>
@@ -745,194 +570,15 @@
     <script src='js/select2.min.js'></script>
  
     <script src='js/jquery.validate.min.js'></script>
-    
-    
-  
 
-    <script>
-      $('.select2').select2(
-      {
-        theme: 'bootstrap4',
-      });
-      $('.select2-multi').select2(
-      {
-        multiple: true,
-        theme: 'bootstrap4',
-      });
-      $('.drgpicker').daterangepicker(
-      {
-        singleDatePicker: true,
-        timePicker: false,
-        showDropdowns: true,
-        locale:
-        {
-          format: 'MM/DD/YYYY'
-        }
-      });
-      $('.time-input').timepicker(
-      {
-        'scrollDefault': 'now',
-        'zindex': '9999' /* fix modal open */
-      });
-      /** date range picker */
-      if ($('.datetimes').length)
-      {
-        $('.datetimes').daterangepicker(
-        {
-          timePicker: true,
-          startDate: moment().startOf('hour'),
-          endDate: moment().startOf('hour').add(32, 'hour'),
-          locale:
-          {
-            format: 'M/DD hh:mm A'
-          }
-        });
-      }
-      var start = moment().subtract(29, 'days');
-      var end = moment();
-
-      function cb(start, end)
-      {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-      }
-      $('#reportrange').daterangepicker(
-      {
-        startDate: start,
-        endDate: end,
-        ranges:
-        {
-          'Today': [moment(), moment()],
-          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month': [moment().startOf('month'), moment().endOf('month')],
-          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-      }, cb);
-      cb(start, end);
-      $('.input-placeholder').mask("00/00/0000",
-      {
-        placeholder: "__/__/____"
-      });
-      $('.input-zip').mask('00000-000',
-      {
-        placeholder: "____-___"
-      });
-      $('.input-money').mask("#.##0,00",
-      {
-        reverse: true
-      });
-      $('.input-phoneus').mask('(000) 000-0000');
-      $('.input-mixed').mask('AAA 000-S0S');
-      $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
-      {
-        translation:
-        {
-          'Z':
-          {
-            pattern: /[0-9]/,
-            optional: true
-          }
-        },
-        placeholder: "___.___.___.___"
-      });
-      // editor
-      var editor = document.getElementById('editor');
-      if (editor)
-      {
-        var toolbarOptions = [
-          [
-          {
-            'font': []
-          }],
-          [
-          {
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote', 'code-block'],
-          [
-          {
-            'header': 1
-          },
-          {
-            'header': 2
-          }],
-          [
-          {
-            'list': 'ordered'
-          },
-          {
-            'list': 'bullet'
-          }],
-          [
-          {
-            'script': 'sub'
-          },
-          {
-            'script': 'super'
-          }],
-          [
-          {
-            'indent': '-1'
-          },
-          {
-            'indent': '+1'
-          }], // outdent/indent
-          [
-          {
-            'direction': 'rtl'
-          }], // text direction
-          [
-          {
-            'color': []
-          },
-          {
-            'background': []
-          }], // dropdown with defaults from theme
-          [
-          {
-            'align': []
-          }],
-          ['clean'] // remove formatting button
-        ];
-        var quill = new Quill(editor,
-        {
-          modules:
-          {
-            toolbar: toolbarOptions
-          },
-          theme: 'snow'
-        });
-      }
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function()
-      {
-        'use strict';
-        window.addEventListener('load', function()
-        {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form)
-          {
-            form.addEventListener('submit', function(event)
-            {
-              if (form.checkValidity() === false)
-              {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
-    <script>
-
-    </script>
    
-    
+
   </body>
 </html>
+
+
+
+
+
+
+

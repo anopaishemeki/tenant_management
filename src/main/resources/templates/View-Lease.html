@@ -6,22 +6,23 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="assets/logo/sysIco(2).ico">
-    <title>Add Request</title>
+    <title>Tenant Management System</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="css/feather.css">
-    <link rel="stylesheet" href="css/select2.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/customlease.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="setAddTenantDropDown(),getImageProfile()">
+<body class="vertical  light  " id="body" onload="getLeases(),getImageProfile()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -203,10 +204,6 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" th:href="@{/requestForm}"><span
-                                    class="ml-1 item-text">Lodge Request</span></a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link pl-3" th:href="@{/request}"><span
                                     class="ml-1 item-text">Requests</span></a>
                         </li>
@@ -279,138 +276,163 @@
     <main role="main" class="main-content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-
-                <div class="col-12 mb-4">
-                    <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-2 page-title">Lease Table</h2>
+                    <p class="card-text">lease management</p>
+                    <div class="row my-4">
+                        <!-- Small table -->
                         <div class="col-md-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header">
-                                    <strong class="card-title"> Request Form</strong>
-                                </div>
+                            <div class="card shadow">
                                 <div class="card-body">
-                                    <form id="_form">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="tenant_list">Tenant Name :</label>
-                                                <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
-                                                        required>
-                                                    <optgroup id="Available Tenants" label="Available Tenants" >
-                                                        <option value="">Select Tenant Name</option>
-                                                    </optgroup>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="request">Request Type</label>
-                                                <input type="text" class="form-control" id="request">
-                                            </div><!-- form-group -->
-                                            <div class="col-md-2"></div>
+                                    <!-- table -->
+                                   <!-- <table class="table dataTables table-hover  table-borderless border-v" id="dataTable" style="width: 100%!important;">-->
+                                    <table class="table table-hover  dataTables table-borderless border-v" id="dataTable" style="width:100%!important;">
+                                        <thead class="thead-dark">
+                                        <tr role="row" >
+                                            <th>ID</th>
+                                            <th>Business </th>
+                                            <th>Representative</th>
+                                            <th><span class="fe fe-phone"></span></spa>Contact</th>
+                                            <th>Start Date</th>
+                                            <th>Expiry Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                      <!--  <tbody id="t_body"></tbody>-->
+                                    </table>
 
-                                            <!-- form-group -->
-                                        </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                                         data-bs-keyboard="false" >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Termination
+                                                        Dialog</h5>
+                                                    <a href="">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="alert alert-info" role="alert" id="alerrt">
+                                                        <p id="alrt" style="visibility: visible">Are You Sure you want
+                                                            to Terminate This Lease</p>
 
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="levelOfUrgency">Level of Urgency</label>
-                                                <select id="levelOfUrgency" class="form-control">
-                                                    <option value="High" selected>High</option>
-                                                    <option value="Moderate">Moderate</option>
-                                                    <option value="Low">Low</option>
-                                                </select>
-                                            </div>
-
-                                                        <div class="form-group col-md-6">
-                                                            <label for="description">Description</label>
-                                                            <textarea class="form-control" id="description"
-                                                                      rows="4"></textarea>
+                                                        <div id="liveAlertPlaceholder">
+                                                            <button id="ldiD" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                                Terminating ...
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </button>
                                                         </div>
-                                                     <!-- /.card -->
-
-                                        </div>
-                                        <div class="form-row">
-                                       <!-- <div class="col-md-12 mb-4">
-                                            <div class="card shadow">
-                                                <div class="card-body">
-                                                    <div class="form-group mb-3">
-                                                        <label for="description">Description</label>
-                                                        <textarea class="form-control" id="description"
-                                                                  rows="4"></textarea>
                                                     </div>
-                                                </div> &lt;!&ndash; /.card-body &ndash;&gt;
-                                            </div> &lt;!&ndash; /.card &ndash;&gt;
-                                        </div>--> <!-- /.col -->
-                                    </div>
-
-                                        <div class="form-row">
-                                            <div class="form-group col-sm-3 ">
-                                                <button type="button" class="btn mb-2 btn-outline-primary"
-                                                        onclick="saveRequest()"><span class="fe fe-upload-cloud fe-16">Add Request</span>
-                                                </button> &nbsp;
-                                            </div>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
 
 
-                                            <div class="form-group col-sm-9">
-                                                <div id="toast"
-                                                     class="toast align-items-center text-white bg-success-light border-0"
-                                                     role="alert" aria-live="assertive" aria-atomic="true">
-                                                    <div class="d-flex">
-                                                        <div class="toast-body">
-                                                            Request was added successfully
-                                                        </div>
-                                                        <button type="button"
-                                                                class="btn-close btn-close-white me-2 m-auto"
-                                                                data-bs-dismiss="toast" aria-label="Close"></button>
-                                                    </div>
+                                                    <a th:href="@{/View-Lease}">
+                                                        <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal" id="Close"
+                                                                style="display: none">Close
+                                                        </button>
+                                                    </a>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
+                                                    </button>
+                                                    <button type="button" id="liveAlertBtn" class="btn btn-primary"
+                                                            onclick="Terminate()">Yes
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="modal fade" id="renewal" tabindex="-1"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                                         data-bs-keyboard="false">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lease Renewal
+                                                        Dialog</h5>
+                                                    <a href="">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </a>
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <div class="alert alert-info" role="alert" id="alerrt">
+                                                        <div id="liveAlertPlaceholder2">
+                                                            <button id="ldID" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                                Renewing ...
+                                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
+                                                        <div id="renewalInfo">
+                                                            <div class="form-group col-md-12">
+                                                                <label for="id2">ID = </label>
+                                                                <label id="id2"></label>
+                                                                <div class="valid-feedback"></div>
+
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <label for="TenantName2">Business :</label>
+                                                                <input type="text" class="form-control" id="TenantName2"
+                                                                       disabled>
+                                                                <div class="valid-feedback"></div>
+
+                                                            </div>
+                                                            <div class="form-group col-md-12 mb-3">
+                                                                <label for="startDate2">Start Date</label>
+                                                                <input class="form-control" id="startDate2" type="date"
+                                                                       name="startDate"
+                                                                       required>
+                                                            </div>
+                                                            <div class="form-group col-md-12 mb-3">
+                                                                <label for="duration2">Duration :</label>
+                                                                <input class="form-control" id="duration2" type="number"
+                                                                       name="duration"
+                                                                       required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-center">
+
+                                                    <a th:href="@{/View-Lease}">
+                                                        <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal" id="Close2"
+                                                                style="display: none">OK
+                                                        </button>
+                                                    </a>
+
+                                                        <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal"
+                                                                style="padding-left: 10px;padding-right: 10px" id="hhh">Cancel
+                                                        </button>
 
 
+                                                    <button id="liveAlertBtn2" class="btn btn-primary"
+                                                            onclick="renewlease()">
+                                                        Submit Renewal
+                                                    </button>
+                                                </div>
 
-                                    </form>
-                                </div> <!-- /. card-body -->
-                            </div> <!-- /. card -->
-                        </div> <!-- /. col -->
-                    </div> <!-- /. end-section -->
-
-
-
-
-
-                                </div> <!-- /. card-body -->
-                            </div> <!-- /. card -->
-                        </div>
-        <!-- /. col -->
-                    </div> <!-- /. end-section -->
-                </div><!-- .col-12 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- simple table -->
+                    </div> <!-- end section -->
+                </div> <!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-
-
-        <!-- Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
-
-            </div>
-            <div class="modal-body">
-                <h4>Request Saved SuccessFully</h4>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
-                    <span aria-hidden="true" >OK</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-            </div>
-        </div>
-    </div>
-</div>
-        <!---->
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-             aria-hidden="true">
+             aria-hidden="true" >
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -546,196 +568,33 @@
 <script src="js/simplebar.min.js"></script>
 <script src='js/daterangepicker.js'></script>
 <script src='js/jquery.stickOnScroll.js'></script>
-<script src='js/select2.min.js'></script>
+<script src="js/register.js"></script>
 <script src="js/tinycolor-min.js"></script>
 <script src="js/config.js"></script>
+<script src='js/jquery.dataTables.min.js'></script>
+<script src='js/dataTables.bootstrap4.min.js'></script>
+
 <script src="js/apps.js"></script>
-<script src="js/register.js"></script>
-<script src="js/maintenanceApi.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+<script src="js/customlease.js"></script>
+<script src='js/bootstrap.bundle.min.js'></script>
+<script src="js/select2.min.js"></script>
+
 <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
+    $('#dataTable-1').DataTable(
+        {
+            autoWidth: true,
+            "lengthMenu": [
+                [10, 25,50, 100, -1],
+                [10, 25,50, 100, "All"]
+            ]
+        });
 </script>
-<script>
-    $('.select2').select2(
-        {
-            theme: 'bootstrap4',
-        });
-    $('.select2-multi').select2(
-        {
-            multiple: true,
-            theme: 'bootstrap4',
-        });
-    $('.drgpicker').daterangepicker(
-        {
-            singleDatePicker: true,
-            timePicker: false,
-            showDropdowns: true,
-            locale:
-                {
-                    format: 'MM/DD/YYYY'
-                }
-        });
-    $('.time-input').timepicker(
-        {
-            'scrollDefault': 'now',
-            'zindex': '9999' /* fix modal open */
-        });
-    /** date range picker */
-    if ($('.datetimes').length) {
-        $('.datetimes').daterangepicker(
-            {
-                timePicker: true,
-                startDate: moment().startOf('hour'),
-                endDate: moment().startOf('hour').add(32, 'hour'),
-                locale:
-                    {
-                        format: 'M/DD hh:mm A'
-                    }
-            });
-    }
-    var start = moment().subtract(29, 'days');
-    var end = moment();
 
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
 
-    $('#reportrange').daterangepicker(
-        {
-            startDate: start,
-            endDate: end,
-            ranges:
-                {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                }
-        }, cb);
-    cb(start, end);
-    $('.input-placeholder').mask("00/00/0000",
-        {
-            placeholder: "__/__/____"
-        });
-    $('.input-zip').mask('00000-000',
-        {
-            placeholder: "____-___"
-        });
-    $('.input-money').mask("#,##0.00",
-        {
-            reverse: true
-        });
-    $('.input-phoneus').mask('(000) 000-0000');
-    $('.input-mixed').mask('AAA 000-S0S');
-    $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
-        {
-            translation:
-                {
-                    'Z':
-                        {
-                            pattern: /[0-9]/,
-                            optional: true
-                        }
-                },
-            placeholder: "___.___.___.___"
-        });
-    // editor
-    var editor = document.getElementById('editor');
-    if (editor) {
-        var toolbarOptions = [
-            [
-                {
-                    'font': []
-                }],
-            [
-                {
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [
-                {
-                    'header': 1
-                },
-                {
-                    'header': 2
-                }],
-            [
-                {
-                    'list': 'ordered'
-                },
-                {
-                    'list': 'bullet'
-                }],
-            [
-                {
-                    'script': 'sub'
-                },
-                {
-                    'script': 'super'
-                }],
-            [
-                {
-                    'indent': '-1'
-                },
-                {
-                    'indent': '+1'
-                }], // outdent/indent
-            [
-                {
-                    'direction': 'rtl'
-                }], // text direction
-            [
-                {
-                    'color': []
-                },
-                {
-                    'background': []
-                }], // dropdown with defaults from theme
-            [
-                {
-                    'align': []
-                }],
-            ['clean'] // remove formatting button
-        ];
-        var quill = new Quill(editor,
-            {
-                modules:
-                    {
-                        toolbar: toolbarOptions
-                    },
-                theme: 'snow'
-            });
-    }
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
+<script src='js/jquery.validate.min.js'></script>
+
+
+
+
 </body>
 </html>

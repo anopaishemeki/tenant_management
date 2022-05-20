@@ -1,4 +1,4 @@
-<!doctype html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -6,22 +6,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="assets/logo/sysIco(2).ico">
-    <title>Add Documents</title>
+    <title>Tenant Management System</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="css/feather.css">
-    <link rel="stylesheet" href="css/select2.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/customlease.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="setAddTenantDropDown(),getImageProfile()">
+
+  <body class="vertical light"  onload='getLeaseDocument(),FetchRecord(),getImageProfile()'>
     <div class="wrapper">
         <nav class="topnav navbar navbar-light" >
             <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -185,7 +187,14 @@
                                 <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
                                         class="ml-1 item-text">Tenant Documents</span></a>
                             </li>
-
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/noticedocuments}"><span
+                                        class="ml-1 item-text">Notice Documents</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/leasedocuments}"><span
+                                        class="ml-1 item-text">Lease Documents </span></a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -267,161 +276,65 @@
         </aside>
       <main role="main" class="main-content">
         <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-12">
-                    <h2 class="page-title">Add new tenant</h2>
-                    <p class="text-muted"> Register a new tenant into the system</p>
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="mb-2 page-title">Lease Documents</h2>
 
-                    <div class="card shadow mb-4">
-                       <!-- <div class="card-header">
-                            <strong class="card-title">Tenant Details</strong>
-                        </div>-->
-                        <div class="card-body">
-                            <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="tenant_list">Business Name :</label>
-                                        <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
-                                                required>
-                                            <optgroup id="Available Tenants" label="Available Tenants" >
-                                                <option value="">Select Business Name</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="application_letter">Application Letter</label>
-                                        <input type="file" id="application_letter" class="form-control-file"
-                                         name="application_letter" accept=".pdf" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="cr14_form">Cr14 Form</label>
-                                        <input type="file" id="cr14_form" class="form-control-file"
-                                               name="cr14_form" accept=".pdf" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="cr6_form">Cr6 Form </label>
-                                        <input type="file" id="cr6_form" class="form-control-file"
-                                               name="cr6_form" accept=".pdf" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="director_id">Director ID</label>
-                                        <input type="file" id="director_id" class="form-control-file"
-                                               name="director_id" accept=".pdf" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="tax_clearance">Tax Clearance</label>
-                                        <input type="file" id="tax_clearance" class="form-control-file"
-                                               name="tax_clearance" accept=".pdf" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="vat_reg">Vat Registration</label>
-                                        <input type="file" id="vat_reg" class="form-control-file"
-                                               name="vat_reg" accept=".pdf" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="certificate_of_inco">Certificate of Incorporation</label><br><br>
-                                        <input type="file" id="certificate_of_inco" class="form-control-file"
-                                               name="certificate_of_inco" accept=".pdf" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="bank_statement">  Bank Statement</label>
-                                        <input type="file" id="bank_statement" class="form-control-file"
-                                               name="bank_statement" accept=".pdf" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="article_associ">Article of Association</label>
-                                        <input type="file" id="article_associ" class="form-control-file"
-                                               name="article_associ" accept=".pdf" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="company_profile">Company Profile</label>
-                                        <input type="file" id="company_profile" class="form-control-file"
-                                               name="company_profile" accept=".pdf" required>
-                                    </div>
-                                </div>
-                                <button type="button" data-bs-toggle="modal"
-                                        data-bs-target="#successModal" id="btnSubmit" class="btn mb-2 btn-outline-primary" onclick="saveTenantDocument()">
-                                    <span class="fe fe-upload-cloud fe-16">
-                                    Upload
-                                    </span>
-                                </button>
-                            </form>
-                        </div>
+              <div class="row my-4">
+                <!-- Small table -->
+                <div class="col-md-12">
+                  <div class="card shadow">
+                      <div class="card-body">
+                          <!-- table -->
+                          <!-- <table class="table dataTables table-hover  table-borderless border-v" id="dataTable" style="width: 100%!important;">-->
+                          <table class="table table-hover  dataTables table-borderless border-v" id="dataTable" style="width:100%!important;">
+                              <thead class="thead-dark">
+                              <tr role="row" >
+
+                                  <th>Id</th>
+                                  <th>Business</th>
+                                  <th>Start Date</th>
+                                  <th>Status</th>
+                                  <th>Display Document</th>
+                                  <th>Action</th>
+                              </tr>
+                              </thead>
+                            <!--<tbody id="t_body">
+                            </tbody>-->
+                              <!--  <tbody id="t_body"></tbody>-->
+                          </table>
                     </div>
-                </div>
-            </div>
-        </div>
-                <!-- Modal -->
-          <!-- Modal -->
-          <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-               aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                  </div>
+                </div> <!-- simple table -->
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
 
-                      </div>
-                      <div class="modal-body">
-                          <h4>Documents Uploaded SuccessFully</h4>
-                          <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
-                              <span aria-hidden="true" >OK</span>
-                          </button>
-                      </div>
-                      <div class="modal-footer">
-                          <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                          <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-               aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalCenterTitle1">Operation Successful</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-                      <div class="modal-body">
-                          Documents not Uploaded
-                      </div>
-                      <div class="modal-footer">
-                          <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                          <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                      </div>
-                  </div>
-              </div>
-          </div>
+
+
 
 
       </main> <!-- main -->
     </div> <!-- .wrapper -->
+
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/simplebar.min.js"></script>
-    <script src="js/downloadfile.js"></script>
     <script src='js/daterangepicker.js'></script>
-    <script src='js/jquery.stickOnScroll.js'></script>
     <script src="js/register.js"></script>
-    <script src='js/select2.min.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
     <script src="js/tinycolor-min.js"></script>
     <script src="js/config.js"></script>
+    <script src='js/jquery.dataTables.min.js'></script>
+    <script src='js/dataTables.bootstrap4.min.js'></script>
     <script src="js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="js/downloadfile.js"></script>
+    <script src="js/customlease.js"></script>
+    <script src='js/bootstrap.bundle.min.js'></script>
+    <script src="js/select2.min.js"></script>
 
     <script>
     $('.select2').select2(
@@ -430,6 +343,7 @@
         });
     $('.select2-multi').select2(
         {
+
             multiple: true,
             theme: 'bootstrap4',
         });
@@ -449,7 +363,8 @@
             'zindex': '9999' /* fix modal open */
         });
     /** date range picker */
-    if ($('.datetimes').length) {
+    if ($('.datetimes').length)
+    {
         $('.datetimes').daterangepicker(
             {
                 timePicker: true,
@@ -464,10 +379,10 @@
     var start = moment().subtract(29, 'days');
     var end = moment();
 
-    function cb(start, end) {
+    function cb(start, end)
+    {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     }
-
     $('#reportrange').daterangepicker(
         {
             startDate: start,
@@ -491,7 +406,7 @@
         {
             placeholder: "____-___"
         });
-    $('.input-money').mask("#,##0.00",
+    $('.input-money').mask("#.##0,00",
         {
             reverse: true
         });
@@ -511,7 +426,8 @@
         });
     // editor
     var editor = document.getElementById('editor');
-    if (editor) {
+    if (editor)
+    {
         var toolbarOptions = [
             [
                 {
@@ -578,15 +494,20 @@
             });
     }
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
+    (function()
+    {
         'use strict';
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function()
+        {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
+            var validation = Array.prototype.filter.call(forms, function(form)
+            {
+                form.addEventListener('submit', function(event)
+                {
+                    if (form.checkValidity() === false)
+                    {
                         event.preventDefault();
                         event.stopPropagation();
                     }
@@ -596,13 +517,34 @@
         }, false);
     })();
 </script>
+    <script>
+    $('#dataTable-1').DataTable(
+        {
+            autoWidth: true,
+            "lengthMenu": [
+                [10, 25,50, 100, -1],
+                [10, 25,50, 100, "All"]
+            ]
+        });
+</script>
+
+
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag()
+    {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-56159088-1');
+</script>
+
+
+    <script src='js/jquery.validate.min.js'></script>
+
+
+
+
   </body>
-
 </html>
-
-
-
-
-
-
-

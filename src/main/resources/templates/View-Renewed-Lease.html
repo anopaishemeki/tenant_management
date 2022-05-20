@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " id="body" onload="getLeases(),getImageProfile()">
+<body class="vertical  light  " id="body" onload="getRenewedLeases(),getImageProfile()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -186,14 +186,7 @@
                             <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
                                     class="ml-1 item-text">Tenant Documents</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link pl-3" th:href="@{/noticedocuments}"><span
-                                    class="ml-1 item-text">Notice Documents</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link pl-3" th:href="@{/leasedocuments}"><span
-                                    class="ml-1 item-text">Lease Documents </span></a>
-                        </li>
+
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -277,7 +270,7 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="mb-2 page-title">Lease Table</h2>
+                    <h2 class="mb-2 page-title">Renewed Leases Table</h2>
                     <p class="card-text">lease management</p>
                     <div class="row my-4">
                         <!-- Small table -->
@@ -289,14 +282,15 @@
                                     <table class="table table-hover  dataTables table-borderless border-v" id="dataTable" style="width:100%!important;">
                                         <thead class="thead-dark">
                                         <tr role="row" >
+
                                             <th>ID</th>
-                                            <th>Business </th>
-                                            <th>Representative</th>
-                                            <th><span class="fe fe-phone"></span></spa>Contact</th>
+                                            <th>Business</th>
+                                            <th>Portfolio</th>
                                             <th>Start Date</th>
                                             <th>Expiry Date</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Action Date</th>
+                                            <th>Action Time</th>
                                         </tr>
                                         </thead>
                                       <!--  <tbody id="t_body"></tbody>-->
@@ -332,7 +326,7 @@
                                                 <div class="modal-footer d-flex justify-content-center">
 
 
-                                                    <a th:href="@{/View-Lease}">
+                                                    <a th:href="@{/View-Renewed}">
                                                         <button type="button" class="btn btn-danger"
                                                                 data-bs-dismiss="modal" id="Close"
                                                                 style="display: none">Close
@@ -356,7 +350,7 @@
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Lease Renewal
                                                         Dialog</h5>
-                                                    <a href="">
+                                                    <a th:href="@{/View-Lease}">
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </a>
@@ -379,7 +373,7 @@
 
                                                             </div>
                                                             <div class="form-group col-md-12">
-                                                                <label for="TenantName2">Business :</label>
+                                                                <label for="TenantName2">Tenant Name:</label>
                                                                 <input type="text" class="form-control" id="TenantName2"
                                                                        disabled>
                                                                 <div class="valid-feedback"></div>
@@ -408,12 +402,6 @@
                                                                 style="display: none">OK
                                                         </button>
                                                     </a>
-
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal"
-                                                                style="padding-left: 10px;padding-right: 10px" id="hhh">Cancel
-                                                        </button>
-
 
                                                     <button id="liveAlertBtn2" class="btn btn-primary"
                                                             onclick="renewlease()">
@@ -568,12 +556,11 @@
 <script src="js/simplebar.min.js"></script>
 <script src='js/daterangepicker.js'></script>
 <script src='js/jquery.stickOnScroll.js'></script>
-<script src="js/register.js"></script>
 <script src="js/tinycolor-min.js"></script>
 <script src="js/config.js"></script>
 <script src='js/jquery.dataTables.min.js'></script>
 <script src='js/dataTables.bootstrap4.min.js'></script>
-
+<script src="js/register.js"></script>
 <script src="js/apps.js"></script>
 <script src="js/customlease.js"></script>
 <script src='js/bootstrap.bundle.min.js'></script>
@@ -591,7 +578,6 @@
 </script>
 
 
-<script src='js/select2.min.js'></script>
 
 <script src='js/jquery.validate.min.js'></script>
 

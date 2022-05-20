@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="getScheduled(),getImageProfile()">
+<body class="vertical  light" onload="getRequest(),getImageProfile()" >
 <div class="wrapper">
     <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -272,30 +272,31 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="mb-2 page-title">Scheduled Requests</h2>
+                    <h2 class="mb-2 page-title">All Requests</h2>
 
                     <div class="row my-4">
                         <!-- Small table -->
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
+
                                     <!-- table -->
                                     <table class="table table-hover  dataTables table-borderless border-v" id="example" style="width: 100%">
                                         <thead class="thead-dark">
-                                        <tr>
+                                        <tr >
+
 
                                             <th>Tenant Id</th>
                                             <th>Request</th>
                                             <th>Description</th>
-                                            <th>Status</th>
+                                            <th>Urgency</th>
                                             <th>Date Logged</th>
-                                            <th>Schedule Date</th>
-                                            <th>Assigned Team</th>
+                                            <th>Scheduled Date</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
-                                       <!-- <tbody id="t_body">
+                                      <!--  <tbody id="t_body">
                                         <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
@@ -303,11 +304,11 @@
                                                     <label class="custom-control-label"></label>
                                                 </div>
                                             </td>
-                                            <td>368</td>
-                                            <td>Imani Lara</td>
-                                            <td>Asset Management</td>
-                                            <td>10-12-2022</td>
-                                            <td>19-12-2022</span></td>
+                                            <td>1</td>
+                                            <td>Electrical Fault</td>
+                                            <td>Main switch problem</td>
+                                            <td>2022-02-24</td>
+                                            <td><span class="badge badge-danger">Overdue</span></td>
 
                                             <td>
                                                 <button class="btn btn-sm dropdown-toggle more-horizontal" type="button"
@@ -316,7 +317,9 @@
                                                     <span class="text-muted sr-only">Action</span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#">Attended</a>
+                                                    <a class="dropdown-item" data-toggle="modal"
+                                                       data-target="#varyModal" data-whatever="@mdo"
+                                                       href="#">Schedule</a>
 
                                                 </div>
                                             </td>
@@ -334,41 +337,67 @@
         <div class="col-md-4 mb-4">
 
 
-            <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel"
-                 aria-hidden="true">
+            <!--            <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel"-->
+            <!--                 aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">-->
+            <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="varyModalLabel">Attended</h5>
+                            <h5 class="modal-title" id="varyModalLabel">Schedule</h5>
                             <a href="">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </a>
                         </div>
-                        <div class="modal-body justify-content-center">
-                            <div class="form-row ">
-                                <div class="liveAlertPlaceholder" id="liveAlertPlaceholder"></div>
-                                <div class="col-md-6 justify-content-center" id="cont">
-                                    <p class="text-center"> Mark this request as attended</p>
+                        <div class=" justify-content-center modal-body" id="liveAlertPlaceholder" style="display: none">
+                            <p class="text-center">Update Request </p>
+                        </div>
+                        <div id="cont" class="modal-body justify-content-center">
+                            <div class="form-row mb-3">
+                                <div class="col-md-6 mb-3">
 
 
+                                    <div  class="row justify-content-center">
+                                        <div  class="col-md-10" >
+                                        <label for="date-input1">Schedule Date</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control drgpicker" id="date-input1"
+                                                   value="2020-12-02" aria-describedby="button-addon2">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text" id="button-addon-date"><span
+                                                        class="fe fe-calendar fe-16 mx-2"></span></div>
+                                            </div>
+                                        </div>
+                                            </div>
+
+                                        <div class="col-md-10">
+                                        <label for="date-input1">Assigned Team</label>
+                                        <div class="input-group">
+                                            <input type="text" id="teamInput" class="form-control"
+                                                  aria-describedby="button-addon2">
+
+                                    </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
+
+                    </div>
                         <div class="modal-footer d-flex justify-content-center">
-<!--                            <a href="schedule.html">-->
-<!--                                <button type="button" class="btn mb-2 btn-success" data-dismiss="modal"-->
-<!--                                        style="display: none" id="1">OK-->
-<!--                                </button>-->
-<!--                            </a>-->
-                            <a th:href="@{/schedule}">
-                                <button type="button" id="1" style="display: none" data-bs-dismiss="modal"
+                            <!--                            <a href="request.html" >-->
+                            <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                            <!--                            </a>-->
+                            <a  th:href="@{/request}">
+                                <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
                                         class="btn mb-2 btn-success" aria-label="Close">OK
                                 </button>
                             </a>
-                            <button type="button" class="btn mb-2 btn-primary" onclick="Attended()" id="2"><span class="fe fe-upload-cloud fe-16">Attended</span></button>
+                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                            </button>
+                            <button type="button" class="btn mb-2 btn-primary" onclick="schedule()" id="2">Assign
+                            </button>
                         </div>
-                    </div>
                 </div>
             </div>
 
@@ -518,31 +547,45 @@
 <script src='js/jquery.dataTables.min.js'></script>
 <script src='js/dataTables.bootstrap4.min.js'></script>
 
-<script src="js/apps.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+
 <script>
-    window.dataLayer = window.dataLayer || [];
+    $(function(){
+        $("#to").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#from").datepicker({ dateFormat: 'yy-mm-dd' }).bind("change",function(){
+            var minValue = $(this).val();
+            minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+            minValue.setDate(minValue.getDate()+1);
+            $("#to").datepicker( "option", "minDate", minValue );
+        })
+    });
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-56159088-1');
 </script>
-
-
-<script src='js/daterangepicker.js'></script>
-
-
+<script>
+    $('#dataTable-1').DataTable(
+        {
+            autoWidth: true,
+            "lengthMenu": [
+                [16, 32, 64, -1],
+                [16, 32, 64, "All"]
+            ]
+        });
+</script>
+<script src="js/apps.js"></script>
 <script src='js/select2.min.js'></script>
 
 <script src='js/jquery.validate.min.js'></script>
 
 
 <script>
-
+    $('.select2').select2(
+        {
+            theme: 'bootstrap4',
+        });
+    $('.select2-multi').select2(
+        {
+            multiple: true,
+            theme: 'bootstrap4',
+        });
     $('.drgpicker').daterangepicker(
         {
             singleDatePicker: true,
@@ -550,12 +593,14 @@
             showDropdowns: true,
             locale:
                 {
-                    format: 'MM/DD/YYYY'
+                    format: 'YYYY-MM-DD'
                 }
+
         });
 
+
+
+
 </script>
-
-
 </body>
 </html>

@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Tenant Management</title>
+    <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
@@ -25,83 +25,76 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
   </head>
-  <body class="vertical  light">
+  <body class="vertical  light  ">
     <div class="wrapper">
-          <main role="" class="">
+  
+
+      <main >
         <div class="container-fluid">
           <div class="row justify-content-center">
-                <div class="col-md-6" style="margin-top: 16%;">
-                  <div class="card shadow mb-4">
-                    <div class="card-header">
-                      <strong class="card-title">Product Token</strong>
+            <div class="col-8 col-lg-6" style="margin-top: 10%;">
+              <div class="card my-4">
+                <div class="card-header">
+                  <strong>FILL IN FORMS</strong>
+                </div>
+                <div class="card-body">
+                  <form id="example-form" action="#">
+                    <div>
+                      <h3>Account</h3>
+                      <section>
+                        <div class="form-group">
+                          <label for="userName">Period</label>
+                          <input id="userName" name="userName" type="text" class="form-control required">
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Number of Users</label>
+                          <input id="password" name="password" type="text" class="form-control required">
+                        </div>
+                        <div class="help-text text-muted">(*) Mandatory</div>
+                      </section>
+                      <h3>Pay</h3>
+                      <section>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="name">First name *</label>
+                            <input id="name" name="name" type="text" class="form-control required">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="surname">Last name *</label>
+                            <input id="surname" name="surname" type="text" class="form-control required">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Email *</label>
+                          <input id="email" name="email" type="text" class="form-control required email">
+                        </div>
+                        <div class="form-group">
+                          <label for="address">Address</label>
+                          <input id="address" name="address" class="form-control" type="text">
+                        </div>
+                        <div class="help-text text-muted">(*) Mandatory</div>
+                      </section>
+                      <h3>Key</h3>
+                      <section>
+                        <ul class="ml-5">
+                       
+                        </ul>
+                      </section>
+                      <h3>Finish</h3>
+                      <section>
+                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                      </section>
                     </div>
-                    <div class="card-body">
-                      <form class="needs-validation" novalidate >
-                          <div class="form-group mb-3">
-                          <label for="validationTextarea1">Key</label>
-                          <textarea class="form-control" id="validationTextarea1" placeholder="Enter Token Here" required="" rows="6"></textarea>
-                          <div class="invalid-feedback"> Please enter your product token. </div>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input type="checkbox" class="custom-control-input" id="customControlValidation16" required="">
-                          <label class="custom-control-label" for="customControlValidation16"> Agree to terms and conditions</label>
-                          <div class="invalid-feedback"> You must agree before submitting. </div>
-                        </div>
-
-                      </form>
-                      <button class="btn btn-primary"  onclick="saveToken()">Submit Key</button>
-                    </div> <!-- /.card-body -->
-                  </div> <!-- /.card -->
-                </div> <!-- /.col -->
-              </div> <!-- end section -->
-            </div> <!-- /.col-12 col-lg-10 col-xl-10 -->
-
+                  </form>
+                </div> <!-- .card-body -->
+              </div> <!-- .card -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-
+      
+        </div>
       </main> <!-- main -->
     </div> <!-- .wrapper -->
-    <script src="../../js/pkey.js"></script>
-    <script src="../../js/email.min.js"></script>
-    <script type="text/javascript">
-      function saveToken() {
-        let token = document.getElementById("validationTextarea1").value
-          console.log("Token :",token)
-        let Data={
-          "token":token
-        }
-
-        let checkSuccess = false
-
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:8090/api/v1/authenticate",
-          processData: false,
-          data:JSON.stringify(Data),
-          contentType: "application/json; charset=utf-8",
-          cache: false,
-          success: function (response) {
-            console.log(response)
-            checkSuccess = true
-            if (checkSuccess) {
-              window.location.replace('http://localhost:8090/company')
-            }
-          },
-          failure: function (response) {
-            if(checkSuccess==false){
-              window.location.replace('http://localhost:8090/token')
-            }
-
-          }
-
-            });
-
-
-
-      }
-      (function () {
-        emailjs.init("D-bkYkdt8KPF0Wdop");
-      })();
-    </script>
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/moment.min.js"></script>
@@ -111,6 +104,21 @@
     <script src='js/jquery.stickOnScroll.js'></script>
     <script src="js/tinycolor-min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="js/topojson.min.js"></script>
+    <script src="js/datamaps.all.min.js"></script>
+    <script src="js/datamaps-zoomto.js"></script>
+    <script src="js/datamaps.custom.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script>
+      /* defind global options */
+      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+      Chart.defaults.global.defaultFontColor = colors.mutedColor;
+    </script>
+    <script src="js/gauge.min.js"></script>
+    <script src="js/jquery.sparkline.min.js"></script>
+    <script src="js/apexcharts.min.js"></script>
+    <script src="js/apexcharts.custom.js"></script>
     <script src='js/jquery.mask.min.js'></script>
     <script src='js/select2.min.js'></script>
     <script src='js/jquery.steps.min.js'></script>
@@ -323,8 +331,8 @@
       }
     </script>
     <script src="js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+
+
     <script>
       window.dataLayer = window.dataLayer || [];
 
