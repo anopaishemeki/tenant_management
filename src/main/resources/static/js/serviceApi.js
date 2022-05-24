@@ -19,7 +19,7 @@ function saveService() {
     console.log("data",data)
 
     $.ajax({
-        url: 'http://localhost:8090/api/services/save-service',
+        url: '/api/services/save-service',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
@@ -54,7 +54,7 @@ function saveService() {
 
 function getService() {
 
-    var baseurl = "http://localhost:8090/api/services/get-all-services";
+    var baseurl = "/api/services/get-all-services";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET",baseurl,true);
     xmlhttp.onreadystatechange = function(){
@@ -118,7 +118,7 @@ function updateService() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(jsonDataObj),
         type: "PUT",
-        url: "http://localhost:8090/api/services/updateService/" + id ,
+        url: "/api/services/updateService/" + id ,
 
         success: function (response) {
             console.log(response);
@@ -159,7 +159,7 @@ function deleteService(){
         crossDomain: "true",
         contentType: "application/json; charset=utf-8",
         type: "DELETE",
-        url: "http://localhost:8090/api/services/delete-service/"+id,
+        url: "/api/services/delete-service/"+id,
         success: function (response) {
             console.log("Delete")
             var r = document.getElementById("1");

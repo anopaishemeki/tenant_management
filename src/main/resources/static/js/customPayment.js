@@ -21,7 +21,7 @@ function savePayment() {
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/payment/save-payment',
+        url: '/api/payment/save-payment',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
@@ -39,7 +39,7 @@ function savePayment() {
 
 function getPayments() {
     $.ajax({
-        url: 'http://localhost:8090/api/payment/get-payments',
+        url: '/api/payment/get-payments',
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -71,7 +71,7 @@ function getPayments() {
 
 function setAddPropertyDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -104,7 +104,7 @@ function setLettableSpaceDropdown() {
     let dropDown = document.getElementById("simple-select33").value;
     if (dropDown == "-1") {
         $.ajax({
-            url: 'http://localhost:8090/api/compartment/get-compartments',
+            url: '/api/compartment/get-compartments',
             type: 'GET',
             success: function (response) {
                 let drop = document.getElementById("simple-select44");
@@ -134,7 +134,7 @@ function setLettableSpaceDropdown() {
         })
     } else {
         $.ajax({
-            url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + dropDown,
+            url: '/api/compartment/get-compartments-for-specific-property/' + dropDown,
             type: 'GET',
             success: function (response) {
                 let drop = document.getElementById("simple-select44");
@@ -169,7 +169,7 @@ function setInvoiceDropdown(){
     let dropDown = document.getElementById("simple-select44").value;
     if (dropDown == "-1") {
         $.ajax({
-            url: 'http://localhost:8090/api/invoice/get-all-invoices',
+            url: '/api/invoice/get-all-invoices',
             type: 'GET',
             success: function (response) {
                 let drop = document.getElementById("simple-select55");
@@ -197,7 +197,7 @@ function setInvoiceDropdown(){
         })
     } else {
         $.ajax({
-            url: 'http://localhost:8090/api/invoice/get-invoice-for-specic-compartment/' + dropDown,
+            url: '/api/invoice/get-invoice-for-specic-compartment/' + dropDown,
             type: 'GET',
             success: function (response) {
                 let drop = document.getElementById("simple-select55");

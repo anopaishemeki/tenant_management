@@ -18,7 +18,7 @@ function toggleView(id) {
 
 function getProperties(){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -157,7 +157,7 @@ function  saveProperty(){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/property/save-property',
+        url: '/api/property/save-property',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
@@ -174,7 +174,7 @@ function  saveProperty(){
 //Property Details
 function editPropertyDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/'+id,
+        url: '/api/property/get-property/'+id,
         type: 'GET',
         success: function (response) {
 
@@ -236,7 +236,7 @@ function updatePropertyDetails(id){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/property/update-property/'+id,
+        url: '/api/property/update-property/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -290,7 +290,7 @@ function updatePropertyDetails(id){
 
 /*function discardEditPropertyDetailsChanges(id){
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-property/'+id,
+        url: '/api/property/get-property/'+id,
         type: 'GET',
         success: function (response) {
             let html =  `<div class="col-sm-6">
@@ -342,7 +342,7 @@ function updatePropertyDetails(id){
 //Property Address
 function editPropertyAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: '/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
 
@@ -400,7 +400,7 @@ function updatePropertyAddress(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/'+id,
+        url: ' /api/address/update-address/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -418,7 +418,7 @@ function updatePropertyAddress(id){
 
 /*function discardEditPropertyAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: '/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -461,7 +461,7 @@ function updatePropertyAddress(id){
 //Property Owner Details
 function editPropertyOwnerDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/owner/get-owner/'+id,
+        url: '/api/owner/get-owner/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="form-row">
@@ -494,7 +494,7 @@ function updatePropertyOwnerDetails(id){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/owner/update-owner/'+id,
+        url: '/api/owner/update-owner/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -508,7 +508,7 @@ function updatePropertyOwnerDetails(id){
 
 /*function discardEditPropertyOwnerDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/owner/get-owner/'+id,
+        url: '/api/owner/get-owner/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -539,7 +539,7 @@ function updatePropertyOwnerDetails(id){
 //Property Owner Address
 function editPropertyOwnerAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: '/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
             let html = `                          <hr class="my-4">
@@ -595,7 +595,7 @@ function updatePropertyOwnerAddress(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/address/update-address/'+id,
+        url: ' /api/address/update-address/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -609,7 +609,7 @@ function updatePropertyOwnerAddress(id){
 
 function discardEditPropertyOwnerAddress(id){
     $.ajax({
-        url: 'http://localhost:8090/api/address/get-address/'+id,
+        url: '/api/address/get-address/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -652,7 +652,7 @@ function discardEditPropertyOwnerAddress(id){
 //Property Owner Contact Details
 function editPropertyOwnerContactDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/'+id,
+        url: '/api/contact-details/get-contact-details/'+id,
         type: 'GET',
         success: function (response) {
 
@@ -695,7 +695,7 @@ function updatePropertyOwnerContactDetails(id){
     }
 
     $.ajax({
-        url: ' http://localhost:8090/api/contact-details/update-contact-details/'+id,
+        url: ' /api/contact-details/update-contact-details/'+id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",
@@ -709,7 +709,7 @@ function updatePropertyOwnerContactDetails(id){
 
 function discardEditPropertyOwnerContactDetails(id){
     $.ajax({
-        url: 'http://localhost:8090/api/contact-details/get-contact-details/'+id,
+        url: '/api/contact-details/get-contact-details/'+id,
         type: 'GET',
         success: function (response) {
             let html = `<div class="col-sm-6">
@@ -745,7 +745,7 @@ function discardEditPropertyOwnerContactDetails(id){
 function setPropertyDetails(){
     let id = JSON.parse(localStorage.getItem("id"))
 
-    let url = 'http://localhost:8090/api/property/get-property/'+id
+    let url = '/api/property/get-property/'+id
 
     $.ajax({
         url: url,

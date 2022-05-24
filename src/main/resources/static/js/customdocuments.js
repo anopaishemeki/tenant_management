@@ -100,7 +100,7 @@ if(mc.value.toString().length==0){
 $("#btnSubmit").prop("disabled", true);
     $.ajax({
         type: "POST",
-        url: "http://localhost:8090/api/v1/expiredDocuments",
+        url: "/api/v1/expiredDocuments",
         data: data,
         processData: false,
         contentType: false,
@@ -152,7 +152,7 @@ function getDetails() {
     var id = JSON.parse(localStorage.getItem("id"));
     console.log(id);
     $.ajax({
-        url: 'http://localhost:8090/api/v1/getexpiredlease'+ id,
+        url: '/api/v1/getexpiredlease'+ id,
         type: 'GET',
         success: function (response) {
             let items = response
@@ -488,7 +488,7 @@ function getDetails() {
 //        $.ajax({
 //            type: "POST",
 //            enctype: 'multipart/form-data',
-//            url: "http://localhost:8090/api/tenant/uploadtenantDocument",
+//            url: "/api/tenant/uploadtenantDocument",
 //
 //            data: data,
 //
@@ -541,7 +541,7 @@ function getDetails() {
 //}
 function getTenant() {
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response

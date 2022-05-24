@@ -220,10 +220,10 @@ public class TenantDocController {
 
 }
 
+/*
 
 
-
- /**  @RequestMapping(method = RequestMethod.POST, headers = "action=delete-bill-by-id")
+  @RequestMapping(method = RequestMethod.POST, headers = "action=delete-bill-by-id")
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file1") MultipartFile file) {
     String message = "";
     try {

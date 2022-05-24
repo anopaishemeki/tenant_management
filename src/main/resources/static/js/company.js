@@ -16,7 +16,7 @@ function saveCompany(){
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "http://localhost:8090/api/v1/savecompany",
+        url: "/api/v1/savecompany",
         data: ajaxData,
         processData: false,
         contentType: false,
@@ -48,7 +48,7 @@ function decryptKey(){
     var id = JSON.parse(localStorage.getItem("t_id"));
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/decrypt/' + id,
+        url: '/api/v1/decrypt/' + id,
         type: 'Get',
         success: function (response) {
             console.log(response)

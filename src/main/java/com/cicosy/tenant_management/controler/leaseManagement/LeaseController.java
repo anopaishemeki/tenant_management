@@ -78,6 +78,11 @@ public class LeaseController {
         return leaseService.getFormName(ID);
 
     }
+    @GetMapping(path="home")
+    public String home(){
+        return System.getProperty("user.home");
+    }
+
 
     //@GetMapping(path = "tenant/{ID}")
     public List<Lease> getLeaseByT_ID(@PathVariable String ID) {

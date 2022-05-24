@@ -82,7 +82,7 @@
          var email=document.getElementById("email").value;
 
          $.ajax({
-             url: 'http://localhost:8090/api/v1/get_product/'+id,
+             url: '/api/v1/get_product/'+id,
              type: 'GET',
              success: function (response) {
                  d.value=response;
@@ -114,7 +114,7 @@
          var id = JSON.parse(localStorage.getItem("tenantId"));
 
          $.ajax({
-             url: 'http://localhost:8090/api/v1/Updatetoken/' + id,
+             url: '/api/v1/Updatetoken/' + id,
              type: 'PUT',
              success: function (response) {
                  console.log(response)
@@ -140,7 +140,7 @@
              period
          }
          $.ajax({
-             url: 'http://localhost:8090/api/v1/savedetails',
+             url: '/api/v1/savedetails',
              type: 'POST',
              crossDomain: "true",
              contentType: "application/json; charset=utf-8",

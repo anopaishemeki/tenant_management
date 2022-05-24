@@ -51,7 +51,7 @@ public class TenantDocumentsService {
   @Autowired
 	TenantsDocumentRepo tenantsDocumentRepo;
 	
-	public static String uploadDirectory = System.getProperty("user.dir")+"/assets/uploads/tenantDocuments";
+	public static String uploadDirectory = System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"tenantDocuments";
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
 			.toAbsolutePath().normalize();
 	
@@ -106,7 +106,7 @@ public Resource loadFileAsResource(Long id,String fileName) {
       } catch (MalformedURLException ex) {
           throw new FileStorageException("File not found " + fileName, ex);
       }*/
-    String DocumentPath="src/main/resources/static/assets/uploads/Tenant"+id;
+    String DocumentPath=System.getProperty("user.dir")+File.separator+ "uploads"+File.separator+"Tenant"+id;
 //        File pathAsFile = new File(DocumentPath);
 
 

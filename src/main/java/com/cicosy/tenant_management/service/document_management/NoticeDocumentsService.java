@@ -58,7 +58,7 @@ public class NoticeDocumentsService  {
 	NoticeDocumentRepo noticeDocumentRepo;
 
 
-	public static String uploadDirectory = System.getProperty("user.dir")+"/assets/uploads/other_doc";
+	public static String uploadDirectory = System.getProperty("user.dir")+File.separator+"assets"+File.separator+"uploads"+File.separator+"other_doc";
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
 			.toAbsolutePath().normalize();
 

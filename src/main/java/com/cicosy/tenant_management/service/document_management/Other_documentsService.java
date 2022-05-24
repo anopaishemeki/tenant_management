@@ -24,7 +24,7 @@ public class Other_documentsService {
 
 
 
-    public static String uploadDirectory = System.getProperty("user.dir")+"/assets/uploads/otherDocuments";
+    public static String uploadDirectory = System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"otherDocuments";
     private final Path fileStorageLocation= Paths.get(uploadDirectory)
             .toAbsolutePath().normalize();
 

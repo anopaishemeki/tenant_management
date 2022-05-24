@@ -126,7 +126,6 @@ public class LeaseDocumentContoller {
 		return leaseDocumentService.findfile(id);
 	}
 
-
-
+	
 
 }

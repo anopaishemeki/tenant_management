@@ -41,7 +41,7 @@ function getImageProfile() {
     console.log("wth innter text uname =",username);
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getUser/' + username,
+        url: '/api/v1/lease/getUser/' + username,
         type: 'GET',
         success: function (response) {
             console.log(response);
@@ -54,7 +54,7 @@ function getImageProfile() {
 
                 // th:href ="${#authentication.getPrincipal().getUsername()}}"
             }else{
-                profileImage.setAttribute("src","http://localhost:8090/uploads/Profiles/"+response.photo);
+                profileImage.setAttribute("src","/uploads/Profiles/"+response.photo);
             }
         }
 

@@ -33,7 +33,7 @@ function toggleView(id) {
 //Get All Request
 function getRequest() {
 
-    var baseurl = "http://localhost:8090/api/maintenance/getAll";
+    var baseurl = "/api/maintenance/getAll";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -107,7 +107,7 @@ function alert(message, type) {
 
 //Get Overdue Request
 function getOverdue() {
-    var baseurl = "http://localhost:8090/api/maintenance/status/overdue";
+    var baseurl = "/api/maintenance/status/overdue";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -158,7 +158,7 @@ function getOverdue() {
 function getPending() {
 
 
-    var baseurl = "http://localhost:8090/api/maintenance/status/pending";
+    var baseurl = "/api/maintenance/status/pending";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -220,7 +220,7 @@ function schedule() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(jsonDataObj),
         type: "PUT",
-        url: "http://localhost:8090/api/maintenance/" + id + "/schedule",
+        url: "/api/maintenance/" + id + "/schedule",
         success: function (response) {
             console.log(response);
 
@@ -250,7 +250,7 @@ function schedule() {
 //Get Scheduled
 function getScheduled() {
     /*$.ajax({
-        url: 'http://localhost:8090/api/maintenance/getAllScheduled',
+        url: '/api/maintenance/getAllScheduled',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -315,7 +315,7 @@ function getScheduled() {
 
 
     })*/
-    var baseurl = "http://localhost:8090/api/maintenance/getAllScheduled";
+    var baseurl = "/api/maintenance/getAllScheduled";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -399,7 +399,7 @@ function Attended() {
     $.ajax({
 
         type: "GET",
-        url: "http://localhost:8090/api/maintenance/" + id,
+        url: "/api/maintenance/" + id,
         success: function (response) {
             console.log(response);
             $.ajax({
@@ -408,7 +408,7 @@ function Attended() {
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(response),
                 type: "POST",
-                url: "http://localhost:8090/api/maintenance/attended",
+                url: "/api/maintenance/attended",
                 success: function (response) {
                     console.log(response);
                     console.log("Posted");
@@ -433,7 +433,7 @@ function Attended() {
         crossDomain: "true",
         contentType: "application/json; charset=utf-8",
         type: "DELETE",
-        url: "http://localhost:8090/api/maintenance/attended/" + id,
+        url: "/api/maintenance/attended/" + id,
         success: function (response) {
             console.log("Delete")
             var r = document.getElementById("1");
@@ -480,7 +480,7 @@ function Attended() {
 //Get Attended
 function getAttended() {
     /*$.ajax({
-        url: 'http://localhost:8090/api/maintenance/getAllAttended',
+        url: '/api/maintenance/getAllAttended',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -530,7 +530,7 @@ function getAttended() {
             }
         }
     })*/
-    var baseurl = "http://localhost:8090/api/maintenance/getAllAttended";
+    var baseurl = "/api/maintenance/getAllAttended";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -664,7 +664,7 @@ function saveRequest() {
     console.log("data", data)
 
     $.ajax({
-        url: 'http://localhost:8090/api/maintenance',
+        url: '/api/maintenance',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
@@ -698,7 +698,7 @@ function saveRequest() {
 
 function setAddTenantDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             console.log(response)

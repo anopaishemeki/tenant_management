@@ -416,7 +416,7 @@
         let tenantId = JSON.parse(localStorage.getItem("tenantId"));
         let document_name = JSON.parse(localStorage.getItem("document_name"))
         $.ajax({
-            url: "http://localhost:8090/api/v1/getoth/"+tenantId + "/" + document_name,
+            url: "/api/v1/getoth/"+tenantId + "/" + document_name,
             type: 'GET',
             success: function (response) {
                 console.log("response",response);
@@ -439,7 +439,7 @@
 
 
         if(PDFObject.supportsPDFs){
-            PDFObject.embed("http://localhost:8090/uploads/other_documents/Tenant" + tenantId + "/" +file,"#form");
+            PDFObject.embed("/uploads/other_documents/Tenant" + tenantId + "/" +file,"#form");
         }else{
             window.alert("This Browser Doest support  PDF of this format");
         }

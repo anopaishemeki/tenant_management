@@ -7,9 +7,8 @@
 <div id="form" >
 	
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.3/pdfobject.min.js" integrity="sha512-bHO4iqeyo1tN+C4qnbroCQ5Hxi3aJcEszT0iOt2nkuXZXQf369U3PUsnoN/ebnKQ5V2iS326OIv9pgXxL+F/kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript">
 
 	let height = window.innerHeight;
@@ -18,16 +17,24 @@
 
 
 	  var file = JSON.parse(localStorage.getItem("file"));
-   /* var filename2=file.split("'")[1];
-	  console.log("file :",filename2);*/
 
-	if(PDFObject.supportsPDFs){
-		PDFObject.embed("http://localhost:8090/uploads/Leases/"+file,"#form");
+
+   
+
+    if(PDFObject.supportsPDFs){
+		PDFObject.embed("/uploads/Leases/"+file,"#form");
 	}else{
 		window.alert("This Browser Doest support  PDF of this format");
-	}
 
 </script>
+
+
+
+
+
+
+
+
 <script type='text/javascript'>
 
     (function()

@@ -38,7 +38,7 @@
 
 <script>
 
-        var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+        var baseurl = "/api/v1/lease/getleases";
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("GET", baseurl, true);
         xmlhttp.onreadystatechange = function () {
@@ -78,7 +78,7 @@
 
     /*function getTenants()
     {*/
-        var baseurl1 = "http://localhost:8090/api/tenants/get-all-tenants";
+        var baseurl1 = "/api/tenants/get-all-tenants";
         var xmlhttp1 = new XMLHttpRequest();
         xmlhttp1.open("GET", baseurl1, true);
         xmlhttp1.onreadystatechange = function () {

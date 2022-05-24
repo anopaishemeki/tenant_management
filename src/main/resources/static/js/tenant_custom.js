@@ -1,6 +1,6 @@
 function getTenants() {
     // -----
-    var baseurl = "http://localhost:8090/api/tenants/get-all-tenants";
+    var baseurl = "/api/tenants/get-all-tenants";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -9,7 +9,7 @@ function getTenants() {
             var data = JSON.parse(xmlhttp.responseText);
 
 
-            var url = "http://localhost:8090/api/v1/lease/getleases";
+            var url = "/api/v1/lease/getleases";
             var xxx = new XMLHttpRequest();
             xxx.open("GET", url, true);
             xxx.onreadystatechange = function () {
@@ -111,7 +111,7 @@ function getTenants() {
 
     // --------
     /*$.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -231,7 +231,7 @@ function saveTenant() {
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/addTenant',
+        url: '/api/tenants/addTenant',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
@@ -294,7 +294,7 @@ function setLocalfiles(application_letter, article, bank_statement, cr6_form, cr
 function getTenantBYid() {
     let id = JSON.parse(localStorage.getItem("t_id"));
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/getTenantByID/' + id,
+        url: '/api/tenants/getTenantByID/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response);
@@ -395,7 +395,7 @@ function getTenantBYid() {
         }
     })
     $.ajax({
-        url: 'http://localhost:8090/api/tenant/fetchfile/' + id,
+        url: '/api/tenant/fetchfile/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response);
@@ -430,7 +430,7 @@ function getTenantBYid() {
 
 function getTenantsAssign() {
  /*   $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -460,7 +460,7 @@ function getTenantsAssign() {
     })*/
 
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -502,7 +502,7 @@ function getTenantsAssign() {
 function getCompartmentDetails() {
 
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             let buildings = response
@@ -520,7 +520,7 @@ function getCompartmentDetails() {
                     let id = buildings[i].id;
 
                     $.ajax({
-                        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + id,
+                        url: '/api/compartment/get-compartments-for-specific-property/' + id,
                         type: 'GET',
                         data: {id},
                         success: function (response) {
@@ -631,7 +631,7 @@ function searchFilter() {
 
 function setAddPropertyDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -655,7 +655,7 @@ function setAddPropertyDropDown() {
 
 function setAddTenantDropDown() {
    /* $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -683,7 +683,7 @@ function setAddTenantDropDown() {
 
 
     /*tenant dropdown*/
-    var baseurl = "http://localhost:8090/api/tenants/get-all-tenants";
+    var baseurl = "/api/tenants/get-all-tenants";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -692,7 +692,7 @@ function setAddTenantDropDown() {
             var data = JSON.parse(xmlhttp.responseText);
 
 
-            var url = "http://localhost:8090/api/v1/lease/getleases";
+            var url = "/api/v1/lease/getleases";
             var xxx = new XMLHttpRequest();
             xxx.open("GET", url, true);
             xxx.onreadystatechange = function () {
@@ -851,7 +851,7 @@ function setAddCompartmentDropDown(compartment_id) {
 
     $.ajax({
 
-        url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + compartment_id,
+        url: '/api/compartment/get-compartments-for-specific-property/' + compartment_id,
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -896,7 +896,7 @@ function setTenantOnCompartment() {
     };
     $.ajax({
 
-        url: 'http://localhost:8090/api/compartment/update-compartment/' + id,
+        url: '/api/compartment/update-compartment/' + id,
         type: 'PUT',
         dataType: "json",
         crossDomain: "true",

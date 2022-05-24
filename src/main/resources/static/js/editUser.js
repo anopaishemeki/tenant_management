@@ -12,7 +12,7 @@
      $.ajax({
          type: "POST",
          enctype: 'multipart/form-data',
-         url: "http://localhost:8090/editProfileImage/"+username,
+         url: "/editProfileImage/"+username,
          data: data,
          processData: false,
          contentType: false,
@@ -50,7 +50,7 @@ function  setNametoLocal(username) {
 function getProfile(){
     var username = JSON.parse(localStorage.getItem("username"));
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getUser/' +username,
+        url: '/api/v1/lease/getUser/' +username,
         type: 'GET',
         success: function (response) {
 
@@ -64,9 +64,9 @@ function getProfile(){
 
                // th:href ="${#authentication.getPrincipal().getUsername()}}"
             }else{
-                profileImage2.setAttribute("src","http://localhost:8090/uploads/Profiles/"+response.photo);
+                profileImage2.setAttribute("src","/uploads/Profiles/"+response.photo);
 
-                profileImage.setAttribute("src","http://localhost:8090/uploads/Profiles/"+response.photo);
+                profileImage.setAttribute("src","/uploads/Profiles/"+response.photo);
             }
 
 
@@ -178,7 +178,7 @@ var newPass2= document.getElementById("newPass2");
          contentType: "application/json; charset=utf-8",
          data: JSON.stringify(jsonDataObj),
          type: "POST",
-         url: "http://localhost:8090/api/v1/lease/comparePass/" + username,
+         url: "/api/v1/lease/comparePass/" + username,
          success: function (response) {
              console.log("Response code : ",response.status);
              console.log("Response  : ",response);
@@ -257,7 +257,7 @@ function upadeProfile() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(jsonDataObj),
         type: "PUT",
-        url: "http://localhost:8090/updateUser/" + username,
+        url: "/updateUser/" + username,
 
 
         success: function (response) {

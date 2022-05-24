@@ -29,7 +29,7 @@ function setLocalfiles(application_letter,article,bank_statement,cr6_form,cr14_f
 function loadfile(){
 var id = JSON.parse(localStorage.getItem("tenantId"));
  $.ajax({
-        url: 'http://localhost:8090/api/tenant/fetchfile/' + id ,
+        url: '/api/tenant/fetchfile/' + id ,
         type: 'GET',
         success: function (response) {
         console.log(response);
@@ -54,7 +54,7 @@ function downloadFile(type){
 
       if(type=="application_letter"){
        $.ajax({
-              url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + application_letter,
+              url: '/api/tenant/downloadFile/' + id + "/" + application_letter,
               type: 'GET',
               success: function (response) {
              var h=application_letter.split(".").pop();
@@ -62,14 +62,14 @@ function downloadFile(type){
             console.log(response);
 
             if(h=="jpg"|| h=="png"||h=="jpeg"){
-                window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ application_letter,"_blank");
+                window.open('/assets/uploads/Tenant'+ id + "/"+ application_letter,"_blank");
             }
               }
           })
       }
        if(type=="article_of_association"){
        $.ajax({
-              url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + article_of_association,
+              url: '/api/tenant/downloadFile/' + id + "/" + article_of_association,
               type: 'GET',
               success: function (response) {
              var h=article_of_association.split(".").pop();
@@ -77,14 +77,14 @@ function downloadFile(type){
             console.log(response);
 
             if(h=="jpg"|| h=="png"||h=="jpeg"){
-                window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ article_of_association,"_blank");
+                window.open('/assets/uploads/Tenant'+ id + "/"+ article_of_association,"_blank");
             }
               }
           })
       }
           if(type=="cr14_form"){
              $.ajax({
-                    url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + cr14_form,
+                    url: '/api/tenant/downloadFile/' + id + "/" + cr14_form,
                     type: 'GET',
                     success: function (response) {
                    var h=cr14_form.split(".").pop();
@@ -92,14 +92,14 @@ function downloadFile(type){
                   console.log(response);
 
                   if(h=="jpg"|| h=="png"||h=="jpeg"){
-                      window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ cr14_form,"_blank");
+                      window.open('/assets/uploads/Tenant'+ id + "/"+ cr14_form,"_blank");
                   }
                     }
                 })
             }
              if(type=="cr6_form"){
              $.ajax({
-                    url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + cr6_form,
+                    url: '/api/tenant/downloadFile/' + id + "/" + cr6_form,
                     type: 'GET',
                     success: function (response) {
                    var h=cr6_form.split(".").pop();
@@ -107,14 +107,14 @@ function downloadFile(type){
                   console.log(response);
 
                   if(h=="jpg"|| h=="png"||h=="jpeg"){
-                      window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ cr6_form,"_blank");
+                      window.open('/assets/uploads/Tenant'+ id + "/"+ cr6_form,"_blank");
                   }
                     }
                 })
             }
                 if(type=="bank"){
                    $.ajax({
-                          url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + bank_statement,
+                          url: '/api/tenant/downloadFile/' + id + "/" + bank_statement,
                           type: 'GET',
                           success: function (response) {
                          var h=bank_statement.split(".").pop();
@@ -122,14 +122,14 @@ function downloadFile(type){
                         console.log(response);
 
                         if(h=="jpg"|| h=="png"||h=="jpeg"){
-                            window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ bank_statement,"_blank");
+                            window.open('/assets/uploads/Tenant'+ id + "/"+ bank_statement,"_blank");
                         }
                           }
                       })
                   }
                    if(type=="director"){
                    $.ajax({
-                          url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + director_id,
+                          url: '/api/tenant/downloadFile/' + id + "/" + director_id,
                           type: 'GET',
                           success: function (response) {
                          var h=director_id.split(".").pop();
@@ -137,14 +137,14 @@ function downloadFile(type){
                         console.log(response);
 
                         if(h=="jpg"|| h=="png"||h=="jpeg"){
-                            window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ director_id,"_blank");
+                            window.open('/assets/uploads/Tenant'+ id + "/"+ director_id,"_blank");
                         }
                           }
                       })
                   }
                       if(type=="certificate"){
                          $.ajax({
-                                url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + certificate_of_incorporation,
+                                url: '/api/tenant/downloadFile/' + id + "/" + certificate_of_incorporation,
                                 type: 'GET',
                                 success: function (response) {
                                var h=certificate_of_incorporation.split(".").pop();
@@ -152,14 +152,14 @@ function downloadFile(type){
                               console.log(response);
 
                               if(h=="jpg"|| h=="png"||h=="jpeg"){
-                                  window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ certificate_of_incorporation,"_blank");
+                                  window.open('/assets/uploads/Tenant'+ id + "/"+ certificate_of_incorporation,"_blank");
                               }
                                 }
                             })
                         }
                          if(type=="tax_clear"){
                          $.ajax({
-                                url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + tax_clearance,
+                                url: '/api/tenant/downloadFile/' + id + "/" + tax_clearance,
                                 type: 'GET',
                                 success: function (response) {
                                var h=tax_clearance.split(".").pop();
@@ -167,14 +167,14 @@ function downloadFile(type){
                               console.log(response);
 
                               if(h=="jpg"|| h=="png"||h=="jpeg"){
-                                  window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ tax_clearance,"_blank");
+                                  window.open('/assets/uploads/Tenant'+ id + "/"+ tax_clearance,"_blank");
                               }
                                 }
                             })
                         }
                         if(type=="vat_reg"){
                           $.ajax({
-                                url: 'http://localhost:8090/api/tenant/downloadFile/' + id + "/" + vat_reg,
+                                url: '/api/tenant/downloadFile/' + id + "/" + vat_reg,
                                 type: 'GET',
                                 success: function (response) {
                                 var h=vat_reg.split(".").pop();
@@ -182,7 +182,7 @@ function downloadFile(type){
                                 console.log(response);
 
                                 if(h=="jpg"|| h=="png"||h=="jpeg"){
-                                   window.open('http://localhost:8090/assets/uploads/Tenant'+ id + "/"+ vat_reg,"_blank");
+                                   window.open('/assets/uploads/Tenant'+ id + "/"+ vat_reg,"_blank");
                                     }
                                 }
                           })
@@ -194,7 +194,7 @@ function getTenant() {
    // $("#btn").prop("disabled", true);
     // ---------------------------
 
-    var baseurl = "http://localhost:8090/api/tenants/get-all-tenants";
+    var baseurl = "/api/tenants/get-all-tenants";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -245,7 +245,7 @@ function getTenant() {
 
     // ---------------------
     /*$.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -413,7 +413,7 @@ function saveTenantDocument(){
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "http://localhost:8090/api/tenant/uploadtenantDocument",
+            url: "/api/tenant/uploadtenantDocument",
             data: ajaxData,
             processData: false,
             contentType: false,
@@ -455,7 +455,7 @@ function setLeasefile(file){
 function loadleasefile(){
 var id = JSON.parse(localStorage.getItem("id"));
  $.ajax({
-        url: 'http://localhost:8090/api/tenant/fetchleasefile/' + id ,
+        url: '/api/tenant/fetchleasefile/' + id ,
         type: 'GET',
         success: function (response) {
         console.log(response);
@@ -469,7 +469,7 @@ function getLeaseDocument() {
    // $("#btn").prop("disabled", true);
 
     //----------------------
-    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var baseurl = "/api/v1/lease/getleases";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -530,7 +530,7 @@ function getLeaseDocument() {
     //----------------------------
 
    /* $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getleases',
+        url: '/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -583,7 +583,7 @@ function getLeaseDocument() {
 }
 function setAddTenantDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -764,7 +764,7 @@ function saveReplyDetails() {
     $("#btnSubmit").prop("disabled", false);
     $.ajax({
         type: "POST",
-        url: "http://localhost:8090/api/v1/replyDocuments",
+        url: "/api/v1/replyDocuments",
         data: data,
         processData: false,
         contentType: false,
@@ -790,7 +790,7 @@ function saveReplyDetails() {
 function getReplyDetails(){
     var id = JSON.parse(localStorage.getItem("id"));
     $.ajax({
-        url: 'http://localhost:8090/api/v1/getreply/' + id,
+        url: '/api/v1/getreply/' + id,
         type: 'GET',
         success: function (response) {
             let obj= response
@@ -878,7 +878,7 @@ function getDoc(){
     var id = JSON.parse(localStorage.getItem("id"));
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/exportreply/' + id,
+        url: '/api/v1/exportreply/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -891,7 +891,7 @@ function getDetails() {
     // $("#btn").prop("disabled", true);
     // ---------------------------
 
-    var baseurl = "http://localhost:8090/api/v1/getallreply";
+    var baseurl = "/api/v1/getallreply";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {
@@ -969,7 +969,7 @@ function saveOtherDetails(){
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "http://localhost:8090/api/v1/uploadOther/" + tenantId,
+        url: "/api/v1/uploadOther/" + tenantId,
         data: ajaxData,
         processData: false,
         contentType: false,
@@ -1002,7 +1002,7 @@ function loadOtherFile(){
     let id = JSON.parse(localStorage.getItem("tenantId"));
     let name = JSON.parse(localStorage.getItem("document_name"))
     $.ajax({
-        url: 'http://localhost:8090/api/v1/getoth/'+id + '/' + name,
+        url: '/api/v1/getoth/'+id + '/' + name,
         type: 'GET',
         success: function (response) {
             console.log("response",response);
@@ -1017,7 +1017,7 @@ function getAll() {
     // ---------------------------
     let tenant_id = JSON.parse(localStorage.getItem("tenantId"));
 
-    var baseurl = "http://localhost:8090/api/v1/getAll_other/" + tenant_id;
+    var baseurl = "/api/v1/getAll_other/" + tenant_id;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", baseurl, true);
     xmlhttp.onreadystatechange = function () {

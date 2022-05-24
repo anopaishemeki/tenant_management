@@ -62,7 +62,7 @@ function saveLease() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "http://localhost:8090/api/v1/lease/addlease",
+        url: "/api/v1/lease/addlease",
         data: data,
         processData: false,
         contentType: false,
@@ -434,7 +434,7 @@ function loaddata() {
 
   /*  $.ajax({
         type: "GET",
-        url: "http://localhost:8090/api/v1/lease/getEmail/" + Name + "/" + surname,
+        url: "/api/v1/lease/getEmail/" + Name + "/" + surname,
         success: function (response) {
             console.log("Email: ",response);
             email.value=response.split(",")[0];
@@ -476,7 +476,7 @@ function loadData() {
 
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getLease/' + id,
+        url: '/api/v1/lease/getLease/' + id,
         type: 'GET',
         success: function (response) {
             let items = response;
@@ -528,7 +528,7 @@ function renewlease() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         type: "PUT",
-        url: "http://localhost:8090/api/v1/lease/renewlease/" + id,
+        url: "/api/v1/lease/renewlease/" + id,
 
 
         success: function (response) {
@@ -619,7 +619,7 @@ function Terminate() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),
         type: "PUT",
-        url: "http://localhost:8090/api/v1/lease/terminatelease/" + id,
+        url: "/api/v1/lease/terminatelease/" + id,
 
 
         success: function (response) {
@@ -693,7 +693,7 @@ function saveUpdate() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(jsonDataObj),
         type: "PUT",
-        url: "http://localhost:8090/api/v1/lease/updatelease/" + id,
+        url: "/api/v1/lease/updatelease/" + id,
 
 
         success: function (response) {
@@ -800,7 +800,7 @@ function FetchRecord() {
 
     var id = JSON.parse(localStorage.getItem("id"));
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getLease/' + id,
+        url: '/api/v1/lease/getLease/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -848,7 +848,7 @@ function FetchRecord() {
         }
     });
     $.ajax({
-        url: ' http://localhost:8090/api/v1/lease/getform/' + id,
+        url: ' /api/v1/lease/getform/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response);
@@ -868,7 +868,7 @@ function loadURL(){
     var file = JSON.parse(localStorage.getItem("file"));
     $.ajax({
 
-        url: 'http://localhost:8090/api/v1/lease/load/' + file,
+        url: '/api/v1/lease/load/' + file,
         type: 'GET',
         success: function (response) {
            var g=response.message;
@@ -889,7 +889,7 @@ function loadURL(){
 function fetchRecord() {
     var id = JSON.parse(localStorage.getItem("id"));
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getLease/' + id,
+        url: '/api/v1/lease/getLease/' + id,
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -956,7 +956,7 @@ function fetchRecord() {
 
 
 function T_Records() {
-    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var baseurl = "/api/v1/lease/getleases";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET",baseurl,true);
     xmlhttp.onreadystatechange = function(){
@@ -1015,7 +1015,7 @@ function T_Records() {
 
 
    /* $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/getleases',
+        url: '/api/v1/lease/getleases',
         type: 'GET',
         success: function (response) {
             let items = response
@@ -1072,7 +1072,7 @@ function T_Records() {
 //Get Leases
 function getLeases() {
 
-    var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+    var baseurl = "/api/v1/lease/getleases";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET",baseurl,true);
     xmlhttp.onreadystatechange = function(){
@@ -1146,7 +1146,7 @@ function getLeases() {
 //Get renewed leases
 function getRenewedLeases() {
 
-    var baseurl = "http://localhost:8090/api/v1/lease/renewed";
+    var baseurl = "/api/v1/lease/renewed";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET",baseurl,true);
     xmlhttp.onreadystatechange = function(){
@@ -1214,7 +1214,7 @@ function DownloadLeaseAgreementForm(){
     console.log(filename2);
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/download/' + filename2,
+        url: '/api/v1/lease/download/' + filename2,
         type: 'GET',
         success: function (response) {
 
@@ -1223,7 +1223,7 @@ function DownloadLeaseAgreementForm(){
             console.log(response);
 
             if(h=="jpg"|| h=="png"||h=="jpeg"){
-                window.open('http://localhost:8090/assets/uploads/'+filename2,"_blank");
+                window.open('/assets/uploads/'+filename2,"_blank");
             }
 
         }
@@ -1262,7 +1262,7 @@ function hover() {
 // Get Tenant Names
 function getTenants() {
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response;
@@ -1344,7 +1344,7 @@ function setTenantID() {
 // get Property details
 /*function getProperty() {
         $.ajax({
-            url: 'http://localhost:8090/api/property/get-all-properties',
+            url: '/api/property/get-all-properties',
             type: 'GET',
             success: function (response) {
                 let items = response;
@@ -1451,7 +1451,7 @@ function getLeaseNotice() {
 
 
     $.ajax({
-        url: 'http://localhost:8090/api/v1/lease/notice/' + duration,
+        url: '/api/v1/lease/notice/' + duration,
         type: 'GET',
         success: function (response) {
             let items = response;

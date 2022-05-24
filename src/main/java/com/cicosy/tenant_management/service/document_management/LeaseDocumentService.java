@@ -30,7 +30,7 @@ public class LeaseDocumentService  {
 	LeaseDocumentsRepo leaseDocumentsRepo;
 
 	
-	public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/lease";
+	public static String uploadDirectory = System.getProperty("user.dir")+File.separator+"uploads"+File.separator+"lease";
 	private final Path fileStorageLocation= Paths.get(uploadDirectory)
 			.toAbsolutePath().normalize();
 	

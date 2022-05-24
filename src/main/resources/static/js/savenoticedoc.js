@@ -16,7 +16,7 @@ function saveNoticeDocuments(){
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "http://localhost:8090/api/v1/uploadNotice",
+        url: "/api/v1/uploadNotice",
         data: data,
         processData: false,
         contentType: false,

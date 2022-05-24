@@ -2,7 +2,7 @@
 function getTenant() {
     $("#btn").prop("disabled", true);
     $.ajax({
-        url: 'http://localhost:8090/api/tenants/get-all-tenants',
+        url: '/api/tenants/get-all-tenants',
         type: 'GET',
         success: function (response) {
             let items = response

@@ -74,7 +74,7 @@
 
         $.ajax({
           type: "POST",
-          url: "http://localhost:8090/api/v1/authenticate",
+          url: "/api/v1/authenticate",
           processData: false,
           data:JSON.stringify(Data),
           contentType: "application/json; charset=utf-8",
@@ -83,12 +83,12 @@
             console.log(response)
             checkSuccess = true
             if (checkSuccess) {
-              window.location.replace('http://localhost:8090/company')
+              window.location.replace('/company')
             }
           },
           failure: function (response) {
             if(checkSuccess==false){
-              window.location.replace('http://localhost:8090/token')
+              window.location.replace('/token')
             }
 
           }
