@@ -70,7 +70,7 @@ public class Other_DocumentsControler {
 //    }
 
     @GetMapping(path="/getAll_other/{id}")
-    public List<Other_documents> getAll(@PathVariable Long id){
+    public List<Other_documents> getAll(@PathVariable String id){
        return  other_documentsService.getAll_OtherDocuments(id);
     }
 

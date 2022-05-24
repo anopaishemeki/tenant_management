@@ -34,7 +34,7 @@ public class Payment {
     private String reference;
     private Long capturedBy;
     private double amount;
-    private Long method;
+    private String method;
     private Long invoice;
     @Transient
     private Property propertyObject;
@@ -43,7 +43,7 @@ public class Payment {
     @Transient
     private Tenant tenantObject;
 
-    public Payment(String paymentDate, Long compartment, Long property, Long type, String reference, Long capturedBy, double amount, Long method, Long invoice, Property propertyObject, Compartment compartmentObject, Tenant tenantObject) {
+    public Payment(String paymentDate, Long compartment, Long property, Long type, String reference, Long capturedBy, double amount, String method, Long invoice, Property propertyObject, Compartment compartmentObject, Tenant tenantObject) {
         this.paymentDate = paymentDate;
         this.compartment = compartment;
         this.property = property;

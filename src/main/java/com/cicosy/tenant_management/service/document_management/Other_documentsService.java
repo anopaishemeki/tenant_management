@@ -36,9 +36,9 @@ public class Other_documentsService {
 
 
 
-    public List<Other_documents> getAll_OtherDocuments(Long id){
+    public List<Other_documents> getAll_OtherDocuments(String id){
 
-        return other_documentsRepo.findAll();
+        return other_documentsRepo.findAllOther(id);
     }
 
     public String saveFile(Other_documents other_documents) throws IOException {
@@ -77,6 +77,7 @@ public class Other_documentsService {
     public String getOth(String tenantId,String document_name){
         return other_documentsRepo.findOther(tenantId,document_name);
     }
+
 
 
 

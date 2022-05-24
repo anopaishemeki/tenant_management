@@ -27,9 +27,10 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="getImageProfile(), setAddPropertyDropDown(), setLettableSpaceDropdown(), setServiceDropDown(), getInvoices()">
+<body class="vertical  light  "
+      onload="getImageProfile(), setAddPropertyDropDown(), setLettableSpaceDropdown(), setServiceDropDown(), getInvoices()">
 <div class="wrapper">
-    <nav class="topnav navbar navbar-light" >
+    <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
             <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
@@ -60,7 +61,9 @@
                 <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+                <img id="profileImage"
+                     src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"
+                     alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
 
               </span><br>
                     <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
@@ -86,7 +89,7 @@
             <!-- nav bar -->
             <div class="w-100 mb-4 d-flex">
                 <a class="navbar-brand mx-auto mt-2 flex-fill text-center" th:href="@{/index}">
-                    <img  src="assets/logo/joina-logo.jpg"  alt="joina-logo" style="margin-left:-40px">
+                    <img src="assets/logo/joina-logo.jpg" alt="joina-logo" style="margin-left:-40px">
                 </a>
             </div>
             <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -169,7 +172,7 @@
                                     class="ml-1 item-text">Terminate </span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link pl-3"  th:href="@{/View-Renewed}"><span
+                            <a class="nav-link pl-3" th:href="@{/View-Renewed}"><span
                                     class="ml-1 item-text">Renewed Leases </span></a>
                         </li>
                         <li class="nav-item">
@@ -321,7 +324,8 @@
                                                     <!-- Button trigger modal -->
                                                     <button id="create-payment" type="button"
                                                             class="btn form-control btn-outline-success"
-                                                            data-toggle="modal" data-target="#verticalModal"> create an Invoice
+                                                            data-toggle="modal" data-target="#verticalModal"> create an
+                                                        Invoice
                                                     </button>
                                                 </div>
                                             </div>
@@ -329,12 +333,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <table class="table table-hover  dataTables table-borderless border-v table-sm" style="width:100%!important;">
+                                            <table class="table table-hover  dataTables table-borderless border-v table-sm"
+                                                   style="width:100%!important;">
                                                 <thead class="thead-dark">
                                                 <tr>
                                                     <th>Date</th>
                                                     <th>ID #</th>
-                                                    <th>Compartment</th>
+                                                    <th>Business name</th>
                                                     <th>Due Date</th>
                                                     <th>Invoice Total</th>
                                                     <th>Status</th>
@@ -390,7 +395,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p class="card-text">Enter the required details to create a payment record</p>
+                        <p class="card-text">Enter the required details to create an invoice record</p>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-row">
@@ -458,7 +463,8 @@
 
                                         <div class="form-group col-md-12">
                                             <label for="service-drop-down">Select Service</label>
-                                            <select class="form-control select2" id="service-drop-down" oninput="appendServices()">
+                                            <select class="form-control select2" id="service-drop-down"
+                                                    oninput="appendServices()">
                                                 <option value="4">Elevators</option>
                                                 <option value="5">Escalators</option>
                                                 <option value="7">Refuse Collection</option>
@@ -502,7 +508,7 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody id="t_body-3">
-                                                               
+
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -551,8 +557,12 @@
                                 <hr class="my-4">
                                 <div class="form-row">,
                                     <div class="form-group col-md-4">
-                                        <button type="button" class="btn mb-2 btn-secondary " data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn mb-2 btn-primary" onclick="saveInvoice()">Save invoice</button>
+                                        <button type="button" class="btn mb-2 btn-secondary " data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="button" class="btn mb-2 btn-primary" onclick="saveInvoice()">Save
+                                            invoice
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -565,138 +575,250 @@
             </div>
         </div>
 
-            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
-                 aria-labelledby="defaultModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="list-group list-group-flush my-n3">
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-box fe-24"></span>
+        <!--modal view invoice-->
+        <!-- Modal -->
+        <div class="modal fade" id="verticalModal-view-invoice" tabindex="-1" role="dialog" data-backdrop="static"
+             aria-labelledby="verticalModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verticalModalTitle">Create Invoice</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="card-text">Enter the required details to create a payment record</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-row">
+                                    <div class="card shadow mb-4 col-md-12">
+                                        <div class="card-header">
+                                            <strong class="card-title">INVOICE #<span id="propNameTwo"> 1</span>
+                                            </strong>
+                                            <!--                                    <span class="float-right"><i class="fe fe-flag mr-2"></i><span-->
+                                            <!--                                            class="badge badge-pill badge-success text-white">Payment</span></span>-->
                                         </div>
-                                        <div class="col">
-                                            <small><strong>Package has uploaded successfull</strong></small>
-                                            <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                                            <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                                        <div id="invoiceDetails">
+                                            <div class="card-body">
+                                                <dl class="row align-items-center mb-0">
+                                                    <dt class="col-sm-2 mb-3 text-muted"> Portfolio</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>Lionel Booth</strong>
+                                                    </dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted"> Lettable Space</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>Complex Building</strong>
+                                                    </dd>
+                                                </dl>
+                                                <dl class="row align-items-center mb-0">
+                                                    <dt class="col-sm-2 mb-3 text-muted">Occupying Tenant</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>1</strong>
+                                                    </dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted"> Issue Date</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>561</strong>
+                                                    </dd>
+                                                </dl>
+                                                <dl class="row mb-0">
+                                                    <dt class="col-sm-2 mb-3 text-muted">Due Date</dt>
+                                                    <dd class="col-sm-4 mb-3">55</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Invoice Status</dt>
+                                                    <dd class="col-sm-4 mb-3">nuzupute@mailinator.com</dd>
+                                                    <!--<dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                                    <dd class="col-sm-4 mb-3"> +1 (286) 984-3158</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                                    <dd class="col-sm-4 mb-3">978</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Date registered</dt>
+                                                    <dd class="col-sm-4 mb-3">2002-08-31</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Date Captured</dt>
+                                                    <dd class="col-sm-4 mb-3">2022-05-11</dd>
+                                                    <dt class="col-sm-2 text-muted">Description</dt>
+                                                    <dd class="col-sm-10"> </dd>
+                                                    <dt class="col-sm-2 text-muted">Address</dt>
+                                                    <dd class="col-sm-10"> Cupiditate veniam o , Eius adipisicing qui , Zimbabwe</dd>-->
+                                                </dl>
+                                                <hr class="my-4">
+                                                <div class="form-row">
+                                                    <table class="table table-hover  dataTables table-borderless border-v table-sm"
+                                                           style="width:100%!important;">
+                                                        <thead class="thead-dark">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>item</th>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                            <!--th>Due Date</th>
+                                            <th>Invoice Total</th>
+                                            <th>Status</th>
+                                            <th>View</th>-->
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="t_body-4">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> <!-- .card-body -->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-download fe-24"></span>
-                                        </div>
-                                        <div class="col">
-                                            <small><strong>Widgets are updated successful</strong></small>
-                                            <div class="my-0 text-muted small">Just create new layout Index, form, table
-                                            </div>
-                                            <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                                        </div>
+
+
+                                <hr class="my-4">
+                                <div class="form-row">,
+                                    <div class="form-group col-md-4">
+                                        <button type="button" class="btn mb-2 btn-secondary " data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="button" class="btn mb-2 btn-primary" onclick="">Save
+                                            Export Document
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-inbox fe-24"></span>
-                                        </div>
-                                        <div class="col">
-                                            <small><strong>Notifications have been sent</strong></small>
-                                            <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo
-                                            </div>
-                                            <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                                        </div>
-                                    </div> <!-- / .row -->
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-link fe-24"></span>
-                                        </div>
-                                        <div class="col">
-                                            <small><strong>Link was attached to menu</strong></small>
-                                            <div class="my-0 text-muted small">New layout has been attached to the menu
-                                            </div>
-                                            <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                                        </div>
-                                    </div>
-                                </div> <!-- / .row -->
-                            </div> <!-- / .list-group -->
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
-                            </button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-                 aria-labelledby="defaultModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+        </div>
+
+        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
+             aria-labelledby="defaultModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group list-group-flush my-n3">
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-box fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Package has uploaded successfull</strong></small>
+                                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-download fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Widgets are updated successful</strong></small>
+                                        <div class="my-0 text-muted small">Just create new layout Index, form, table
+                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-inbox fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Notifications have been sent</strong></small>
+                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo
+                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-link fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Link was attached to menu</strong></small>
+                                        <div class="my-0 text-muted small">New layout has been attached to the menu
+                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                                    </div>
+                                </div>
+                            </div> <!-- / .row -->
+                        </div> <!-- / .list-group -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
+             aria-labelledby="defaultModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-5">
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-success justify-content-center">
+                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Control area</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Activity</p>
+                            </div>
                         </div>
-                        <div class="modal-body px-5">
-                            <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-success justify-content-center">
-                                        <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Control area</p>
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
                                 </div>
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Activity</p>
-                                </div>
+                                <p>Droplet</p>
                             </div>
-                            <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Droplet</p>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
                                 </div>
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Upload</p>
-                                </div>
+                                <p>Upload</p>
                             </div>
-                            <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Users</p>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
                                 </div>
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Settings</p>
+                                <p>Users</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
                                 </div>
+                                <p>Settings</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main> <!-- main -->
+</div>
+</main> <!-- main -->
 </div> <!-- .wrapper -->
 <script src="js/jquery.min.js"></script>
 <script src="js/popper.min.js"></script>
