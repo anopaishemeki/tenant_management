@@ -5,6 +5,8 @@ function getInvoices() {
         success: function (response) {
             console.log(response)
 
+            localStorage.setItem('invoiceList', JSON.stringify(response));
+
             let t_body = document.getElementById("t_body");
 
             while (t_body.hasChildNodes()) {
@@ -15,11 +17,11 @@ function getInvoices() {
             for (let i = response.length - 1; i >= 0; i--) {
                 let html = `<td>${response[i].dateIssued}</td>
                                                     <td>${response[i].id}</td>
-                                                    <td>${response[i].compartmentObject.compartmentNumber}</td>
+                                                    <td>${response[i].compartmentObject.tenantObject.business_name}</td>
                                                     <td>${response[i].dueDate}</td>
                                                     <td>${response[i].amount}</td>
                                                     <td><span class="text-success">${response[i].status}</span></td>
-                                                    <td><button type="button" onclick="" class="btn btn-secondary btn-sm"><i class="bi bi-trash-fill"></i>view </button></td>
+                                                    <td><button type="button" onclick="viewInvoice(${response[i].id})" class="btn btn-secondary btn-sm"><i class="bi bi-trash-fill"></i>view </button></td>
                                                     `
 
                 let tr = document.createElement('tr');
@@ -28,6 +30,160 @@ function getInvoices() {
                 t_body.appendChild(tr);
             }
 
+        }
+    })
+}
+
+function viewInvoice(id){
+    let invoiceList = JSON.parse(localStorage.getItem('invoiceList'))
+    let properties = JSON.parse(localStorage.getItem('i_properties'));
+    let container = document.getElementById('invoiceDetails');
+
+    for (let i = 0; i < invoiceList.length; i++){
+        if (id == invoiceList[i].id){
+            for (let j = 0; j < properties.length; j++){
+                if (properties[j].id == invoiceList[i].compartmentObject.property){
+                    let html = `<div class="card-body">
+                                                <dl class="row align-items-center mb-0">
+                                                    <dt class="col-sm-2 mb-3 text-muted"> Portfolio</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>${properties[j].name}</strong>
+                                                    </dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted"> Lettable Space</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>${invoiceList[i].compartmentObject.compartmentNumber}</strong>
+                                                    </dd>
+                                                </dl>
+                                                <dl class="row align-items-center mb-0">
+                                                    <dt class="col-sm-2 mb-3 text-muted">Occupying Tenant</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>${invoiceList[i].compartmentObject.tenantObject.business_name}</strong>
+                                                    </dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted"> Issue Date</dt>
+                                                    <dd class="col-sm-4 mb-3">
+                                                        <strong>${invoiceList[i].dateIssued}</strong>
+                                                    </dd>
+                                                </dl>
+                                                <dl class="row mb-0">
+                                                    <dt class="col-sm-2 mb-3 text-muted">Due Date</dt>
+                                                    <dd class="col-sm-4 mb-3">${invoiceList[i].dueDate}</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Invoice Status</dt>
+                                                    <dd class="col-sm-4 mb-3">${invoiceList[i].status}</dd>
+                                                    <!--<dt class="col-sm-2 mb-3 text-muted">Phone</dt>
+                                                    <dd class="col-sm-4 mb-3"> +1 (286) 984-3158</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Mobile</dt>
+                                                    <dd class="col-sm-4 mb-3">978</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Date registered</dt>
+                                                    <dd class="col-sm-4 mb-3">2002-08-31</dd>
+                                                    <dt class="col-sm-2 mb-3 text-muted">Date Captured</dt>
+                                                    <dd class="col-sm-4 mb-3">2022-05-11</dd>
+                                                    <dt class="col-sm-2 text-muted">Description</dt>
+                                                    <dd class="col-sm-10"> </dd>
+                                                    <dt class="col-sm-2 text-muted">Address</dt>
+                                                    <dd class="col-sm-10"> Cupiditate veniam o , Eius adipisicing qui , Zimbabwe</dd>-->
+                                                </dl>
+                                                <hr class="my-4">
+                                                <div class="form-row">
+                                                    <table class="table table-hover  dataTables table-borderless border-v table-sm"
+                                                           style="width:100%!important;">
+                                                        <thead class="thead-dark">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>item</th>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                            <!--th>Due Date</th>
+                                            <th>Invoice Total</th>
+                                            <th>Status</th>
+                                            <th>View</th>-->
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="t_body-4">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> <!-- .card-body -->`
+
+                    container.innerHTML = html
+
+
+                    let services = JSON.parse(invoiceList[i].servicesList);
+
+                    let t_body = document.getElementById('t_body-4');
+
+                    let rent = document.createElement('tr');
+
+                    let rentHtml = `<td>1</td>
+                                    <td>Rent</td>
+                                    <td>Monthly rent</td>
+                                    <td>${invoiceList[i].rentalAmount}</td>`
+
+                    rent.innerHTML = rentHtml;
+
+                    t_body.appendChild(rent)
+
+                    for (let i = 0; i < services.length; i ++){
+                        let html2 = `<td>${i+2}</td>
+                                                    <td>${services[i].serviceName}</td>
+                                                    <td>description</td>
+                                                    <td>${services[i].amount}</td>`
+
+                        let tr = document.createElement('tr');
+
+                        tr.innerHTML = html2;
+                        t_body.appendChild(tr);
+                    }
+
+                    $('#verticalModal-view-invoice').modal('show')
+                }
+            }
+            break;
+        }
+    }
+}
+
+function saveInvoice(){
+    let compartment = JSON.parse(localStorage.getItem('selectedLettable'));
+    let amount = 0;
+    let  dueDate = document.getElementById('date-input2').value;
+    let servicesList = [];
+
+    let response = JSON.parse(localStorage.getItem('i_services'))
+
+    let selectedServicesList = JSON.parse(localStorage.getItem('selectedCategories'))
+
+    for (let i = 0; i < response.length; i++) {
+        for (let j = 0; j < selectedServicesList.length; j++) {
+            if (response[i].id == selectedServicesList[j]) {
+                amount = amount + Number.parseFloat(response[i].amount)
+
+                servicesList.push(response[i])
+            }
+            console.log(response[i]);
+        }
+    }
+
+    servicesList = JSON.stringify(servicesList);
+
+    let data = {
+        compartment,
+        amount,
+        dueDate,
+        servicesList,
+        rentalAmount : JSON.parse(localStorage.getItem('rent'))
+    }
+
+    $.ajax({
+        url: 'http://localhost:8090/api/invoice/save-invoice',
+        type: 'POST',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response)
+            getInvoices()
         }
     })
 }
@@ -159,6 +315,9 @@ function appendLettableSpace() {
                                                     <td>$ ${letaleSpaces[i].rentalRate * letaleSpaces[i].floorArea}</td>
                                                     `
 
+            localStorage.removeItem('rent');
+            localStorage.setItem('rent', JSON.stringify(letaleSpaces[i].rentalRate * letaleSpaces[i].floorArea))
+
             let tr = document.createElement('tr');
             tr.innerHTML = html;
 
@@ -166,6 +325,7 @@ function appendLettableSpace() {
 
             localStorage.removeItem('selectedLettable')
             localStorage.setItem('selectedLettable', JSON.stringify(space))
+            break;
         }
     }
 
@@ -353,46 +513,3 @@ function updateAmount(id){
     appendServices();
 }
 
-function saveInvoice(){
-    let compartment = JSON.parse(localStorage.getItem('selectedLettable'));
-    let amount = 0;
-    let  dueDate = document.getElementById('date-input2').value;
-    let servicesList = [];
-
-    let response = JSON.parse(localStorage.getItem('i_services'))
-
-    let selectedServicesList = JSON.parse(localStorage.getItem('selectedCategories'))
-
-    for (let i = 0; i < response.length; i++) {
-        for (let j = 0; j < selectedServicesList.length; j++) {
-            if (response[i].id == selectedServicesList[j]) {
-                amount = amount + Number.parseFloat(response[i].amount)
-
-                servicesList.push(response[i])
-            }
-            console.log(response[i]);
-        }
-    }
-
-    servicesList = JSON.stringify(servicesList);
-
-    let data = {
-        compartment,
-        amount,
-        dueDate,
-        servicesList
-    }
-
-    $.ajax({
-        url: 'http://localhost:8090/api/invoice/save-invoice',
-        type: 'POST',
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log(response)
-            getInvoices()
-        }
-    })
-}

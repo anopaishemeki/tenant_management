@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("/editProfile")
     public String getUser() {
-        return "/security/userEdit";
+        return "userEdit";
     }
 
 
@@ -51,7 +51,7 @@ public class UserController {
     @GetMapping("/security/users")
     public String getAll(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "/security/users";
+        return "/users";
     }
 
     @GetMapping("/security/user/{op}/{id}")

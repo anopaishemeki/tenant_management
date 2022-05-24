@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/cdb.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/cdb.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/9d1d9a82d2.js" crossorigin="anonymous"></script>
+
+  <title>How to create bootstrap charts using bootstrap 5</title>
+</head>
+<style>
+  .chart-container {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+  }
+</style>
+
+<body>
+<div class="card chart-container">
+  <canvas id="chart"></canvas>
+  <canvas id="chart2"></canvas>
+</div>
+
+</body>
+
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
+</script>
+
+
+<script>
+
+        var baseurl = "http://localhost:8090/api/v1/lease/getleases";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", baseurl, true);
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var data = JSON.parse(xmlhttp.responseText);
+                // console.log(xmlhttp.responseText);
+                //leases = JSON.parse(xmlhttp.responseText)
+                console.log("leases : ",data.length)
+                const ctx = document.getElementById("chart2").getContext('2d');
+
+                const myChart2 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["leases", "tenants", "tomato", "potato",
+                            "beans", "maize", "oil"],
+                        datasets: [{
+                            label: 'Tenant Management table statistics',
+                            backgroundColor: 'rgba(161, 198, 247, 1)',
+                            borderColor: 'rgb(47, 128, 237)',
+                            data: [ data.length, 0, 5, 2, 3, 6, 1],
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                }
+                            }]
+                        }
+                    },
+                });
+            }
+        };
+        xmlhttp.send();
+
+
+    /*function getTenants()
+    {*/
+        var baseurl1 = "http://localhost:8090/api/tenants/get-all-tenants";
+        var xmlhttp1 = new XMLHttpRequest();
+        xmlhttp1.open("GET", baseurl1, true);
+        xmlhttp1.onreadystatechange = function () {
+            if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200) {
+                var data1 = JSON.parse(xmlhttp1.responseText);
+                console.log("tenant : ",data1.length);
+                /*return data1.length;*/
+                const ctx = document.getElementById("chart2").getContext('2d');
+
+                const myChart2 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["leases", "tenants", "tomato", "potato",
+                            "beans", "maize", "oil"],
+                        datasets: [{
+                            label: 'Tenant Management table statistics',
+                            backgroundColor: 'rgba(161, 198, 247, 1)',
+                            borderColor: 'rgb(47, 128, 237)',
+                            data: [ 0, data1.length, 5, 2, 3, 6, 1],
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                }
+                            }]
+                        }
+                    },
+                });
+            }
+        };
+        xmlhttp1.send();
+   /* }*/
+
+
+   /* const ctx = document.getElementById("chart2").getContext('2d');
+
+    const myChart2 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["leases", "tenants", "tomato", "potato",
+                "beans", "maize", "oil"],
+            datasets: [{
+                label: 'Tenant Management table statistics',
+                backgroundColor: 'rgba(161, 198, 247, 1)',
+                borderColor: 'rgb(47, 128, 237)',
+                data: [ lease, tenant, 5, 2, 3, 6, 1],
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
+            }
+        },
+    });*/
+</script>
+
+</html>

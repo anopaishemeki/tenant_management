@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/logo/sysIco(2).ico">
+    <title>Add Documents</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="css/feather.css">
+    <link rel="stylesheet" href="css/select2.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
+</head>
+<body class="vertical  light  " onload="setAddTenantDropDown(),getImageProfile()">
+    <div class="wrapper">
+        <nav class="topnav navbar navbar-light" >
+            <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+                <i class="fe fe-menu navbar-toggler-icon"></i>
+            </button>
+            <form class="form-inline mr-auto searchform text-muted">
+                <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
+                       placeholder="Type something..." aria-label="Search">
+            </form>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+                        <i class="fe fe-sun fe-16"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+                       data-target=".modal-shortcut">
+                        <span class="fe fe-grid fe-16"></span>
+                    </a>
+                </li>
+                <li class="nav-item nav-notif">
+                    <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+                       data-target=".modal-notif">
+                        <span class="fe fe-bell fe-16"></span>
+                        <span class="dot dot-md bg-success"></span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar avatar-sm mt-2">
+                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+
+              </span><br>
+                        <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+
+                        <b class="caret"></b>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+                        <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+                        <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="#">Activities</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+            <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+                <i class="fe fe-x"><span class="sr-only"></span></i>
+            </a>
+            <nav class="vertnav navbar navbar-light">
+                <!-- nav bar -->
+                <div class="w-100 mb-4 d-flex">
+                    <a class="navbar-brand mx-auto mt-2 flex-fill text-center" th:href="@{/index}">
+                        <img  src="assets/logo/joina-logo.jpg"  alt="joina-logo" style="margin-left:-40px">
+                    </a>
+                </div>
+                <ul class="navbar-nav flex-fill w-100 mb-2">
+                    <li class="nav-item dropdown">
+                        <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-home fe-16"></i>
+                            <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                            <li class="nav-item active">
+                                <a class="nav-link pl-3" th:href="@{/index}"><span class="ml-1 item-text">Default</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="text-muted nav-heading mt-4 mb-1">
+                    <span>Components</span>
+                </p>
+                <ul class="navbar-nav flex-fill w-100 mb-2">
+                    <li class="nav-item dropdown">
+                        <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
+                           class="dropdown-toggle nav-link">
+                            <i class="fe fe-box fe-16"></i>
+                            <span class="ml-3 item-text">Property Portfolios</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/propertyList}"><span
+                                        class="ml-1 item-text">Portfolio List</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/addProperty}"><span
+                                        class="ml-1 item-text">Add Portfolio</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/addCompartment}"><span
+                                        class="ml-1 item-text">Add Lettable space</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-credit-card fe-16"></i>
+                            <span class="ml-3 item-text">Tenants</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/tenantList}"><span
+                                        class="ml-1 item-text">Tenant List</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/addTenant}"><span
+                                        class="ml-1 item-text">Add Tenant</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/assignProperty}"><span
+                                        class="ml-1 item-text">Assign Property</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-grid fe-16"></i>
+                            <span class="ml-3 item-text">Leasing</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/View-Lease}"><span
+                                        class="ml-1 item-text">View Leases</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/AddLease}"><span
+                                        class="ml-1 item-text">Add Lease</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/Terminate-Lease}"><span
+                                        class="ml-1 item-text">Terminate </span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3"  th:href="@{/View-Renewed}"><span
+                                        class="ml-1 item-text">Renewed Leases </span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/Lease-Notices}"><span
+                                        class="ml-1 item-text">Lease Notices </span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-pie-chart fe-16"></i>
+                            <span class="ml-3 item-text">Documents</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/addTenantDocuments}"><span class="ml-1 item-text">Add Tenant Documents</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
+                                        class="ml-1 item-text">Tenant Documents</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#maintenance" data-toggle="collapse" aria-expanded="false"
+                           class="dropdown-toggle nav-link">
+                            <i class="fe fe-pie-chart fe-16"></i>
+                            <span class="ml-3 item-text">Maintenance</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/request}"><span
+                                        class="ml-1 item-text">Requests</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/schedule}"><span
+                                        class="ml-1 item-text">Schedule</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/overdueRequest}"><span
+                                        class="ml-1 item-text">Overdue</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/pending}"><span
+                                        class="ml-1 item-text">Pending</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <p class="text-muted nav-heading mt-4 mb-1">
+                    <span>Finance</span>
+                </p>
+                <ul class="navbar-nav flex-fill w-100 mb-2">
+
+                    <li class="nav-item dropdown">
+                        <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-book fe-16"></i>
+                            <span class="ml-3 item-text">Accounts</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                            <a class="nav-link pl-3" th:href="@{/Payments}"><span class="ml-1">Payments</span></a>
+                            <a class="nav-link pl-3" th:href="@{/Invoicing}"><span class="ml-1">Invoicing</span></a>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-book fe-16"></i>
+                            <span class="ml-3 item-text">Services</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                            <a class="nav-link pl-3" th:href="@{/ServiceList}"><span class="ml-1">Service List</span></a>
+                            <a class="nav-link pl-3" th:href="@{/AddService}"><span class="ml-1">Add Services</span></a>
+                        </ul>
+                    </li>
+
+                </ul>
+                <p class="text-muted nav-heading mt-4 mb-1">
+                    <span>Other</span>
+                </p>
+                <ul class="navbar-nav flex-fill w-100 mb-2">
+                    <li class="nav-item dropdown">
+                        <a href="#apllicants" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                            <i class="fe fe-book fe-16"></i>
+                            <span class="ml-3 item-text">Tenant Applications</span>
+                        </a>
+                        <ul class="collapse list-unstyled pl-4 w-100" id="apllicants">
+                            <a class="nav-link pl-3" href="#"><span class="ml-1">Application List</span></a>
+                            <a class="nav-link pl-3" href="#"><span class="ml-1">Waiting List</span></a>
+                            <a class="nav-link pl-3" href="#"><span class="ml-1">Rejected Application</span></a>
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+        </aside>
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h2 class="page-title">Add new tenant</h2>
+                    <p class="text-muted"> Register a new tenant into the system</p>
+
+                    <div class="card shadow mb-4">
+                       <!-- <div class="card-header">
+                            <strong class="card-title">Tenant Details</strong>
+                        </div>-->
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="tenant_list">Business Name :</label>
+                                        <select class="form-control select2" id="tenant_list" onchange="onSetTenants()"
+                                                required>
+                                            <optgroup id="Available Tenants" label="Available Tenants" >
+                                                <option value="">Select Business Name</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="application_letter">Application Letter</label>
+                                        <input type="file" id="application_letter" class="form-control-file"
+                                         name="application_letter" accept=".pdf" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="cr14_form">Cr14 Form</label>
+                                        <input type="file" id="cr14_form" class="form-control-file"
+                                               name="cr14_form" accept=".pdf" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="cr6_form">Cr6 Form </label>
+                                        <input type="file" id="cr6_form" class="form-control-file"
+                                               name="cr6_form" accept=".pdf" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="director_id">Director ID</label>
+                                        <input type="file" id="director_id" class="form-control-file"
+                                               name="director_id" accept=".pdf" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="tax_clearance">Tax Clearance</label>
+                                        <input type="file" id="tax_clearance" class="form-control-file"
+                                               name="tax_clearance" accept=".pdf" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="vat_reg">Vat Registration</label>
+                                        <input type="file" id="vat_reg" class="form-control-file"
+                                               name="vat_reg" accept=".pdf" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="certificate_of_inco">Certificate of Incorporation</label><br><br>
+                                        <input type="file" id="certificate_of_inco" class="form-control-file"
+                                               name="certificate_of_inco" accept=".pdf" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="bank_statement">  Bank Statement</label>
+                                        <input type="file" id="bank_statement" class="form-control-file"
+                                               name="bank_statement" accept=".pdf" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="article_associ">Article of Association</label>
+                                        <input type="file" id="article_associ" class="form-control-file"
+                                               name="article_associ" accept=".pdf" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="company_profile">Company Profile</label>
+                                        <input type="file" id="company_profile" class="form-control-file"
+                                               name="company_profile" accept=".pdf" required>
+                                    </div>
+                                </div>
+                                <button type="button" data-bs-toggle="modal"
+                                        data-bs-target="#successModal" id="btnSubmit" class="btn mb-2 btn-outline-primary" onclick="saveTenantDocument()">
+                                    <span class="fe fe-upload-cloud fe-16">
+                                    Upload
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <!-- Modal -->
+          <!-- Modal -->
+          <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+               aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+
+                      </div>
+                      <div class="modal-body">
+                          <h4>Documents Uploaded SuccessFully</h4>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
+                              <span aria-hidden="true" >OK</span>
+                          </button>
+                      </div>
+                      <div class="modal-footer">
+                          <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                          <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+               aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle1">Operation Successful</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          Documents not Uploaded
+                      </div>
+                      <div class="modal-footer">
+                          <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                          <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+      </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/simplebar.min.js"></script>
+    <script src="js/downloadfile.js"></script>
+    <script src='js/daterangepicker.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
+    <script src="js/register.js"></script>
+    <script src='js/select2.min.js'></script>
+    <script src="js/tinycolor-min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/apps.js"></script>
+
+
+    <script>
+    $('.select2').select2(
+        {
+            theme: 'bootstrap4',
+        });
+    $('.select2-multi').select2(
+        {
+            multiple: true,
+            theme: 'bootstrap4',
+        });
+    $('.drgpicker').daterangepicker(
+        {
+            singleDatePicker: true,
+            timePicker: false,
+            showDropdowns: true,
+            locale:
+                {
+                    format: 'MM/DD/YYYY'
+                }
+        });
+    $('.time-input').timepicker(
+        {
+            'scrollDefault': 'now',
+            'zindex': '9999' /* fix modal open */
+        });
+    /** date range picker */
+    if ($('.datetimes').length) {
+        $('.datetimes').daterangepicker(
+            {
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale:
+                    {
+                        format: 'M/DD hh:mm A'
+                    }
+            });
+    }
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+
+    $('#reportrange').daterangepicker(
+        {
+            startDate: start,
+            endDate: end,
+            ranges:
+                {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+        }, cb);
+    cb(start, end);
+    $('.input-placeholder').mask("00/00/0000",
+        {
+            placeholder: "__/__/____"
+        });
+    $('.input-zip').mask('00000-000',
+        {
+            placeholder: "____-___"
+        });
+    $('.input-money').mask("#,##0.00",
+        {
+            reverse: true
+        });
+    $('.input-phoneus').mask('(000) 000-0000');
+    $('.input-mixed').mask('AAA 000-S0S');
+    $('.input-ip').mask('0ZZ.0ZZ.0ZZ.0ZZ',
+        {
+            translation:
+                {
+                    'Z':
+                        {
+                            pattern: /[0-9]/,
+                            optional: true
+                        }
+                },
+            placeholder: "___.___.___.___"
+        });
+    // editor
+    var editor = document.getElementById('editor');
+    if (editor) {
+        var toolbarOptions = [
+            [
+                {
+                    'font': []
+                }],
+            [
+                {
+                    'header': [1, 2, 3, 4, 5, 6, false]
+                }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [
+                {
+                    'header': 1
+                },
+                {
+                    'header': 2
+                }],
+            [
+                {
+                    'list': 'ordered'
+                },
+                {
+                    'list': 'bullet'
+                }],
+            [
+                {
+                    'script': 'sub'
+                },
+                {
+                    'script': 'super'
+                }],
+            [
+                {
+                    'indent': '-1'
+                },
+                {
+                    'indent': '+1'
+                }], // outdent/indent
+            [
+                {
+                    'direction': 'rtl'
+                }], // text direction
+            [
+                {
+                    'color': []
+                },
+                {
+                    'background': []
+                }], // dropdown with defaults from theme
+            [
+                {
+                    'align': []
+                }],
+            ['clean'] // remove formatting button
+        ];
+        var quill = new Quill(editor,
+            {
+                modules:
+                    {
+                        toolbar: toolbarOptions
+                    },
+                theme: 'snow'
+            });
+    }
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+  </body>
+
+</html>
+
+
+
+
+
+
+

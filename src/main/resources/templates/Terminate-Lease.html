@@ -1,29 +1,26 @@
 <!doctype html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-     <meta name="author"content="">
+    <meta name="author" content="">
     <link rel="icon" href="assets/logo/sysIco(2).ico">
     <title>Tenant Management System</title>
-
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="css/feather.css">
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="css/daterangepicker.css">
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light  " onload="getImageProfile()">
-
+<body class="vertical  light  " onload="T_Records(),getImageProfile()" id="body">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -86,15 +83,17 @@
                 </a>
             </div>
             <ul class="navbar-nav flex-fill w-100 mb-2">
-
-                    <li class="nav-item active">
-
-                        <a class="nav-link pl-3" th:href="@{/index}">
-                            <i class="fe fe-home fe-16"></i>
-                            <span class="ml-1 item-text">Home</span>
-                        </a>
-                    </li>
-
+                <li class="nav-item dropdown">
+                    <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-home fe-16"></i>
+                        <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                        <li class="nav-item active">
+                            <a class="nav-link pl-3" th:href="@{/index}"><span class="ml-1 item-text">Default</span></a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <p class="text-muted nav-heading mt-4 mb-1">
                 <span>Components</span>
@@ -141,7 +140,7 @@
                             <a class="nav-link pl-3" th:href="@{/assignProperty}"><span
                                     class="ml-1 item-text">Assign Property</span></a>
                         </li>
-                        
+
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -196,10 +195,6 @@
                     </a>
                     <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
                         <li class="nav-item">
-                            <a class="nav-link pl-3" th:href="@{/requestForm}"><span
-                                    class="ml-1 item-text">Lodge Request</span></a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link pl-3" th:href="@{/request}"><span
                                     class="ml-1 item-text">Requests</span></a>
                         </li>
@@ -216,12 +211,12 @@
                                     class="ml-1 item-text">Pending</span></a>
                         </li>
                         <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
-                </li>
+                            <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
+                        </li>
                     </ul>
                 </li>
             </ul>
-           
+
 
             <p class="text-muted nav-heading mt-4 mb-1">
                 <span>Finance</span>
@@ -266,216 +261,264 @@
                     </ul>
                 </li>
             </ul>
-            
+
         </nav>
     </aside>
     <main role="main" class="main-content">
         <div class="container-fluid">
-            <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h2 class="mb-2 page-title">Lease Termnination Table</h2>
+                    <p class="card-text">lease management</p>
+                    <div class="row my-4">
+                        <!-- Small table -->
+                        <div class="col-md-12">
+                            <div class="card shadow">
+                                <div class="card-body">
 
-                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
-                                    class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                                    aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
+                                    <!-- table -->
+                                    <table class="table table-hover  dataTables table-borderless border-v" id="dataTable" style="width:100%!important;">
+                                        <thead class="thead-dark">
+                                        <tr>
 
-                        </div>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="assets/images/im1.jpg" class="d-block w-100 img-fluid" alt="..." width="70%"
-                                     height="800px">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>First Image Name</h5>
-                                    <p>Some representative placeholder for building </p>
+                                            <th>ID</th>
+                                            <th>Business</th>
+                                            <th>Portfolio</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Status</th>
+                                            <th>Terminate</th>
+                                        </tr>
+                                        </thead>
+                                        <!--<tbody id="t_body">
+                                        <tr>
+
+                                            <td>368</td>
+                                            <td>Imani Lara</td>
+                                            <td>$300</td>
+                                            <td>Joina City</td>
+                                            <td>Harare</td>
+
+                                            <td>Active</td>
+                                            <td>Jun 8, 2019</td>
+                                            <td><a href="#"> <span class="badge badge-pill badge-danger">Terminate</span></a></td>
+                                        </tr>
+
+                                        </tbody>-->
+                                    </table>
                                 </div>
                             </div>
-                            <div class="carousel-item">
-                                <img src="assets/images/im1.jpg" class="d-block w-100 img-fluid" alt="..." width="70%"
-                                     height="800px">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Second Image Name</h5>
-                                    <p>Some representative placeholder for Building</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="assets/images/im1.jpg" class="d-block w-100 img-fluid" alt="..." width="70%"
-                                     height="800px">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Joina City</h5>
-                                    <p>Home for everyone</p>
-                                </div>
-                            </div>
+                        </div> <!-- simple table -->
+                    </div> <!-- end section -->
+                </div> <!-- .col-12 -->
+            </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
 
-                            <button style="background: none!important ;border: none!important"
-                                    class="carousel-control-prev" type="button"
-                                    data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden" style="display: none">Previous</span>
-                            </button>
-                            <button style="background: none!important; border: none!important"
-                                    class="carousel-control-next" type="button"
-                                    data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden" style="display: none">Next</span>
-                            </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1"
+             aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+             data-bs-keyboard="false" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lease Termination
+                            Dialog</h5>
+                        <a >
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info" role="alert" id="alerrt">
+                            <p id="alrt" style="visibility: visible">Are You Sure you want
+                                to Terminate This Lease</p>
+
+                            <div id="liveAlertPlaceholder">
+                                <button id="ldID" style="background: none;display:none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                    Terminating ...
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <div class="modal-footer d-flex justify-content-center">
 
 
-            </div> <!-- .container-fluid -->
-            <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
-                 aria-labelledby="defaultModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                        <a th:href="@{/Terminate-Lease}">
+                            <button type="button" class="btn btn-danger"
+                                    data-bs-dismiss="modal" id="Close"
+                                    style="display: none">Close
                             </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="list-group list-group-flush my-n3">
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-box fe-24"></span>
-                                        </div>
-                                        <div class="col">
-                                            <small><strong>Package has uploaded successfull</strong></small>
-                                            <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                                            <small class="badge badge-pill badge-light text-muted">1m ago</small>
-                                        </div>
+                        </a>
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal" id="liveAlertkBtn">Cancel
+                        </button>
+                        <button type="button" id="liveAlertBtn" class="btn btn-primary"
+                                onclick="Terminate()">Yes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group list-group-flush my-n3">
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-box fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Package has uploaded successfull</strong></small>
+                                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
                                     </div>
                                 </div>
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-download fe-24"></span>
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-download fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Widgets are updated successfull</strong></small>
+                                        <div class="my-0 text-muted small">Just create new layout Index, form, table
                                         </div>
-                                        <div class="col">
-                                            <small><strong>Widgets are updated successfull</strong></small>
-                                            <div class="my-0 text-muted small">Just create new layout Index, form,
-                                                table
-                                            </div>
-                                            <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
                                     </div>
                                 </div>
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-inbox fe-24"></span>
-                                        </div>
-                                        <div class="col">
-                                            <small><strong>Notifications have been sent</strong></small>
-                                            <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo
-                                            </div>
-                                            <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                                        </div>
-                                    </div> <!-- / .row -->
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span class="fe fe-link fe-24"></span>
-                                        </div>
-                                        <div class="col">
-                                            <small><strong>Link was attached to menu</strong></small>
-                                            <div class="my-0 text-muted small">New layout has been attached to the
-                                                menu
-                                            </div>
-                                            <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                                        </div>
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-inbox fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Notifications have been sent</strong></small>
+                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
                                     </div>
                                 </div> <!-- / .row -->
-                            </div> <!-- / .list-group -->
+                            </div>
+                            <div class="list-group-item bg-transparent">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="fe fe-link fe-24"></span>
+                                    </div>
+                                    <div class="col">
+                                        <small><strong>Link was attached to menu</strong></small>
+                                        <div class="my-0 text-muted small">New layout has been attached to the menu
+                                        </div>
+                                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                                    </div>
+                                </div>
+                            </div> <!-- / .row -->
+                        </div> <!-- / .list-group -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
+             aria-labelledby="defaultModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-5">
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-success justify-content-center">
+                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Control area</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Activity</p>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All
-                            </button>
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Droplet</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Upload</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Users</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div class="squircle bg-primary justify-content-center">
+                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                                </div>
+                                <p>Settings</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-                 aria-labelledby="defaultModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body px-5">
-                            <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-success justify-content-center">
-                                        <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Control area</p>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Activity</p>
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Droplet</p>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Upload</p>
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Users</p>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <div class="squircle bg-primary justify-content-center">
-                                        <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                                    </div>
-                                    <p>Settings</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
     </main> <!-- main -->
 </div> <!-- .wrapper -->
 
 <script src="js/jquery.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/moment.min.js"></script>
+<script src="js/select2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/simplebar.min.js"></script>
 <script src='js/daterangepicker.js'></script>
+<script src="js/register.js"></script>
 <script src='js/jquery.stickOnScroll.js'></script>
 <script src="js/tinycolor-min.js"></script>
-<script src="js/register.js"></script>
-<script src="js/apps.js"></script>
-<script src="js/custom.js"></script>
-<script src="js/customlease.js"></script>
-
-<script src="js/apexcharts.custom.js"></script>
 <script src="js/config.js"></script>
+<script src='js/jquery.dataTables.min.js'></script>
+<script src='js/dataTables.bootstrap4.min.js'></script>
+<script src="js/apps.js"></script>
+<script src="js/customlease.js"></script>
+<script src='js/bootstrap.bundle.min.js'></script>
+
+
+<script>
+    $('#dataTable-1').DataTable(
+        {
+            autoWidth: true,
+            "lengthMenu": [
+                [16, 32, 64, -1],
+                [16, 32, 64, "All"]
+            ]
+        });
+</script>
+
 
 </body>
 </html>

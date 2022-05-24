@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/logo/sysIco(2).ico">
+    <title>Tenant Management System</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="css/feather.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
+  </head>
+  <body class="vertical  light  " onload="getOverdue(),getImageProfile()">
+    <div class="wrapper">
+      <nav class="topnav navbar navbar-light" >
+        <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+          <i class="fe fe-menu navbar-toggler-icon"></i>
+        </button>
+        <form class="form-inline mr-auto searchform text-muted">
+          <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
+                 placeholder="Type something..." aria-label="Search">
+        </form>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+              <i class="fe fe-sun fe-16"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+               data-target=".modal-shortcut">
+              <span class="fe fe-grid fe-16"></span>
+            </a>
+          </li>
+          <li class="nav-item nav-notif">
+            <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+               data-target=".modal-notif">
+              <span class="fe fe-bell fe-16"></span>
+              <span class="dot dot-md bg-success"></span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar avatar-sm mt-2">
+                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+
+              </span><br>
+              <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+
+              <b class="caret"></b>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+              <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+              <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
+              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" href="#">Activities</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+        <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+          <i class="fe fe-x"><span class="sr-only"></span></i>
+        </a>
+        <nav class="vertnav navbar navbar-light">
+          <!-- nav bar -->
+          <div class="w-100 mb-4 d-flex">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" th:href="@{/index}">
+              <img  src="assets/logo/joina-logo.jpg"  alt="joina-logo" style="margin-left:-40px">
+            </a>
+          </div>
+          <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+              <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-home fe-16"></i>
+                <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                <li class="nav-item active">
+                  <a class="nav-link pl-3" th:href="@{/index}"><span class="ml-1 item-text">Default</span></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p class="text-muted nav-heading mt-4 mb-1">
+            <span>Components</span>
+          </p>
+          <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+              <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
+                 class="dropdown-toggle nav-link">
+                <i class="fe fe-box fe-16"></i>
+                <span class="ml-3 item-text">Property Portfolios</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/propertyList}"><span
+                          class="ml-1 item-text">Portfolio List</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/addProperty}"><span
+                          class="ml-1 item-text">Add Portfolio</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/addCompartment}"><span
+                          class="ml-1 item-text">Add Lettable space</span></a>
+                </li>
+
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-credit-card fe-16"></i>
+                <span class="ml-3 item-text">Tenants</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/tenantList}"><span
+                          class="ml-1 item-text">Tenant List</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/addTenant}"><span
+                          class="ml-1 item-text">Add Tenant</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/assignProperty}"><span
+                          class="ml-1 item-text">Assign Property</span></a>
+                </li>
+
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-grid fe-16"></i>
+                <span class="ml-3 item-text">Leasing</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/View-Lease}"><span
+                          class="ml-1 item-text">View Leases</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/AddLease}"><span
+                          class="ml-1 item-text">Add Lease</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/Terminate-Lease}"><span
+                          class="ml-1 item-text">Terminate </span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3"  th:href="@{/View-Renewed}"><span
+                          class="ml-1 item-text">Renewed Leases </span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/Lease-Notices}"><span
+                          class="ml-1 item-text">Lease Notices </span></a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-pie-chart fe-16"></i>
+                <span class="ml-3 item-text">Documents</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/addTenantDocuments}"><span class="ml-1 item-text">Add Tenant Documents</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
+                          class="ml-1 item-text">Tenant Documents</span></a>
+                </li>
+
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#maintenance" data-toggle="collapse" aria-expanded="false"
+                 class="dropdown-toggle nav-link">
+                <i class="fe fe-pie-chart fe-16"></i>
+                <span class="ml-3 item-text">Maintenance</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/requestForm}"><span
+                          class="ml-1 item-text">Lodge Request</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/request}"><span
+                          class="ml-1 item-text">Requests</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/schedule}"><span
+                          class="ml-1 item-text">Schedule</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/overdueRequest}"><span
+                          class="ml-1 item-text">Overdue</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/pending}"><span
+                          class="ml-1 item-text">Pending</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+
+          <p class="text-muted nav-heading mt-4 mb-1">
+            <span>Finance</span>
+          </p>
+          <ul class="navbar-nav flex-fill w-100 mb-2">
+
+            <li class="nav-item dropdown">
+              <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-book fe-16"></i>
+                <span class="ml-3 item-text">Accounts</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                <a class="nav-link pl-3" th:href="@{/Payments}"><span class="ml-1">Payments</span></a>
+                <a class="nav-link pl-3" th:href="@{/Invoicing}"><span class="ml-1">Invoicing</span></a>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-book fe-16"></i>
+                <span class="ml-3 item-text">Services</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                <a class="nav-link pl-3" th:href="@{/ServiceList}"><span class="ml-1">Service List</span></a>
+                <a class="nav-link pl-3" th:href="@{/AddService}"><span class="ml-1">Add Services</span></a>
+              </ul>
+            </li>
+
+          </ul>
+          <p class="text-muted nav-heading mt-4 mb-1">
+            <span>Other</span>
+          </p>
+          <ul class="navbar-nav flex-fill w-100 mb-2">
+            <li class="nav-item dropdown">
+              <a href="#apllicants" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-book fe-16"></i>
+                <span class="ml-3 item-text">Tenant Applications</span>
+              </a>
+              <ul class="collapse list-unstyled pl-4 w-100" id="apllicants">
+                <a class="nav-link pl-3" href="#"><span class="ml-1">Application List</span></a>
+                <a class="nav-link pl-3" href="#"><span class="ml-1">Waiting List</span></a>
+                <a class="nav-link pl-3" href="#"><span class="ml-1">Rejected Application</span></a>
+              </ul>
+            </li>
+          </ul>
+
+        </nav>
+      </aside>
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="mb-2 page-title">Overdue Requests</h2>
+              
+              <div class="row my-4">
+                <!-- Small table -->
+                <div class="col-md-12">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <!-- table -->
+                      <table class="table table-hover  dataTables table-borderless border-v" id="example" style="width: 100%">
+                        <thead class="thead-dark">
+                          <tr>
+
+                            <th>Tenant Id</th>
+                            <th>Request</th>
+                            <th>Description</th>
+                            <th>Level of Urgency</th>
+                            <th>Date Logged</th>
+                            <th>Scheduled Date</th>
+                            
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+
+                      </table>
+                    </div>
+                  </div>
+                </div> <!-- simple table -->
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+        
+        <div class="col-md-4 mb-4">
+
+
+
+          <div class="modal fade" id="varyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+               aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="varyModalLabel">Schedule</h5>
+                  <a href="overdueRequest.html">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                  </a>
+                </div>
+                <div class=" justify-content-center modal-body" id="liveAlertPlaceholder" style="display: none">
+                  <p class="text-center">Request Updated</p>
+                </div>
+                <div id="cont" class="modal-body justify-content-center">
+                  <div class="form-row mb-3">
+                    <div class="col-md-6 mb-3">
+
+
+                      <div  class="row justify-content-center">
+                        <div  class="col-md-10" >
+                          <label for="date-input1">Schedule Date</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control drgpicker" id="date-input1"
+                                   value="2020-12-02" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                              <div class="input-group-text" id="button-addon-date"><span
+                                      class="fe fe-calendar fe-16 mx-2"></span></div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-10">
+                          <label for="date-input1">Assigned Team</label>
+                          <div class="input-group">
+                            <input type="text" id="teamInput" class="form-control"
+                                   aria-describedby="button-addon2">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                  <!--                            <a href="request.html" >-->
+                  <!--                                <button id="0" style="display: none" type="button" data-dismiss="modal" class="btn mb-2 btn-success">OK</button>-->
+                  <!--                            </a>-->
+                  <a href="overdueRequest.html">
+                    <button type="button" id="0" style="display: none" data-bs-dismiss="modal"
+                            class="btn mb-2 btn-success" aria-label="Close">OK
+                    </button>
+                  </a>
+                  <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal" id="1">Close
+                  </button>
+                  <button type="button" class="btn mb-2 btn-primary" onclick="schedule()" id="2">Assign
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+              
+
+            
+          
+        </div>
+        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="list-group list-group-flush my-n3">
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-box fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Package has uploaded successfull</strong></small>
+                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-download fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Widgets are updated successfull</strong></small>
+                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-inbox fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Notifications have been sent</strong></small>
+                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                      </div>
+                    </div> <!-- / .row -->
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-link fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Link was attached to menu</strong></small>
+                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                      </div>
+                    </div>
+                  </div> <!-- / .row -->
+                </div> <!-- / .list-group -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body px-5">
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-success justify-content-center">
+                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Control area</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Activity</p>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Droplet</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Upload</p>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Users</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Settings</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/maintenanceApi.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/simplebar.min.js"></script>
+    <script src="js/register.js"></script>
+    <script src='js/daterangepicker.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
+    <script src="js/tinycolor-min.js"></script>
+    <script src="js/config.js"></script>
+    <script src='js/jquery.dataTables.min.js'></script>
+    <script src='js/dataTables.bootstrap4.min.js'></script>
+    <script>
+
+      $('.drgpicker').daterangepicker(
+      {
+        singleDatePicker: true,
+        timePicker: false,
+        showDropdowns: true,
+        locale:
+        {
+          format: 'YYYY-MM-DD'
+        }
+      });
+
+    </script>
+    <script>
+      $('#dataTable-1').DataTable(
+      {
+        autoWidth: true,
+        "lengthMenu": [
+          [16, 32, 64, -1],
+          [16, 32, 64, "All"]
+        ]
+      });
+    </script>
+    <script src="js/apps.js"></script>
+    <script src='js/select2.min.js'></script>
+ 
+    <script src='js/jquery.validate.min.js'></script>
+  </body>
+</html>

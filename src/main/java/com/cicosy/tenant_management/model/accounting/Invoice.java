@@ -39,8 +39,9 @@ public class Invoice {
     private String status;
     private Long user;
     private String servicesList;
+    private long rentalAmount;
 
-    public Invoice(Long compartment, Compartment compartmentObject, LocalDate dateIssued, String forTheMonthOf, double amount, String dueDate, String status, Long user, String servicesList) {
+    public Invoice(Long compartment, Compartment compartmentObject, LocalDate dateIssued, String forTheMonthOf, double amount, String dueDate, String status, Long user, String servicesList, long rentalAmount) {
         this.compartment = compartment;
         this.compartmentObject = compartmentObject;
         this.dateIssued = dateIssued;
@@ -50,5 +51,6 @@ public class Invoice {
         this.status = status;
         this.user = user;
         this.servicesList = servicesList;
+        this.rentalAmount = rentalAmount;
     }
 }
