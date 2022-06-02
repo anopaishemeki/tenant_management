@@ -22,7 +22,29 @@ function saveLease() {
 
         return
     }
-    var p = document.getElementById("duration");
+
+    var s = document.getElementById("startDate");
+
+    if (s.value.toString().length == 0) {
+        alert("Start Date is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+    var d = document.getElementById("endDate");
+
+    if (d.value.toString().length == 0) {
+        alert("End Date is Required", "danger");
+        var r = document.getElementById("retry");
+        r.setAttribute("style", "display:all");
+
+        return
+    }
+
+
+
+    /*var p = document.getElementById("duration");
 
     if (p.value.toString().length == 0) {
         alert("Lease Duration is Required", "danger");
@@ -30,7 +52,7 @@ function saveLease() {
         r.setAttribute("style", "display:all");
 
         return
-    }
+    }*/
     var we = document.getElementById("leaseName");
     if (we.value.toString().length == 0) {
         alert("Business Name is Required", "danger");
@@ -54,7 +76,7 @@ function saveLease() {
     var jsonDataObj = {
         "tenant_id":$("#leaseName").val(),
         "startDate": $("#startDate").val(),
-        "duration": $("#duration").val(),
+        "endDate": $("#endDate").val(),
         "terms": $("#terms").val()
     };
     data.append("jsondata", JSON.stringify(jsonDataObj));
@@ -514,12 +536,12 @@ function renewlease() {
     var tenant_id = JSON.parse(localStorage.getItem("tenant_id"));
 
     var startDate = document.getElementById("startDate2").value;
-    var duration = document.getElementById("duration2").value;
+    var endDate = document.getElementById("endDate2").value;
 
 
     let data = {
         startDate,
-        duration,
+        endDate,
         tenant_id
     }
     $.ajax({

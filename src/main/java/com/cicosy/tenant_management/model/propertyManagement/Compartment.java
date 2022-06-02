@@ -26,7 +26,7 @@ public class Compartment {
     private Long id;
     private Long property;
     private String floorNumber;
-    private int floorArea;
+    private double floorArea;
     private double rentalRate;
     private String status;
     private String compartmentNumber;
@@ -35,7 +35,7 @@ public class Compartment {
     private Tenant tenantObject;
     private Long tenant;
 
-    public Compartment(Long property, String floorNumber, int floorArea, double rentalRate, String status, String compartmentNumber, Tenant tenantObject, Long tenant) {
+    public Compartment(Long property, String floorNumber, double floorArea, double rentalRate, String status, String compartmentNumber, Tenant tenantObject, Long tenant) {
         this.property = property;
         this.floorNumber = floorNumber;
         this.floorArea = floorArea;

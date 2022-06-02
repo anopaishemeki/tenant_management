@@ -68,9 +68,9 @@ function getTenants() {
                                 }},
                             {"data":function(row) {
 
-                                    let rentalFee="";
+                                    let rentalFee="";;
                                     for (let i = 0; i < row.compartmentObjectlist.length; i++) {
-                                        rentalFee = rentalFee +" ; $ " +row.compartmentObjectlist[i].rentalRate *row.compartmentObjectlist[i].floorArea ;
+                                        rentalFee = rentalFee +" ; $ " + Math.round((row.compartmentObjectlist[i].rentalRate *row.compartmentObjectlist[i].floorArea + Number.EPSILON) * 100) / 100;
 
                                     }
                                     rentalFee = rentalFee.substr(3,rentalFee.length);
@@ -372,7 +372,7 @@ function getTenantBYid() {
                     },
                     {
                         "data": function (row) {
-                            return "$" + row.floorArea * row.rentalRate;
+                            return "$" +Math.round((row.floorArea * row.rentalRate + Number.EPSILON) * 100) / 100;
                         }
                     },
                     {

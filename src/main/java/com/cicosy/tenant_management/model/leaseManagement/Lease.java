@@ -39,7 +39,9 @@ public class Lease {
    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate startDate;
     private String terms;
-    private int duration;
+    private int duration ;
+   @JsonDeserialize(using = LocalDateDeserializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate endDate;
     private int timeLeft;
     private String status;
@@ -117,7 +119,7 @@ public class Lease {
     }
 
     public void setEndDate(LocalDate endDate) {
-        endDate = this.startDate.plusMonths(this.duration);
+       // endDate = this.startDate.plusMonths(this.duration);
         this.endDate = endDate;
     }
 

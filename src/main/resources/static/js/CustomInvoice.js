@@ -1,6 +1,6 @@
 function getInvoices() {
     $.ajax({
-        url: 'http://localhost:8090/api/invoice/get-all-invoices',
+        url: '/api/invoice/get-all-invoices',
         type: 'GET',
         success: function (response) {
             console.log(response)
@@ -175,7 +175,7 @@ function saveInvoice(){
     }
 
     $.ajax({
-        url: 'http://localhost:8090/api/invoice/save-invoice',
+        url: '/api/invoice/save-invoice',
         type: 'POST',
         dataType: "json",
         crossDomain: "true",
@@ -190,7 +190,7 @@ function saveInvoice(){
 
 function setAddPropertyDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/property/get-all-properties',
+        url: '/api/property/get-all-properties',
         type: 'GET',
         success: function (response) {
             localStorage.setItem('i_properties', JSON.stringify(response));
@@ -228,7 +228,7 @@ function setLettableSpaceDropdown() {
     let dropDown = document.getElementById("simple-select33").value;
     if (dropDown == "-1") {
         $.ajax({
-            url: 'http://localhost:8090/api/compartment/get-compartments',
+            url: '/api/compartment/get-compartments',
             type: 'GET',
             success: function (response) {
                 localStorage.setItem('i_lettable', JSON.stringify(response));
@@ -262,7 +262,7 @@ function setLettableSpaceDropdown() {
         })
     } else {
         $.ajax({
-            url: 'http://localhost:8090/api/compartment/get-compartments-for-specific-property/' + dropDown,
+            url: '/api/compartment/get-compartments-for-specific-property/' + dropDown,
             type: 'GET',
             success: function (response) {
                 localStorage.setItem('i_lettable', JSON.stringify(response));
@@ -333,7 +333,7 @@ function appendLettableSpace() {
 
 function setServiceDropDown() {
     $.ajax({
-        url: 'http://localhost:8090/api/services/get-all-services',
+        url: '/api/services/get-all-services',
         type: 'GET',
         success: function (response) {
             localStorage.setItem('i_services', JSON.stringify(response));

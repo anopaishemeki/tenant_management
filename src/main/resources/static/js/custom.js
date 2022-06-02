@@ -179,7 +179,7 @@ function appendCompartments() {
                         return businessName;
                         }},
                     {"data":function(row){
-                            return "$"+row.floorArea * row.rentalRate ;
+                            return "$"+Math.round((row.floorArea * row.rentalRate + Number.EPSILON) * 100) / 100;
                         }},
                     {"data": function (row) {
                                 return row.floorArea+ " &#13217";
@@ -689,7 +689,7 @@ function saveProperty() {
     })
 }
 
-function viewProperty() {
+function  viewProperty() {
     let id = JSON.parse(localStorage.getItem("id"));
     $.ajax({
         url: '/api/property/get-property/' + id,
