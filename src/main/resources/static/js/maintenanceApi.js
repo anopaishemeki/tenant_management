@@ -39,7 +39,7 @@ function getRequest() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-
+            var printCounter = 0;
             console.log(data)
             $("#example").DataTable({
                 data: data,
@@ -83,6 +83,73 @@ function getRequest() {
                         }
                     },
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Requests"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Requests"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Requests"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Requests"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Requests"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }
@@ -113,7 +180,7 @@ function getOverdue() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-
+            var printCounter = 0;
             console.log(data)
             $("#example").DataTable({
                 data: data,
@@ -147,6 +214,73 @@ function getOverdue() {
                         }
                     },
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Overdue Requests"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Overdue Requests"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Overdue Requests"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Overdue Requests"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Overdue Requests"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }
@@ -164,8 +298,8 @@ function getPending() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-
-            console.log(data)
+            var printCounter = 0;
+            console.log(data);
             $("#example").DataTable({
                 data: data,
                 columns: [
@@ -198,6 +332,73 @@ function getPending() {
                         }
                     },
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Pending Requests"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Pending Requests"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Pending Requests"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Pending Requests"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Pending Requests"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }
@@ -322,7 +523,8 @@ function getScheduled() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
 
-            console.log(data)
+            console.log(data);
+            var printCounter = 0;
             $("#example").DataTable({
                 data: data,
 
@@ -383,6 +585,73 @@ function getScheduled() {
                         }
                     },
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Scheduled Requests"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Scheduled Requests"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Scheduled Requests"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Scheduled Requests"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Scheduled Requests"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
 
             });
@@ -536,7 +805,7 @@ function getAttended() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-
+            var printCounter = 0;
             console.log(data)
             $("#example").DataTable({
                 data: data,
@@ -549,6 +818,73 @@ function getAttended() {
                     {"data": "description"},
                     {"data": "dateLogged"},
                     {"data": "dateAttended"}
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Attended Requests"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Attended Requests"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Attended Requests"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Attended Requests"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Attended Requests"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
 
             });

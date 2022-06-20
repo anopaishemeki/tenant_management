@@ -149,7 +149,7 @@ function saveCompartment() {
 
 function appendCompartments() {
     let id = JSON.parse(localStorage.getItem("id"));
-   
+    let name = JSON.parse(localStorage.getItem("nameProp"));
 
  // -----------------
     var baseurl = '/api/compartment/get-compartments-for-specific-property/' + id;
@@ -158,7 +158,8 @@ function appendCompartments() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-            console.log(data);
+            var printCounter = 0;
+            console.log("Compartments : ",data);
             $("#property-compartment").DataTable({
                 data: data,
                 columns: [
@@ -199,6 +200,73 @@ function appendCompartments() {
                        
                     
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Compartments at "+name
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Compartments at "+name
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Compartments for at "+name
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Compartments at "+name
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Compartments at "+name
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }
@@ -471,7 +539,7 @@ function getProperties() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-
+            var printCounter = 0;
             console.log(data);
             $("#property_list").DataTable({
                 data: data,
@@ -504,6 +572,73 @@ function getProperties() {
                         "searchable":false
                     },
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of All Portfolios"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of All Portfolios"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of All Portfolios"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of All Portfolios"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of All Portfolios"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }

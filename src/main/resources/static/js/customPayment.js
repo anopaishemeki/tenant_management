@@ -42,8 +42,103 @@ function getPayments() {
         url: '/api/payment/get-payments',
         type: 'GET',
         success: function (response) {
-            console.log(response)
+            console.log(response);
 
+
+            var data = response;
+            var printCounter = 0;
+            console.log(data),
+            $("#example").DataTable({
+                data:data,
+                columns:[
+
+                    {"data":"paymentDate"},
+                    {"data":"reference"},
+                    {"data":function (row) {
+                            return row.tenantObject.business_name;
+                        }},
+                    {"data":"method"},
+                    {"data":"invoice"},
+                    {"data":function (row) {
+                            return `<span class="text-success">`+row.amount+`</span>`;
+                        }}
+
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Payments"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of  Payments"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of  Payments"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Payments"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of  Payments"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
+                ]
+            });
+
+
+
+
+
+
+           /*
             let t_body = document.getElementById("t_body");
 
             while (t_body.hasChildNodes()) {
@@ -63,8 +158,7 @@ function getPayments() {
                 tr.innerHTML = html;
 
                 t_body.appendChild(tr);
-            }
-
+            }*/
         }
     })
 }

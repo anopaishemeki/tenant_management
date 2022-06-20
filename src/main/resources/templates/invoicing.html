@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="assets/logo/sysIco(2).ico">
-    <title>Invoicing | Tenant Management System</title>
+    <title>Invoice Listing</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
@@ -26,6 +26,14 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
+
+
+
+
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">-->
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+
 </head>
 <body class="vertical  light  "
       onload="getImageProfile(), setAddPropertyDropDown(), setLettableSpaceDropdown(), setServiceDropDown(), getInvoices()">
@@ -332,9 +340,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" style="margin-top:20px">
                                             <table class="table table-hover  dataTables table-borderless border-v table-sm"
-                                                   style="width:100%!important;">
+                                                   style="width:100%!important;" id="example">
                                                 <thead class="thead-dark">
                                                 <tr>
                                                     <th>Date</th>
@@ -582,13 +590,13 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="verticalModalTitle">Create Invoice</h5>
+                        <h5 class="modal-title" id="verticalModalTitle">View Invoice</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p class="card-text">Enter the required details to create a payment record</p>
+                        <p class="card-text">Invoice Details</p>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-row">
@@ -1035,5 +1043,34 @@
     }
 </script>
 <script src="js/apps.js"></script>
+<script src='js/jquery.dataTables.min.js'></script>
+<script src='js/dataTables.bootstrap4.min.js'></script>
+
+
+
+<style>
+    div .dt-buttons{
+        float : left;
+        padding:10px;
+        margin-left:20%;
+    }
+    .dt-button-collection{
+        top:-20px!important;
+    }
+
+    .dataTables_info ,.dataTables_length{
+        float : left;
+    }
+</style>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+<script src="//cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
+
 </body>
 </html>

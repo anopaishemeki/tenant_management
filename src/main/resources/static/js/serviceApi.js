@@ -60,7 +60,7 @@ function getService() {
     xmlhttp.onreadystatechange = function(){
         if(xmlhttp.readyState==4 && xmlhttp.status ==200){
             var data = JSON.parse(xmlhttp.responseText);
-
+            var printCounter = 0;
             console.log(data)
             $("#example").DataTable({
                 data:data,
@@ -80,6 +80,73 @@ function getService() {
                       </div>`
                         }},
 
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Services"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of  Services"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of  Services"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Services"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of  Services"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }

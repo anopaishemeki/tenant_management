@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="assets/logo/sysIco(2).ico">
-    <title>Tenant Management System</title>
+    <title>Overdule Requests</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
@@ -19,6 +19,10 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
+
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">-->
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+
   </head>
   <body class="vertical  light  " onload="getOverdue(),getImageProfile()">
     <div class="wrapper">
@@ -543,5 +547,34 @@
     <script src='js/select2.min.js'></script>
  
     <script src='js/jquery.validate.min.js'></script>
+
+
+
+
+    <style>
+      div .dt-buttons{
+        float : left;
+        padding:10px;
+        margin-left:20%;
+      }
+      .dt-button-collection{
+        top:-20px!important;
+      }
+
+      .dataTables_info ,.dataTables_length{
+        float : left;
+      }
+    </style>
+    <script src="//cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
+
+
   </body>
 </html>
