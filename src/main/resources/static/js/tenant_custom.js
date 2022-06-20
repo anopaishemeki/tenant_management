@@ -29,9 +29,24 @@ function getTenants() {
                         }
                     }
 
-                    console.log(data);
+
+                    let un_archieved=[];
+                    let archived=[];
+                    for(let i=0;i<data.length;i++){
+                        if(data[i].status.toString()=="0"){
+                            un_archieved.push(data[i]);
+                        }else{
+
+                            archived.push(data[i]);
+                        }
+                    }
+
+                    console.log("active :" ,un_archieved);
+                    console.log("in-active :" ,archived);
+                    var printCounter = 0;
+
                     $("#tenants").DataTable({
-                        data: data,
+                        data: un_archieved,
                         columns: [
 
                             {"data":"id"},
@@ -84,20 +99,265 @@ function getTenants() {
                                 "sortable":false,
                                 "searchable":false
                             },
+                            {"data":function (row) {
+                                    return"<div class='d-flex justify-content-center'><span style='color: red ;cursor: pointer' class='fe fe-16 fe-anchor'></span></div>";
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            },
                             {"data":function(row){
                                     return`<button class="btn btn-sm " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item"  onclick="LocalTenantID('`+row.id+`')" href="tenantDetail"">View</a>
-                                <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="#">Assign</a>
+                                <a class="dropdown-item"  onclick="LocalTenantID('`+row.id+`')" href="tenantDetail">View</a>
+                                <a class="dropdown-item" onclick="LocalTenantID('`+row.id+`')" href="editTenant">Edit</a>
+                                <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#assign" onclick="LocalTenantID('`+row.id+`');setAddPropertyDropDown(),loadData() " href="#">Assign</a>
                               </div>`
                                 },
                                 "sortable":false,
                                 "searchable":false
                             }
+                        ],
+                        orderCellsTop: true,
+                        fixedHeader: true,
+                        dom: 'lfrtipB',
 
+                        buttons: [
+                            {
+                                extend: 'collection',
+                                text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                                buttons: [
+                                    {extend:'excel',
+                                        messageTop:"List Of Active Tenants"
+                                    },
+                                    {extend:'csv',
+                                        messageTop:"List Of Active Tenants"
+                                    },
+                                    {extend:'pdf',
+                                        messageBottom:null,
+                                        messageTop:"List Of Active Tenants"
+                                    }
+
+                                ]
+                            },
+                            {extend:'collection',
+                            text:'Print <span class="fe fe-24 fe-printer"></span>',
+                            buttons:[
+                                {   extend:"print",
+                                    text:"Print All Records",
+                                    messageBottom: function () {
+                                        printCounter++;
+
+                                        if ( printCounter === 1 ) {
+                                            return 'This is the first time you have printed this document.';
+                                        }
+                                        else {
+                                            return 'You have printed this document '+printCounter+' times today.';
+                                        }
+                                    },
+                                    messageTop:"List Of Active Tenants"
+                                },
+                                {   extend:"print",
+                                    text:"Print Current Table",
+                                    messageBottom: function () {
+                                        printCounter++;
+
+                                        if ( printCounter === 1 ) {
+                                            return 'This is the first time you have printed this document.';
+                                        }
+                                        else {
+                                            return 'You have printed this document '+printCounter+' times today.';
+                                        }
+                                    },
+                                    exportOptions: {
+                                        modifier: {
+                                            page: 'current'
+                                        }
+                                    },
+                                    messageTop:"List Of Active Tenants"
+                                }
+                            ]},
+
+                            {
+                                popoverTitle: 'Visibility control',
+                                text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                                extend: 'colvis',
+                                collectionLayout: 'two-column'
+
+                            }
+                        ]
+                    /* "language":
+                            {"buttons":
+                                    {"print":'Print <span class="fe fe-24 fe-printer"></span>'}
+
+                            }*/
+
+
+
+                      /*  buttons: [
+
+                            'excel',
+                            'print',
+                            'pdf'
+
+                            /!*'pdf',
+                            {
+                                extend: 'pdf',
+                                text: 'Save current page',
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                }
+                            }*!/
+                        ]*/
+                    });
+
+                    $("#tenants2").DataTable({
+                        data: archived,
+                        columns: [
+
+                            {"data":"id"},
+                            {"data":"business_name"},
+                            {"data":"phone"},
+                            {"data":function(row) {
+
+                                    let compartment = "";
+                                    for (let i = 0; i < row.compartmentObjectlist.length; i++) {
+                                        compartment = compartment + " ; " + row.compartmentObjectlist[i].compartmentNumber;
+
+                                    }
+                                    compartment = compartment.substr(2, compartment.length);
+
+
+                                    if(compartment.length==0) {
+                                        compartment = "...."
+                                    }
+
+
+                                    return compartment ;
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            },
+                            {"data":function (row) {
+                                    var rentStatus="";
+                                    if(row.rentStatus===null) {
+                                        rentStatus="unpaid"
+                                    }else{
+                                        rentStatus=row.rentStatus;
+                                    }
+                                    return rentStatus;
+                                }},
+                            {"data":function(row) {
+
+                                    let rentalFee=0;
+                                    for (let i = 0; i < row.compartmentObjectlist.length; i++) {
+                                       // rentalFee = rentalFee +" ; $ " + Math.round((row.compartmentObjectlist[i].rentalRate *row.compartmentObjectlist[i].floorArea + Number.EPSILON) * 100) / 100;
+
+                                        rentalFee = rentalFee + row.compartmentObjectlist[i].rentalRate * row.compartmentObjectlist[i].floorArea ;
+                                    }
+                                  //  rentalFee = rentalFee.substr(3,rentalFee.length);
+
+                                    if(rentalFee==0){
+                                        rentalFee="...."
+                                    }else{
+                                        rentalFee="$ "+Math.round((rentalFee + Number.EPSILON) * 100) / 100;
+                                    }
+
+                                    return rentalFee ;
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            },
+                            {"data":function (row) {
+                                    return"<div class='d-flex justify-content-center'><span style='color: red ;cursor: pointer' class='fe fe-16 fe-anchor'></span></div>";
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            },
+                            {"data":function(row){
+                                    return`<button class="btn btn-sm " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="font-size: 20px;color: blueviolet" class="fe fe-edit"></span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item"  onclick="LocalTenantID('`+row.id+`')" href="tenantDetail">View</a>
+                                <a class="dropdown-item" onclick="LocalTenantID('`+row.id+`')" href="editTenant">Edit</a>
+                                <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#assign" onclick="LocalTenantID('`+row.id+`');setAddPropertyDropDown(),loadData() " href="#">Assign</a>
+                              </div>`
+                                },
+                                "sortable":false,
+                                "searchable":false
+                            }
+                        ],
+                        orderCellsTop: true,
+                        fixedHeader: true,
+                        dom: 'lfrtipB',
+
+                        buttons: [
+                            {
+                                extend: 'collection',
+                                text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                                buttons: [
+                                    {extend:'excel',
+                                        messageTop:"List Of InActive Tenants"
+                                    },
+                                    {extend:'csv',
+                                        messageTop:"List Of InActive Tenants"
+                                    },
+                                    {extend:'pdf',
+                                        messageBottom:null,
+                                        messageTop:"List Of InActive Tenants"
+                                    }
+
+                                ]
+                            },
+                            {extend:'collection',
+                                text:'Print <span class="fe fe-24 fe-printer"></span>',
+                                buttons:[
+                                    {   extend:"print",
+                                        text:"Print All Records",
+                                        messageBottom: function () {
+                                            printCounter++;
+
+                                            if ( printCounter === 1 ) {
+                                                return 'This is the first time you have printed this document.';
+                                            }
+                                            else {
+                                                return 'You have printed this document '+printCounter+' times today.';
+                                            }
+                                        },
+                                        messageTop:"List Of InActive Tenants"
+                                    },
+                                    {   extend:"print",
+                                        text:"Print Current Table",
+                                        messageBottom: function () {
+                                            printCounter++;
+
+                                            if ( printCounter === 1 ) {
+                                                return 'This is the first time you have printed this document.';
+                                            }
+                                            else {
+                                                return 'You have printed this document '+printCounter+' times today.';
+                                            }
+                                        },
+                                        exportOptions: {
+                                            modifier: {
+                                                page: 'current'
+                                            }
+                                        },
+                                        messageTop:"List Of InActive Tenants"
+                                    }
+                                ]},
+
+                            {
+                                popoverTitle: 'Visibility control',
+                                text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                                extend: 'colvis',
+                                collectionLayout: 'two-column'
+
+                            }
                         ]
                     });
                 }
@@ -177,6 +437,70 @@ function getTenants() {
 }
 
 
+
+//View hide Archieved Tenants
+
+function viewhideArchieved(){
+    var archDiv=document.getElementById("viewhideArchieved");
+   var aa= archDiv.getAttribute("style");
+    if(aa=="display:none"){
+        archDiv.setAttribute("style","display:all");
+    }else{
+        archDiv.setAttribute("style","display:none");
+    }
+    var btn =document.getElementById("btnShowHide");
+    var btn2 =document.getElementById("btnShowHide2");
+
+    if(btn.innerText=="Show"){
+        btn.innerText="Hide";
+        btn2.setAttribute("class","fe fe-chevron-up fe-16 ml-2");
+    }else{
+        btn.innerText="Show";
+        btn2.setAttribute("class","fe fe-chevron-down fe-16 ml-2");
+    }
+
+}
+
+
+// Renewing Lease
+function loadData() {
+    var id = JSON.parse(localStorage.getItem("t_id"));
+
+
+    $.ajax({
+        url: '/api/tenants/getTenantByID/' + id,
+        type: 'GET',
+        success: function (response) {
+            let items = response;
+
+            console.log(response);
+            let nametag = document.getElementById("TenantName2");
+            if (nametag) {
+
+                nametag.value= response.business_name;
+               // setLocalTenantID(response.tenant_id)
+            }
+            let namet = document.getElementById("tenantName3");
+            if (namet) {
+
+                namet.innerHTML= response.business_name;
+                // setLocalTenantID(response.tenant_id)
+            }
+        }
+    });
+
+
+    let id2 = document.getElementById("id2");
+
+
+
+    if (id2) {
+        id2.innerText = id;
+    }
+
+}
+
+//save Tenant
 function saveTenant() {
     let name = document.getElementById("name").value
     let property = "null";
@@ -251,6 +575,214 @@ function saveTenant() {
     $("#tenant_form")[0].reset();
 }
 
+
+//edit tenant
+function EditTenant() {
+
+    var p = document.getElementById("done");
+    p.setAttribute("style","display: all");
+
+    var o = document.getElementById("retry");
+    o.setAttribute("style","display: none");
+
+    var y = document.getElementById("modal-body");
+    if (y) {
+        y.setAttribute("style", "display:all");
+    }
+
+    var h = document.getElementById("err");
+    if (h) {
+
+        h.innerHTML = ''
+    }
+
+
+    let id = JSON.parse(localStorage.getItem("t_id"));
+
+    let business_name = document.getElementById("business_name").value;
+
+
+    if(business_name.toString()==""){
+        alert("Business Name is Required", "danger");
+        return;
+    }
+
+    let business_type = document.getElementById("business_type").value;
+    if(business_type.toString()==""){
+        alert("Business Type is Required", "danger");
+        return;
+    }
+    let b_phone = document.getElementById("b_phone").value;
+
+    let b_tel = document.getElementById("b_tel").value;
+    if(b_phone.toString()=="" && b_tel.toString()==""){
+        alert("Either Business Phone Number / Tel is Required", "danger");
+        return;
+    }
+
+    let name = document.getElementById("name").value;
+    if(name.toString()==""){
+        alert("Tenant First Name is Required", "danger");
+        return;
+    }
+
+    let surname = document.getElementById("surname").value;
+    if(surname.toString()==""){
+        alert("Tenant Last Name is Required", "danger");
+        return;
+    }
+    let email = document.getElementById("email").value;
+
+    let id_passport = document.getElementById("passport").value;
+    if(id_passport.toString()==""){
+        alert("Tenant ID or Passport Number is Required", "danger");
+        return;
+    }
+
+    let b_email = document.getElementById("b_email").value;
+   /* if(b_email.toString()==""){
+        alert("Business Email is Required", "danger");
+        return;
+    }*/
+
+
+    let address = document.getElementById("address").value;
+    if(address.toString()==""){
+        alert("Address is Required", "danger");
+        return;
+    }
+    let phone = document.getElementById("phone").value;
+    if(phone.toString()==""){
+        alert("Tenant Phone Number is Required", "danger");
+        return;
+    }
+    //property contact details
+
+
+
+    //owner Object properties
+    let website = document.getElementById("website").value;
+
+
+    let services = document.getElementById("services").value;
+
+
+    let city = document.getElementById("city").value;
+    if(city.toString()==""){
+        alert("City is Required", "danger");
+        return;
+    }
+    let country = document.getElementById("country").value;
+    if(country.toString()==""){
+        alert("Country is Required", "danger");
+        return;
+    }
+
+    $('#staticBackdrop').modal('show');
+    var y = document.getElementById("modal-body");
+    if (y) {
+        y.setAttribute("style", "display:all");
+    }
+
+
+    let data = {
+        city,
+        country,
+        email,
+        website,
+        address,
+        b_email,
+        b_phone,
+        b_tel,
+        id_passport,
+        name,
+        phone,
+        surname,
+        business_name,
+        business_type,
+        services
+    };
+
+    $.ajax({
+        url: '/api/tenants/updateTenant/'+id,
+        type: 'PUT',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response);
+            alert('Tenant Updated Successfully !!', 'success');
+            return;
+
+        },
+        error: function (e) {
+            if (e.status.toString() == "200") {
+
+                alert('Tenant Updated Successfully !!', 'success');
+                return;
+            } else if (e.status.toString() == "500") {
+
+                alert( e.responseJSON.message, 'danger');
+                console.log("ERROR : ", e.responseJSON.message);
+                return;
+            } else {
+                alert(e.responseJSON.message, 'danger')
+                console.log("ERROR : ", e);
+                return;
+            }
+        }
+
+    });
+
+    $("#tenant_form")[0].reset();
+}
+
+
+function alert(message, type) {
+
+    if(message=="Tenant Updated Successfully !!"){
+        var p = document.getElementById("retry");
+        p.setAttribute("style","display: none");
+        var o = document.getElementById("done");
+        o.setAttribute("style","display: all");
+    }else{
+        var p = document.getElementById("retry");
+        p.setAttribute("style","display: all");
+        var o = document.getElementById("done");
+        o.setAttribute("style","display: none");
+    }
+
+    var y = document.getElementById("modal-body");
+
+    if (y) {
+        y.setAttribute("style", "display:none");
+    }
+
+
+    var e = document.getElementById("ldiD");
+    if (e) {
+        e.setAttribute("style", "display:none");
+    }
+
+
+    var h = document.getElementById("err");
+    if (h) {
+
+        h.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+    } else {
+        var wrapper = document.createElement('div');
+        wrapper.setAttribute("id", "err");
+        wrapper.innerHTML = '<div class="alert  err alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+        alertPlaceholder.append(wrapper);
+    }
+
+
+}
+var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
 function LocalTenantID(id) {
     localStorage.removeItem("t_id");
     localStorage.setItem("t_id", JSON.stringify(id));
@@ -289,6 +821,63 @@ function setLocalfiles(application_letter, article, bank_statement, cr6_form, cr
     localStorage.removeItem("certificate_of_incorporation");
     localStorage.setItem("certificate_of_incorporation", JSON.stringify(certificate_of_incorporation));
 }
+/*Edit Tenant*/
+// view Tenant Details
+function getTenantForEdit() {
+    let id = JSON.parse(localStorage.getItem("t_id"));
+    $.ajax({
+        url: '/api/tenants/getTenantByID/' + id,
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+            let name = document.getElementById("name");
+            name.value=response.name;
+
+            let surname = document.getElementById("surname");
+            surname.value=response.surname;
+            let email = document.getElementById("email");
+            email.value=response.email;
+            let id_passport = document.getElementById("passport");
+            id_passport.value=response.id_passport;
+
+            let b_email = document.getElementById("b_email");
+            b_email.value=response.b_email;
+            let b_phone = document.getElementById("b_phone");
+            b_phone.value=response.b_phone
+            let b_tel = document.getElementById("b_tel");
+            b_tel.value=response.b_tel;
+            let address = document.getElementById("address");
+            address.value=response.address;
+            //property contact details
+            let phone = document.getElementById("phone");
+            phone.value=response.phone;
+
+
+            //owner Object properties
+            let website = document.getElementById("website");
+            website.value=response.website;
+            let business_name = document.getElementById("business_name");
+            business_name.value=response.business_name;
+
+            let business_type = document.getElementById("business_type");
+            business_type.value=response.business_type;
+            let services = document.getElementById("services");
+            services.value=response.services;
+
+
+            let city = document.getElementById("city");
+            city.value=response.city;
+            let country = document.getElementById("country");
+            country.value=response.country;
+
+
+        }
+
+    })
+}
+
+
+
 
 // view Tenant Details
 function getTenantBYid() {
@@ -863,6 +1452,7 @@ function setAddCompartmentDropDown(compartment_id) {
             let option = document.createElement("option");
 
             option.text = "Select Compartment";
+            option.value="";
             dropDown.appendChild(option);
 
 
@@ -914,5 +1504,62 @@ function setTenantOnCompartment() {
 }
 
 
+function setTenantOnCompartment2() {
 
+    var kombartment = document.getElementById("compartmentDropdown").value;
+    if (kombartment.toString()==""){
+        var assigning = document.getElementById("ldID");
+        assigning.setAttribute("style","display:all;background: none;color: red;border: none;font-size: 20px");
+        assigning.innerHTML=`No Lettable Space Selected
+                                            <span class=" fe fe-24 fe-alert-triangle"></span>`
+
+        return
+    }
+    var assigning = document.getElementById("ldID")
+    assigning.setAttribute("style","display:all;background: none;color: green;border: none;font-size: 20px");
+    assigning.innerHTML=` Assigning ...
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+
+    //let id = JSON.parse(localStorage.getItem("compartment_id"));
+
+    var id = document.getElementById("compartmentDropdown").value
+
+    let tenant_id = JSON.parse(localStorage.getItem("t_id"));
+    console.log(id);
+    console.log(tenant_id)
+    var data = {
+        "tenant": tenant_id,
+        "status": "1"
+    };
+    $.ajax({
+
+        url: '/api/compartment/update-compartment/' + id,
+        type: 'PUT',
+        dataType: "json",
+        crossDomain: "true",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function () {
+           /* $('#assignedModal').modal('show')*/
+            var assigning = document.getElementById("ldID");
+            assigning.setAttribute("style","display:all;background: none;color: green;border: none;font-size: 20px");
+            assigning.innerHTML=`Assigned Successfully
+                                            <span class=" fe fe-24 fe-check"></span>`
+
+            var b = document.getElementById("liveAlertBtn2");
+            b.setAttribute("style","display:none");
+
+            var b2 = document.getElementById("Close2");
+            b2.setAttribute("style","display:all");
+
+            var b3 = document.getElementById("hhh");
+            b3.setAttribute("style","display:none")
+
+            console.log("Assinged sukkessfully");
+        }
+    });
+
+    $("#assign_form")[0].reset();
+
+}
 

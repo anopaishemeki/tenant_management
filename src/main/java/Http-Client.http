@@ -2,6 +2,6 @@ GET http://165.22.126.3:8090/nwpm/api/v1/lease/getEmail/Peter/gera
 
 ###
 
-GET http://165.22.126.3:8090/nwpm/api/v1/lease/tenant/3
+GET http://localhost:8090/api/tenants/getTenant/3
 
 ###

@@ -71,7 +71,20 @@ public class UserService {
     public void UpadateProfile(User user,String username) {
 
        // user.setPassword(encoder.encode(user.getPassword()));
+      List<User> all=userRepository.findAll();
         User user2=userRepository.findByUsername(username);
+     if(user.getUsername().equals(user2.getUsername())) {
+            System.out.println("Users are same");
+     }
+             else{
+      for (int i=0;i<all.size();i++){
+          if(all.get(i).getUsername().equals(user.getUsername())){
+              throw new IllegalStateException("Username already taken");
+          }
+        }
+     }
+
+
 
         String status="";
         if(user2!=null){

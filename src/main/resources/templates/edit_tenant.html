@@ -26,7 +26,9 @@
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
 </head>
-<body class="vertical  light" onload="getImageProfile(),getTenantsAssign();setAddTenantDropDown();setAddCompartmentDropDown();setAddPropertyDropDown()">
+
+<!--  this is not working-->
+<body class="vertical  light  " onload="getImageProfile(),getTenantForEdit()">
 <div class="wrapper">
     <nav class="topnav navbar navbar-light" >
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
@@ -273,94 +275,282 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="page-title">Assign Property</h2>
-                    <p class="text-muted">Assign Property to an existing tenant</p>
+                    <h2 class="page-title">Edit tenant</h2>
+                    <p class="text-muted">Update tenant details</p>
+
+                    <div class="card shadow mb-4">
+                        <!-- <div class="card-header">
+                             <strong class="card-title">Tenant Details</strong>
+                         </div>-->
+                        <div class="card-body">
+                            <form id="tenant_form">
+                                <div class="mb-2">
+                                    <strong class="card-title">Business Details</strong>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="business_name">Business Name</label>
+                                        <input type="text" class="form-control" id="business_name" name="business_name"
+                                               placeholder="">
+                                   </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="business_type">Business Type</label>
+                                        <input type="text" class="form-control" id="business_type" name="business_type"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="services">Services</label>
+                                        <input type="text" class="form-control" id="services" name="services"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="b_email">Email</label>
+                                        <input type="text" class="form-control" id="b_email" name="email" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="b_phone">Phone :</label>
+                                        <input type="text" class="form-control" id="b_phone" name="id_passport"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="b_tel">Tel :</label>
+                                        <input type="text" class="form-control" id="b_tel" name="phone" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="website">Website :</label>
+                                        <input type="text" class="form-control" id="website" name="website" placeholder="">
+                                    </div>
+
+                                </div>
 
 
-                    <!--                    <form>-->
-                    <div class="form-row" id="assign_form">
-                        <div class="form-group col-md-6">
-                            <label for="tenant_list">Business Name</label>
-                            <select id="tenant_list" class="form-control select2" onchange="onSetTenants()">
-                                <optgroup id="Available Tenants" label="Available Tenants" >
-                                    <option value="">Select Business Name</option>
-                                </optgroup>
-                            </select>
-                            <!--                                //fggvhgvgvhvhg-->
+
+                                <div class="mb-2">
+                                    <strong class="card-title">Tenant Representative Details</strong>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="name">First Name</label>
+                                        <input type="text" name="name" class="form-control" id="name"
+                                               placeholder="John">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="surname">Last Name</label>
+                                        <input type="text" class="form-control" name="surname" id="surname"
+                                               placeholder="Doe">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="passport">Id/Passport No</label>
+                                        <input type="text" class="form-control" id="passport" name="id_passport"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="phone">Phone Number</label>
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="address">Address :</label>
+                                        <input type="text" class="form-control" id="address" name="house_no"
+                                               placeholder="">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" name="city" placeholder="">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="country">Country</label>
+                                        <input type="text" class="form-control" id="country" name="country"
+                                               placeholder="">
+                                    </div>
+
+                                </div>
+
+                                <!--<div class="mb-2">
+                                    <strong class="card-title">Business Details</strong>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputEmail4">Business Name</label>
+                                        <input type="text" class="form-control" id="business_name" name="business_name"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputPassword4">Business Type</label>
+                                        <input type="text" class="form-control" id="business_type" name="business_type"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputPassword4">Services</label>
+                                        <input type="text" class="form-control" id="services" name="services"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputEmail4">Shop Number</label>
+                                        <input type="number" class="form-control" id="shop_no" name="shop_number"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputPassword4">Deposit</label>
+                                        <input type="number" class="form-control" id="deposit" name="deposit"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputPassword4">Rental Fee</label>
+                                        <input type="number" class="form-control" id="rent" name="rental_fee"
+                                               placeholder="">
+                                    </div>
+                                </div>-->
+
+
+                                <div class="d-flex mt-4 justify-content-center">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="EditTenant()">
+                                        Save Changes
+                                    </button>
+                                    <!-- <button class="btn mb-2  btn-primary " type="button" onclick="EditTenant()"
+                                             data-bs-toggle="modal"
+                                             data-bs-target="#exampleModal" >
+                                                 <span class="fe fe-save fe-16">
+                                                Save Changes
+                                                 </span>
+                                     </button>-->
+
+                                </div>
+
+
+                            </form>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="property-dropdown">Portfolio</label>
-                            <select id="property-dropdown" class="form-control select2" onchange="onSetProperty()">
-                                <optgroup id="Available Portfolio" label="Available Portfolio" >
-                                    <option value="">Select Portfolio</option>
-                                </optgroup>
-
-                            </select>
-                        </div>
-                        <!--                            <div class="form-group col-md-2">-->
-                        <!--                                <label for="gtC"></label>-->
-                        <!--                                <button class="form-control btn btn-primary" id="gtC" onclick="getCompartmentDetails()">ok</button>-->
-                        <!--                            </div><-->
                     </div>
-                    <!--                        </div> &lt;!&ndash; /.form-row &ndash;&gt;-->
-                    <div class="form-row">
-                        <!--                            <div class="form-group col-md-6 ">-->
-                        <!--                                <label for="floor_option">Floor</label>-->
-                        <!--                                <select id="floor_option" class="form-control">-->
-                        <!--                                    <option selected>Choose...</option>-->
 
-                        <!--                                </select>-->
+                    <!--                    Modals..........-->
 
-                        <!--                            </div>-->
-                        <div class="form-group col-md-6">
-                            <label for="compartmentDropdown">Lettable Space</label>
-                            <select id="compartmentDropdown" class="form-control select2">
-                                <optgroup id="Available Space" label="Available Space" >
-                                    <option value="">Select lettable Space</option>
-                                </optgroup>
-                            </select>
+                    <!--
+                                        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                             aria-hidden="true"  data-bs-backdrop="static"
+                                             data-bs-keyboard="false">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h4>The Tenant Was Updated SuccessFully</h4>
+                                                       <a th:href="@{/tenantList}">
+                                                           <button type="button" class="btn btn-primary mb-2" data-dismiss="modal"   style="margin-left: 40%;">
+                                                            OK
+                                                        </button>
+                                                       </a>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        &lt;!&ndash;                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>&ndash;&gt;
+                                                        &lt;!&ndash;                        <button type="button" class="btn btn-primary">Save changes</button>&ndash;&gt;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    -->
+
+
+
+                    <!-- Button trigger modal -->
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Tenant Update Status</h5>
+                                    <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                                </div>
+                                <div id="liveAlertPlaceholder">
+                                    <div class="modal-body alert  " role="alert" id="modal-body">
+                                        Updating ...
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
+                                            style="display: none">Close
+                                    </button>
+                                    <a th:href="@{/tenantList}" id="done">
+                                        <button type="button" class="btn btn-primary">Ok</button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
-                    <button class="btn mb-2 btn-outline-primary" type="button" onclick="setTenantOnCompartment()">
-                     <span class="fe fe-upload-cloud fe-16">
-                        Assign
-                     </span>
-                    </button>
-                    <!--                    </form>-->
+                    <!--  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                           aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                           data-bs-keyboard="false">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Update Record Dialog</h5>
+                                      <a href="" >
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                      </a>
+                                  </div>
+                                  <div class="modal-body">
+                                      <div class="alert alert-info" role="alert" id="alerrt">
+                                          <div id="liveAlertPlaceholder">
+                                              <button id="ldID" style="display:none;background: none;color: green;border: none;font-size: 20px" class="btn btn-secondary" type="button" disabled>
+                                                  Updating ...
+                                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer d-flex justify-content-center">
 
-                </div>
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="retry"
+                                              style="display: none">Edit & Retry
+                                      </button>
+                                      <a th:href="@{/tenantList}">
 
-                <div class="modal fade" id="assignedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">Operation Successful</h5>
+                                          <button type="button" class="btn btn-success"
+                                                  data-bs-dismiss="modal" id="Close"
+                                          >Ok
+                                          </button>
+                                      </a>
 
-                            </div>
-                            <div class="modal-body">
-                                <h4>The Lettable Space Was Assigned SuccessFully</h4>
-                                <button type="button" class="btn btn-primary mb-2" data-dismiss="modal" aria-label="Close"  style="margin-left: 40%;">
-                                    <span aria-hidden="true" >OK</span>
-                                </button>
-                            </div>
-                            <div class="modal-footer">
-                                <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                                <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-                            </div>
-                        </div>
-                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+  -->
+
                 </div>
             </div>
         </div>
     </main> <!-- main -->
 </div> <!-- .wrapper -->
 <script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
+<script src="js/apps.js"></script>
 <script src="js/tenant_custom.js"></script>
+<script src="js/popper.min.js"></script>
 <script src="js/moment.min.js"></script>
-<script src="js/register.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/simplebar.min.js"></script>
 <script src='js/daterangepicker.js'></script>
@@ -368,6 +558,7 @@
 <script src="js/tinycolor-min.js"></script>
 <script src="js/config.js"></script>
 <script src='js/jquery.mask.min.js'></script>
+<script src="js/register.js"></script>
 <script src='js/select2.min.js'></script>
 <script src='js/jquery.steps.min.js'></script>
 <script src='js/jquery.validate.min.js'></script>
@@ -375,6 +566,7 @@
 <script src='js/dropzone.min.js'></script>
 <script src='js/uppy.min.js'></script>
 <script src='js/quill.min.js'></script>
+<script src='js/bootstrap.bundle.min.js'></script>
 <script>
     $('.select2').select2(
         {
@@ -566,10 +758,9 @@
             });
         uppy.on('complete', (result) => {
             console.log('Upload complete! We’ve uploaded these files:', result.successful)
-        });
+    });
     }
 </script>
-<script src="js/apps.js"></script>
 
 </body>
 </html>

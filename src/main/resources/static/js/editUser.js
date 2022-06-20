@@ -7,7 +7,7 @@
 
      var file = $('#fileUploadForm')[0];
      var data = new FormData(file);
-     var username = JSON.parse(localStorage.getItem("username"));
+     var username = document.getElementById("Uname").innerText.trim();
 
      $.ajax({
          type: "POST",
@@ -47,8 +47,9 @@ function  setNametoLocal(username) {
     localStorage.removeItem("username");
     localStorage.setItem("username", JSON.stringify(username));
 }
+
 function getProfile(){
-    var username = JSON.parse(localStorage.getItem("username"));
+    var username = document.getElementById("Uname").innerText.trim() ;;
     $.ajax({
         url: '/api/v1/lease/getUser/' +username,
         type: 'GET',
@@ -129,7 +130,7 @@ var newPass2= document.getElementById("newPass2");
 
 
 
-    var username = JSON.parse(localStorage.getItem("username"));
+    var username = document.getElementById("Uname").innerText.trim() ;;
 
 
 
@@ -238,7 +239,7 @@ function upadeProfile() {
     let Close3 = document.getElementById("Close3");
     let Close = document.getElementById("Close");
 
-    var username = JSON.parse(localStorage.getItem("username"));
+    var username = document.getElementById("Uname").innerText.trim() ;;
     console.log("Old Username = ",username);
     console.log("New Username = ",$("#Username").val());
     var jsonDataObj = {
@@ -295,7 +296,7 @@ function upadeProfile() {
                 ar.setAttribute("display", "all");
                 Close3.setAttribute("style", "display:none");
                 Close.setAttribute("style", "display:all");
-                alert("There was an error in Updating record !!", 'danger')
+                alert( e.responseJSON.message, 'danger')
                 console.log("ERROR : ", e.responseJSON.message);
                 return;
             } else {

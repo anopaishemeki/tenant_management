@@ -48,6 +48,7 @@ public class TenantController {
         return tenantService.addTenant(tenant);
     }
 
+
     @PostMapping("/addTenants")
     public List<Tenant> addTenants(@RequestBody List<Tenant> tenants){
         return tenantService.addTenants(tenants);
@@ -59,8 +60,8 @@ public class TenantController {
     }
 
         @GetMapping("/getTenant/{id}")
-        public Tenant getTenantById(@RequestBody Tenant tenant ,@PathVariable Long id){
-        return tenantService.getTenantById(tenant, id);
+        public Tenant getTenantById(@PathVariable Long id){
+        return tenantService.getTenantById(id);
 
         }
 

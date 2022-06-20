@@ -1,713 +1,833 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+<!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+-->
     <link rel="icon" href="assets/logo/sysIco(2).ico">
-    <title>Tenant Management System</title>
+    <title>Tenants List</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="css/simplebar.css">
     <!-- Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
     <!-- Icons CSS -->
     <link rel="stylesheet" href="css/feather.css">
-    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
+   <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="css/daterangepicker.css">
+
+
+
+
+   <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">-->
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+
+
+
+
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
-  </head>
+</head>
 
 <!--  this is not reflecting-->
-  <body class="vertical  light  " onload="getTenants();getImageProfile()">
-    <div class="wrapper">
-      <nav class="topnav navbar navbar-light" >
+<body class="vertical  light  " onload="getTenants();getImageProfile()">
+<div class="wrapper">
+    <nav class="topnav navbar navbar-light">
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
-          <i class="fe fe-menu navbar-toggler-icon"></i>
+            <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
         <form class="form-inline mr-auto searchform text-muted">
-          <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
-                 placeholder="Type something..." aria-label="Search">
+            <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
+                   placeholder="Type something..." aria-label="Search">
         </form>
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
-              <i class="fe fe-sun fe-16"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
-               data-target=".modal-shortcut">
-              <span class="fe fe-grid fe-16"></span>
-            </a>
-          </li>
-          <li class="nav-item nav-notif">
-            <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
-               data-target=".modal-notif">
-              <span class="fe fe-bell fe-16"></span>
-              <span class="dot dot-md bg-success"></span>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item">
+                <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+                    <i class="fe fe-sun fe-16"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+                   data-target=".modal-shortcut">
+                    <span class="fe fe-grid fe-16"></span>
+                </a>
+            </li>
+            <li class="nav-item nav-notif">
+                <a class="nav-link text-muted my-2" href="tiny_dash/light#" data-toggle="modal"
+                   data-target=".modal-notif">
+                    <span class="fe fe-bell fe-16"></span>
+                    <span class="dot dot-md bg-success"></span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img  id="profileImage" src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png" alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
+                <img id="profileImage"
+                     src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"
+                     alt="" class="avatar-img rounded-circle" height="32px!important" width="32px!important">
 
               </span><br>
-              <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    <span id="Uname" th:text="${#authentication.getPrincipal().getUsername()}"></span>
 
-              <b class="caret"></b>
-            </a>
+                    <b class="caret"></b>
+                </a>
 
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
-              <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
-              <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
-              <a class="dropdown-item" href="#">Activities</a>
-            </div>
-          </li>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <!--th:href="@{'/hr/employeeStatus/'+${employeeStatus.id}}"-->
+                    <!--                    <a class="dropdown-item" id="profileName" th:href="@{'/edit/'+${#authentication.getPrincipal().getUsername()}}">Profile</a>-->
+                    <a class="dropdown-item" id="profileName" th:href="@{/editProfile}" onclick="setName()">Profile</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <a class="dropdown-item" href="#">Activities</a>
+                </div>
+            </li>
         </ul>
-      </nav>
-      <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+    </nav>
+    <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
         <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
-          <i class="fe fe-x"><span class="sr-only"></span></i>
+            <i class="fe fe-x"><span class="sr-only"></span></i>
         </a>
         <nav class="vertnav navbar navbar-light">
-          <!-- nav bar -->
-          <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" th:href="@{/index}">
-              <img  src="assets/logo/joina-logo.jpg"  alt="joina-logo" style="margin-left:-40px">
-            </a>
-          </div>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-home fe-16"></i>
-                <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
-                <li class="nav-item active">
-                  <a class="nav-link pl-3" th:href="@{/index}"><span class="ml-1 item-text">Default</span></a>
+            <!-- nav bar -->
+            <div class="w-100 mb-4 d-flex">
+                <a class="navbar-brand mx-auto mt-2 flex-fill text-center" th:href="@{/index}">
+                    <img src="assets/logo/joina-logo.jpg" alt="joina-logo" style="margin-left:-40px">
+                </a>
+            </div>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <li class="nav-item dropdown">
+                    <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-home fe-16"></i>
+                        <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                        <li class="nav-item active">
+                            <a class="nav-link pl-3" th:href="@{/index}"><span class="ml-1 item-text">Default</span></a>
+                        </li>
+                    </ul>
                 </li>
-              </ul>
-            </li>
-          </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Components</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
-                 class="dropdown-toggle nav-link">
-                <i class="fe fe-box fe-16"></i>
-                <span class="ml-3 item-text">Property Portfolios</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/propertyList}"><span
-                          class="ml-1 item-text">Portfolio List</span>
-                  </a>
+            </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Components</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <li class="nav-item dropdown">
+                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle nav-link">
+                        <i class="fe fe-box fe-16"></i>
+                        <span class="ml-3 item-text">Property Portfolios</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/propertyList}"><span
+                                    class="ml-1 item-text">Portfolio List</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addProperty}"><span
+                                    class="ml-1 item-text">Add Portfolio</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addCompartment}"><span
+                                    class="ml-1 item-text">Add Lettable space</span></a>
+                        </li>
+
+                    </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/addProperty}"><span
-                          class="ml-1 item-text">Add Portfolio</span></a>
+                <li class="nav-item dropdown">
+                    <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-credit-card fe-16"></i>
+                        <span class="ml-3 item-text">Tenants</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/tenantList}"><span
+                                    class="ml-1 item-text">Tenant List</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addTenant}"><span
+                                    class="ml-1 item-text">Add Tenant</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/assignProperty}"><span
+                                    class="ml-1 item-text">Assign Property</span></a>
+                        </li>
+
+                    </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/addCompartment}"><span
-                          class="ml-1 item-text">Add Lettable space</span></a>
+                <li class="nav-item dropdown">
+                    <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-grid fe-16"></i>
+                        <span class="ml-3 item-text">Leasing</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/View-Lease}"><span
+                                    class="ml-1 item-text">View Leases</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/AddLease}"><span
+                                    class="ml-1 item-text">Add Lease</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/Terminate-Lease}"><span
+                                    class="ml-1 item-text">Terminate </span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/View-Renewed}"><span
+                                    class="ml-1 item-text">Renewed Leases </span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/Lease-Notices}"><span
+                                    class="ml-1 item-text">Lease Notices </span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-pie-chart fe-16"></i>
+                        <span class="ml-3 item-text">Documents</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/addTenantDocuments}"><span class="ml-1 item-text">Add Tenant Documents</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
+                                    class="ml-1 item-text">Tenant Documents</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#maintenance" data-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle nav-link">
+                        <i class="fe fe-pie-chart fe-16"></i>
+                        <span class="ml-3 item-text">Maintenance</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/request}"><span
+                                    class="ml-1 item-text">Requests</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/schedule}"><span
+                                    class="ml-1 item-text">Schedule</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/overdueRequest}"><span
+                                    class="ml-1 item-text">Overdue</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/pending}"><span
+                                    class="ml-1 item-text">Pending</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Finance</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+
+                <li class="nav-item dropdown">
+                    <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Accounts</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                        <a class="nav-link pl-3" th:href="@{/Payments}"><span class="ml-1">Payments</span></a>
+                        <a class="nav-link pl-3" th:href="@{/Invoicing}"><span class="ml-1">Invoicing</span></a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Services</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
+                        <a class="nav-link pl-3" th:href="@{/ServiceList}"><span class="ml-1">Service List</span></a>
+                        <a class="nav-link pl-3" th:href="@{/AddService}"><span class="ml-1">Add Services</span></a>
+                    </ul>
                 </li>
 
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-credit-card fe-16"></i>
-                <span class="ml-3 item-text">Tenants</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="forms">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/tenantList}"><span
-                          class="ml-1 item-text">Tenant List</span></a>
+            </ul>
+            <p class="text-muted nav-heading mt-4 mb-1">
+                <span>Other</span>
+            </p>
+            <ul class="navbar-nav flex-fill w-100 mb-2">
+                <li class="nav-item dropdown">
+                    <a href="#apllicants" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                        <i class="fe fe-book fe-16"></i>
+                        <span class="ml-3 item-text">Tenant Applications</span>
+                    </a>
+                    <ul class="collapse list-unstyled pl-4 w-100" id="apllicants">
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Application List</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Waiting List</span></a>
+                        <a class="nav-link pl-3" href="#"><span class="ml-1">Rejected Application</span></a>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/addTenant}"><span
-                          class="ml-1 item-text">Add Tenant</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/assignProperty}"><span
-                          class="ml-1 item-text">Assign Property</span></a>
-                </li>
-
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-grid fe-16"></i>
-                <span class="ml-3 item-text">Leasing</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="tables">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/View-Lease}"><span
-                          class="ml-1 item-text">View Leases</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/AddLease}"><span
-                          class="ml-1 item-text">Add Lease</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/Terminate-Lease}"><span
-                          class="ml-1 item-text">Terminate </span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/View-Renewed}"><span
-                          class="ml-1 item-text">Renewed Leases </span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/Lease-Notices}"><span
-                          class="ml-1 item-text">Lease Notices </span></a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-pie-chart fe-16"></i>
-                <span class="ml-3 item-text">Documents</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="charts">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/addTenantDocuments}"><span class="ml-1 item-text">Add Tenant Documents</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/tenantDocuments}"><span
-                          class="ml-1 item-text">Tenant Documents</span></a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#maintenance" data-toggle="collapse" aria-expanded="false"
-                 class="dropdown-toggle nav-link">
-                <i class="fe fe-pie-chart fe-16"></i>
-                <span class="ml-3 item-text">Maintenance</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="maintenance">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/request}"><span
-                          class="ml-1 item-text">Requests</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/schedule}"><span
-                          class="ml-1 item-text">Schedule</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/overdueRequest}"><span
-                          class="ml-1 item-text">Overdue</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/pending}"><span
-                          class="ml-1 item-text">Pending</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/attended}"><span class="ml-1 item-text">Attended</span></a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Finance</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-
-            <li class="nav-item dropdown">
-              <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-book fe-16"></i>
-                <span class="ml-3 item-text">Accounts</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="contact">
-                <a class="nav-link pl-3" th:href="@{/Payments}"><span class="ml-1">Payments</span></a>
-                <a class="nav-link pl-3" th:href="@{/Invoicing}"><span class="ml-1">Invoicing</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#contact1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-book fe-16"></i>
-                <span class="ml-3 item-text">Services</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="contact1">
-                <a class="nav-link pl-3" th:href="@{/ServiceList}"><span class="ml-1">Service List</span></a>
-                <a class="nav-link pl-3" th:href="@{/AddService}"><span class="ml-1">Add Services</span></a>
-              </ul>
-            </li>
-
-          </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Other</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#apllicants" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-book fe-16"></i>
-                <span class="ml-3 item-text">Tenant Applications</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="apllicants">
-                <a class="nav-link pl-3" href="#"><span class="ml-1">Application List</span></a>
-                <a class="nav-link pl-3" href="#"><span class="ml-1">Waiting List</span></a>
-                <a class="nav-link pl-3" href="#"><span class="ml-1">Rejected Application</span></a>
-              </ul>
-            </li>
-          </ul>
+            </ul>
 
         </nav>
-      </aside>
-      <main role="main" class="main-content">
+    </aside>
+    <main role="main" class="main-content">
         <div class="container-fluid">
-          <div class="row justify-content-center">
-            <div class="col-12">
-              <h2 class="page-title">List of Tenants</h2>
-              <p class="text-muted">The list of all registered tenants</p>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h2 class="page-title">List of Active Tenants</h2>
+                    <p class="text-muted">The list of all registered tenants with active leases</p>
 
-                            <div class="row">
-                <div class="col-md-12 my-4">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <!-- table -->
-                      <table class="table table-hover  dataTables table-borderless border-v" id="tenants" style="width:100%!important;">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th>Tenant ID</th>
-                            <th>Business Name</th>
-                            <th><span class="fe fe-phone"></span> Contact</th>
-                            <th>Lettable Space</th>
-                            <th>Rent Status</th>
-                            <th>Rental Fee</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody id="t_body">
-<!--                          <tr class="accordion-toggle collapsed" id="c-2474" data-toggle="collapse" data-parent="#c-2474" href="#collap-2474">-->
-<!--                            <td>3599</td>-->
-<!--                            <td>2020-09-12 11:21:03</td>-->
-<!--                            <td>3951</td>-->
-<!--                            <td>Alexander Ellis</td>-->
-<!--                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">Paid</small></td>-->
-<!--                            <td>$37.39</td>-->
-<!--                            <td>$80.11</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-2474" class="collapse show in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Fringilla Ornare Consulting</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">287-8300 Nisl. St.</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(899) 881-3833</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Papua New Guinea</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-3954" data-toggle="collapse" data-parent="#c-3954" href="#collap-3954">-->
-<!--                            <td>3954</td>-->
-<!--                            <td>2020-10-11 19:09:12</td>-->
-<!--                            <td>4038</td>-->
-<!--                            <td>Casey Caldwell</td>-->
-<!--                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">Paid</small></td>-->
-<!--                            <td>$30.74</td>-->
-<!--                            <td>$46.14</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-3954" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Tristique Ltd</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">4577 Cras St.</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(977) 220-6518</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Central African Republic</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-2429" data-toggle="collapse" data-parent="#c-2429" href="#collap-2429">-->
-<!--                            <td>2429</td>-->
-<!--                            <td>2020-11-26 02:45:30</td>-->
-<!--                            <td>4603</td>-->
-<!--                            <td>Jack Adams</td>-->
-<!--                            <td><span class="badge badge-pill badge-warning mr-2">W</span><small class="text-muted">Pending</small></td>-->
-<!--                            <td>$20.84</td>-->
-<!--                            <td>$28.51</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-2429" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Orci Luctus Et Inc.</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">P.O. Box 228, 7512 Lectus Ave</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(537) 315-1481</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Bonaire, Sint Eustatius and Sabac</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-3987" data-toggle="collapse" data-parent="#c-3987" href="#collap-3987">-->
-<!--                            <td>3987</td>-->
-<!--                            <td>2020-02-13 19:29:45</td>-->
-<!--                            <td>4261</td>-->
-<!--                            <td>Samantha Hansen</td>-->
-<!--                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">Paid</small></td>-->
-<!--                            <td>$83.19</td>-->
-<!--                            <td>$48.48</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-3987" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Ap #377-5357 Sed Road</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">P.O. Box 228, 7512 Lectus Ave</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(238) 386-0247</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Canada</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-3165" data-toggle="collapse" data-parent="#c-3987" href="#collap-3165">-->
-<!--                            <td>3165</td>-->
-<!--                            <td>2020-05-05 22:33:28</td>-->
-<!--                            <td>3308</td>-->
-<!--                            <td>Carla Ochoa</td>-->
-<!--                            <td><span class="badge badge-pill badge-primary mr-2">P</span><small class="text-muted">Invoiced</small></td>-->
-<!--                            <td>$99.92</td>-->
-<!--                            <td>$38.62</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-3165" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Suspendisse LLC</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">Ap #410-5363 Non, Avenue</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(587) 675-3258</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Chad</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-5429" data-toggle="collapse" data-parent="#c-5429" href="#collap-5429">-->
-<!--                            <td>5429</td>-->
-<!--                            <td>2020-11-26 02:45:30</td>-->
-<!--                            <td>4603</td>-->
-<!--                            <td>Jack Adams</td>-->
-<!--                            <td><span class="badge badge-pill badge-warning mr-2">W</span><small class="text-muted">Pending</small></td>-->
-<!--                            <td>$20.84</td>-->
-<!--                            <td>$28.51</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-5429" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Dolor Incorporated</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">8250 Molestie St.</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(934) 582-9495</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">British</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-3951" data-toggle="collapse" data-parent="#c-3951" href="#collap-3951">-->
-<!--                            <td>3951</td>-->
-<!--                            <td>2020-10-11 19:09:12</td>-->
-<!--                            <td>4038</td>-->
-<!--                            <td>Casey Caldwell</td>-->
-<!--                            <td><span class="badge badge-pill badge-success mr-2">S</span><small class="text-muted">Paid</small></td>-->
-<!--                            <td>$30.74</td>-->
-<!--                            <td>$46.14</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-3951" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Urna Et PC</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">3132 Mi Av.</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(459) 982-1284</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Burkina Faso</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr class="accordion-toggle collapsed" id="c-3599" data-toggle="collapse" data-parent="#c-3599" href="#collap-3599">-->
-<!--                            <td>3599</td>-->
-<!--                            <td>2020-09-12 11:21:03</td>-->
-<!--                            <td>3951</td>-->
-<!--                            <td>Alexander Ellis</td>-->
-<!--                            <td><span class="badge badge-pill badge-primary mr-2">P</span><small class="text-muted">Invoiced</small></td>-->
-<!--                            <td>$37.39</td>-->
-<!--                            <td>$80.11</td>-->
-<!--                            <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                <span class="text-muted sr-only">Action</span>-->
-<!--                              </button>-->
-<!--                              <div class="dropdown-menu dropdown-menu-right">-->
-<!--                                <a class="dropdown-item" href="#">Edit</a>-->
-<!--                                <a class="dropdown-item" href="#">Remove</a>-->
-<!--                                <a class="dropdown-item" href="#">Assign</a>-->
-<!--                              </div>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-<!--                          <tr id="collap-3599" class="collapse in p-3 bg-light">-->
-<!--                            <td colspan="8">-->
-<!--                              <dl class="row mb-0 mt-1">-->
-<!--                                <dt class="col-sm-1">Company</dt>-->
-<!--                                <dd class="col-sm-2">Mi Consulting</dd>-->
-<!--                                <dt class="col-sm-1">Address</dt>-->
-<!--                                <dd class="col-sm-2">921-6311 Nam Av.</dd>-->
-<!--                                <dt class="col-sm-1">Phone</dt>-->
-<!--                                <dd class="col-sm-2">(759) 501-2397</dd>-->
-<!--                                <dt class="col-sm-1 text-truncate">Region</dt>-->
-<!--                                <dd class="col-sm-2">Singapore</dd>-->
-<!--                              </dl>-->
-<!--                            </td>-->
-<!--                          </tr>-->
-                        </tbody>
-                      </table>
+                    <div class="row">
+                        <div class="col-md-12 my-4">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <!-- table -->
+                                    <table class="table table-hover  dataTables table-borderless border-v" id="tenants"
+                                           style="width:100%!important;">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th>Tenant ID</th>
+                                            <th>Business Name</th>
+                                            <th><span class="fe fe-phone"></span> Contact</th>
+                                            <th>Lettable Space</th>
+                                            <th>Rent Status</th>
+                                            <th>Rental Fee</th>
+                                            <th>Archive</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="t_body">
 
-                      <div class="container-fluid d-none" id="view_Tenant">
+                                        </tbody>
+                                    </table>
 
-                                  </div>
-                                </td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div> <!-- /.col-12 -->
-                        </div> <!-- .row -->
-                      </div> <!-- .container-fluid -->
-                      <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="list-group list-group-flush my-n3">
-                                <div class="list-group-item bg-transparent">
-                                  <div class="row align-items-center">
-                                    <div class="col-auto">
-                                      <span class="fe fe-box fe-24"></span>
+                                    <div class="container-fluid d-none" id="view_Tenant">
+
                                     </div>
-                                    <div class="col">
-                                      <small><strong>Package has uploaded successfull</strong></small>
-                                      <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                                      <small class="badge badge-pill badge-light text-muted">1m ago</small>
+
+                                </div> <!-- /.col-12 -->
+                            </div> <!-- .row -->
+                        </div> <!-- .container-fluid -->
+
+
+                        <div class="modal fade" id="assign" tabindex="-1"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
+                             data-bs-keyboard="false">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Assign Compartment to <span
+                                                id="tenantName3"></span></h5>
+                                        <a href="">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </a>
                                     </div>
-                                  </div>
+
+                                    <div class="modal-body">
+
+                                        <div class="alert alert-info" role="alert" id="alerrt">
+                                            <div id="liveAlertPlaceholder2">
+                                                <button id="ldID"
+                                                        style="display:none;background: none;color: green;border: none;font-size: 20px"
+                                                        class="btn btn-secondary" type="button" disabled>
+                                                    Assigning ...
+                                                    <span class="spinner-border spinner-border-sm" role="status"
+                                                          aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+                                            <div id="renewalInfo">
+                                                <div class="form-group col-md-12">
+                                                    <label for="id2">ID = </label>
+                                                    <label id="id2"></label>
+                                                    <div class="valid-feedback"></div>
+
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label for="TenantName2">Business :</label>
+                                                    <input type="text" class="form-control" id="TenantName2"
+                                                           disabled>
+                                                    <div class="valid-feedback"></div>
+
+                                                </div>
+                                                <form id="assign_form">
+                                                    <div class="form-group col-md-12 mb-3">
+
+                                                        <label for="property-dropdown">Portfolio</label>
+                                                        <select id="property-dropdown" class="form-control select2"
+                                                                onchange="onSetProperty()">
+                                                            <optgroup id="Available Portfolio"
+                                                                      label="Available Portfolio">
+                                                                <option value="">Select Portfolio</option>
+                                                            </optgroup>
+
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="form-group col-md-12 mb-3">
+                                                        <label for="compartmentDropdown">Lettable Space</label>
+                                                        <select id="compartmentDropdown" class="form-control select2">
+                                                            <optgroup id="Available Space" label="Available Space">
+                                                                <option value="">Select lettable Space</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+
+                                        <a th:href="@{/tenantList}">
+                                            <button type="button" class="btn btn-success"
+                                                    data-bs-dismiss="modal" id="Close2"
+                                                    style="display: none">OK
+                                            </button>
+                                        </a>
+
+                                        <button type="button" class="btn btn-danger"
+                                                data-bs-dismiss="modal"
+                                                style="padding-left: 10px;padding-right: 10px" id="hhh">Cancel
+                                        </button>
+
+
+                                        <button id="liveAlertBtn2" class="btn btn-primary"
+                                                onclick="setTenantOnCompartment2()">
+                                            Assign
+                                        </button>
+                                    </div>
+
                                 </div>
-                                <div class="list-group-item bg-transparent">
-                                  <div class="row align-items-center">
-                                    <div class="col-auto">
-                                      <span class="fe fe-download fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                      <small><strong>Widgets are updated successfull</strong></small>
-                                      <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
-                                      <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                  <div class="row align-items-center">
-                                    <div class="col-auto">
-                                      <span class="fe fe-inbox fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                      <small><strong>Notifications have been sent</strong></small>
-                                      <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                                      <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                                    </div>
-                                  </div> <!-- / .row -->
-                                </div>
-                                <div class="list-group-item bg-transparent">
-                                  <div class="row align-items-center">
-                                    <div class="col-auto">
-                                      <span class="fe fe-link fe-24"></span>
-                                    </div>
-                                    <div class="col">
-                                      <small><strong>Link was attached to menu</strong></small>
-                                      <div class="my-0 text-muted small">New layout has been attached to the menu</div>
-                                      <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                                    </div>
-                                  </div>
-                                </div> <!-- / .row -->
-                              </div> <!-- / .list-group -->
                             </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
-                            </div>
-                          </div>
                         </div>
-                      </div>
-                      <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
+
+
+                        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
+                             aria-labelledby="defaultModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="list-group list-group-flush my-n3">
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-box fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Package has uploaded successfull</strong></small>
+                                                        <div class="my-0 text-muted small">Package is zipped and
+                                                            uploaded
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">1m ago
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-download fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Widgets are updated successfull</strong></small>
+                                                        <div class="my-0 text-muted small">Just create new layout Index,
+                                                            form, table
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">2m ago
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-inbox fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Notifications have been sent</strong></small>
+                                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac
+                                                            cursus commodo
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">30m ago
+                                                        </small>
+                                                    </div>
+                                                </div> <!-- / .row -->
+                                            </div>
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-link fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Link was attached to menu</strong></small>
+                                                        <div class="my-0 text-muted small">New layout has been attached
+                                                            to the menu
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">1h ago
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- / .row -->
+                                        </div> <!-- / .list-group -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">
+                                            Clear All
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body px-5">
-                              <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                  <div class="squircle bg-success justify-content-center">
-                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                                  </div>
-                                  <p>Control area</p>
-                                </div>
-                                <div class="col-6 text-center">
-                                  <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                                  </div>
-                                  <p>Activity</p>
-                                </div>
-                              </div>
-                              <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                  <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                                  </div>
-                                  <p>Droplet</p>
-                                </div>
-                                <div class="col-6 text-center">
-                                  <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                                  </div>
-                                  <p>Upload</p>
-                                </div>
-                              </div>
-                              <div class="row align-items-center">
-                                <div class="col-6 text-center">
-                                  <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                                  </div>
-                                  <p>Users</p>
-                                </div>
-                                <div class="col-6 text-center">
-                                  <div class="squircle bg-primary justify-content-center">
-                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                                  </div>
-                                  <p>Settings</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
-                      </div>
+                        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
+                             aria-labelledby="defaultModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body px-5">
+                                        <div class="row align-items-center">
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-success justify-content-center">
+                                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Control area</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Activity</p>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Droplet</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Upload</p>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Users</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Settings</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div> 
-              
-            </div> <!-- .col-12 -->
-          </div> <!-- .row -->
-        </div> <!-- .container-fluid -->
+            </div>
 
 
-      </main> <!-- main -->
-    </div> <!-- .wrapper -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/simplebar.min.js"></script>
-    <script src='js/daterangepicker.js'></script>
-    <script src="js/register.js"></script>
-    <script src='js/jquery.stickOnScroll.js'></script>
-    <script src='js/jquery.dataTables.min.js'></script>
-    <script src='js/dataTables.bootstrap4.min.js'></script>
-    <script src="js/tinycolor-min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/apps.js"></script>
-    <script src="js/tenant_custom.js"></script>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <button type="button" onclick="viewhideArchieved()" class="btn mb-2 btn-success"><span id="btnShowHide">Show</span> Archieved Tenants<span
+                            id="btnShowHide2" class="fe fe-chevron-down fe-16 ml-2"></span></button>
+                </div>
+            </div>
 
-  </body>
+
+            <div class="row justify-content-center" id="viewhideArchieved" style="display:none">
+                <div class="col-12">
+                    <h2 class="page-title">List of Archieved Tenants</h2>
+                    <p class="text-muted">The list of all tenants With terminated Leases</p>
+
+                    <div class="row">
+                        <div class="col-md-12 my-4">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <!-- table -->
+                                    <table class="table table-hover  dataTables table-borderless border-v" id="tenants2"
+                                           style="width:100%!important;">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th>Tenant ID</th>
+                                            <th>Business Name</th>
+                                            <th><span class="fe fe-phone"></span> Contact</th>
+                                            <th>Lettable Space</th>
+                                            <th>Rent Status</th>
+                                            <th>Rental Fee</th>
+                                            <th>Un-Archive</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                    </table>
+
+                                </div> <!-- /.col-12 -->
+                            </div> <!-- .row -->
+                        </div> <!-- .container-fluid -->
+
+
+                        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
+                             aria-labelledby="defaultModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="list-group list-group-flush my-n3">
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-box fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Package has uploaded successfull</strong></small>
+                                                        <div class="my-0 text-muted small">Package is zipped and
+                                                            uploaded
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">1m ago
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-download fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Widgets are updated successfull</strong></small>
+                                                        <div class="my-0 text-muted small">Just create new layout Index,
+                                                            form, table
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">2m ago
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-inbox fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Notifications have been sent</strong></small>
+                                                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac
+                                                            cursus commodo
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">30m ago
+                                                        </small>
+                                                    </div>
+                                                </div> <!-- / .row -->
+                                            </div>
+                                            <div class="list-group-item bg-transparent">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="fe fe-link fe-24"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <small><strong>Link was attached to menu</strong></small>
+                                                        <div class="my-0 text-muted small">New layout has been attached
+                                                            to the menu
+                                                        </div>
+                                                        <small class="badge badge-pill badge-light text-muted">1h ago
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- / .row -->
+                                        </div> <!-- / .list-group -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">
+                                            Clear All
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
+                             aria-labelledby="defaultModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body px-5">
+                                        <div class="row align-items-center">
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-success justify-content-center">
+                                                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Control area</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Activity</p>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Droplet</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Upload</p>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Users</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <div class="squircle bg-primary justify-content-center">
+                                                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                                                </div>
+                                                <p>Settings</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </main> <!-- main -->
+
+
+
+</div> <!-- .wrapper -->
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/simplebar.min.js"></script>
+<script src='js/daterangepicker.js'></script>
+<script src="js/register.js"></script>
+<script src='js/jquery.stickOnScroll.js'></script>
+<script src='js/jquery.dataTables.min.js'></script>
+<script src='js/dataTables.bootstrap4.min.js'></script>
+<script src="js/tinycolor-min.js"></script>
+<script src='js/bootstrap.bundle.min.js'></script>
+<script src="js/config.js"></script>
+<script src="js/apps.js"></script>
+<script src="js/tenant_custom.js"></script>
+
+
+<!--
+
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
+-->
+
+
+
+<style>
+    div .dt-buttons{
+        float : left;
+        padding:10px;
+        margin-left:20%;
+    }
+    .dt-button-collection{
+        top:-20px!important;
+    }
+
+    .dataTables_info ,.dataTables_length{
+        float : left;
+    }
+</style>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+<script src="//cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
+
+<!--  <script>
+      $(document).ready(function() {
+          /*Setup - add a text input to each footer cell*/
+          $('#tenants thead tr').clone(true).appendTo( '#tenants thead' );
+          $('#tenants thead tr:eq(1) th').each( function (i) {
+              var title = $(this).text();
+              $(this).html( 'input type="text" placeholder="Search '+title+'" ' );
+
+              $( 'input', this ).on( 'keyup change', function () {
+                  if ( table.column(i).search() !== this.value ) {
+                      table
+                          .column(i)
+                          .search( this.value )
+                          .draw();
+                  }
+              } );
+          } );
+
+        /*  var table = $('#tenants').DataTable( {
+              orderCellsTop: true,
+              fixedHeader: true
+          } );*/
+      } );
+  </script>-->
+
+</body>
 </html>

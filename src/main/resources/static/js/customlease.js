@@ -1101,6 +1101,9 @@ function getLeases() {
         if(xmlhttp.readyState==4 && xmlhttp.status ==200){
             var data = JSON.parse(xmlhttp.responseText);
             console.log(xmlhttp.responseText);
+
+
+            var printCounter = 0;
             $("#dataTable").DataTable({
                 data:data,
                 columns:[
@@ -1156,8 +1159,493 @@ function getLeases() {
                 "lengthMenu": [
                     [10, 25,50, 100, -1],
                     [10, 25,50, 100, "All"]
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of All Leases"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of All Leases"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of All Leases"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of All Leases"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of All Leases"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
+
+
+/*terminated*/
+            let terminated = [];
+            for (let i = 0; i < data.length; i++ ){
+
+                    if (data[i].status.toString() == "Terminated"){
+
+                        terminated.push(data[i]);
+                    }
+            }
+            console.log("terminated :",terminated);
+            $("#terminated").DataTable({
+                data:terminated,
+                columns:[
+                    {"data":"id"},
+                    {"data":function(row){
+                            return row.tenant.business_name;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.name +" "+row.tenant.surname;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.b_phone;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+
+                    {"data":"startDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i>  "+data;
+                        }},
+
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                        render:function(data){
+                            if(data==="Active"){
+                                return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                            } else if(data==="Expired"){
+                                return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                            }else{
+                                return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                            }
+                        }},
+                    {"data":"id",
+                        "sortable":false,
+                        "searchable":false,
+                        render:function (data) {
+                            return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <span class="text-muted sr-only">Action</span></button>'+`
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="Edit-Lease" onclick="setLocal('`+data+`')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('`+data+`'),loadData() " href="#">Renew</a>
+                            <a class="dropdown-item" href="Lease-Detail" onclick="setLocal('`+data+`')">View More Details</a>
+                        </div>`
+
+                        }}
+                ],
+                autoWidth: true,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Terminated Leases"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Terminated Leases"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Terminated Leases"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Terminated Leases"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Terminated Leases"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
+                ]
+            });
+
+/*Expired*/
+
+            let expired = [];
+            for (let i = 0; i < data.length; i++ ){
+
+                if (data[i].status.toString() == "Expired"){
+
+                    expired.push(data[i]);
+                }
+            }
+            console.log("expired :",expired);
+            $("#expired").DataTable({
+                data:expired,
+                columns:[
+                    {"data":"id"},
+                    {"data":function(row){
+                            return row.tenant.business_name;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.name +" "+row.tenant.surname;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.b_phone;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+
+                    {"data":"startDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i>  "+data;
+                        }},
+
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                        render:function(data){
+                            if(data==="Active"){
+                                return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                            } else if(data==="Expired"){
+                                return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                            }else{
+                                return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                            }
+                        }},
+                    {"data":"id",
+                        "sortable":false,
+                        "searchable":false,
+                        render:function (data) {
+                            return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <span class="text-muted sr-only">Action</span></button>'+`
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="Edit-Lease" onclick="setLocal('`+data+`')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('`+data+`'),loadData() " href="#">Renew</a>
+                            <a class="dropdown-item" href="Lease-Detail" onclick="setLocal('`+data+`')">View More Details</a>
+                        </div>`
+
+                        }}
+                ],
+                autoWidth: true,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Expired Leases"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Expired Leases"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Expired Leases"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Expired Leases"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Expired Leases"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
+                ]
+            });
+
+
+
+      /*Active*/
+
+            let active = [];
+            for (let i = 0; i < data.length; i++ ){
+
+                if (data[i].status.toString() == "Active"){
+
+                    active.push(data[i]);
+                }
+            }
+            console.log("active :",active);
+            $("#active").DataTable({
+                data:active,
+                columns:[
+                    {"data":"id"},
+                    {"data":function(row){
+                            return row.tenant.business_name;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.name +" "+row.tenant.surname;
+                        }},
+                    {"data":function(row){
+                            return row.tenant.b_phone;
+                        },
+                        "sortable":false,
+                        "searchable":false
+                    },
+
+                    {"data":"startDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i>  "+data;
+                        }},
+
+                    {"data":"endDate",
+                        render:function(data){
+                            return "<i class='fe fe-calendar'></i> <strong>"+data+"</strong>"
+                        }},
+                    {"data":"status",
+                        render:function(data){
+                            if(data==="Active"){
+                                return "<span class='badge badge-pill badge-success'> "+data+"</span>";
+                            } else if(data==="Expired"){
+                                return "<span class='badge badge-pill badge-warning'> "+data+"</span>";
+                            }else{
+                                return "<span class='badge badge-pill badge-danger'> "+data+"</span>";
+
+                            }
+                        }},
+                    {"data":"id",
+                        "sortable":false,
+                        "searchable":false,
+                        render:function (data) {
+                            return '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > <span class="text-muted sr-only">Action</span></button>'+`
+                            <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="Edit-Lease" onclick="setLocal('`+data+`')">Edit</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setLocal('`+data+`')" href="#">Terminate</a>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#renewal" onclick="SetLocal('`+data+`'),loadData() " href="#">Renew</a>
+                            <a class="dropdown-item" href="Lease-Detail" onclick="setLocal('`+data+`')">View More Details</a>
+                        </div>`
+
+                        }}
+                ],
+                autoWidth: true,
+                "lengthMenu": [
+                    [10, 25,50, 100, -1],
+                    [10, 25,50, 100, "All"]
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Active Leases"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of Active Leases"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of Active Leases"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of Active Leases"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of Active Leases"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
+                ]
+            });
+
+
+
+
+
         }
     };
     xmlhttp.send();
@@ -1174,6 +1662,7 @@ function getRenewedLeases() {
     xmlhttp.onreadystatechange = function(){
         if(xmlhttp.readyState==4 && xmlhttp.status ==200){
             var data = JSON.parse(xmlhttp.responseText);
+            var printCounter = 0;
             console.log(xmlhttp.responseText);
             $("#dataTable").DataTable({
                 data:data,
@@ -1219,6 +1708,73 @@ function getRenewedLeases() {
                 "lengthMenu": [
                     [10, 25,50, 100, -1],
                     [10, 25,50, 100, "All"]
+                ],
+                orderCellsTop: true,
+                fixedHeader: true,
+                dom: 'lfrtipB',
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<span class="fe fe-24 fe-twitch"></span> Export Data',
+                        buttons: [
+                            {extend:'excel',
+                                messageTop:"List Of Renewed Leases"
+                            },
+                            {extend:'csv',
+                                messageTop:"List Of  Renewed Leases"
+                            },
+                            {extend:'pdf',
+                                messageBottom:null,
+                                messageTop:"List Of  Renewed Leases"
+                            }
+
+                        ]
+                    },
+                    {extend:'collection',
+                        text:'Print <span class="fe fe-24 fe-printer"></span>',
+                        buttons:[
+                            {   extend:"print",
+                                text:"Print All Records",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                messageTop:"List Of  Renewed Leases"
+                            },
+                            {   extend:"print",
+                                text:"Print Current Table",
+                                messageBottom: function () {
+                                    printCounter++;
+
+                                    if ( printCounter === 1 ) {
+                                        return 'This is the first time you have printed this document.';
+                                    }
+                                    else {
+                                        return 'You have printed this document '+printCounter+' times today.';
+                                    }
+                                },
+                                exportOptions: {
+                                    modifier: {
+                                        page: 'current'
+                                    }
+                                },
+                                messageTop:"List Of  Renewed Leases"
+                            }
+                        ]},
+
+                    {
+                        popoverTitle: 'Visibility control',
+                        text:'Column Visibility <span class="fe fe-24 fe-eye"></span>',
+                        extend: 'colvis',
+                        collectionLayout: 'two-column'
+
+                    }
                 ]
             });
         }

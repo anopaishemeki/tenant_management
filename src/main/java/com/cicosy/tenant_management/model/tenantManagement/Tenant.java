@@ -50,13 +50,16 @@ public class Tenant {
     private String b_tel;
     private String website;
 
+    @Column(columnDefinition = "varchar(1) default '0'")
+    private String status;
+
     @Transient
     private List<Lease> leaseObjectlist;
     @Transient
     private List<Compartment> compartmentObjectlist;
 
     public Tenant(String name, String surname, String email, String phone,
-                  String id_passport, String property, String rentStatus, List<Compartment> compartmentObjectlist,List<Lease> leaseObjectlist) {
+                  String id_passport, String property, String rentStatus, String status, List<Compartment> compartmentObjectlist, List<Lease> leaseObjectlist) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -64,6 +67,7 @@ public class Tenant {
         this.id_passport = id_passport;
         this.property = property;
         this.rentStatus = rentStatus;
+        this.status = status;
         this.leaseObjectlist=leaseObjectlist;
         this.compartmentObjectlist = compartmentObjectlist;
 
@@ -166,6 +170,14 @@ public class Tenant {
         this.b_phone = b_phone;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getB_email() {
         return b_email;
     }
@@ -234,6 +246,7 @@ public class Tenant {
     public List<Lease> getLeaseObjectlist() {
         return leaseObjectlist;
     }
+
 
     public void setLeaseObjectlist(List<Lease> leaseObjectlist) {
         this.leaseObjectlist = leaseObjectlist;

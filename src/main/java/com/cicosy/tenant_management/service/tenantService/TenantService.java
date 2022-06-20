@@ -1,6 +1,5 @@
 package com.cicosy.tenant_management.service.tenantService;
 
-import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import com.cicosy.tenant_management.repository.tenantManagement.TenantRepository;
@@ -23,6 +22,7 @@ public class TenantService {
     }
 
     public Tenant addTenant(Tenant tenant) {
+        tenant.setStatus("0");
         return tenantRepository.save(tenant);
     }
 
@@ -31,11 +31,28 @@ public class TenantService {
     }
 
     public String updateTenant(Long id, Tenant tenant) {
-        Tenant existing_tenant = tenantRepository.getById(id);
-        existing_tenant.setPhone(tenant.getPhone());
-        existing_tenant.setName(tenant.getName());
-        existing_tenant.setProperty(tenant.getProperty());
+
+        Tenant existing_tenant=  tenantRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Record With ID " + id + " Does Not Exist"
+                ));
+
+
+        existing_tenant.setCity(tenant.getCity());
+        existing_tenant.setCountry(tenant.getCountry());
+        existing_tenant.setEmail(tenant.getEmail());
+        existing_tenant.setWebsite(tenant.getWebsite());
+        existing_tenant.setAddress(tenant.getAddress());
+        existing_tenant.setB_email(tenant.getB_email());
+        existing_tenant.setB_phone(tenant.getB_phone());
+        existing_tenant.setB_tel(tenant.getB_tel());
         existing_tenant.setId_passport(tenant.getId_passport());
+        existing_tenant.setName(tenant.getName());
+        existing_tenant.setPhone(tenant.getPhone());
+        existing_tenant.setSurname(tenant.getSurname());
+        existing_tenant.setBusiness_name(tenant.getBusiness_name());
+        existing_tenant.setBusiness_type(tenant.getBusiness_type());
+        existing_tenant.setServices(tenant.getServices());
 
         tenantRepository.save(existing_tenant);
 
@@ -51,7 +68,7 @@ public class TenantService {
     }
     
 
-    public Tenant getTenantById(Tenant tenant, Long id) {
+    public Tenant getTenantById(Long id) {
         Tenant existing_tenant = tenantRepository.getById(id);
         return existing_tenant;
     }

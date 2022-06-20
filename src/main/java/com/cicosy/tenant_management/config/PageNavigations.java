@@ -205,6 +205,10 @@ public String LodgeRequest() {
     public String addTenant() {
         return "add_tenant";
     }
+    @GetMapping("/editTenant")
+    public String editTenant() {
+        return "edit_tenant";
+    }
     @GetMapping("/assignProperty")
     public String AssignProperty() {
         return "assign_property";

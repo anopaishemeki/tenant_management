@@ -4,9 +4,11 @@ import com.cicosy.tenant_management.controler.propertyManagement.CompartmentCont
 import com.cicosy.tenant_management.model.leaseManagement.Lease;
 import com.cicosy.tenant_management.model.leaseManagement.LeaseHistory;
 import com.cicosy.tenant_management.model.propertyManagement.Compartment;
+import com.cicosy.tenant_management.model.tenantManagement.Tenant;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseHistoryRepository;
 import com.cicosy.tenant_management.repository.leaseManagement.LeaseRepository;
 import com.cicosy.tenant_management.repository.propertyManagement.CompartmentRepository;
+import com.cicosy.tenant_management.repository.tenantManagement.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -30,12 +32,14 @@ public class LeaseService {
      LeaseRepository leaseRepository;
      LeaseHistoryRepository leaseHistoryRepository;
      CompartmentController2 compartmentController;
+     TenantRepository tenantRepository;
      CompartmentRepository compartmentRepository;
 
 
     @Autowired
-    public LeaseService(LeaseRepository leaseRepository, LeaseHistoryRepository leaseHistoryRepository, CompartmentController2 compartmentController ,CompartmentRepository compartmentRepository) {
+    public LeaseService(LeaseRepository leaseRepository,TenantRepository tenantRepository, LeaseHistoryRepository leaseHistoryRepository, CompartmentController2 compartmentController ,CompartmentRepository compartmentRepository) {
         this.leaseRepository = leaseRepository;
+        this.tenantRepository=tenantRepository;
         this.leaseHistoryRepository = leaseHistoryRepository;
         this.compartmentController = compartmentController;
         this.compartmentRepository=compartmentRepository;
@@ -216,7 +220,13 @@ public class LeaseService {
                     compartment.get(i).setStatus("0");
 
                 }
-
+                Tenant tenant=tenantRepository.findById(id)
+                        .orElseThrow(
+                                () -> new IllegalStateException(
+                                        "Record With ID " + id + " Does Not Exist"
+                                )
+                );
+                tenant.setStatus("1");
             }
         }
 
